@@ -12,6 +12,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // 3. Register Routes (Placeholders for now)
     Router.add('/dashboard', renderDashboard);
     Router.add('/module1', renderModule1);
+    Router.add('/module1-docs', renderModule1Docs);
+    Router.add('/module1-challenges', renderModule1Challenges);
     Router.add('/module2', renderModule2);
     Router.add('/module3', renderModule3);
     Router.add('/module4', renderModule4);
@@ -42,6 +44,22 @@ function setupUI() {
             showToast('Trainer Mode ' + (State.get('trainerMode') ? 'Enabled' : 'Disabled'), 'info');
         });
     }
+
+    // Theme Toggle
+    const themeBtn = document.getElementById('theme-toggle');
+    if(themeBtn) {
+        const savedTheme = localStorage.getItem('dec_ai_theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        themeBtn.innerText = savedTheme === 'dark' ? '☀️' : '🌙';
+
+        themeBtn.addEventListener('click', () => {
+            let current = document.documentElement.getAttribute('data-theme');
+            let next = current === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', next);
+            localStorage.setItem('dec_ai_theme', next);
+            themeBtn.innerText = next === 'dark' ? '☀️' : '🌙';
+        });
+    }
 }
 
 function renderDashboard(container) {
@@ -63,6 +81,16 @@ function renderDashboard(container) {
             <div class="badge badge-info" style="font-size: 0.875rem; padding: 0.5rem 1rem;">3 SESSIONS</div>
             <div class="badge badge-info" style="font-size: 0.875rem; padding: 0.5rem 1rem;">6 HOURS</div>
             <div class="badge badge-info" style="font-size: 0.875rem; padding: 0.5rem 1rem;">1 CAPSTONE</div>
+        </div>
+
+        <div class="card mb-8">
+            <div class="card-header"><h3 class="card-title">My Achievements</h3></div>
+            <div class="card-body">
+                ${State.get('badges') && State.get('badges').length > 0 ? 
+                    '<div class="flex gap-4 flex-wrap">' + State.get('badges').map(b => `<div class="badge badge-warning" style="font-size: 1rem; padding: 0.75rem 1.5rem; border: 1px solid var(--accent); background: #FFFBEB;">🏆 ${b}</div>`).join('') + '</div>'
+                    : '<p class="text-muted">Complete modules to unlock your AI badges.</p>'
+                }
+            </div>
         </div>
 
         <div class="dashboard-grid">
@@ -228,7 +256,7 @@ function renderModule1(container) {
                     <p>Practice writing structured prompts for real DEC scenarios.</p>
                 </div>
                 <div class="card-footer">
-                    <button class="btn btn-secondary w-full">Open Challenges</button>
+                    <button class="btn btn-secondary w-full" onclick="window.location.hash='/module1-challenges'">Open Challenges</button>
                 </div>
             </div>
             <div class="card module-card">
@@ -451,17 +479,51 @@ function renderModule3(container) {
             </div>
         </div>
         
+        <div class="dashboard-grid">
+            <div class="card mb-8">
+                <div class="card-header"><h3 class="card-title">Spot the AI Mistake</h3></div>
+                <div class="card-body">
+                    <p class="text-sm text-muted mb-4">Review the AI generated site report. Click on the hallucinated fact based on the actual log.</p>
+                    <div class="p-3 mb-2 rounded text-sm" style="background: var(--bg-main); border-left: 3px solid var(--info); padding: 0.75rem; margin-bottom: 1rem;">
+                        <strong>Actual Log:</strong> "Excavator broke down at 2PM due to hydraulic leak."
+                    </div>
+                    <div class="p-3 border rounded" style="border: 1px solid #E2E8F0; padding: 0.75rem; border-radius: var(--radius-sm); line-height: 1.8;">
+                        <strong>AI Report:</strong> "Site progress was delayed because <span class="mistake-option" style="cursor:pointer; background: #FEF3C7; padding: 0.1rem 0.25rem; border-radius: 4px;" data-correct="false">the weather was rainy</span>, and additionally <span class="mistake-option" style="cursor:pointer; background: #FEF3C7; padding: 0.1rem 0.25rem; border-radius: 4px;" data-correct="true">the excavator ran out of fuel</span> at 2PM."
+                    </div>
+                    <div id="mistake-feedback" class="mt-4 hidden text-sm font-bold"></div>
+                </div>
+            </div>
+            
+            <div class="card mb-8">
+                <div class="card-header"><h3 class="card-title">AI Adoption Decision Tree</h3></div>
+                <div class="card-body flex-col gap-2">
+                    <p class="text-sm text-muted mb-4">Should you use AI for this task?</p>
+                    <div id="decision-q1">
+                        <p class="mb-2">Does the task involve highly confidential personal data (e.g., salaries)?</p>
+                        <button class="btn btn-secondary btn-small dec-btn" style="margin-right:0.5rem;" data-ans="yes1">Yes</button>
+                        <button class="btn btn-secondary btn-small dec-btn" data-ans="no1">No</button>
+                    </div>
+                    <div id="decision-q2" class="hidden mt-4" style="border-top: 1px solid #E2E8F0; padding-top: 1rem;">
+                        <p class="mb-2">Does the output require 100% factual accuracy without human review?</p>
+                        <button class="btn btn-secondary btn-small dec-btn" style="margin-right:0.5rem;" data-ans="yes2">Yes</button>
+                        <button class="btn btn-secondary btn-small dec-btn" data-ans="no2">No</button>
+                    </div>
+                    <div id="decision-res" class="hidden mt-4 p-3 rounded text-sm font-bold" style="padding: 0.75rem; border-radius: var(--radius-sm); color: white;"></div>
+                </div>
+            </div>
+        </div>
+
         <div class="card mb-8">
             <div class="card-header">
                 <h3 class="card-title">Human Verification Checklist</h3>
             </div>
             <div class="card-body">
                 <ul style="list-style: none; padding: 0;">
-                    <li class="mb-2"><label><input type="checkbox"> Source Checked</label></li>
-                    <li class="mb-2"><label><input type="checkbox"> Numbers/Formulas Verified</label></li>
-                    <li class="mb-2"><label><input type="checkbox"> Dates & Deadlines Verified</label></li>
-                    <li class="mb-2"><label><input type="checkbox"> Sensitive Data Removed</label></li>
-                    <li class="mb-2"><label><input type="checkbox"> Business Logic Validated</label></li>
+                    <li class="mb-2"><label><input type="checkbox" class="chk-verify"> Source Checked</label></li>
+                    <li class="mb-2"><label><input type="checkbox" class="chk-verify"> Numbers/Formulas Verified</label></li>
+                    <li class="mb-2"><label><input type="checkbox" class="chk-verify"> Dates & Deadlines Verified</label></li>
+                    <li class="mb-2"><label><input type="checkbox" class="chk-verify"> Sensitive Data Removed</label></li>
+                    <li class="mb-2"><label><input type="checkbox" class="chk-verify"> Business Logic Validated</label></li>
                 </ul>
             </div>
         </div>
@@ -504,6 +566,51 @@ function renderModule3(container) {
                 }
             });
         });
+
+        // Spot the Mistake Logic
+        document.querySelectorAll('.mistake-option').forEach(el => {
+            el.addEventListener('click', (e) => {
+                const isCorrect = e.target.getAttribute('data-correct') === 'true';
+                const fb = document.getElementById('mistake-feedback');
+                fb.classList.remove('hidden');
+                if (isCorrect) {
+                    fb.innerHTML = '<span style="color: var(--success);">Correct! The log mentioned a hydraulic leak, not running out of fuel.</span>';
+                    State.markExerciseComplete('m3_mistake', 'module3');
+                } else {
+                    fb.innerHTML = '<span style="color: var(--danger);">Incorrect. While weather wasn\'t mentioned, that is not the primary hallucination based on the log.</span>';
+                }
+            });
+        });
+
+        // Decision Tree Logic
+        document.querySelectorAll('.dec-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const ans = e.target.getAttribute('data-ans');
+                if (ans === 'yes1') {
+                    const res = document.getElementById('decision-res');
+                    res.innerHTML = 'STOP. Do not use public AI for highly confidential data.';
+                    res.style.backgroundColor = 'var(--danger)';
+                    res.classList.remove('hidden');
+                    document.getElementById('decision-q2').classList.add('hidden');
+                } else if (ans === 'no1') {
+                    document.getElementById('decision-q2').classList.remove('hidden');
+                    document.getElementById('decision-res').classList.add('hidden');
+                } else if (ans === 'yes2') {
+                    const res = document.getElementById('decision-res');
+                    res.innerHTML = 'CAUTION. AI can hallucinate. You MUST have a human-in-the-loop to verify the output.';
+                    res.style.backgroundColor = 'var(--warning)';
+                    res.classList.remove('hidden');
+                    State.markExerciseComplete('m3_decision', 'module3');
+                } else if (ans === 'no2') {
+                    const res = document.getElementById('decision-res');
+                    res.innerHTML = 'SAFE TO PROCEED. AI is great for drafts, brainstorming, and summaries.';
+                    res.style.backgroundColor = 'var(--success)';
+                    res.classList.remove('hidden');
+                    State.markExerciseComplete('m3_decision', 'module3');
+                }
+            });
+        });
+
     }, 100);
 }
 
@@ -774,6 +881,125 @@ function renderResourceCenter(container) {
                         </div>
                         <button class="btn btn-secondary btn-small" onclick="showToast('Downloading PDF...', 'info')">Download PDF</button>
                     </div>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+function renderModule1Docs(container) {
+    const docs = DocumentEngine.getAllDocuments();
+    let optionsHtml = docs.map(d => `<option value="${d.id}">${d.title} (${d.type})</option>`).join('');
+
+    container.innerHTML = `
+        <div class="mb-4">
+            <button class="btn btn-secondary btn-small mb-4" onclick="window.location.hash='/module1'">← Back to Module 1</button>
+            <span class="badge badge-warning">Session 1 Workspace</span>
+            <h2 class="mt-4">Document Intelligence Workspace</h2>
+            <p class="text-muted">Analyze DEC Tenders, Contracts, and Quotes using AI.</p>
+        </div>
+        
+        <div class="dashboard-grid">
+            <div class="card mb-8">
+                <div class="card-header"><h3 class="card-title">Select Document</h3></div>
+                <div class="card-body">
+                    <select id="doc-select" class="form-control mb-4">
+                        ${optionsHtml}
+                    </select>
+                    <div id="doc-viewer" style="background: var(--bg-main); padding: 1rem; border-radius: var(--radius-sm); max-height: 400px; overflow-y: auto; white-space: pre-wrap; font-family: monospace; font-size: 0.875rem;"></div>
+                </div>
+            </div>
+            
+            <div class="card mb-8">
+                <div class="card-header"><h3 class="card-title">AI Analysis Tool</h3></div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label class="form-label">Extraction Goal / Question</label>
+                        <textarea id="doc-prompt" class="form-control" rows="4">Extract all penalty clauses and payment terms. Format as a bulleted list.</textarea>
+                    </div>
+                    <button class="btn btn-primary w-full mb-4" id="btn-analyze-doc">Analyze Document</button>
+                    
+                    <div id="doc-analysis-result" class="ai-result-box hidden">
+                        <span class="ai-badge">AI Extraction</span>
+                        <div id="doc-analysis-text" class="mt-2 text-sm"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+
+    setTimeout(() => {
+        const docSelect = document.getElementById('doc-select');
+        const docViewer = document.getElementById('doc-viewer');
+        
+        const updateViewer = () => {
+            const doc = DocumentEngine.getDocument(docSelect.value);
+            if(doc) {
+                docViewer.innerText = doc.content;
+            }
+        };
+        
+        if(docSelect) {
+            docSelect.addEventListener('change', updateViewer);
+            updateViewer(); // init
+        }
+        
+        document.getElementById('btn-analyze-doc')?.addEventListener('click', async () => {
+            const btn = document.getElementById('btn-analyze-doc');
+            btn.disabled = true;
+            btn.innerText = "Analyzing...";
+            
+            const doc = DocumentEngine.getDocument(docSelect.value);
+            const goal = document.getElementById('doc-prompt').value;
+            
+            const response = await AIService.extractFromDocument(doc.content, goal);
+            
+            document.getElementById('doc-analysis-text').innerHTML = response.replace(/\\n/g, '<br>');
+            document.getElementById('doc-analysis-result').classList.remove('hidden');
+            
+            btn.disabled = false;
+            btn.innerText = "Analyze Document";
+        });
+    }, 100);
+}
+
+function renderModule1Challenges(container) {
+    container.innerHTML = `
+        <div class="mb-4">
+            <button class="btn btn-secondary btn-small mb-4" onclick="window.location.hash='/module1'">← Back to Module 1</button>
+            <span class="badge badge-warning">Session 1 Challenges</span>
+            <h2 class="mt-4">Prompting Challenges</h2>
+            <p class="text-muted">Test your prompt engineering skills against DEC scenarios.</p>
+        </div>
+        
+        <div class="dashboard-grid">
+            <div class="card mb-8">
+                <div class="card-header"><h3 class="card-title">Challenge 1: The Vague Manager</h3></div>
+                <div class="card-body">
+                    <p class="mb-4"><strong>Scenario:</strong> You need to draft a rejection email to a vendor (Omega Machining) for a poor quality delivery. Your manager gave you this prompt: <em>"Tell omega they did bad and we won't pay."</em></p>
+                    <p class="mb-4">Rewrite this prompt using the structured DEC Prompt Framework (Role, Context, Task, Tone, Output format).</p>
+                    
+                    <textarea class="form-control mb-4" rows="6" placeholder="Your improved prompt here..."></textarea>
+                    <button class="btn btn-primary w-full" onclick="showToast('Great structure! A structured prompt gets better results.', 'success')">Submit Improved Prompt</button>
+                </div>
+            </div>
+            
+            <div class="card mb-8">
+                <div class="card-header"><h3 class="card-title">Challenge 2: Data Hallucination</h3></div>
+                <div class="card-body">
+                    <p class="mb-4"><strong>Scenario:</strong> You asked the AI to summarize project delays. The AI blamed "Weather Conditions", but the actual site reports only mention "Material Shortages".</p>
+                    <p class="mb-4">What constraint should you add to your prompt to prevent this?</p>
+                    
+                    <div class="flex-col gap-2 mb-4">
+                        <label class="flex gap-2 items-center"><input type="radio" name="c2" value="1"> Be more creative</label>
+                        <label class="flex gap-2 items-center"><input type="radio" name="c2" value="2"> Do not invent or assume information outside the provided text</label>
+                        <label class="flex gap-2 items-center"><input type="radio" name="c2" value="3"> Write a longer summary</label>
+                    </div>
+                    <button class="btn btn-primary w-full" onclick="
+                        const checked = document.querySelector('input[name=c2]:checked');
+                        if(checked && checked.value === '2') showToast('Correct! Always ground the AI.', 'success');
+                        else showToast('Incorrect. Try again.', 'error');
+                    ">Submit Answer</button>
                 </div>
             </div>
         </div>

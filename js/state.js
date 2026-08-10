@@ -15,6 +15,7 @@ const State = {
         },
         trainerMode: false,
         completedExercises: [],
+        badges: [],
         assistantConfig: null
     },
 
@@ -52,12 +53,27 @@ const State = {
     },
 
     recalculateProgress(moduleId) {
-        // Simplified progress calculation for demo purposes
-        // In reality, this would count specific exercises per module
+        if (!this._state.badges) this._state.badges = [];
         let count = this._state.completedExercises.filter(id => id.startsWith(moduleId)).length;
-        // Assume 5 exercises per module for 100%
-        let pct = Math.min(100, Math.round((count / 1) * 100));
+        // Adjusted for current exercises: M1=1, M2=1, M3=2, M4=1
+        let required = 1;
+        if (moduleId === 'module3') required = 2;
+        let pct = Math.min(100, Math.round((count / required) * 100));
         this._state.progress[moduleId] = pct;
+        
+        // Badge Logic
+        if (pct === 100) {
+            let badge = '';
+            if (moduleId === 'module1') badge = 'Prompt Engineer';
+            if (moduleId === 'module2') badge = 'Data Detective';
+            if (moduleId === 'module3') badge = 'Safety Guardian';
+            if (moduleId === 'module4') badge = 'AI Architect';
+            
+            if (badge && !this._state.badges.includes(badge)) {
+                this._state.badges.push(badge);
+                if(window.showToast) window.showToast('🏆 Achievement Unlocked: ' + badge, 'success');
+            }
+        }
         
         // Overall
         const p = this._state.progress;

@@ -12,6 +12,7 @@
     --secondary: #FFFFFF; /* White */
     --bg-main: #F8FAFC; /* Light Gray/Blue background for app */
     --bg-card: #FFFFFF;
+    --border-color: #E2E8F0;
     
     --accent: #F59E0B; /* Warm Orange/Gold */
     --accent-hover: #D97706;
@@ -48,6 +49,22 @@
     --radius-lg: 12px;
     
     --transition: all 0.2s ease-in-out;
+}
+
+[data-theme="dark"] {
+    --primary: #020617;
+    --primary-light: #0F172A;
+    --primary-lighter: #1E293B;
+    --secondary: #1E293B;
+    --bg-main: #0F172A;
+    --bg-card: #1E293B;
+    --border-color: #334155;
+    --text-main: #F8FAFC;
+    --text-muted: #94A3B8;
+    --success-bg: rgba(16, 185, 129, 0.2);
+    --warning-bg: rgba(245, 158, 11, 0.2);
+    --danger-bg: rgba(239, 68, 68, 0.2);
+    --info-bg: rgba(59, 130, 246, 0.2);
 }
 
 /* Reset & Base */
@@ -211,7 +228,7 @@ a:hover {
     align-items: center;
     justify-content: space-between;
     padding: 0 2rem;
-    border-bottom: 1px solid #E2E8F0;
+    border-bottom: 1px solid var(--border-color);
     box-shadow: var(--shadow-sm);
     flex-shrink: 0;
 }
@@ -289,4 +306,26 @@ a:hover {
     .sidebar.collapsed {
         margin-left: calc(-1 * var(--sidebar-width));
     }
+}
+
+/* Animations */
+.ai-thinking {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 0.5rem;
+}
+.ai-thinking span {
+    width: 6px;
+    height: 6px;
+    background-color: var(--accent);
+    border-radius: 50%;
+    animation: bounce 1.4s infinite ease-in-out both;
+}
+.ai-thinking span:nth-child(1) { animation-delay: -0.32s; }
+.ai-thinking span:nth-child(2) { animation-delay: -0.16s; }
+
+@keyframes bounce {
+    0%, 80%, 100% { transform: scale(0); }
+    40% { transform: scale(1); }
 }

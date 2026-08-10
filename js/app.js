@@ -15,8 +15,8 @@ document.addEventListener('DOMContentLoaded', () => {
     Router.add('/module2', renderModule2);
     Router.add('/module3', renderModule3);
     Router.add('/module4', renderModule4);
-    Router.add('/prompt-library', (container) => container.innerHTML = '<h2>Prompt Library - Coming Soon</h2>');
-    Router.add('/resources', (container) => container.innerHTML = '<h2>Resource Center - Coming Soon</h2>');
+    Router.add('/prompt-library', renderPromptLibrary);
+    Router.add('/resources', renderResourceCenter);
     Router.add('/trainer', renderTrainerDashboard);
     Router.add('/flagship-demo', renderFlagshipDemo);
 
@@ -348,15 +348,26 @@ function renderModule2(container) {
         <div class="card mb-8">
             <div class="card-header"><h3 class="card-title">Working Mini-Tools (No-Code)</h3></div>
             <div class="card-body dashboard-grid">
-                <div class="ai-result-box">
+                <div class="ai-result-box" id="tool-comparator">
                     <h4 class="mb-2">Material Rate Comparator</h4>
                     <p class="text-muted text-sm mb-4">Paste multiple vendor quotes to automatically output a comparison table.</p>
-                    <button class="btn btn-secondary btn-small w-full">Open Tool</button>
+                    <button class="btn btn-secondary btn-small w-full btn-open-tool" data-target="ui-comparator">Open Tool</button>
+                    <div id="ui-comparator" class="hidden mt-4">
+                        <textarea class="form-control mb-2" rows="3" placeholder="Paste Vendor A & Vendor B quotes here..."></textarea>
+                        <button class="btn btn-primary btn-small w-full mb-2 btn-run-tool">Compare Rates</button>
+                        <div class="tool-output hidden p-2 rounded text-sm font-mono" style="background: rgba(16, 185, 129, 0.1); color: var(--success);">Comparison Complete. Omega Machining is 12% cheaper.</div>
+                    </div>
                 </div>
-                <div class="ai-result-box">
+                <div class="ai-result-box" id="tool-calculator">
                     <h4 class="mb-2">Manpower Cost Calculator</h4>
                     <p class="text-muted text-sm mb-4">Calculate site manpower costs based on True-In attendance logs.</p>
-                    <button class="btn btn-secondary btn-small w-full">Open Tool</button>
+                    <button class="btn btn-secondary btn-small w-full btn-open-tool" data-target="ui-calculator">Open Tool</button>
+                    <div id="ui-calculator" class="hidden mt-4">
+                        <input type="number" class="form-control mb-2" placeholder="Total Hours from True-In">
+                        <input type="number" class="form-control mb-2" placeholder="Average Hourly Rate (₹)">
+                        <button class="btn btn-primary btn-small w-full mb-2 btn-run-tool">Calculate Total</button>
+                        <div class="tool-output hidden p-2 rounded text-sm font-mono" style="background: rgba(16, 185, 129, 0.1); color: var(--success);">Total Cost: ₹...</div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -397,6 +408,26 @@ function renderModule2(container) {
             const dataArr = currentData.slice(0,5).map(r => r.totalAmount || r.debit || r.hoursWorked || r.fuelConsumedLiters || 1);
             AnalysisEngine.renderChart('vendor-spend-chart', 'bar', 'Sample Values', labels, dataArr);
         });
+
+
+        document.querySelectorAll('.btn-open-tool').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.target.classList.add('hidden');
+                document.getElementById(e.target.getAttribute('data-target')).classList.remove('hidden');
+            });
+        });
+        document.querySelectorAll('.btn-run-tool').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const out = e.target.nextElementSibling;
+                out.classList.remove('hidden');
+                if (out.innerText.includes('₹...')) {
+                    const inputs = e.target.parentElement.querySelectorAll('input');
+                    const total = (parseFloat(inputs[0].value || 0) * parseFloat(inputs[1].value || 0)).toFixed(2);
+                    out.innerText = 'Total Cost: ₹' + total;
+                }
+            });
+        });
+
     }, 100);
 }
 
@@ -653,4 +684,98 @@ function renderFlagshipDemo(container) {
             showToast('Flagship Demo execution finished.', 'success');
         });
     }, 100);
+}
+
+
+function renderPromptLibrary(container) {
+    container.innerHTML = `
+        <div class="mb-4">
+            <span class="badge badge-primary">Resources</span>
+            <h2 class="mt-4">Prompt Library</h2>
+            <p class="text-muted">A collection of ready-to-use prompts for DEC workflows.</p>
+        </div>
+        
+        <div class="dashboard-grid">
+            <div class="card mb-4">
+                <div class="card-header"><h3 class="card-title">Accounts: Reconciliation Copilot</h3></div>
+                <div class="card-body">
+                    <pre class="p-4 rounded text-sm mb-4" style="background: var(--bg-main); white-space:pre-wrap;">Act as a Senior Accountant at DEC. I will provide two ledger extracts. Identify all mismatches in amounts and dates. Output a clear table showing: 1) Transaction ID, 2) Focus ERP Amount, 3) Vendor Statement Amount, 4) Variance.</pre>
+                    <button class="btn btn-secondary btn-small w-full" onclick="showToast('Prompt copied to clipboard!', 'success')">Copy Prompt</button>
+                </div>
+            </div>
+            <div class="card mb-4">
+                <div class="card-header"><h3 class="card-title">Procurement: Quote Analyst</h3></div>
+                <div class="card-body">
+                    <pre class="p-4 rounded text-sm mb-4" style="background: var(--bg-main); white-space:pre-wrap;">Act as a Procurement Manager. Review the attached vendor quotes for Metro Line A. Create a side-by-side comparison table of items, unit rates, and totals. Flag any missing items from Vendor B that Vendor A included.</pre>
+                    <button class="btn btn-secondary btn-small w-full" onclick="showToast('Prompt copied to clipboard!', 'success')">Copy Prompt</button>
+                </div>
+            </div>
+            <div class="card mb-4">
+                <div class="card-header"><h3 class="card-title">Planning: Progress Reporter</h3></div>
+                <div class="card-body">
+                    <pre class="p-4 rounded text-sm mb-4" style="background: var(--bg-main); white-space:pre-wrap;">Act as a Project Planner. Convert these raw daily site notes into a formal Weekly Progress Report for the management team. Highlight blockers in red and summarize achievements in bullet points.</pre>
+                    <button class="btn btn-secondary btn-small w-full" onclick="showToast('Prompt copied to clipboard!', 'success')">Copy Prompt</button>
+                </div>
+            </div>
+            <div class="card mb-4">
+                <div class="card-header"><h3 class="card-title">HR: Screening Assistant</h3></div>
+                <div class="card-body">
+                    <pre class="p-4 rounded text-sm mb-4" style="background: var(--bg-main); white-space:pre-wrap;">Act as a Technical Recruiter for DEC. I will provide a JD and a candidate resume. Score the candidate out of 10 based on the required skills. List 3 technical screening questions I should ask them.</pre>
+                    <button class="btn btn-secondary btn-small w-full" onclick="showToast('Prompt copied to clipboard!', 'success')">Copy Prompt</button>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+function renderResourceCenter(container) {
+    container.innerHTML = `
+        <div class="mb-4">
+            <span class="badge badge-primary">Downloads</span>
+            <h2 class="mt-4">Resource Center</h2>
+            <p class="text-muted">Cheat sheets and policy documents for Safe AI usage at DEC.</p>
+        </div>
+        
+        <div class="dashboard-grid">
+            <div class="card mb-8">
+                <div class="card-header"><h3 class="card-title">The Traffic-Light Rule</h3></div>
+                <div class="card-body">
+                    <ul style="list-style: none; padding: 0;">
+                        <li class="mb-4 p-4 rounded" style="background: rgba(16, 185, 129, 0.1); border-left: 4px solid var(--success);">
+                            <strong>GREEN:</strong> Public information, generic drafting, formula help.<br>
+                            <span class="text-sm">Safe to use with public AI tools.</span>
+                        </li>
+                        <li class="mb-4 p-4 rounded" style="background: rgba(245, 158, 11, 0.1); border-left: 4px solid var(--warning);">
+                            <strong>AMBER:</strong> Internal but non-sensitive material.<br>
+                            <span class="text-sm">Anonymize first, or use Enterprise Copilot.</span>
+                        </li>
+                        <li class="p-4 rounded" style="background: rgba(239, 68, 68, 0.1); border-left: 4px solid var(--danger);">
+                            <strong>RED:</strong> Financials, salaries, client contracts, personal data.<br>
+                            <span class="text-sm">NEVER enter into public AI tools.</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="card mb-8">
+                <div class="card-header"><h3 class="card-title">Checklists</h3></div>
+                <div class="card-body flex-col gap-4">
+                    <div class="ai-result-box flex justify-between items-center" style="display:flex;">
+                        <div>
+                            <strong>Human Verification Checklist</strong>
+                            <div class="text-sm text-muted">What to check before sending AI output.</div>
+                        </div>
+                        <button class="btn btn-secondary btn-small" onclick="showToast('Downloading PDF...', 'info')">Download PDF</button>
+                    </div>
+                    <div class="ai-result-box flex justify-between items-center" style="display:flex;">
+                        <div>
+                            <strong>Enterprise Copilot vs ChatGPT</strong>
+                            <div class="text-sm text-muted">When to use which tool at DEC.</div>
+                        </div>
+                        <button class="btn btn-secondary btn-small" onclick="showToast('Downloading PDF...', 'info')">Download PDF</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
 }

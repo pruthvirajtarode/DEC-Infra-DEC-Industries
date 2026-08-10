@@ -56,7 +56,7 @@ const State = {
         // In reality, this would count specific exercises per module
         let count = this._state.completedExercises.filter(id => id.startsWith(moduleId)).length;
         // Assume 5 exercises per module for 100%
-        let pct = Math.min(100, Math.round((count / 5) * 100));
+        let pct = Math.min(100, Math.round((count / 1) * 100));
         this._state.progress[moduleId] = pct;
         
         // Overall

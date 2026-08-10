@@ -30,7 +30,7 @@ function setupUI() {
     const toggleBtn = document.getElementById('toggle-sidebar');
     const sidebar = document.getElementById('sidebar');
 
-    const toggleFn = () => sidebar.classList.toggle('open');
+    const toggleFn = () => { if(window.innerWidth <= 768) { sidebar.classList.toggle('open'); } else { sidebar.classList.toggle('collapsed'); } };
     if (mobileBtn) mobileBtn.addEventListener('click', toggleFn);
     if (toggleBtn) toggleBtn.addEventListener('click', toggleFn);
 
@@ -254,6 +254,7 @@ function renderModule1(container) {
             const format = document.getElementById('prompt-format').value;
             
             const finalPrompt = PromptEngine.buildPrompt(role, context, task, input, constraints, format);
+            State.markExerciseComplete('m1', 'module1');
             document.getElementById('final-prompt-text').innerText = finalPrompt;
             
             const evalResult = PromptEngine.evaluatePrompt(finalPrompt);
@@ -291,23 +292,29 @@ function renderModule2(container) {
         <div class="mb-4">
             <span class="badge badge-info">Session 2</span>
             <h2 class="mt-4">Module 2: AI-Powered Data Analysis</h2>
-            <p class="text-muted">From manual Excel to AI analysis. Work with synthetic procurement data.</p>
+            <p class="text-muted">From manual Excel to AI analysis. Work with DEC synthetic data.</p>
         </div>
         
         <div class="card mb-8">
-            <div class="card-header">
-                <h3 class="card-title">Data Lab - Synthetic Procurement Dataset</h3>
-                <button class="btn btn-secondary btn-small" id="btn-generate-data">Generate 100 Rows</button>
+            <div class="card-header flex justify-between items-center" style="display:flex;">
+                <h3 class="card-title">Data Lab</h3>
+                <div class="flex gap-2">
+                    <select id="data-type-select" class="form-control" style="width: auto; padding: 0.25rem; margin-bottom: 0;">
+                        <option value="procurement">Procurement (Extropeak)</option>
+                        <option value="ledger">Ledger (Focus)</option>
+                        <option value="attendance">Attendance (True-In)</option>
+                        <option value="fuel">Fuel Logs (Tabi)</option>
+                    </select>
+                    <button class="btn btn-secondary btn-small" id="btn-generate-data">Generate 100 Rows</button>
+                </div>
             </div>
             <div class="card-body table-responsive" style="max-height: 400px; overflow-y: auto;">
                 <table class="table" id="data-lab-table">
-                    <thead>
-                        <tr>
-                            <th>ID</th><th>Date</th><th>Vendor</th><th>Project</th><th>Item</th><th>Qty</th><th>Unit Price</th><th>Total</th>
-                        </tr>
+                    <thead id="data-lab-head">
+                        <tr><th>Waiting for data generation...</th></tr>
                     </thead>
                     <tbody id="data-lab-body">
-                        <tr><td colspan="8" class="text-muted text-center" style="padding: 2rem;">No dataset selected. Click Generate.</td></tr>
+                        <tr><td class="text-muted text-center" style="padding: 2rem;">No dataset selected. Click Generate.</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -329,11 +336,27 @@ function renderModule2(container) {
                         </div>
                     </div>
                     <div>
-                        <h4 class="mb-4">Spend by Vendor</h4>
+                        <h4 class="mb-4">Data Visualization</h4>
                         <div style="height: 250px;">
                             <canvas id="vendor-spend-chart"></canvas>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mb-8">
+            <div class="card-header"><h3 class="card-title">Working Mini-Tools (No-Code)</h3></div>
+            <div class="card-body dashboard-grid">
+                <div class="ai-result-box">
+                    <h4 class="mb-2">Material Rate Comparator</h4>
+                    <p class="text-muted text-sm mb-4">Paste multiple vendor quotes to automatically output a comparison table.</p>
+                    <button class="btn btn-secondary btn-small w-full">Open Tool</button>
+                </div>
+                <div class="ai-result-box">
+                    <h4 class="mb-2">Manpower Cost Calculator</h4>
+                    <p class="text-muted text-sm mb-4">Calculate site manpower costs based on True-In attendance logs.</p>
+                    <button class="btn btn-secondary btn-small w-full">Open Tool</button>
                 </div>
             </div>
         </div>
@@ -342,39 +365,37 @@ function renderModule2(container) {
     setTimeout(() => {
         let currentData = [];
         document.getElementById('btn-generate-data')?.addEventListener('click', () => {
-            currentData = DataEngine.generateDataset('procurement', 20);
-            const tbody = document.getElementById('data-lab-body');
-            tbody.innerHTML = currentData.map(row => 
-                `<tr class="${row.notes !== 'Standard' ? 'danger-bg' : ''}">
-                    <td>${row.id}</td>
-                    <td>${row.date}</td>
-                    <td>${row.vendor}</td>
-                    <td>${row.project}</td>
-                    <td>${row.item}</td>
-                    <td>${row.quantity}</td>
-                    <td>₹${row.unitPrice}</td>
-                    <td>₹${row.totalAmount} ${row.notes !== 'Standard' ? '⚠️' : ''}</td>
-                </tr>`
-            ).join('');
+            const type = document.getElementById('data-type-select').value;
+            currentData = DataEngine.generateDataset(type, 100);
+            
+            if(currentData.length > 0) {
+                const keys = Object.keys(currentData[0]);
+                document.getElementById('data-lab-head').innerHTML = '<tr>' + keys.map(k => `<th>${k.toUpperCase()}</th>`).join('') + '</tr>';
+                document.getElementById('data-lab-body').innerHTML = currentData.map(row => 
+                    `<tr class="${row.notes && row.notes !== 'Standard' ? 'danger-bg' : ''}">
+                        ${keys.map(k => `<td>${row[k]}</td>`).join('')}
+                    </tr>`
+                ).join('');
+            }
             
             document.getElementById('btn-analyze-data').disabled = false;
-            showToast('Generated 20 rows of synthetic procurement data.', 'success');
+            showToast(`Generated 100 rows of synthetic ${type} data.`, 'success');
         });
 
         document.getElementById('btn-analyze-data')?.addEventListener('click', async () => {
             const resultCard = document.getElementById('data-analysis-result');
             resultCard.classList.remove('hidden');
             
-            const response = await AIService.analyzeData(currentData, "Find invoice amount anomalies");
+            const response = await AIService.analyzeData(currentData, "Find anomalies");
             document.getElementById('ai-data-text').innerHTML = `<p>${response.replace(/\n/g, '<br>')}</p>`;
             
-            // Generate Chart data
-            const vendorTotals = {};
-            currentData.forEach(r => {
-                vendorTotals[r.vendor] = (vendorTotals[r.vendor] || 0) + r.totalAmount;
-            });
+            // Mark progress
+            State.markExerciseComplete('m2', 'module2');
             
-            AnalysisEngine.renderChart('vendor-spend-chart', 'bar', 'Spend (₹)', Object.keys(vendorTotals), Object.values(vendorTotals));
+            // Generate basic chart
+            const labels = currentData.slice(0,5).map(r => r.id);
+            const dataArr = currentData.slice(0,5).map(r => r.totalAmount || r.debit || r.hoursWorked || r.fuelConsumedLiters || 1);
+            AnalysisEngine.renderChart('vendor-spend-chart', 'bar', 'Sample Values', labels, dataArr);
         });
     }, 100);
 }
@@ -470,7 +491,7 @@ function renderModule4(container) {
                     <div class="form-group">
                         <label class="form-label">Department</label>
                         <select id="cap-dept" class="form-control">
-                            <option>Procurement</option><option>Projects</option><option>Finance</option><option>HR</option>
+                            <option>HR (Recruitment)</option><option>Accounts (Reconciliation)</option><option>Sales (Proposal)</option><option>Procurement (Quotes)</option><option>Planning/Sites (Reporting)</option><option>Admin/IT (SOP)</option>
                         </select>
                     </div>
                     <div class="form-group">
@@ -536,6 +557,7 @@ function renderModule4(container) {
             
             document.getElementById('capstone-result').classList.remove('hidden');
             showToast('Assistant configuration compiled!', 'success');
+            State.markExerciseComplete('m4', 'module4');
         });
 
         document.getElementById('btn-capstone-report')?.addEventListener('click', () => {

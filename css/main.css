@@ -283,3 +283,10 @@ a:hover {
         padding: 1rem;
     }
 }
+
+/* Desktop Sidebar Collapse */
+@media (min-width: 769px) {
+    .sidebar.collapsed {
+        margin-left: calc(-1 * var(--sidebar-width));
+    }
+}

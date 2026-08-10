@@ -13,11 +13,10 @@ const DataEngine = {
     },
 
     _generateRow(type, index) {
-        // Base generators for synthetic DEC data
         const vendors = ["DEC BuildCorp", "DEC Steel", "Alpha Cement", "Omega Machining", "Vendor_Unknown"];
         const projects = ["Metro Line A", "Highway 42", "Factory Unit B", "DEC HQ Renovation"];
         
-        let row = { id: `REC-${1000 + index}`, date: this._randomDate() };
+        let row = { id: `${type.substring(0,3).toUpperCase()}-${1000 + index}`, date: this._randomDate() };
 
         if (type === 'procurement') {
             const qty = Math.floor(Math.random() * 500) + 10;
@@ -27,14 +26,31 @@ const DataEngine = {
             row.item = "Construction Material";
             row.quantity = qty;
             row.unitPrice = price;
-            // Introduce intentional error 5% of time
             if(Math.random() < 0.05) {
-                row.totalAmount = (qty * price) + 10000; // Anomaly
+                row.totalAmount = (qty * price) + 10000;
                 row.notes = "Calculation Error Injected";
             } else {
                 row.totalAmount = qty * price;
                 row.notes = "Standard";
             }
+        } else if (type === 'ledger') {
+            row.account = "Acc-Payables";
+            row.reference = `INV-${5000+index}`;
+            row.vendor = vendors[Math.floor(Math.random() * vendors.length)];
+            row.debit = Math.floor(Math.random() * 100000);
+            row.credit = 0;
+            row.notes = (Math.random() < 0.05) ? "Missing Ref" : "Standard";
+        } else if (type === 'attendance') {
+            row.employeeId = `EMP-${Math.floor(Math.random() * 50) + 100}`;
+            row.checkIn = "08:00 AM";
+            row.checkOut = "06:00 PM";
+            row.hoursWorked = 10;
+            if(Math.random() < 0.05) { row.hoursWorked = 24; row.notes = "Anomaly"; } else { row.notes = "Standard"; }
+        } else if (type === 'fuel') {
+            row.machineryId = `EXC-${Math.floor(Math.random()*10)+1}`;
+            row.fuelConsumedLiters = Math.floor(Math.random()*50)+20;
+            row.operatingHours = Math.floor(Math.random()*8)+1;
+            if(Math.random() < 0.05) { row.fuelConsumedLiters = 500; row.notes = "Anomaly"; } else { row.notes = "Standard"; }
         }
         return row;
     },
@@ -44,20 +60,6 @@ const DataEngine = {
         const end = new Date(2025, 11, 31);
         const d = new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
         return d.toISOString().split('T')[0];
-    },
-
-    toCSV(dataset) {
-        if (!dataset || !dataset.length) return "";
-        const headers = Object.keys(dataset[0]);
-        const csvRows = [headers.join(",")];
-        for (const row of dataset) {
-            const values = headers.map(h => {
-                const val = row[h];
-                return typeof val === 'string' ? `"${val}"` : val;
-            });
-            csvRows.push(values.join(","));
-        }
-        return csvRows.join("\n");
     }
 };
 

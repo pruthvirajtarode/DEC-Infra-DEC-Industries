@@ -424,13 +424,13 @@ function renderModule3(container) {
             el.className = 'card';
             el.innerHTML = `
                 <div class="card-body">
-                    <h4 class="mb-4">\${scen.text}</h4>
+                    <h4 class="mb-4">${scen.text}</h4>
                     <div class="flex gap-2 mb-4">
-                        <button class="btn btn-success btn-small safety-btn" data-id="\${scen.id}" data-choice="GREEN">GREEN (Safe)</button>
-                        <button class="btn btn-warning btn-small safety-btn" data-id="\${scen.id}" data-choice="AMBER">AMBER (Caution)</button>
-                        <button class="btn btn-danger btn-small safety-btn" data-id="\${scen.id}" data-choice="RED">RED (Do Not Upload)</button>
+                        <button class="btn btn-success btn-small safety-btn" data-id="${scen.id}" data-choice="GREEN">GREEN (Safe)</button>
+                        <button class="btn btn-warning btn-small safety-btn" data-id="${scen.id}" data-choice="AMBER">AMBER (Caution)</button>
+                        <button class="btn btn-danger btn-small safety-btn" data-id="${scen.id}" data-choice="RED">RED (Do Not Upload)</button>
                     </div>
-                    <div class="safety-result hidden mt-4 text-sm" id="res-\${scen.id}"></div>
+                    <div class="safety-result hidden mt-4 text-sm" id="res-${scen.id}"></div>
                 </div>
             `;
             grid.appendChild(el);
@@ -442,13 +442,13 @@ function renderModule3(container) {
                 const choice = e.target.getAttribute('data-choice');
                 const result = SafetyEngine.checkClassification(id, choice);
                 
-                const resEl = document.getElementById(\`res-\${id}\`);
+                const resEl = document.getElementById(`res-${id}`);
                 resEl.classList.remove('hidden');
                 
                 if(result.isCorrect) {
-                    resEl.innerHTML = \`<span style="color: var(--success); font-weight: bold;">Correct!</span> \${result.reason}\`;
+                    resEl.innerHTML = `<span style="color: var(--success); font-weight: bold;">Correct!</span> ${result.reason}`;
                 } else {
-                    resEl.innerHTML = \`<span style="color: var(--danger); font-weight: bold;">Incorrect. It is \${result.correctAnswer}.</span> \${result.reason}\`;
+                    resEl.innerHTML = `<span style="color: var(--danger); font-weight: bold;">Incorrect. It is ${result.correctAnswer}.</span> ${result.reason}`;
                 }
             });
         });
@@ -456,7 +456,7 @@ function renderModule3(container) {
 }
 
 function renderModule4(container) {
-    container.innerHTML = \`
+    container.innerHTML = `
         <div class="mb-4">
             <span class="badge badge-danger">Session 3</span>
             <h2 class="mt-4">Module 4: Capstone - Build Your Department Assistant</h2>
@@ -512,7 +512,7 @@ function renderModule4(container) {
                 </div>
             </div>
         </div>
-    \`;
+    `;
 
     setTimeout(() => {
         document.getElementById('btn-build-capstone')?.addEventListener('click', () => {
@@ -529,10 +529,10 @@ function renderModule4(container) {
             document.getElementById('cap-sys-prompt').innerText = prompt;
             
             const evalRes = CapstoneEngine.evaluateAssistant(prompt);
-            document.getElementById('cap-scorecard').innerHTML = \`
-                <div class="flex justify-between mb-2"><span>Assistant Design & Safety:</span> <strong>\${evalRes.score}/\${evalRes.total}</strong></div>
-                <div class="flex justify-between"><span>Readiness Label:</span> <span class="badge badge-success">\${evalRes.label}</span></div>
-            \`;
+            document.getElementById('cap-scorecard').innerHTML = `
+                <div class="flex justify-between mb-2"><span>Assistant Design & Safety:</span> <strong>${evalRes.score}/${evalRes.total}</strong></div>
+                <div class="flex justify-between"><span>Readiness Label:</span> <span class="badge badge-success">${evalRes.label}</span></div>
+            `;
             
             document.getElementById('capstone-result').classList.remove('hidden');
             showToast('Assistant configuration compiled!', 'success');
@@ -568,7 +568,7 @@ function renderTrainerDashboard(container) {
                 <div class="card-header"><h3 class="card-title">Module 1 Notes</h3></div>
                 <div class="card-body">
                     <ul class="text-muted">
-                        \${TrainerEngine.getNotes('module1').map(n => \`<li class="mb-2">\${n}</li>\`).join('')}
+                        ${TrainerEngine.getNotes('module1').map(n => `<li class="mb-2">${n}</li>`).join('')}
                     </ul>
                 </div>
             </div>
@@ -577,7 +577,7 @@ function renderTrainerDashboard(container) {
                 <div class="card-header"><h3 class="card-title">Module 2 Notes</h3></div>
                 <div class="card-body">
                     <ul class="text-muted">
-                        \${TrainerEngine.getNotes('module2').map(n => \`<li class="mb-2">\${n}</li>\`).join('')}
+                        ${TrainerEngine.getNotes('module2').map(n => `<li class="mb-2">${n}</li>`).join('')}
                     </ul>
                 </div>
             </div>
@@ -614,7 +614,7 @@ function renderFlagshipDemo(container) {
             
             for(let i = 0; i < stages.length; i++) {
                 await new Promise(r => setTimeout(r, 1200));
-                log.innerHTML += `\n[STEP \${stages[i].id}] \${stages[i].text}<br>`;
+                log.innerHTML += `\n[STEP ${stages[i].id}] ${stages[i].text}<br>`;
                 
                 if (i === 3) {
                     // Show chart generation simulate

@@ -19,7 +19,7 @@ const State = {
         assistantConfig: null,
         productivityFormBefore: null,
         productivityFormAfter: null,
-        surveyWebhookUrl: "https://script.google.com/macros/s/AKfycbzztghKVuTii2St02I4le5Dm73GmawS6LDRHCUZmuIRy6kBwRoH6nFPDI5WjoFfcgahYA/exec",
+        surveyWebhookUrl: "https://script.google.com/macros/s/AKfycbxiJBLH35Quutp0p8Xd-BnwnNowKh9MjOnb28DTb1A0ihZp2yxL55g62MRX8FkMG3ejvg/exec",
         localSubmissions: []
     },
 

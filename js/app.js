@@ -184,6 +184,45 @@ function renderModule1(container) {
             <p class="text-muted">Turn AI from a simple question-answering tool into a structured work assistant.</p>
         </div>
         
+        <!-- NEW: Prompting Patterns -->
+        <div class="card mb-8">
+            <div class="card-header"><h3 class="card-title">Prompting Patterns Library</h3></div>
+            <div class="card-body dashboard-grid">
+                <div class="ai-result-box">
+                    <h4 class="mb-2">1. Zero-Shot Prompting</h4>
+                    <p class="text-sm text-muted mb-2">Asking the AI a question with no prior examples.</p>
+                    <pre class="p-2 rounded text-xs" style="background:var(--bg-main)">"What is a standard penalty clause for delays?"</pre>
+                </div>
+                <div class="ai-result-box">
+                    <h4 class="mb-2">2. Few-Shot Prompting</h4>
+                    <p class="text-sm text-muted mb-2">Providing 2-3 examples so the AI learns the format.</p>
+                    <pre class="p-2 rounded text-xs" style="background:var(--bg-main)">"Ex 1: Minor Delay -> 1% penalty.\nEx 2: Safety Issue -> ₹5000 penalty.\nNow classify this incident..."</pre>
+                </div>
+                <div class="ai-result-box">
+                    <h4 class="mb-2">3. Chain of Thought</h4>
+                    <p class="text-sm text-muted mb-2">Forcing the AI to explain its reasoning step-by-step.</p>
+                    <pre class="p-2 rounded text-xs" style="background:var(--bg-main)">"Think step-by-step to calculate the total manpower cost based on the attendance log before giving the final number."</pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- NEW: Prompt Optimizer -->
+        <div class="card mb-8">
+            <div class="card-header"><h3 class="card-title">Prompt Optimizer (Bad vs Good)</h3></div>
+            <div class="card-body dashboard-grid">
+                <div>
+                    <h4 class="mb-2">Vague Prompt</h4>
+                    <textarea class="form-control mb-2" id="bad-prompt-input" rows="4">Write an email about the project delay to the client.</textarea>
+                    <button class="btn btn-secondary w-full" id="btn-optimize-prompt">Optimize Prompt ✨</button>
+                </div>
+                <div>
+                    <h4 class="mb-2">Optimized Structured Prompt</h4>
+                    <textarea class="form-control mb-2" id="good-prompt-output" rows="4" readonly style="background:#F8FAFC; border-color:var(--accent);"></textarea>
+                    <button class="btn btn-primary w-full" id="btn-use-optimized" disabled>Use This Structure</button>
+                </div>
+            </div>
+        </div>
+
         <div class="card mb-8">
             <div class="card-header">
                 <h3 class="card-title">Prompt Builder</h3>
@@ -253,7 +292,7 @@ function renderModule1(container) {
             <div class="card module-card">
                 <div class="card-header"><h3 class="card-title">Interactive Challenges</h3></div>
                 <div class="card-body">
-                    <p>Practice writing structured prompts for real DEC scenarios.</p>
+                    <p>Practice writing structured prompts for 5 real DEC scenarios.</p>
                 </div>
                 <div class="card-footer">
                     <button class="btn btn-secondary w-full" onclick="window.location.hash='/module1-challenges'">Open Challenges</button>
@@ -262,7 +301,7 @@ function renderModule1(container) {
             <div class="card module-card">
                 <div class="card-header"><h3 class="card-title">Document Intelligence</h3></div>
                 <div class="card-body">
-                    <p>Analyze Tenders, Contracts, and Quotes using AI.</p>
+                    <p>Analyze Tenders, Contracts, and Quotes in a split-pane Copilot interface.</p>
                 </div>
                 <div class="card-footer">
                     <button class="btn btn-secondary w-full" onclick="window.location.hash='/module1-docs'">Open Workspace</button>
@@ -273,6 +312,23 @@ function renderModule1(container) {
 
     // Event Listeners for Module 1
     setTimeout(() => {
+        // Optimizer
+        document.getElementById('btn-optimize-prompt')?.addEventListener('click', () => {
+            const bad = document.getElementById('bad-prompt-input').value;
+            const good = `Act as a Project Manager for DEC Infra.\nContext: We are experiencing a 2-week delay due to unseasonal rain.\nTask: Write an update email to the client.\nConstraints: Maintain a professional, reassuring tone. Do not mention financial penalties.\nFormat: Subject line + 3 short paragraphs.`;
+            document.getElementById('good-prompt-output').value = good;
+            document.getElementById('btn-use-optimized').disabled = false;
+        });
+
+        document.getElementById('btn-use-optimized')?.addEventListener('click', () => {
+            document.getElementById('prompt-role').value = "Project Manager";
+            document.getElementById('prompt-context').value = "We are experiencing a 2-week delay due to unseasonal rain.";
+            document.getElementById('prompt-task').value = "Write an update email to the client.";
+            document.getElementById('prompt-constraints').value = "Maintain a professional, reassuring tone. Do not mention financial penalties.";
+            document.getElementById('prompt-format').value = "Subject line + 3 short paragraphs.";
+            showToast('Prompt Builder populated!', 'success');
+        });
+
         document.getElementById('btn-generate-prompt')?.addEventListener('click', () => {
             const role = document.getElementById('prompt-role').value;
             const context = document.getElementById('prompt-context').value;
@@ -323,6 +379,30 @@ function renderModule2(container) {
             <p class="text-muted">From manual Excel to AI analysis. Work with DEC synthetic data.</p>
         </div>
         
+        <!-- NEW: Data Cleansing Lab -->
+        <div class="card mb-8">
+            <div class="card-header"><h3 class="card-title">Data Cleansing Lab</h3></div>
+            <div class="card-body dashboard-grid">
+                <div>
+                    <h4 class="mb-2">Messy Data (Raw Extract)</h4>
+                    <pre class="p-2 rounded text-xs" style="background:var(--bg-main); height:150px; overflow-y:auto;">ID, VENDOR, AMT, DATE\n101, Omega mach., Rs5000, 12-01-2023\n102, OMEGA MACHINING, 4500, Jan 15 2023\n103, null, 1200, 2023/01/20\n104, Alpha Corp, 8k, 01-22-2023</pre>
+                    <button class="btn btn-secondary w-full mt-2" id="btn-cleanse-data">AI Cleanse & Standardize ✨</button>
+                </div>
+                <div>
+                    <h4 class="mb-2">Cleaned Data (Ready for DB)</h4>
+                    <div id="cleansed-data-output" class="hidden p-2 rounded text-xs" style="background:rgba(16, 185, 129, 0.1); border: 1px solid var(--success); height:150px; overflow-y:auto;">
+                        <table class="table text-xs">
+                            <tr><th>ID</th><th>VENDOR</th><th>AMT_INR</th><th>DATE_ISO</th></tr>
+                            <tr><td>101</td><td>Omega Machining</td><td>5000</td><td>2023-01-12</td></tr>
+                            <tr><td>102</td><td>Omega Machining</td><td>4500</td><td>2023-01-15</td></tr>
+                            <tr><td>103</td><td>UNKNOWN</td><td>1200</td><td>2023-01-20</td></tr>
+                            <tr><td>104</td><td>Alpha Corp</td><td>8000</td><td>2023-01-22</td></tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="card mb-8">
             <div class="card-header flex justify-between items-center" style="display:flex;">
                 <h3 class="card-title">Data Lab</h3>
@@ -346,26 +426,34 @@ function renderModule2(container) {
                     </tbody>
                 </table>
             </div>
-            <div class="card-footer" style="padding: 1.5rem; border-top: 1px solid #E2E8F0;">
+            <div class="card-footer" style="padding: 1.5rem; border-top: 1px solid #E2E8F0; display:flex; gap:1rem;">
                 <button class="btn btn-primary" id="btn-analyze-data" disabled>AI Analysis & Anomaly Check</button>
             </div>
         </div>
 
+        <!-- ENHANCED: Interactive Chart Builder & Insights -->
         <div class="card mb-8 hidden" id="data-analysis-result">
             <div class="card-header">
-                <h3 class="card-title">AI Analyst Report</h3>
+                <h3 class="card-title">AI Analyst Report & Chart Builder</h3>
             </div>
             <div class="card-body">
                 <div class="dashboard-grid">
                     <div>
-                        <div id="ai-data-insights" class="ai-result-box">
+                        <div id="ai-data-insights" class="ai-result-box mb-4">
                             <span class="ai-badge verification-required">Verification Required</span>
                             <div id="ai-data-text"></div>
+                        </div>
+                        
+                        <!-- NEW: Chart Prompt -->
+                        <h4 class="mb-2">Generate Custom Chart</h4>
+                        <div class="flex gap-2">
+                            <input type="text" class="form-control" id="chart-prompt" placeholder="e.g., Show me spend by vendor as a pie chart">
+                            <button class="btn btn-secondary" id="btn-build-chart">Build</button>
                         </div>
                     </div>
                     <div>
                         <h4 class="mb-4">Data Visualization</h4>
-                        <div style="height: 250px;">
+                        <div style="height: 300px; display:flex; align-items:center; justify-content:center; border: 1px dashed #cbd5e1; border-radius: 8px;">
                             <canvas id="vendor-spend-chart"></canvas>
                         </div>
                     </div>
@@ -373,6 +461,7 @@ function renderModule2(container) {
             </div>
         </div>
 
+        <!-- ENHANCED: More Mini Tools -->
         <div class="card mb-8">
             <div class="card-header"><h3 class="card-title">Working Mini-Tools (No-Code)</h3></div>
             <div class="card-body dashboard-grid">
@@ -382,10 +471,11 @@ function renderModule2(container) {
                     <button class="btn btn-secondary btn-small w-full btn-open-tool" data-target="ui-comparator">Open Tool</button>
                     <div id="ui-comparator" class="hidden mt-4">
                         <textarea class="form-control mb-2" rows="3" placeholder="Paste Vendor A & Vendor B quotes here..."></textarea>
-                        <button class="btn btn-primary btn-small w-full mb-2 btn-run-tool">Compare Rates</button>
+                        <button class="btn btn-primary btn-small w-full mb-2 btn-run-tool" data-tool="comparator">Compare Rates</button>
                         <div class="tool-output hidden p-2 rounded text-sm font-mono" style="background: rgba(16, 185, 129, 0.1); color: var(--success);">Comparison Complete. Omega Machining is 12% cheaper.</div>
                     </div>
                 </div>
+                
                 <div class="ai-result-box" id="tool-calculator">
                     <h4 class="mb-2">Manpower Cost Calculator</h4>
                     <p class="text-muted text-sm mb-4">Calculate site manpower costs based on True-In attendance logs.</p>
@@ -393,8 +483,30 @@ function renderModule2(container) {
                     <div id="ui-calculator" class="hidden mt-4">
                         <input type="number" class="form-control mb-2" placeholder="Total Hours from True-In">
                         <input type="number" class="form-control mb-2" placeholder="Average Hourly Rate (₹)">
-                        <button class="btn btn-primary btn-small w-full mb-2 btn-run-tool">Calculate Total</button>
+                        <button class="btn btn-primary btn-small w-full mb-2 btn-run-tool" data-tool="calculator">Calculate Total</button>
                         <div class="tool-output hidden p-2 rounded text-sm font-mono" style="background: rgba(16, 185, 129, 0.1); color: var(--success);">Total Cost: ₹...</div>
+                    </div>
+                </div>
+                
+                <div class="ai-result-box" id="tool-invoice">
+                    <h4 class="mb-2">Invoice Anomaly Detector</h4>
+                    <p class="text-muted text-sm mb-4">Scan focus ERP ledger dump for duplicate invoice numbers or suspicious amounts.</p>
+                    <button class="btn btn-secondary btn-small w-full btn-open-tool" data-target="ui-invoice">Open Tool</button>
+                    <div id="ui-invoice" class="hidden mt-4">
+                        <textarea class="form-control mb-2" rows="2" placeholder="Paste CSV/Ledger rows..."></textarea>
+                        <button class="btn btn-primary btn-small w-full mb-2 btn-run-tool" data-tool="invoice">Run Scan</button>
+                        <div class="tool-output hidden p-2 rounded text-sm font-mono" style="background: rgba(239, 68, 68, 0.1); color: var(--danger);">⚠️ Duplicate Invoice #INV-8822 detected for Vendor X and Y.</div>
+                    </div>
+                </div>
+                
+                <div class="ai-result-box" id="tool-risk">
+                    <h4 class="mb-2">Project Risk Scorer</h4>
+                    <p class="text-muted text-sm mb-4">Analyze weekly progress reports and assign a RAG (Red/Amber/Green) risk score.</p>
+                    <button class="btn btn-secondary btn-small w-full btn-open-tool" data-target="ui-risk">Open Tool</button>
+                    <div id="ui-risk" class="hidden mt-4">
+                        <textarea class="form-control mb-2" rows="2" placeholder="Paste Weekly Progress Report..."></textarea>
+                        <button class="btn btn-primary btn-small w-full mb-2 btn-run-tool" data-tool="risk">Score Risk</button>
+                        <div class="tool-output hidden p-2 rounded text-sm font-mono" style="background: rgba(245, 158, 11, 0.1); color: var(--warning);">Status: AMBER. 2 critical path items are delayed by >3 days.</div>
                     </div>
                 </div>
             </div>
@@ -402,6 +514,17 @@ function renderModule2(container) {
     `;
 
     setTimeout(() => {
+        // Cleansing Lab
+        document.getElementById('btn-cleanse-data')?.addEventListener('click', (e) => {
+            e.target.innerText = "Cleansing...";
+            setTimeout(() => {
+                document.getElementById('cleansed-data-output').classList.remove('hidden');
+                e.target.innerText = "Data Cleansed";
+                e.target.disabled = true;
+                showToast('Data standardized successfully!', 'success');
+            }, 800);
+        });
+    
         let currentData = [];
         document.getElementById('btn-generate-data')?.addEventListener('click', () => {
             const type = document.getElementById('data-type-select').value;
@@ -426,7 +549,7 @@ function renderModule2(container) {
             resultCard.classList.remove('hidden');
             
             const response = await AIService.analyzeData(currentData, "Find anomalies");
-            document.getElementById('ai-data-text').innerHTML = `<p>${response.replace(/\n/g, '<br>')}</p>`;
+            document.getElementById('ai-data-text').innerHTML = `<p>${response.replace(/\\n/g, '<br>')}</p>`;
             
             // Mark progress
             State.markExerciseComplete('m2', 'module2');
@@ -436,7 +559,14 @@ function renderModule2(container) {
             const dataArr = currentData.slice(0,5).map(r => r.totalAmount || r.debit || r.hoursWorked || r.fuelConsumedLiters || 1);
             AnalysisEngine.renderChart('vendor-spend-chart', 'bar', 'Sample Values', labels, dataArr);
         });
-
+        
+        document.getElementById('btn-build-chart')?.addEventListener('click', () => {
+            showToast('AI dynamically interpreting prompt and rendering chart...', 'info');
+            // Mocking dynamic chart update
+            const labels = currentData.slice(5,10).map(r => r.id || 'N/A');
+            const dataArr = currentData.slice(5,10).map(r => r.totalAmount || Math.random()*1000);
+            AnalysisEngine.renderChart('vendor-spend-chart', 'pie', 'Custom View', labels, dataArr);
+        });
 
         document.querySelectorAll('.btn-open-tool').forEach(btn => {
             btn.addEventListener('click', (e) => {
@@ -448,7 +578,9 @@ function renderModule2(container) {
             btn.addEventListener('click', (e) => {
                 const out = e.target.nextElementSibling;
                 out.classList.remove('hidden');
-                if (out.innerText.includes('₹...')) {
+                
+                const toolType = e.target.getAttribute('data-tool');
+                if (toolType === 'calculator') {
                     const inputs = e.target.parentElement.querySelectorAll('input');
                     const total = (parseFloat(inputs[0].value || 0) * parseFloat(inputs[1].value || 0)).toFixed(2);
                     out.innerText = 'Total Cost: ₹' + total;
@@ -608,12 +740,6 @@ function renderModule3(container) {
                     res.classList.remove('hidden');
                     State.markExerciseComplete('m3_decision', 'module3');
                 }
-            });
-        });
-
-    }, 100);
-}
-
 function renderModule4(container) {
     container.innerHTML = `
         <div class="mb-4">
@@ -624,7 +750,7 @@ function renderModule4(container) {
         
         <div class="dashboard-grid">
             <div class="card mb-8">
-                <div class="card-header"><h3 class="card-title">Assistant Wizard</h3></div>
+                <div class="card-header"><h3 class="card-title">Assistant Builder Wizard</h3></div>
                 <div class="card-body flex-col gap-4">
                     <div class="form-group">
                         <label class="form-label">Department</label>
@@ -638,7 +764,7 @@ function renderModule4(container) {
                     </div>
                     <div class="form-group">
                         <label class="form-label">Core Task / Context</label>
-                        <textarea id="cap-context" class="form-control">Compare vendor quotes and flag missing items.</textarea>
+                        <textarea id="cap-context" class="form-control" rows="2">Compare vendor quotes and flag missing items.</textarea>
                     </div>
                     <div class="form-group">
                         <label class="form-label">Allowed Inputs</label>
@@ -657,14 +783,26 @@ function renderModule4(container) {
             </div>
             
             <div class="card mb-8 hidden" id="capstone-result">
-                <div class="card-header"><h3 class="card-title">Your AI Assistant</h3></div>
+                <div class="card-header"><h3 class="card-title">Your Custom AI Assistant</h3></div>
                 <div class="card-body">
-                    <h4>System Prompt Generated</h4>
+                    <h4>1. System Prompt Generated</h4>
                     <pre id="cap-sys-prompt" style="background: var(--bg-main); padding: 1rem; border-radius: var(--radius-sm); white-space: pre-wrap; font-size: 0.875rem;" class="mb-4"></pre>
                     
+                    <h4>2. Readiness Scorecard</h4>
                     <div class="ai-result-box mb-4">
-                        <h4 class="mb-2">Scorecard</h4>
                         <div id="cap-scorecard"></div>
+                    </div>
+                    
+                    <!-- NEW: Interactive Test Drive -->
+                    <h4 class="mb-2">3. Test Drive Assistant</h4>
+                    <div class="p-3 border rounded mb-4" style="background:#F8FAFC; border:1px solid #cbd5e1; height: 200px; display:flex; flex-direction:column;">
+                        <div id="cap-chat-log" style="flex-grow:1; overflow-y:auto; font-size:0.875rem; margin-bottom:0.5rem;">
+                            <div class="text-muted italic mb-2">Assistant is ready. Ask it a question...</div>
+                        </div>
+                        <div class="flex gap-2">
+                            <input type="text" id="cap-chat-input" class="form-control" placeholder="Test your prompt..." style="margin-bottom:0;">
+                            <button class="btn btn-secondary btn-small" id="btn-cap-send">Send</button>
+                        </div>
                     </div>
                     
                     <button class="btn btn-accent w-full" id="btn-capstone-report">Generate Capstone Report (PDF)</button>
@@ -698,8 +836,29 @@ function renderModule4(container) {
             State.markExerciseComplete('m4', 'module4');
         });
 
+        document.getElementById('btn-cap-send')?.addEventListener('click', () => {
+            const inputEl = document.getElementById('cap-chat-input');
+            const logEl = document.getElementById('cap-chat-log');
+            const msg = inputEl.value;
+            if(!msg) return;
+            
+            // Add user msg
+            logEl.innerHTML += `<div class="mb-2 text-right"><span style="background:var(--accent); color:white; padding:4px 8px; border-radius:4px; display:inline-block;">${msg}</span></div>`;
+            inputEl.value = '';
+            
+            // Mock AI response
+            setTimeout(() => {
+                const response = "As the Custom Assistant, I have processed your request based on my configured constraints. Here is the structured output...";
+                logEl.innerHTML += `<div class="mb-2"><span style="background:#e2e8f0; padding:4px 8px; border-radius:4px; display:inline-block;">🤖 ${response}</span></div>`;
+                logEl.scrollTop = logEl.scrollHeight;
+            }, 500);
+        });
+
         document.getElementById('btn-capstone-report')?.addEventListener('click', () => {
             showToast('Generating Capstone Report for Download...', 'info');
+        });
+    }, 100);
+}load...', 'info');
         });
     }, 100);
 }
@@ -895,33 +1054,35 @@ function renderModule1Docs(container) {
         <div class="mb-4">
             <button class="btn btn-secondary btn-small mb-4" onclick="window.location.hash='/module1'">← Back to Module 1</button>
             <span class="badge badge-warning">Session 1 Workspace</span>
-            <h2 class="mt-4">Document Intelligence Workspace</h2>
-            <p class="text-muted">Analyze DEC Tenders, Contracts, and Quotes using AI.</p>
+            <h2 class="mt-4">Document Intelligence Copilot</h2>
+            <p class="text-muted">Analyze DEC Tenders, Contracts, and Quotes in a split-pane Copilot interface.</p>
         </div>
         
-        <div class="dashboard-grid">
-            <div class="card mb-8">
-                <div class="card-header"><h3 class="card-title">Select Document</h3></div>
-                <div class="card-body">
+        <div class="dashboard-grid" style="grid-template-columns: 1fr 1fr; gap: 2rem;">
+            <!-- Left Pane: Document Viewer -->
+            <div class="card mb-8" style="display: flex; flex-direction: column;">
+                <div class="card-header"><h3 class="card-title">Document Source</h3></div>
+                <div class="card-body flex-col h-full" style="flex-grow: 1; display: flex;">
                     <select id="doc-select" class="form-control mb-4">
                         ${optionsHtml}
                     </select>
-                    <div id="doc-viewer" style="background: var(--bg-main); padding: 1rem; border-radius: var(--radius-sm); max-height: 400px; overflow-y: auto; white-space: pre-wrap; font-family: monospace; font-size: 0.875rem;"></div>
+                    <div id="doc-viewer" style="background: white; padding: 1.5rem; border: 1px solid #E2E8F0; border-radius: var(--radius-sm); max-height: 500px; overflow-y: auto; white-space: pre-wrap; font-family: var(--font-body); font-size: 0.875rem; box-shadow: inset 0 2px 4px rgba(0,0,0,0.02); flex-grow: 1;"></div>
                 </div>
             </div>
             
-            <div class="card mb-8">
-                <div class="card-header"><h3 class="card-title">AI Analysis Tool</h3></div>
-                <div class="card-body">
+            <!-- Right Pane: AI Copilot -->
+            <div class="card mb-8" style="border: 1px solid var(--accent); display: flex; flex-direction: column;">
+                <div class="card-header" style="background: var(--bg-main);"><h3 class="card-title">AI Copilot Chat</h3></div>
+                <div class="card-body flex-col" style="flex-grow: 1; display: flex;">
                     <div class="form-group">
                         <label class="form-label">Extraction Goal / Question</label>
-                        <textarea id="doc-prompt" class="form-control" rows="4">Extract all penalty clauses and payment terms. Format as a bulleted list.</textarea>
+                        <textarea id="doc-prompt" class="form-control" rows="3">Extract all penalty clauses and payment terms. Format as a bulleted list.</textarea>
                     </div>
                     <button class="btn btn-primary w-full mb-4" id="btn-analyze-doc">Analyze Document</button>
                     
-                    <div id="doc-analysis-result" class="ai-result-box hidden">
-                        <span class="ai-badge">AI Extraction</span>
-                        <div id="doc-analysis-text" class="mt-2 text-sm"></div>
+                    <div id="doc-analysis-result" class="ai-result-box hidden" style="flex-grow: 1; max-height: 350px; overflow-y: auto;">
+                        <span class="ai-badge">Copilot Output</span>
+                        <div id="doc-analysis-text" class="mt-2 text-sm" style="line-height: 1.6;"></div>
                     </div>
                 </div>
             </div>
@@ -954,7 +1115,7 @@ function renderModule1Docs(container) {
             
             const response = await AIService.extractFromDocument(doc.content, goal);
             
-            document.getElementById('doc-analysis-text').innerHTML = response.replace(/\\n/g, '<br>');
+            document.getElementById('doc-analysis-text').innerHTML = response.replace(/\n/g, '<br>');
             document.getElementById('doc-analysis-result').classList.remove('hidden');
             
             btn.disabled = false;
@@ -969,17 +1130,15 @@ function renderModule1Challenges(container) {
             <button class="btn btn-secondary btn-small mb-4" onclick="window.location.hash='/module1'">← Back to Module 1</button>
             <span class="badge badge-warning">Session 1 Challenges</span>
             <h2 class="mt-4">Prompting Challenges</h2>
-            <p class="text-muted">Test your prompt engineering skills against DEC scenarios.</p>
+            <p class="text-muted">Test your prompt engineering skills against 5 DEC scenarios.</p>
         </div>
         
         <div class="dashboard-grid">
             <div class="card mb-8">
                 <div class="card-header"><h3 class="card-title">Challenge 1: The Vague Manager</h3></div>
                 <div class="card-body">
-                    <p class="mb-4"><strong>Scenario:</strong> You need to draft a rejection email to a vendor (Omega Machining) for a poor quality delivery. Your manager gave you this prompt: <em>"Tell omega they did bad and we won't pay."</em></p>
-                    <p class="mb-4">Rewrite this prompt using the structured DEC Prompt Framework (Role, Context, Task, Tone, Output format).</p>
-                    
-                    <textarea class="form-control mb-4" rows="6" placeholder="Your improved prompt here..."></textarea>
+                    <p class="mb-4"><strong>Scenario:</strong> You need to draft a rejection email to a vendor for poor quality. Manager says: <em>"Tell omega they did bad and we won't pay."</em></p>
+                    <textarea class="form-control mb-4" rows="4" placeholder="Rewrite using DEC Prompt Framework..."></textarea>
                     <button class="btn btn-primary w-full" onclick="showToast('Great structure! A structured prompt gets better results.', 'success')">Submit Improved Prompt</button>
                 </div>
             </div>
@@ -987,18 +1146,49 @@ function renderModule1Challenges(container) {
             <div class="card mb-8">
                 <div class="card-header"><h3 class="card-title">Challenge 2: Data Hallucination</h3></div>
                 <div class="card-body">
-                    <p class="mb-4"><strong>Scenario:</strong> You asked the AI to summarize project delays. The AI blamed "Weather Conditions", but the actual site reports only mention "Material Shortages".</p>
-                    <p class="mb-4">What constraint should you add to your prompt to prevent this?</p>
-                    
+                    <p class="mb-4"><strong>Scenario:</strong> The AI blamed "Weather Conditions" for delays, but the logs only mention "Material Shortages". How to fix?</p>
                     <div class="flex-col gap-2 mb-4">
                         <label class="flex gap-2 items-center"><input type="radio" name="c2" value="1"> Be more creative</label>
-                        <label class="flex gap-2 items-center"><input type="radio" name="c2" value="2"> Do not invent or assume information outside the provided text</label>
-                        <label class="flex gap-2 items-center"><input type="radio" name="c2" value="3"> Write a longer summary</label>
+                        <label class="flex gap-2 items-center"><input type="radio" name="c2" value="2"> Do not invent information outside the provided text</label>
                     </div>
                     <button class="btn btn-primary w-full" onclick="
                         const checked = document.querySelector('input[name=c2]:checked');
                         if(checked && checked.value === '2') showToast('Correct! Always ground the AI.', 'success');
                         else showToast('Incorrect. Try again.', 'error');
+                    ">Submit Answer</button>
+                </div>
+            </div>
+
+            <div class="card mb-8">
+                <div class="card-header"><h3 class="card-title">Challenge 3: Tone Adjustment</h3></div>
+                <div class="card-body">
+                    <p class="mb-4"><strong>Scenario:</strong> Write an HR email reminding employees to submit timesheets, but it must be empathetic and positive, not threatening.</p>
+                    <textarea class="form-control mb-4" rows="4" placeholder="Your prompt here..."></textarea>
+                    <button class="btn btn-primary w-full" onclick="showToast('Submitted! Tone and constraints are key.', 'success')">Submit Prompt</button>
+                </div>
+            </div>
+
+            <div class="card mb-8">
+                <div class="card-header"><h3 class="card-title">Challenge 4: Output Formatting</h3></div>
+                <div class="card-body">
+                    <p class="mb-4"><strong>Scenario:</strong> You are feeding a 50-page technical spec to the AI. You only want the material requirements in a markdown table. What constraint do you add?</p>
+                    <textarea class="form-control mb-4" rows="3" placeholder="Constraint: ..."></textarea>
+                    <button class="btn btn-primary w-full" onclick="showToast('Submitted! Format definitions save hours of re-formatting.', 'success')">Submit Prompt</button>
+                </div>
+            </div>
+
+            <div class="card mb-8">
+                <div class="card-header"><h3 class="card-title">Challenge 5: Chain of Thought</h3></div>
+                <div class="card-body">
+                    <p class="mb-4"><strong>Scenario:</strong> You want the AI to calculate the total budget based on scattered invoice emails. To ensure accuracy, what instruction should you use?</p>
+                    <div class="flex-col gap-2 mb-4">
+                        <label class="flex gap-2 items-center"><input type="radio" name="c5" value="1"> Give me the final number immediately.</label>
+                        <label class="flex gap-2 items-center"><input type="radio" name="c5" value="2"> Think step-by-step and show the calculation before the final sum.</label>
+                    </div>
+                    <button class="btn btn-primary w-full" onclick="
+                        const checked = document.querySelector('input[name=c5]:checked');
+                        if(checked && checked.value === '2') showToast('Correct! Chain of Thought improves math accuracy.', 'success');
+                        else showToast('Incorrect.', 'error');
                     ">Submit Answer</button>
                 </div>
             </div>

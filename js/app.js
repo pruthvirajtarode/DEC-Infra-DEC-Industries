@@ -858,9 +858,6 @@ function renderModule4(container) {
             showToast('Generating Capstone Report for Download...', 'info');
         });
     }, 100);
-}load...', 'info');
-        });
-    }, 100);
 }
 
 function renderTrainerDashboard(container) {

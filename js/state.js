@@ -32,6 +32,11 @@ const State = {
                 console.error('Failed to parse saved state, resetting.');
             }
         }
+        // Force upgrade old/empty webhook URLs to the new working bound script URL
+        const oldUrl1 = "https://script.google.com/macros/s/AKfycbzztghKVuTii2St02I4le5Dm73GmawS6LDRHCUZmuIRy6kBwRoH6nFPDI5WjoFfcgahYA/exec";
+        if (!this._state.surveyWebhookUrl || this._state.surveyWebhookUrl === "" || this._state.surveyWebhookUrl === oldUrl1) {
+            this._state.surveyWebhookUrl = "https://script.google.com/macros/s/AKfycbxiJBLH35Quutp0p8Xd-BnwnNowKh9MjOnb28DTb1A0ihZp2yxL55g62MRX8FkMG3ejvg/exec";
+        }
         this.save();
     },
 

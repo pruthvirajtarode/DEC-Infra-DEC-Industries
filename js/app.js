@@ -740,6 +740,11 @@ function renderModule3(container) {
                     res.classList.remove('hidden');
                     State.markExerciseComplete('m3_decision', 'module3');
                 }
+            });
+        });
+    }, 100);
+}
+
 function renderModule4(container) {
     container.innerHTML = `
         <div class="mb-4">

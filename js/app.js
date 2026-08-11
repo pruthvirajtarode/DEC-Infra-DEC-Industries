@@ -1079,7 +1079,7 @@ function renderModule4(container) {
                 <p class="text-muted">Combine structured prompting, data intelligence, and safe policies into a working Claude Project.</p>
             </div>
             
-            <div class="flex gap-2 mb-6" style="display: flex; gap: 0.5rem; border-bottom: 2px solid var(--border-color); padding-bottom: 0.5rem; margin-bottom: 2rem;">
+            <div class="flex gap-2 mb-6" style="display: flex; flex-wrap: wrap; gap: 0.5rem; border-bottom: 2px solid var(--border-color); padding-bottom: 0.5rem; margin-bottom: 2rem;">
                 <button class="btn sub-tab-btn ${activeSubTab === 'guide' ? 'btn-primary' : 'btn-secondary'}" data-subtab="guide" style="border-radius: var(--radius-sm); display: flex; align-items: center; gap: 0.25rem;">📖 Claude Project Guide</button>
                 <button class="btn sub-tab-btn ${activeSubTab === 'builder' ? 'btn-primary' : 'btn-secondary'}" data-subtab="builder" style="border-radius: var(--radius-sm); display: flex; align-items: center; gap: 0.25rem;">🛠️ Department Assistant Builder</button>
             </div>
@@ -2099,7 +2099,7 @@ function renderProductivityForms(container) {
                 <p class="text-muted">Analyze your productivity gains, AI utilization shift, and satisfaction delta before and after the sessions.</p>
             </div>
             
-            <div class="flex gap-2 mb-6" style="display: flex; gap: 0.5rem; border-bottom: 2px solid var(--border-color); padding-bottom: 0.5rem; margin-bottom: 2rem;">
+            <div class="flex gap-2 mb-6" style="display: flex; flex-wrap: wrap; gap: 0.5rem; border-bottom: 2px solid var(--border-color); padding-bottom: 0.5rem; margin-bottom: 2rem;">
                 <button class="btn tab-btn ${activeTab === 'before' ? 'btn-primary' : 'btn-secondary'}" data-tab="before" style="border-radius: var(--radius-sm);">1. Pre-Session Survey</button>
                 <button class="btn tab-btn ${activeTab === 'after' ? 'btn-primary' : 'btn-secondary'} ${!beforeData ? 'disabled' : ''}" data-tab="after" ${!beforeData ? 'disabled' : ''} style="border-radius: var(--radius-sm);">2. Post-Session Feedback</button>
                 <button class="btn tab-btn ${activeTab === 'dashboard' ? 'btn-primary' : 'btn-secondary'} ${(!beforeData || !afterData) ? 'disabled' : ''}" data-tab="dashboard" ${(!beforeData || !afterData) ? 'disabled' : ''} style="border-radius: var(--radius-sm);">3. ROI Impact Dashboard</button>

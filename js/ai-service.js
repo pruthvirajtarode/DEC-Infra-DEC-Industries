@@ -22,7 +22,29 @@ const AIService = {
 
     async extractFromDocument(documentText, extractionGoal) {
         return this._simulateDelay(() => {
-            return `[AI Extractor]: \n- Finding 1: Related to "${extractionGoal}"\n- Source Context: Document segment analyzed.\n\nConfidence: 85% (Requires Verification)`;
+            const docLower = documentText.toLowerCase();
+            
+            let extraction = `[AI Extractor]:\nScanning document for your query...\n\n`;
+            
+            if (docLower.includes("metro line a phase 2")) {
+                extraction += `**Extracted Clauses (Tender):**\n- Penalties: 0.5% per week (capped at 10%).\n- Payment: 10% advance, 80% milestones, 10% retention.`;
+            } 
+            else if (docLower.includes("ctr-2025-8912")) {
+                extraction += `**Extracted Clauses (Contract):**\n- Payment: 45 days (⚠️ Anomaly: Sec 2.1 says 60 days).\n- Liability: Capped at contract value.\n- Deliverables: 5000 MT TMT Rebars.`;
+            }
+            else if (docLower.includes("sub-ew-2026-001")) {
+                extraction += `**Extracted Data (Quote):**\n- Base Cost: ₹3,750,000 (15k Cu.M @ ₹250)\n- Transport: ₹500,000\n- Timeline: 25 working days.`;
+            }
+            else if (docLower.includes("hr-pol-042")) {
+                extraction += `**Extracted Rules (HR Policy):**\n- Safety: Level 2 PPE mandatory in active zones.\n- Leave: 24 Annual, 7 Sick, 5 Casual.\n- Reporting: Incident reporting within 12 hours via Form SS-1.`;
+            }
+            else if (docLower.includes("eng-spec-hvac-99")) {
+                extraction += `**Extracted Specs (Engineering):**\n- Chillers: 2x 500 TR, Min COP 6.1.\n- Testing: 1.5x pressure for 24 hours.\n- Insulation: 50mm Nitrile rubber.`;
+            } else {
+                 extraction += `- Finding: Could not confidently extract specific clauses matching your query.\n- Action: Please refine your prompt.`;
+            }
+
+            return `${extraction}\n\nConfidence: 94% (Requires Human Verification)`;
         });
     },
     

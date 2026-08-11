@@ -70,6 +70,7 @@ const Router = {
     
     formatTitle(path) {
         if(path === 'productivity') return 'AI Productivity Tracker';
+        if(path === 'datasets') return 'Synthetic Dataset Hub';
         if(path === 'module1') return 'Module 1: Prompting & Docs';
         if(path === 'module2') return 'Module 2: Data Analysis';
         if(path === 'module3') return 'Module 3: Safe AI Usage';

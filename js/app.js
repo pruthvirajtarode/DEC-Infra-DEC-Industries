@@ -21,6 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
     Router.add('/prompt-library', renderPromptLibrary);
     Router.add('/case-studies', renderCaseStudies);
     Router.add('/resources', renderResourceCenter);
+    Router.add('/datasets', renderDatasetHub);
     Router.add('/trainer', renderTrainerDashboard);
     Router.add('/flagship-demo', renderFlagshipDemo);
 
@@ -2685,5 +2686,193 @@ function renderProductivityForms(container) {
     }
     
     // Initial draw call
+    drawView();
+}
+
+function renderDatasetHub(container) {
+    let activeRole = 'procurement';
+    
+    // Dataset map
+    const datasetsMap = {
+        procurement: [
+            { id: 'procurement_quotes', name: 'Vendor Quotation Comparison', desc: 'Quotation comparison sheet containing rates, items, lead times, and compliance checks.' },
+            { id: 'procurement_pos', name: 'Purchase Order (PO) Register', desc: 'Master register of approved POs, values, dates, and budget allocations.' },
+            { id: 'procurement_delivery', name: 'Material Delivery Log', desc: 'Comparison of gate entry received quantities vs challan quantity for mismatch identification.' },
+            { id: 'procurement_rates', name: 'Rate Contract Discrepancy Index', desc: 'Comparison of invoiced rates against approved standard vendor rates to highlight overcharging.' }
+        ],
+        finance: [
+            { id: 'finance_ledger', name: 'ERP Ledger Transactions', desc: 'General ledger transactions, debits, credits, and reference identifiers for audit.' },
+            { id: 'finance_bank', name: 'Bank Statement Log', desc: 'Bank transaction history for matching against ledger entries to reconcile cash flow.' },
+            { id: 'finance_gst', name: 'GST Input Tax Credit Invoices', desc: 'Calculated GST tax value vs portal-uploaded GST to detect discrepancies.' },
+            { id: 'finance_petty', name: 'Site Petty Cash Vouchers', desc: 'Petty cash payouts from site cashier, flags transactions without matching bills.' }
+        ],
+        planning: [
+            { id: 'planning_progress', name: 'Daily Progress Report (DPR)', desc: 'Site construction target vs actual completed quantities and manpower count.' },
+            { id: 'planning_equipment', name: 'Equipment Run & Fuel Log', desc: 'Fuel consumption and runtime hours for excavators/tippers to detect fuel siphoning anomalies.' },
+            { id: 'planning_manpower', name: 'Daily Wage Labor Headcount', desc: 'Contractor agency manpower counts vs gate entry logs to audit wage overbilling.' },
+            { id: 'planning_qa', name: 'Concrete Cube Strength Register', desc: 'Laboratory compressive testing results for concrete mixes, flagging quality failures.' }
+        ],
+        hr: [
+            { id: 'hr_attendance', name: 'Staff Work Hours & Overtime', desc: 'Timesheet log tracking check-ins, check-outs, hours worked, and unauthorized overtime hours.' },
+            { id: 'hr_candidates', name: 'Candidate Interview Screening', desc: 'Applicant experience, evaluation scores, and recruitment outcomes against job requirements.' },
+            { id: 'hr_incidents', name: 'Site Incident and Near-Miss Log', desc: 'Log of safety incidents, injured persons, severity levels, and investigation status.' },
+            { id: 'hr_training', name: 'Safety Training Compliance Register', desc: 'Induction training records and certificate expiry status of onsite workforce.' }
+        ]
+    };
+
+    let selectedDatasetId = datasetsMap[activeRole][0].id;
+    let currentData = DataEngine.generateDataset(selectedDatasetId, 100);
+
+    function drawView() {
+        const currentDataset = datasetsMap[activeRole].find(d => d.id === selectedDatasetId);
+        const headers = Object.keys(currentData[0]);
+        const previewRows = currentData.slice(0, 10);
+
+        // 1. Build List HTML
+        let listHtml = '';
+        datasetsMap[activeRole].forEach(d => {
+            const isActive = selectedDatasetId === d.id;
+            listHtml += `
+                <div class="p-3 border rounded cursor-pointer dataset-select-item ${isActive ? 'active-dataset' : ''}" 
+                     data-id="${d.id}" 
+                     style="border-radius: 6px; border: 1px solid ${isActive ? 'var(--accent)' : '#CBD5E1'}; background: ${isActive ? '#F8FAFC' : 'var(--bg-main)'}; cursor: pointer; transition: all 0.2s;">
+                    <h4 style="margin: 0; font-size: 0.95rem; font-weight: 600; color: ${isActive ? 'var(--accent)' : 'var(--text-main)'};">${d.name}</h4>
+                    <p class="text-xs text-muted" style="margin: 0.25rem 0 0 0; line-height: 1.4;">${d.desc}</p>
+                </div>
+            `;
+        });
+
+        // 2. Build Headers HTML
+        let headersHtml = '';
+        headers.forEach(h => {
+            const name = h.replace(/([A-Z])/g, ' $1');
+            headersHtml += `<th style="padding: 10px; text-transform: capitalize; background: var(--bg-card);">${name}</th>`;
+        });
+
+        // 3. Build Rows HTML
+        let rowsHtml = '';
+        previewRows.forEach(row => {
+            rowsHtml += '<tr>';
+            headers.forEach(h => {
+                const val = row[h];
+                let cellStyle = "";
+                if (val === 'YES' || val === 'FLAGGED' || val === 'Non-Compliant' || val === 'Blocked / Review' || val === 'FAIL - REJECT LAB RUN' || val === 'EXPIRED') {
+                    cellStyle = 'style="color: #EF4444; font-weight: bold;"';
+                } else if (val === 'NO' || val === 'Compliant' || val === 'Eligible' || val === 'PASS' || val === 'ACTIVE') {
+                    cellStyle = 'style="color: #10B981; font-weight: bold;"';
+                }
+                rowsHtml += `<td style="padding: 10px;" ${cellStyle}>${val}</td>`;
+            });
+            rowsHtml += '</tr>';
+        });
+
+        container.innerHTML = `
+            <div class="mb-6">
+                <span class="badge badge-primary" style="margin-bottom: 0.5rem;">Data Intelligence</span>
+                <h2 class="mt-2">Synthetic Dataset Hub</h2>
+                <p class="text-muted">Generate, preview, and download structured synthetic datasets representing typical construction operations to train your custom assistants.</p>
+            </div>
+
+            <!-- Role Selector Tabs -->
+            <div class="flex gap-2 mb-6" style="display: flex; flex-wrap: wrap; gap: 0.5rem; border-bottom: 2px solid var(--border-color); padding-bottom: 0.5rem; margin-bottom: 1.5rem;">
+                <button class="btn role-tab-btn ${activeRole === 'procurement' ? 'btn-primary' : 'btn-secondary'}" data-role="procurement" style="border-radius: var(--radius-sm);">🛠️ Procurement & Supply Chain</button>
+                <button class="btn role-tab-btn ${activeRole === 'finance' ? 'btn-primary' : 'btn-secondary'}" data-role="finance" style="border-radius: var(--radius-sm);">💼 Finance & Accounts</button>
+                <button class="btn role-tab-btn ${activeRole === 'planning' ? 'btn-primary' : 'btn-secondary'}" data-role="planning" style="border-radius: var(--radius-sm);">🏗️ Planning & Site Operations</button>
+                <button class="btn role-tab-btn ${activeRole === 'hr' ? 'btn-primary' : 'btn-secondary'}" data-role="hr" style="border-radius: var(--radius-sm);">👥 HR & Safety Compliance</button>
+            </div>
+
+            <div class="dashboard-grid">
+                <!-- Left Column: Dataset List -->
+                <div class="card" style="padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem;">
+                    <h3 style="margin-bottom: 0.5rem; color: var(--text-main);">Select a Training Dataset</h3>
+                    <div style="display: flex; flex-direction: column; gap: 0.75rem;" id="dataset-list-container">
+                        ${listHtml}
+                    </div>
+                </div>
+
+                <!-- Right Column: Preview and Export -->
+                <div class="card" style="padding: 1.5rem; display: flex; flex-direction: column; justify-content: space-between;">
+                    <div>
+                        <div class="flex justify-between items-center" style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 0.75rem; margin-bottom: 1rem;">
+                            <div>
+                                <h3 style="margin: 0; color: var(--text-main);">${currentDataset.name} Preview</h3>
+                                <p class="text-xs text-muted" style="margin: 0.15rem 0 0 0;">Showing 10 of 100 generated rows</p>
+                            </div>
+                            <div class="flex gap-2" style="display:flex; gap:0.5rem;">
+                                <button class="btn btn-secondary btn-small" id="btn-copy-csv" style="display:inline-flex; align-items:center; gap:0.25rem;">📋 Copy CSV</button>
+                                <button class="btn btn-primary btn-small" id="btn-download-csv" style="display:inline-flex; align-items:center; gap:0.25rem;">📥 Download CSV</button>
+                            </div>
+                        </div>
+
+                        <!-- Preview Table -->
+                        <div class="table-responsive" style="max-height: 300px; overflow: auto; border: 1px solid var(--border-color); border-radius: 6px; background: var(--bg-main);">
+                            <table class="table" style="margin: 0; font-size: 0.85rem;">
+                                <thead>
+                                    <tr>
+                                        ${headersHtml}
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${rowsHtml}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Instruction Card for uploading to Claude -->
+                    <div style="background: #F8FAFC; border-left: 4px solid var(--primary); padding: 1rem; border-radius: 4px; margin-top: 1.5rem; font-size: 0.85rem;">
+                        <h4 style="margin: 0 0 0.25rem 0; color: var(--primary); font-weight: 600;">💡 Training Exercise Tip for Claude Projects:</h4>
+                        <p style="margin: 0; color: #475569; line-height: 1.5;">Click <b>Download CSV</b> to save this file to your computer. Then, open your Claude Project, upload this CSV under the "Project Knowledge" section, and prompt your assistant to audit the file or analyze the records for potential anomalies!</p>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        bindListeners();
+    }
+
+    function bindListeners() {
+        // Role Tab Buttons
+        document.querySelectorAll('.role-tab-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                activeRole = e.target.getAttribute('data-role');
+                selectedDatasetId = datasetsMap[activeRole][0].id;
+                currentData = DataEngine.generateDataset(selectedDatasetId, 100);
+                drawView();
+            });
+        });
+
+        // Dataset List Select Items
+        document.querySelectorAll('.dataset-select-item').forEach(item => {
+            item.addEventListener('click', (e) => {
+                const target = e.currentTarget;
+                selectedDatasetId = target.getAttribute('data-id');
+                currentData = DataEngine.generateDataset(selectedDatasetId, 100);
+                drawView();
+            });
+        });
+
+        // Copy CSV to Clipboard
+        document.getElementById('btn-copy-csv')?.addEventListener('click', () => {
+            const csvString = DataEngine.convertToCSV(currentData);
+            navigator.clipboard.writeText(csvString);
+            showToast('Dataset CSV copied to clipboard!', 'success');
+        });
+
+        // Download CSV file
+        document.getElementById('btn-download-csv')?.addEventListener('click', () => {
+            const csvString = DataEngine.convertToCSV(currentData);
+            const blob = new Blob([csvString], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const downloadAnchor = document.createElement('a');
+            downloadAnchor.setAttribute("href", url);
+            downloadAnchor.setAttribute("download", `${selectedDatasetId}_synthetic.csv`);
+            document.body.appendChild(downloadAnchor);
+            downloadAnchor.click();
+            downloadAnchor.remove();
+            showToast('CSV file downloaded!', 'success');
+        });
+    }
+
     drawView();
 }

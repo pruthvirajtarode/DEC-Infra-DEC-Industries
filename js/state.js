@@ -18,7 +18,9 @@ const State = {
         badges: [],
         assistantConfig: null,
         productivityFormBefore: null,
-        productivityFormAfter: null
+        productivityFormAfter: null,
+        surveyWebhookUrl: "",
+        localSubmissions: []
     },
 
     init() {

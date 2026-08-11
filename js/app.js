@@ -1444,11 +1444,118 @@ function renderTrainerDashboard(container) {
         return;
     }
 
+    const currentWebhook = State.get('surveyWebhookUrl') || '';
+    const subs = State.get('localSubmissions') || [];
+
+    // Helper to generate the table rows
+    let tableRows = '';
+    if (subs.length === 0) {
+        tableRows = `<tr><td colspan="5" class="text-center text-muted" style="padding: 1.5rem;">No participant survey submissions collected yet.</td></tr>`;
+    } else {
+        subs.forEach(s => {
+            const before = s.before || {};
+            const after = s.after || {};
+            
+            const beforeUsage = before.aiUsagePct ? before.aiUsagePct + '%' : 'N/A';
+            const afterUsage = after.aiUsagePct ? after.aiUsagePct + '%' : 'N/A';
+            const usageShift = before.aiUsagePct && after.aiUsagePct ? `${beforeUsage} ➔ ${afterUsage}` : `${beforeUsage} / ${afterUsage}`;
+            
+            const beforeRating = before.chatgptRating ? before.chatgptRating + '/10' : 'N/A';
+            const afterRating = after.chatgptRating ? after.chatgptRating + '/10' : 'N/A';
+            const ratingShift = before.chatgptRating && after.chatgptRating ? `${beforeRating} ➔ ${afterRating}` : `${beforeRating} / ${afterRating}`;
+            
+            const manualHrsBefore = before.manualTime || 0;
+            const manualHrsAfter = after.manualTime || 0;
+            const timeSaved = before.manualTime && after.manualTime ? (manualHrsBefore - manualHrsAfter) + ' hrs' : 'N/A';
+            
+            const feedbackText = after.feedbackPointers || (before.blocker ? 'Blocker: ' + before.blocker : 'N/A');
+
+            tableRows += `
+                <tr>
+                    <td><b>${s.name}</b></td>
+                    <td>${usageShift}</td>
+                    <td>${ratingShift}</td>
+                    <td style="color:var(--success); font-weight:bold;">${timeSaved}</td>
+                    <td class="text-xs text-muted" style="max-width: 250px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" title="${feedbackText}">${feedbackText}</td>
+                </tr>
+            `;
+        });
+    }
+
     container.innerHTML = `
         <div class="mb-4">
             <span class="badge badge-warning">Trainer Tools</span>
             <h2 class="mt-4">Trainer Dashboard</h2>
-            <p class="text-muted">Presentation controls and teaching notes.</p>
+            <p class="text-muted">Manage participant submissions, setup Google Sheets database collector, and view notes.</p>
+        </div>
+
+        <!-- NEW: Google Sheets Webhook Database Setup -->
+        <div class="card mb-8">
+            <div class="card-header"><h3 class="card-title">🔗 Google Sheets Survey Database Collector</h3></div>
+            <div class="card-body">
+                <p class="text-sm text-muted mb-4">You can log all participants' survey submissions directly into a Google Sheet in real-time. Follow the steps below to set it up:</p>
+                
+                <div class="dashboard-grid mb-4">
+                    <div>
+                        <h4 class="text-sm mb-2">1. Configure Webhook URL</h4>
+                        <div class="form-group flex gap-2" style="display:flex; gap:0.5rem; margin-bottom: 1rem;">
+                            <input type="text" id="webhook-url-input" class="form-control" placeholder="Paste Google Web App URL here..." value="${currentWebhook}" style="margin-bottom:0; flex-grow:1;">
+                            <button class="btn btn-primary" id="btn-save-webhook">Save Link</button>
+                        </div>
+                        <p class="text-xs text-muted">When a URL is saved, all new participant survey submissions will automatically push to this Google Sheet.</p>
+                    </div>
+                    
+                    <div>
+                        <h4 class="text-sm mb-2">2. Google Apps Script Code</h4>
+                        <p class="text-xs text-muted mb-2">Open your Google Sheet, go to <b>Extensions > Apps Script</b>, paste the code below, and **Deploy as a Web App** (execute as: Me, access: Anyone):</p>
+                        <pre style="background:var(--bg-main); padding: 0.75rem; border-radius: 6px; font-size: 0.7rem; max-height: 150px; overflow-y: auto; border: 1px solid #CBD5E1;" id="script-code-block">
+function doPost(e) {
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+  var json = JSON.parse(e.postData.contents);
+  var rowData = [
+    new Date(),
+    json.participantName,
+    json.type,
+    json.data.aiUsagePct + "%",
+    json.data.chatgptRating + "/10",
+    json.data.manualTime + " hrs",
+    json.data.feedbackPointers || json.data.blocker || ""
+  ];
+  sheet.appendRow(rowData);
+  return ContentService.createTextOutput("Success");
+}
+                        </pre>
+                        <button class="btn btn-secondary btn-small w-full mt-2" id="btn-copy-script">Copy Apps Script Code</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- NEW: Collected Submissions Table -->
+        <div class="card mb-8">
+            <div class="card-header flex justify-between items-center" style="display:flex; justify-content:space-between;">
+                <h3 class="card-title">📊 Collected Participant Submissions</h3>
+                <div class="flex gap-2">
+                    <button class="btn btn-secondary btn-small" id="btn-export-subs-json">Download JSON</button>
+                    <button class="btn btn-danger btn-small" id="btn-clear-subs">Reset Database</button>
+                </div>
+            </div>
+            <div class="card-body table-responsive" style="padding: 0; max-height: 350px; overflow-y: auto;">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Participant Name</th>
+                            <th>AI Usage Shift (Before ➔ After)</th>
+                            <th>ChatGPT Rating (Before ➔ After)</th>
+                            <th>Weekly Time Saved</th>
+                            <th>Feedback / Blockers</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${tableRows}
+                    </tbody>
+                </table>
+            </div>
         </div>
 
         <div class="dashboard-grid">
@@ -1471,6 +1578,43 @@ function renderTrainerDashboard(container) {
             </div>
         </div>
     `;
+
+    setTimeout(() => {
+        // Save Webhook URL
+        document.getElementById('btn-save-webhook')?.addEventListener('click', () => {
+            const url = document.getElementById('webhook-url-input').value;
+            State.set('surveyWebhookUrl', url);
+            showToast('Google Sheet Webhook URL saved successfully!', 'success');
+        });
+
+        // Copy Script Code
+        document.getElementById('btn-copy-script')?.addEventListener('click', () => {
+            const pre = document.getElementById('script-code-block');
+            navigator.clipboard.writeText(pre.innerText);
+            showToast('Apps Script code copied to clipboard!', 'success');
+        });
+
+        // Export submissions JSON
+        document.getElementById('btn-export-subs-json')?.addEventListener('click', () => {
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(subs, null, 2));
+            const downloadAnchor = document.createElement('a');
+            downloadAnchor.setAttribute("href", dataStr);
+            downloadAnchor.setAttribute("download", "participant_submissions.json");
+            document.body.appendChild(downloadAnchor);
+            downloadAnchor.click();
+            downloadAnchor.remove();
+            showToast('JSON export downloaded!', 'success');
+        });
+
+        // Clear submissions
+        document.getElementById('btn-clear-subs')?.addEventListener('click', () => {
+            if (confirm('Are you sure you want to clear all collected submissions from local browser memory?')) {
+                State.set('localSubmissions', []);
+                showToast('Local database cleared!', 'info');
+                renderTrainerDashboard(container); // Re-draw
+            }
+        });
+    }, 100);
 }
 
 function renderFlagshipDemo(container) {
@@ -2072,6 +2216,47 @@ function renderProductivityForms(container) {
     let selectedBeforeRating = beforeData ? beforeData.chatgptRating : 5;
     let selectedAfterRating = afterData ? afterData.chatgptRating : 9;
     
+    async function saveAndPostSubmission(name, type, surveyData) {
+        // 1. Save locally in State for Trainer Dashboard View
+        let subs = State.get('localSubmissions') || [];
+        const idx = subs.findIndex(s => s.name.toLowerCase() === name.toLowerCase());
+        
+        if (idx >= 0) {
+            subs[idx][type] = surveyData;
+            subs[idx].lastUpdated = new Date().toLocaleString();
+        } else {
+            const newSub = {
+                name: name,
+                lastUpdated: new Date().toLocaleString()
+            };
+            newSub[type] = surveyData;
+            subs.push(newSub);
+        }
+        State.set('localSubmissions', subs);
+        
+        // 2. Post to Webhook if URL exists
+        const webhookUrl = State.get('surveyWebhookUrl');
+        if (webhookUrl && webhookUrl.trim() !== '') {
+            try {
+                const payload = {
+                    participantName: name,
+                    type: type,
+                    data: surveyData,
+                    timestamp: new Date().toLocaleString()
+                };
+                
+                await fetch(webhookUrl, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+            } catch (err) {
+                console.error('Failed to submit to webhook:', err);
+            }
+        }
+    }
+    
     function renderStars(rating, prefix = '') {
         let starsHtml = '';
         for (let i = 1; i <= 5; i++) {
@@ -2122,6 +2307,11 @@ function renderProductivityForms(container) {
                     <div class="card-header"><h3 class="card-title">Pre-Session Baseline Survey (Before Training)</h3></div>
                     <div class="card-body">
                         <form id="pre-survey-form">
+                            <div class="form-group mb-6" style="margin-bottom: 1.5rem;">
+                                <label class="form-label font-bold" style="font-weight: 600; margin-bottom: 0.75rem;">Your Full Name</label>
+                                <input type="text" id="before-name" class="form-control" placeholder="e.g. John Doe" value="${beforeData ? beforeData.name : ''}" required style="max-width: 400px;">
+                            </div>
+
                             <div class="form-group mb-6" style="margin-bottom: 1.5rem;">
                                 <label class="form-label font-bold" style="font-weight: 600; margin-bottom: 0.75rem;">1. What percentage of your daily tasks currently utilize AI?</label>
                                 <div class="flex gap-2 flex-wrap" style="display:flex; gap:0.5rem; flex-wrap:wrap;">
@@ -2186,6 +2376,11 @@ function renderProductivityForms(container) {
                     <div class="card-header"><h3 class="card-title">Session Feedback & Impact (After Session)</h3></div>
                     <div class="card-body">
                         <form id="post-survey-form">
+                            <div class="form-group mb-6" style="margin-bottom: 1.5rem;">
+                                <label class="form-label font-bold" style="font-weight: 600; margin-bottom: 0.75rem;">Your Full Name</label>
+                                <input type="text" id="after-name" class="form-control" placeholder="e.g. John Doe" value="${afterData ? afterData.name : (beforeData ? beforeData.name : '')}" required style="max-width: 400px;">
+                            </div>
+
                             <div class="form-group mb-6" style="margin-bottom: 1.5rem;">
                                 <label class="form-label font-bold" style="font-weight: 600; margin-bottom: 0.75rem;">1. What percentage of your daily tasks do you expect to perform using AI after this training?</label>
                                 <div class="flex gap-2 flex-wrap" style="display:flex; gap:0.5rem; flex-wrap:wrap;">
@@ -2300,7 +2495,7 @@ function renderProductivityForms(container) {
                         <div>
                             <div class="card-header" style="margin-bottom: 1rem;"><h3 class="card-title">Key Feedback & Takeaways</h3></div>
                             <div class="card-body" style="padding: 0;">
-                                <h4 style="color:var(--accent); margin-bottom: 0.5rem;">Feedback Pointers submitted:</h4>
+                                <h4 style="color:var(--accent); margin-bottom: 0.5rem;">Feedback Pointers submitted by ${b.name || 'Participant'}:</h4>
                                 <div class="p-4 rounded text-sm mb-4" style="background:var(--bg-main); line-height: 1.6; border-left: 4px solid var(--accent); font-style: italic; white-space: pre-wrap;">"${a.feedbackPointers}"</div>
                                 <p class="text-muted text-sm">Your feedback and ROI stats have been logged into the enterprise training system. You can generate a formal PDF summary below.</p>
                             </div>
@@ -2347,7 +2542,7 @@ function renderProductivityForms(container) {
                         <div style="text-align: center; border: 4px double #0A192F; padding: 2.5rem; margin-bottom: 2rem; border-radius: 8px;">
                             <h1 style="color:#0A192F; margin:0 0 0.5rem 0; font-family:sans-serif; font-size:2.25rem;">DEC AI FOUNDATIONS</h1>
                             <h2 style="color:#F59E0B; margin:0 0 1.5rem 0; font-family:sans-serif; font-weight:normal; font-size:1.25rem;">AI Productivity ROI Certificate & Report</h2>
-                            <p style="font-family:sans-serif; color:#475569; font-size:0.95rem;">This certifies that the participant has successfully completed the 6-hour AI Foundations training covering prompt optimization, data intelligence pipeline automation, safe AI usage frameworks, and custom Claude Projects.</p>
+                            <p style="font-family:sans-serif; color:#475569; font-size:0.95rem;">This certifies that ${b.name || 'the participant'} has successfully completed the 6-hour AI Foundations training covering prompt optimization, data intelligence pipeline automation, safe AI usage frameworks, and custom Claude Projects.</p>
                         </div>
                         
                         <h2 style="font-family:sans-serif; color:#0A192F; border-bottom:2px solid #E2E8F0; padding-bottom:0.5rem; margin-top:2rem;">Productivity Impact Parameters</h2>
@@ -2440,13 +2635,15 @@ function renderProductivityForms(container) {
         });
         
         if (type === 'before') {
-            document.getElementById('pre-survey-form')?.addEventListener('submit', (e) => {
+            document.getElementById('pre-survey-form')?.addEventListener('submit', async (e) => {
                 e.preventDefault();
+                const name = document.getElementById('before-name').value;
                 const usage = parseInt(document.querySelector('input[name="before-ai-usage"]:checked').value);
                 const manualTime = parseInt(document.getElementById('before-manual-time').value);
                 const blocker = document.getElementById('before-blocker').value;
                 
                 const data = {
+                    name: name,
                     aiUsagePct: usage,
                     usefulnessRating: selectedBeforeStars,
                     chatgptRating: selectedBeforeRating,
@@ -2455,19 +2652,22 @@ function renderProductivityForms(container) {
                 };
                 
                 State.set('productivityFormBefore', data);
+                await saveAndPostSubmission(name, 'before', data);
                 showToast('Pre-session baseline recorded!', 'success');
                 activeTab = 'after';
                 drawView();
             });
         } else if (type === 'after') {
-            document.getElementById('post-survey-form')?.addEventListener('submit', (e) => {
+            document.getElementById('post-survey-form')?.addEventListener('submit', async (e) => {
                 e.preventDefault();
+                const name = document.getElementById('after-name').value;
                 const usage = parseInt(document.querySelector('input[name="after-ai-usage"]:checked').value);
                 const prodIncrease = document.querySelector('input[name="after-productivity"]:checked').value;
                 const manualTime = parseInt(document.getElementById('after-manual-time').value);
                 const feedback = document.getElementById('after-feedback').value;
                 
                 const data = {
+                    name: name,
                     aiUsagePct: usage,
                     productivityIncrease: prodIncrease,
                     chatgptRating: selectedAfterRating,
@@ -2476,6 +2676,7 @@ function renderProductivityForms(container) {
                 };
                 
                 State.set('productivityFormAfter', data);
+                await saveAndPostSubmission(name, 'after', data);
                 showToast('Post-session feedback recorded!', 'success');
                 activeTab = 'dashboard';
                 drawView();

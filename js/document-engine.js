@@ -75,6 +75,50 @@ Expected duration: 25 working days.
 Validity of Quote: 30 days from submission.
             `
         },
+        'quote_demo_2': {
+            title: 'Subcontractor Quote - Earthworks (Alt)',
+            type: 'Quote',
+            content: `
+SYNTHETIC TRAINING DOCUMENT — NOT ACTUAL DEC DATA
+
+QUOTE REF: ALT-EW-2026-042
+CONTRACTOR: GlobalDiggers Corp
+
+1. SCOPE OF WORK
+Excavation and earth removal for Site B foundation. Estimated volume: 15,000 Cubic Meters.
+
+2. PRICING
+Base Rate: ₹230 per Cu.M
+Total Base Cost: ₹3,450,000
+Transportation (Disposal up to 20km): ₹800,000
+Taxes: 18% GST Extra
+
+3. TIMELINE & CONDITIONS
+Work to commence within 14 days of PO. 
+Expected duration: 35 working days.
+Penalty: ₹10,000 per day of delay beyond expected duration.
+            `
+        },
+        'contract_demo_2': {
+            title: 'Vendor Contract - Cement Supply',
+            type: 'Contract',
+            content: `
+SYNTHETIC TRAINING DOCUMENT — NOT ACTUAL DEC DATA
+
+CONTRACT NO: CTR-2025-9055
+PARTIES: DEC Infra (Buyer) and SolidBuild Cement (Supplier)
+
+1. DELIVERABLES
+Supplier shall deliver 10,000 MT of OPC 53 Grade Cement.
+
+2. PAYMENT TERMS
+Advance payment of 20%, remaining 80% within 30 days of GRN approval.
+Red Flag Clause: Failure to pay within 30 days incurs 2% monthly interest.
+
+3. LIABILITIES
+Liability is uncapped in case of structural failure due to poor cement quality.
+            `
+        },
         'policy_demo': {
             title: 'HR Policy - Site Safety & Leave',
             type: 'Policy',

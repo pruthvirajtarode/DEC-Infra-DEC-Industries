@@ -16,7 +16,9 @@ const State = {
         trainerMode: false,
         completedExercises: [],
         badges: [],
-        assistantConfig: null
+        assistantConfig: null,
+        productivityFormBefore: null,
+        productivityFormAfter: null
     },
 
     init() {

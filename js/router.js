@@ -69,10 +69,12 @@ const Router = {
     },
     
     formatTitle(path) {
+        if(path === 'productivity') return 'AI Productivity Tracker';
         if(path === 'module1') return 'Module 1: Prompting & Docs';
         if(path === 'module2') return 'Module 2: Data Analysis';
         if(path === 'module3') return 'Module 3: Safe AI Usage';
         if(path === 'module4') return 'Module 4: Capstone Assistant';
+        if(path === 'case-studies') return 'Enterprise Case Studies';
         return path.charAt(0).toUpperCase() + path.slice(1).replace('-', ' ');
     }
 };

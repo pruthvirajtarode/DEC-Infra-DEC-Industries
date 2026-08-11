@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 3. Register Routes (Placeholders for now)
     Router.add('/dashboard', renderDashboard);
+    Router.add('/productivity', renderProductivityForms);
     Router.add('/module1', renderModule1);
     Router.add('/module1-docs', renderModule1Docs);
     Router.add('/module1-challenges', renderModule1Challenges);
@@ -18,6 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
     Router.add('/module3', renderModule3);
     Router.add('/module4', renderModule4);
     Router.add('/prompt-library', renderPromptLibrary);
+    Router.add('/case-studies', renderCaseStudies);
     Router.add('/resources', renderResourceCenter);
     Router.add('/trainer', renderTrainerDashboard);
     Router.add('/flagship-demo', renderFlagshipDemo);
@@ -81,6 +83,33 @@ function renderDashboard(container) {
             <div class="badge badge-info" style="font-size: 0.875rem; padding: 0.5rem 1rem;">3 SESSIONS</div>
             <div class="badge badge-info" style="font-size: 0.875rem; padding: 0.5rem 1rem;">6 HOURS</div>
             <div class="badge badge-info" style="font-size: 0.875rem; padding: 0.5rem 1rem;">1 CAPSTONE</div>
+        </div>
+
+        <!-- AI Productivity Survey Tracker Card -->
+        <div class="card mb-8" style="border-left: 5px solid var(--accent); background: var(--bg-main);">
+            <div class="card-body flex justify-between items-center" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+                <div>
+                    <h4 style="margin-bottom: 0.25rem; display: flex; align-items: center; gap: 0.5rem;">
+                        📊 AI Productivity & ROI Tracker
+                    </h4>
+                    <p class="text-sm text-muted" style="margin-bottom: 0;">
+                        ${!State.get('productivityFormBefore') ? 
+                            'Start your AI journey by capturing your baseline productivity stats (takes 30 seconds).' :
+                            (!State.get('productivityFormAfter') ? 
+                                'Baseline registered. Don\'t forget to fill in the post-session feedback at the end!' :
+                                'Congratulations! Your AI productivity gain has been recorded and computed.')
+                        }
+                    </p>
+                </div>
+                <div>
+                    ${!State.get('productivityFormBefore') ? 
+                        `<button class="btn btn-accent btn-small" onclick="window.location.hash=\'/productivity\'">Start Pre-Session Form</button>` :
+                        (!State.get('productivityFormAfter') ? 
+                            `<button class="btn btn-primary btn-small" onclick="window.location.hash=\'/productivity\'">Complete Session Feedback</button>` :
+                            `<button class="btn btn-success btn-small" onclick="window.location.hash=\'/productivity\'">View ROI Dashboard</button>`)
+                    }
+                </div>
+            </div>
         </div>
 
         <div class="card mb-8">
@@ -378,6 +407,42 @@ function renderModule1(container) {
             </div>
         </div>
 
+        </div>
+
+        <!-- NEW: Claude Projects Personal Assistant Lab -->
+        <div class="card mb-8">
+            <div class="card-header"><h3 class="card-title">Build Your Personal AI Assistant (Claude Projects)</h3></div>
+            <div class="card-body">
+                <p class="mb-4 text-muted">Learn how to create a custom AI assistant trained exactly on your department's templates and SOPs.</p>
+                <div class="dashboard-grid">
+                    <div>
+                        <div class="form-group mb-4">
+                            <label class="form-label font-bold text-sm">1. System Instructions (Prompt)</label>
+                            <textarea id="claude-inst" class="form-control" rows="3">You are a DEC Site Manager Assistant. Always format reports using the standard Weekly Progress template. Strictly adhere to the uploaded Site Safety SOP.</textarea>
+                        </div>
+                        <div class="form-group mb-4">
+                            <label class="form-label font-bold text-sm">2. Project Knowledge (Uploads)</label>
+                            <div class="p-3 border rounded" style="background:var(--bg-main); border: 1px dashed var(--accent);">
+                                <label class="flex items-center gap-2 mb-2 text-sm"><input type="checkbox" checked disabled> DEC_Weekly_Report_Template.docx</label>
+                                <label class="flex items-center gap-2 text-sm"><input type="checkbox" id="chk-sop" checked> Site_Safety_SOP_v2.pdf</label>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary w-full" id="btn-claude-test">Test Assistant</button>
+                    </div>
+                    <div>
+                        <div class="form-group mb-2">
+                            <label class="form-label font-bold text-sm">3. Test Sandbox</label>
+                            <textarea id="claude-user-prompt" class="form-control" rows="2">Write a quick report about a minor injury on site today.</textarea>
+                        </div>
+                        <div class="ai-result-box" style="margin-top:0; min-height:150px;">
+                            <span class="ai-badge">Claude Project Output</span>
+                            <div id="claude-out" class="mt-2 text-sm" style="line-height: 1.5;">Click 'Test Assistant' to see output...</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="dashboard-grid">
             <div class="card module-card">
                 <div class="card-header"><h3 class="card-title">Interactive Challenges</h3></div>
@@ -506,6 +571,28 @@ function renderModule1(container) {
             btn.innerText = 'Run Demo';
             btn.disabled = false;
         });
+
+        // Claude Projects Lab
+        document.getElementById('btn-claude-test')?.addEventListener('click', () => {
+            const btn = document.getElementById('btn-claude-test');
+            btn.disabled = true;
+            btn.innerText = "Testing...";
+            
+            setTimeout(() => {
+                const sopIncluded = document.getElementById('chk-sop').checked;
+                let out = "";
+                if (sopIncluded) {
+                    out = `<strong>WEEKLY PROGRESS REPORT</strong><br><br><strong>Incident Section:</strong><br>As per <em>Site_Safety_SOP_v2.pdf</em>, a minor injury was recorded. The worker was treated on-site. Form SS-1 has been filed within the required 12-hour window.`;
+                } else {
+                    out = `<strong>WEEKLY PROGRESS REPORT</strong><br><br><strong>Incident Section:</strong><br>A minor injury happened today. The worker is fine now. Please advise next steps. <br><br><span style="color:var(--danger); font-size:0.75rem;">(Note: Assistant didn't know the SOP rule to file Form SS-1 because it wasn't in its Knowledge Base!)</span>`;
+                }
+                document.getElementById('claude-out').innerHTML = out;
+                btn.disabled = false;
+                btn.innerText = "Test Assistant";
+                showToast('Claude Project simulated!', 'success');
+            }, 600);
+        });
+
     }, 100);
 }
 
@@ -967,154 +1054,382 @@ function renderModule3(container) {
 }
 
 function renderModule4(container) {
-    container.innerHTML = `
-        <div class="mb-4">
-            <span class="badge badge-danger">Session 3</span>
-            <h2 class="mt-4">Module 4: Capstone - Build Your Department Assistant</h2>
-            <p class="text-muted">Combine everything to create a working, structured AI assistant for your department.</p>
-        </div>
-        
-        <div class="dashboard-grid">
-            <div class="card mb-8">
-                <div class="card-header"><h3 class="card-title">Assistant Builder Wizard</h3></div>
-                <div class="card-body flex-col gap-4">
-                    <div class="form-group">
-                        <label class="form-label">Department</label>
-                        <select id="cap-dept" class="form-control">
-                            <option>HR (Recruitment)</option><option>Accounts (Reconciliation)</option><option>Sales (Proposal)</option><option>Procurement (Quotes)</option><option>Planning/Sites (Reporting)</option><option>Admin/IT (SOP)</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Assistant Role</label>
-                        <input type="text" id="cap-role" class="form-control" value="Procurement Executive">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Core Task / Context</label>
-                        <textarea id="cap-context" class="form-control" rows="2">Compare vendor quotes and flag missing items.</textarea>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Allowed Inputs</label>
-                        <input type="text" id="cap-inputs" class="form-control" value="Synthetic Quotes CSV, Tender Specs">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Output Standard</label>
-                        <input type="text" id="cap-outputs" class="form-control" value="Comparison Table, Markdown">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Custom Safety Rules</label>
-                        <input type="text" id="cap-rules" class="form-control" value="Do not automatically select the cheapest vendor.">
-                    </div>
-                    <button class="btn btn-primary w-full" id="btn-build-capstone">Generate System Prompt & Build</button>
-                </div>
-            </div>
-            
-            <div class="card mb-8 hidden" id="capstone-result">
-                <div class="card-header"><h3 class="card-title">Your Custom AI Assistant</h3></div>
-                <div class="card-body">
-                    <h4>1. System Prompt Generated</h4>
-                    <pre id="cap-sys-prompt" style="background: var(--bg-main); padding: 1rem; border-radius: var(--radius-sm); white-space: pre-wrap; font-size: 0.875rem;" class="mb-4"></pre>
-                    
-                    <h4>2. Readiness Scorecard</h4>
-                    <div class="ai-result-box mb-4">
-                        <div id="cap-scorecard"></div>
-                    </div>
-                    
-                    <!-- NEW: Interactive Test Drive -->
-                    <h4 class="mb-2">3. Test Drive Assistant</h4>
-                    <div class="p-3 border rounded mb-4" style="background:#F8FAFC; border:1px solid #cbd5e1; height: 200px; display:flex; flex-direction:column;">
-                        <div id="cap-chat-log" style="flex-grow:1; overflow-y:auto; font-size:0.875rem; margin-bottom:0.5rem;">
-                            <div class="text-muted italic mb-2">Assistant is ready. Ask it a question...</div>
-                        </div>
-                        <div class="flex gap-2">
-                            <input type="text" id="cap-chat-input" class="form-control" placeholder="Test your prompt..." style="margin-bottom:0;">
-                            <button class="btn btn-secondary btn-small" id="btn-cap-send">Send</button>
-                        </div>
-                    </div>
-                    
-                    <!-- NEW: Deployment Strategy Plan -->
-                    <h4 class="mb-2">4. Deployment Strategy Plan</h4>
-                    <div class="p-3 border rounded mb-4" style="background:#fff; border:1px solid #cbd5e1;">
-                        <p class="text-sm text-muted mb-3">To complete the 6-hour workshop, outline how you will roll this AI assistant out to your team.</p>
-                        <div class="form-group mb-2">
-                            <label class="form-label text-sm">Target Audience</label>
-                            <input type="text" class="form-control" placeholder="e.g., 15 Junior Procurement Officers">
-                        </div>
-                        <div class="form-group mb-2">
-                            <label class="form-label text-sm">Success Metric</label>
-                            <input type="text" class="form-control" placeholder="e.g., Time spent comparing quotes reduced by 50%">
-                        </div>
-                        <div class="form-group mb-3">
-                            <label class="form-label text-sm">Human-in-the-Loop Workflow</label>
-                            <input type="text" class="form-control" placeholder="e.g., Manager must review final table before sending to vendor">
-                        </div>
-                        <button class="btn btn-secondary btn-small w-full" onclick="showToast('Deployment plan saved!', 'success')">Save Deployment Plan</button>
-                    </div>
-                    
-                    <button class="btn btn-accent w-full" id="btn-capstone-report">Generate Capstone Report & Completion Certificate (PDF)</button>
-                </div>
-            </div>
-        </div>
-    `;
+    let activeSubTab = 'guide'; // 'guide' | 'builder'
+    
+    // We store form fields in a local state so switching tabs doesn't wipe entries
+    let formData = {
+        department: 'Procurement (Quotes)',
+        role: 'Procurement Executive',
+        context: 'Compare vendor quotes and flag missing items.',
+        inputs: 'Synthetic Quotes CSV, Tender Specs',
+        outputs: 'Comparison Table, Markdown',
+        rules: 'Do not automatically select the cheapest vendor.',
+        manualTime: 4,
+        aiTime: 15
+    };
+    
+    let compiledPrompt = '';
+    let evalRes = null;
 
-    setTimeout(() => {
+    function drawModule4View() {
+        container.innerHTML = `
+            <div class="mb-4">
+                <span class="badge badge-danger" style="margin-bottom:0.5rem;">Session 3 / Final Capstone</span>
+                <h2 class="mt-2">Module 4: Capstone - Build Your Department Assistant</h2>
+                <p class="text-muted">Combine structured prompting, data intelligence, and safe policies into a working Claude Project.</p>
+            </div>
+            
+            <div class="flex gap-2 mb-6" style="display: flex; gap: 0.5rem; border-bottom: 2px solid var(--border-color); padding-bottom: 0.5rem; margin-bottom: 2rem;">
+                <button class="btn sub-tab-btn ${activeSubTab === 'guide' ? 'btn-primary' : 'btn-secondary'}" data-subtab="guide" style="border-radius: var(--radius-sm); display: flex; align-items: center; gap: 0.25rem;">📖 Claude Project Guide</button>
+                <button class="btn sub-tab-btn ${activeSubTab === 'builder' ? 'btn-primary' : 'btn-secondary'}" data-subtab="builder" style="border-radius: var(--radius-sm); display: flex; align-items: center; gap: 0.25rem;">🛠️ Department Assistant Builder</button>
+            </div>
+
+            <div id="module4-tab-content"></div>
+        `;
+        
+        renderSubTabContent(activeSubTab);
+        bindSubTabListeners();
+    }
+    
+    function renderSubTabContent(tab) {
+        const contentDiv = document.getElementById('module4-tab-content');
+        if (!contentDiv) return;
+        
+        if (tab === 'guide') {
+            contentDiv.innerHTML = `
+                <div class="card mb-8">
+                    <div class="card-header"><h3 class="card-title">How to Build a Claude Project (Step-by-Step Help Guide)</h3></div>
+                    <div class="card-body">
+                        <p class="text-muted mb-6">Claude Projects are dedicated workspaces in Claude.ai that allow you to combine files (knowledge base) and custom system instructions. Follow this stepwise guide to build yours:</p>
+                        
+                        <div class="dashboard-grid mb-6">
+                            <div class="p-4 border rounded" style="background:var(--bg-main); border-left: 4px solid var(--info); border-radius: 8px;">
+                                <div class="badge badge-info mb-2" style="font-size:0.7rem; color: #1E40AF; background-color: var(--info-bg);">Step 1</div>
+                                <h4 class="mb-2">Create a Claude Project</h4>
+                                <p class="text-sm text-muted">Go to <a href="https://claude.ai" target="_blank" style="text-decoration: underline; font-weight: 500;">Claude.ai</a>, log in to your Pro/Team account, and click on <b>"Projects"</b> in the left sidebar menu. Click <b>"Create Project"</b> and name it after your role (e.g., <i>DEC Metro Quote Analyst</i>).</p>
+                            </div>
+                            
+                            <div class="p-4 border rounded" style="background:var(--bg-main); border-left: 4px solid var(--warning); border-radius: 8px;">
+                                <div class="badge badge-warning" style="color:#92400E; background-color: var(--warning-bg); font-size:0.7rem; margin-bottom:0.5rem;">Step 2</div>
+                                <h4 class="mb-2">Upload Project Knowledge</h4>
+                                <p class="text-sm text-muted">Upload your department templates, policy manuals, site safety checklists, or reference CSV files. Click <b>"Add Content"</b> inside the project and upload files like <i>Site_Safety_SOP_v2.pdf</i> so Claude can refer to them.</p>
+                            </div>
+                            
+                            <div class="p-4 border rounded" style="background:var(--bg-main); border-left: 4px solid var(--success); border-radius: 8px;">
+                                <div class="badge badge-success" style="color:#065F46; background-color: var(--success-bg); font-size:0.7rem; margin-bottom:0.5rem;">Step 3</div>
+                                <h4 class="mb-2">Set Custom Instructions</h4>
+                                <p class="text-sm text-muted">Click on <b>"Set Custom Instructions"</b> in the project settings panel. Copy and paste the compiled System Prompt from our <b>Assistant Builder</b> tab. This forces Claude to always follow your role instructions and output standards.</p>
+                            </div>
+                        </div>
+
+                        <div class="p-4 border rounded" style="background:#FFFBEB; border: 1px dashed var(--accent); border-radius: 8px;">
+                            <h4 style="color:var(--accent);" class="mb-2">💡 Why build a Claude Project?</h4>
+                            <p class="text-sm text-muted" style="line-height: 1.6; margin-bottom: 0;">
+                                In contrast to public chats, Claude Projects remember all your templates, instructions, and rules in every new chat session. It acts as a dedicated departmental AI colleague that doesn't hallucinate metrics outside your uploaded files.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        } else if (tab === 'builder') {
+            contentDiv.innerHTML = `
+                <div class="dashboard-grid">
+                    <div class="card mb-8" style="align-self: start;">
+                        <div class="card-header"><h3 class="card-title">Assistant Builder Wizard</h3></div>
+                        <div class="card-body flex-col gap-4" style="padding: 0;">
+                            <div class="form-group">
+                                <label class="form-label">Department</label>
+                                <select id="cap-dept" class="form-control">
+                                    <option ${formData.department.includes('HR') ? 'selected' : ''}>HR (Recruitment)</option>
+                                    <option ${formData.department.includes('Accounts') ? 'selected' : ''}>Accounts (Reconciliation)</option>
+                                    <option ${formData.department.includes('Sales') ? 'selected' : ''}>Sales (Proposal)</option>
+                                    <option ${formData.department.includes('Procurement') ? 'selected' : ''}>Procurement (Quotes)</option>
+                                    <option ${formData.department.includes('Planning') ? 'selected' : ''}>Planning/Sites (Reporting)</option>
+                                    <option ${formData.department.includes('Admin') ? 'selected' : ''}>Admin/IT (SOP)</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Assistant Role</label>
+                                <input type="text" id="cap-role" class="form-control" value="${formData.role}">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Core Task / Context</label>
+                                <textarea id="cap-context" class="form-control" rows="2">${formData.context}</textarea>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Allowed Inputs</label>
+                                <input type="text" id="cap-inputs" class="form-control" value="${formData.inputs}">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Output Standard</label>
+                                <input type="text" id="cap-outputs" class="form-control" value="${formData.outputs}">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Custom Safety Rules</label>
+                                <input type="text" id="cap-rules" class="form-control" value="${formData.rules}">
+                            </div>
+                            
+                            <hr style="border: 0; border-top: 1px solid var(--border-color); margin: 1rem 0;">
+                            
+                            <h4 class="mb-4 text-sm" style="color: var(--info);">ROI & Time Saved Parameter Analysis</h4>
+                            <div class="form-group">
+                                <label class="form-label">Manual execution time before AI (Hours/Task)</label>
+                                <input type="number" id="cap-manual-time" class="form-control" value="${formData.manualTime}" min="1" max="100">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">AI-Assisted execution time (Minutes/Task)</label>
+                                <input type="number" id="cap-ai-time" class="form-control" value="${formData.aiTime}" min="1" max="120">
+                            </div>
+                            
+                            <button class="btn btn-primary w-full" id="btn-build-capstone">Generate System Prompt & Build</button>
+                        </div>
+                    </div>
+                    
+                    <div class="card mb-8 ${!compiledPrompt ? 'hidden' : ''}" id="capstone-result">
+                        <div class="card-header"><h3 class="card-title">Your Custom AI Assistant</h3></div>
+                        <div class="card-body" style="padding: 0;">
+                            <h4 class="mb-2">1. System Prompt Compiled</h4>
+                            <pre id="cap-sys-prompt" style="background: var(--bg-main); padding: 1rem; border-radius: var(--radius-sm); white-space: pre-wrap; font-size: 0.85rem;" class="mb-4">${compiledPrompt}</pre>
+                            
+                            <h4 class="mb-2">2. Rubric Evaluation scorecard</h4>
+                            <div class="ai-result-box mb-4" style="margin-top: 0.5rem; border-left: 4px solid var(--success);">
+                                <div id="cap-scorecard"></div>
+                            </div>
+
+                            <h4 class="mb-2">3. Time Saved & ROI Metrics</h4>
+                            <div class="ai-result-box mb-4" style="margin-top: 0.5rem; border-left: 4px solid var(--info); background: var(--info-bg); color: #1E40AF;">
+                                <div id="cap-roi-metrics"></div>
+                            </div>
+                            
+                            <h4 class="mb-2">4. Test Drive Assistant</h4>
+                            <div class="p-3 border rounded mb-4" style="background:#F8FAFC; border:1px solid #cbd5e1; height: 180px; display:flex; flex-direction:column; border-radius: 6px;">
+                                <div id="cap-chat-log" style="flex-grow:1; overflow-y:auto; font-size:0.875rem; margin-bottom:0.5rem; padding-right:0.25rem;">
+                                    <div class="text-muted italic mb-2">Assistant is ready. Ask it a question...</div>
+                                </div>
+                                <div class="flex gap-2" style="display:flex; gap:0.5rem;">
+                                    <input type="text" id="cap-chat-input" class="form-control" placeholder="Test your prompt..." style="margin-bottom:0; flex-grow:1;">
+                                    <button class="btn btn-secondary btn-small" id="btn-cap-send">Send</button>
+                                </div>
+                            </div>
+                            
+                            <h4 class="mb-2">5. Deployment Strategy Plan</h4>
+                            <div class="p-3 border rounded mb-4" style="background:#fff; border:1px solid #cbd5e1; border-radius: 6px;">
+                                <p class="text-xs text-muted mb-3">Outline how you will roll this AI assistant out to your department team.</p>
+                                <div class="form-group mb-2">
+                                    <label class="form-label text-xs">Target Audience</label>
+                                    <input type="text" id="deploy-audience" class="form-control" placeholder="e.g., 10 Junior Site Engineers" style="padding: 0.5rem; font-size: 0.8rem;">
+                                </div>
+                                <div class="form-group mb-2">
+                                    <label class="form-label text-xs">Success Metric</label>
+                                    <input type="text" id="deploy-metric" class="form-control" placeholder="e.g., Reporting delay reduced from 2 days to 1 hour" style="padding: 0.5rem; font-size: 0.8rem;">
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label class="form-label text-xs">Human-in-the-Loop Safeguard</label>
+                                    <input type="text" id="deploy-loop" class="form-control" placeholder="e.g., Senior Manager must verify final CSV output" style="padding: 0.5rem; font-size: 0.8rem;">
+                                </div>
+                                <button class="btn btn-secondary btn-small w-full" id="btn-save-deploy">Save Deployment Plan</button>
+                            </div>
+                            
+                            <button class="btn btn-accent w-full" id="btn-capstone-report">Generate Capstone Report & Completion Certificate (PDF)</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            bindBuilderListeners();
+        }
+    }
+    
+    function bindSubTabListeners() {
+        document.querySelectorAll('.sub-tab-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                activeSubTab = e.target.getAttribute('data-subtab');
+                drawModule4View();
+            });
+        });
+    }
+    
+    function bindBuilderListeners() {
+        const checkValues = () => {
+            formData.department = document.getElementById('cap-dept').value;
+            formData.role = document.getElementById('cap-role').value;
+            formData.context = document.getElementById('cap-context').value;
+            formData.inputs = document.getElementById('cap-inputs').value;
+            formData.outputs = document.getElementById('cap-outputs').value;
+            formData.rules = document.getElementById('cap-rules').value;
+            formData.manualTime = parseInt(document.getElementById('cap-manual-time').value) || 4;
+            formData.aiTime = parseInt(document.getElementById('cap-ai-time').value) || 15;
+        };
+        
         document.getElementById('btn-build-capstone')?.addEventListener('click', () => {
-            const config = {
-                department: document.getElementById('cap-dept').value,
-                role: document.getElementById('cap-role').value,
-                context: document.getElementById('cap-context').value,
-                inputs: document.getElementById('cap-inputs').value,
-                outputs: document.getElementById('cap-outputs').value,
-                customRules: document.getElementById('cap-rules').value
-            };
+            checkValues();
             
-            const prompt = CapstoneEngine.generateSystemPrompt(config);
-            document.getElementById('cap-sys-prompt').innerText = prompt;
+            compiledPrompt = CapstoneEngine.generateSystemPrompt(formData);
+            evalRes = CapstoneEngine.evaluateAssistant(formData);
             
-            const evalRes = CapstoneEngine.evaluateAssistant(prompt);
+            // Re-render subtab content to show results panel
+            renderSubTabContent('builder');
+            
+            // Fill outputs
+            document.getElementById('cap-sys-prompt').innerText = compiledPrompt;
+            
+            // Fill Scorecard
             document.getElementById('cap-scorecard').innerHTML = `
-                <div class="flex justify-between mb-2"><span>Assistant Design & Safety:</span> <strong>${evalRes.score}/${evalRes.total}</strong></div>
-                <div class="flex justify-between"><span>Readiness Label:</span> <span class="badge badge-success">${evalRes.label}</span></div>
+                <div class="flex justify-between mb-2" style="display:flex; justify-content:space-between;">
+                    <span><b>Total Evaluation Score:</b></span>
+                    <strong style="color:var(--success); font-size:1.1rem;">${evalRes.score}/${evalRes.total} Marks</strong>
+                </div>
+                <div class="flex justify-between mb-4" style="display:flex; justify-content:space-between;">
+                    <span>Readiness Category:</span>
+                    <span class="badge badge-success">${evalRes.label}</span>
+                </div>
+                
+                <hr style="border:0; border-top:1px solid #E2E8F0; margin:0.75rem 0;">
+                <div style="font-size: 0.85rem; color: var(--text-main);">
+                    <div style="margin-bottom: 0.25rem;">🎭 <b>Role Definition:</b> ${evalRes.breakdown.role}/5 Marks</div>
+                    <div style="margin-bottom: 0.25rem;">🎯 <b>Task Context:</b> ${evalRes.breakdown.context}/5 Marks</div>
+                    <div style="margin-bottom: 0.25rem;">📄 <b>Inputs & Scope:</b> ${evalRes.breakdown.inputs}/5 Marks</div>
+                    <div style="margin-bottom: 0.25rem;">📊 <b>Output Formatting:</b> ${evalRes.breakdown.outputs}/5 Marks</div>
+                    <div>🛡️ <b>Safety Guardrails:</b> ${evalRes.breakdown.safety}/5 Marks</div>
+                </div>
+            `;
+            
+            // Fill ROI Metrics
+            const hoursPerRun = formData.manualTime;
+            const minutesPerRun = formData.aiTime;
+            const hoursPerRunAI = minutesPerRun / 60;
+            const savedPerRun = Math.max(0, hoursPerRun - hoursPerRunAI).toFixed(2);
+            const savedPct = Math.round((savedPerRun / hoursPerRun) * 100);
+            const annualSaved = Math.round(savedPerRun * 52);
+            
+            document.getElementById('cap-roi-metrics').innerHTML = `
+                <div style="margin-bottom: 0.25rem;"><b>Manual execution before:</b> ${hoursPerRun} hours per task</div>
+                <div style="margin-bottom: 0.25rem;"><b>AI-Assisted execution now:</b> ${minutesPerRun} minutes per task</div>
+                <div style="margin-bottom: 0.25rem; font-weight: bold;"><b>Net Time Saved per run:</b> ${savedPerRun} hours (${savedPct}% reduction)</div>
+                <div style="font-weight: bold;"><b>Annualized Efficiency Gain:</b> ${annualSaved} hours / participant</div>
             `;
             
             document.getElementById('capstone-result').classList.remove('hidden');
-            showToast('Assistant configuration compiled!', 'success');
+            showToast('Custom Assistant compiled successfully!', 'success');
             State.markExerciseComplete('m4', 'module4');
         });
-
+        
+        document.getElementById('btn-save-deploy')?.addEventListener('click', () => {
+            showToast('Deployment plan saved!', 'success');
+        });
+        
         document.getElementById('btn-cap-send')?.addEventListener('click', () => {
             const inputEl = document.getElementById('cap-chat-input');
             const logEl = document.getElementById('cap-chat-log');
             const msg = inputEl.value;
             if(!msg) return;
             
-            // Add user msg
-            logEl.innerHTML += `<div class="mb-2 text-right"><span style="background:var(--accent); color:white; padding:4px 8px; border-radius:4px; display:inline-block;">${msg}</span></div>`;
+            logEl.innerHTML += `<div class="mb-2 text-right"><span style="background:var(--accent); color:white; padding:6px 12px; border-radius:6px; display:inline-block; font-size:0.85rem;">${msg}</span></div>`;
             inputEl.value = '';
             
-            // Mock AI response
             setTimeout(() => {
-                const response = "As the Custom Assistant, I have processed your request based on my configured constraints. Here is the structured output...";
-                logEl.innerHTML += `<div class="mb-2"><span style="background:#e2e8f0; padding:4px 8px; border-radius:4px; display:inline-block;">🤖 ${response}</span></div>`;
+                const response = `As your custom ${formData.role} Assistant, I have reviewed your input data using my configured knowledge templates. No anomalies detected under my custom rules.`;
+                logEl.innerHTML += `<div class="mb-2"><span style="background:#e2e8f0; padding:6px 12px; border-radius:6px; display:inline-block; font-size:0.85rem;">🤖 ${response}</span></div>`;
                 logEl.scrollTop = logEl.scrollHeight;
-            }, 500);
+            }, 600);
         });
-
+        
         document.getElementById('btn-capstone-report')?.addEventListener('click', () => {
-            const promptStr = document.getElementById('cap-sys-prompt')?.innerText || 'Not generated yet';
+            const audience = document.getElementById('deploy-audience')?.value || 'Not specified';
+            const metric = document.getElementById('deploy-metric')?.value || 'Not specified';
+            const loop = document.getElementById('deploy-loop')?.value || 'Not specified';
+            
+            const hoursPerRun = formData.manualTime;
+            const minutesPerRun = formData.aiTime;
+            const hoursPerRunAI = minutesPerRun / 60;
+            const savedPerRun = Math.max(0, hoursPerRun - hoursPerRunAI).toFixed(2);
+            const savedPct = Math.round((savedPerRun / hoursPerRun) * 100);
+            const annualSaved = Math.round(savedPerRun * 52);
+            
             const html = `
-                <div style="text-align: center; border: 4px double #cbd5e1; padding: 2rem; margin-bottom: 2rem;">
-                    <h2>DEC AI Foundations - Completion Certificate</h2>
-                    <p>This certifies the successful completion of the 6-hour AI foundations workshop and the deployment of a custom Capstone Assistant.</p>
+                <div style="text-align: center; border: 4px double #0A192F; padding: 2.5rem; margin-bottom: 2rem; border-radius: 8px;">
+                    <h1 style="color:#0A192F; margin:0 0 0.5rem 0; font-family:sans-serif; font-size:2.25rem;">DEC AI FOUNDATIONS</h1>
+                    <h2 style="color:#F59E0B; margin:0 0 1.5rem 0; font-family:sans-serif; font-weight:normal; font-size:1.25rem;">Capstone Completion Certificate</h2>
+                    <p style="font-family:sans-serif; color:#475569; font-size:0.95rem;">This certifies that the participant has successfully designed, evaluated, and test-driven a custom departmental assistant using the 25-marks rubric guidelines.</p>
                 </div>
-                <h2>Custom AI Assistant Configuration</h2>
-                <div class="alert alert-green">
-                    <h3>System Prompt</h3>
-                    <pre style="white-space: pre-wrap; font-family: sans-serif;">${promptStr}</pre>
+                
+                <h2 style="font-family:sans-serif; color:#0A192F; border-bottom:2px solid #E2E8F0; padding-bottom:0.5rem; margin-top:2rem;">Assistant Specifications</h2>
+                <ul style="font-family:sans-serif; font-size:0.95rem; line-height:1.8;">
+                    <li><b>Department:</b> ${formData.department}</li>
+                    <li><b>Assistant Role:</b> ${formData.role}</li>
+                    <li><b>Core Task/Context:</b> ${formData.context}</li>
+                    <li><b>Allowed Inputs:</b> ${formData.inputs}</li>
+                    <li><b>Output Standards:</b> ${formData.outputs}</li>
+                </ul>
+                
+                <h2 style="font-family:sans-serif; color:#0A192F; border-bottom:2px solid #E2E8F0; padding-bottom:0.5rem; margin-top:2rem;">Rubric Scoring & Assessment Breakdown</h2>
+                <table style="width: 100%; border-collapse: collapse; margin-top: 1rem; font-family:sans-serif; font-size:0.95rem;">
+                    <thead>
+                        <tr style="background:#0A192F; color:white;">
+                            <th style="padding:10px; text-align:left; border:1px solid #CBD5E1;">Evaluation Parameter</th>
+                            <th style="padding:10px; text-align:center; border:1px solid #CBD5E1;">Grade</th>
+                            <th style="padding:10px; border:1px solid #CBD5E1; text-align:left;">Criteria Standard</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="padding:10px; border:1px solid #CBD5E1; font-weight:bold;">Role & Persona Definition</td>
+                            <td style="padding:10px; text-align:center; border:1px solid #CBD5E1; font-weight:bold;">${evalRes.breakdown.role} / 5 Marks</td>
+                            <td style="padding:10px; border:1px solid #CBD5E1;">AI assistant role must be explicitly declared.</td>
+                        </tr>
+                        <tr>
+                            <td style="padding:10px; border:1px solid #CBD5E1; font-weight:bold;">Task Context & Specificity</td>
+                            <td style="padding:10px; text-align:center; border:1px solid #CBD5E1; font-weight:bold;">${evalRes.breakdown.context} / 5 Marks</td>
+                            <td style="padding:10px; border:1px solid #CBD5E1;">Task scope and background information clearly mapped.</td>
+                        </tr>
+                        <tr>
+                            <td style="padding:10px; border:1px solid #CBD5E1; font-weight:bold;">Inputs & Scope Boundaries</td>
+                            <td style="padding:10px; text-align:center; border:1px solid #CBD5E1; font-weight:bold;">${evalRes.breakdown.inputs} / 5 Marks</td>
+                            <td style="padding:10px; border:1px solid #CBD5E1;">Permitted datasets, SOP files, and source materials.</td>
+                        </tr>
+                        <tr>
+                            <td style="padding:10px; border:1px solid #CBD5E1; font-weight:bold;">Output Formatting & Standards</td>
+                            <td style="padding:10px; text-align:center; border:1px solid #CBD5E1; font-weight:bold;">${evalRes.breakdown.outputs} / 5 Marks</td>
+                            <td style="padding:10px; border:1px solid #CBD5E1;">Target formatting, layout, structure, and style rules.</td>
+                        </tr>
+                        <tr>
+                            <td style="padding:10px; border:1px solid #CBD5E1; font-weight:bold;">Safety & Human Verification</td>
+                            <td style="padding:10px; text-align:center; border:1px solid #CBD5E1; font-weight:bold;">${evalRes.breakdown.safety} / 5 Marks</td>
+                            <td style="padding:10px; border:1px solid #CBD5E1;">Precautionary instructions to prevent hallucination.</td>
+                        </tr>
+                        <tr style="background:#F8FAFC; font-weight:bold;">
+                            <td style="padding:10px; border:1px solid #CBD5E1;">Total Score</td>
+                            <td style="padding:10px; text-align:center; border:1px solid #CBD5E1; font-size:1.1rem; color:#10B981;">${evalRes.score} / 25 Marks</td>
+                            <td style="padding:10px; border:1px solid #CBD5E1;">Status: ${evalRes.label}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <h2 style="font-family:sans-serif; color:#0A192F; border-bottom:2px solid #E2E8F0; padding-bottom:0.5rem; margin-top:2rem;">Calculated Time Saved & ROI</h2>
+                <ul style="font-family:sans-serif; font-size:0.95rem; line-height:1.8;">
+                    <li><b>Before Seminar Manual time:</b> ${hoursPerRun} Hours</li>
+                    <li><b>AI-Assisted execution time:</b> ${minutesPerRun} Minutes</li>
+                    <li><b>Net time saved per task run:</b> ${savedPerRun} Hours (${savedPct}% reduction)</li>
+                    <li><b>Annual efficiency gains:</b> ${annualSaved} Hours saved per user</li>
+                </ul>
+
+                <h2 style="font-family:sans-serif; color:#0A192F; border-bottom:2px solid #E2E8F0; padding-bottom:0.5rem; margin-top:2rem;">Deployment Strategy Plan</h2>
+                <ul style="font-family:sans-serif; font-size:0.95rem; line-height:1.8;">
+                    <li><b>Target Audience:</b> ${audience}</li>
+                    <li><b>Success Metric:</b> ${metric}</li>
+                    <li><b>Human Safeguard:</b> ${loop}</li>
+                </ul>
+
+                <h2 style="font-family:sans-serif; color:#0A192F; border-bottom:2px solid #E2E8F0; padding-bottom:0.5rem; margin-top:2rem;">Compiled System instructions</h2>
+                <div style="background:#F8FAFC; border:1px solid #CBD5E1; padding:1rem; border-radius:4px; font-family:monospace; font-size:0.85rem; white-space:pre-wrap;">
+${compiledPrompt}
                 </div>
             `;
             window.downloadPDF('DEC AI Foundations - Capstone Report', html);
         });
-    }, 100);
+    }
+    
+    // Initial draw
+    drawModule4View();
 }
 
 function renderTrainerDashboard(container) {
@@ -1344,13 +1659,48 @@ function renderModule1Docs(container) {
             <button class="btn btn-secondary btn-small mb-4" onclick="window.location.hash='/module1'">← Back to Module 1</button>
             <span class="badge badge-warning">Session 1 Workspace</span>
             <h2 class="mt-4">Document Intelligence Copilot</h2>
-            <p class="text-muted">Analyze DEC Tenders, Contracts, and Quotes in a split-pane Copilot interface.</p>
+            <p class="text-muted">Analyze DEC Tenders, Contracts, and Quotes, and build side-by-side comparisons.</p>
         </div>
         
+        <!-- NEW: Side-by-Side Comparison -->
+        <div class="card mb-8">
+            <div class="card-header"><h3 class="card-title">Side-by-Side Vendor Comparison (Red Flags)</h3></div>
+            <div class="card-body">
+                <p class="mb-4 text-muted">Select two vendor quotes or contracts to automatically extract dates, penalties, and obligations, and highlight discrepancies.</p>
+                <div class="flex gap-4 mb-4">
+                    <div class="form-group w-full">
+                        <label class="form-label text-sm">Vendor A</label>
+                        <select id="compare-doc-a" class="form-control">${optionsHtml}</select>
+                    </div>
+                    <div class="form-group w-full">
+                        <label class="form-label text-sm">Vendor B</label>
+                        <select id="compare-doc-b" class="form-control">${optionsHtml}</select>
+                    </div>
+                </div>
+                <button class="btn btn-primary w-full mb-4" id="btn-run-comparison">Extract & Compare (Detect Red Flags)</button>
+                
+                <div id="comparison-result" class="hidden">
+                    <table class="table" style="font-size: 0.875rem; width: 100%;">
+                        <thead>
+                            <tr>
+                                <th style="width:20%;">Criteria</th>
+                                <th style="width:30%;">Vendor A</th>
+                                <th style="width:30%;">Vendor B</th>
+                                <th style="width:20%;">AI Analysis</th>
+                            </tr>
+                        </thead>
+                        <tbody id="comparison-body">
+                            <!-- Populated by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
         <div class="dashboard-grid" style="grid-template-columns: 1fr 1fr; gap: 2rem;">
             <!-- Left Pane: Document Viewer -->
             <div class="card mb-8" style="display: flex; flex-direction: column;">
-                <div class="card-header"><h3 class="card-title">Document Source</h3></div>
+                <div class="card-header"><h3 class="card-title">Single Document Source</h3></div>
                 <div class="card-body flex-col h-full" style="flex-grow: 1; display: flex;">
                     <select id="doc-select" class="form-control mb-4">
                         ${optionsHtml}
@@ -1410,6 +1760,73 @@ function renderModule1Docs(container) {
             btn.disabled = false;
             btn.innerText = "Analyze Document";
         });
+
+        // NEW: Comparison Logic
+        document.getElementById('btn-run-comparison')?.addEventListener('click', () => {
+            const btn = document.getElementById('btn-run-comparison');
+            btn.disabled = true;
+            btn.innerText = "Extracting & Comparing...";
+            
+            setTimeout(() => {
+                const docA = DocumentEngine.getDocument(document.getElementById('compare-doc-a').value);
+                const docB = DocumentEngine.getDocument(document.getElementById('compare-doc-b').value);
+                
+                let html = "";
+                
+                // Demo logic specifically matching the quote_demo vs quote_demo_2 for a great demo, fallback for others
+                if (docA.id.includes('quote') && docB.id.includes('quote')) {
+                    html = `
+                        <tr>
+                            <td><strong>Pricing (Base Rate)</strong></td>
+                            <td>₹250 per Cu.M</td>
+                            <td>₹230 per Cu.M</td>
+                            <td><span style="color:var(--success); font-weight:bold;">Vendor B is cheaper by ₹20/Cu.M</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Timeline</strong></td>
+                            <td>25 working days</td>
+                            <td>35 working days</td>
+                            <td><span style="background:var(--danger-bg); color:var(--danger); padding:2px 4px; border-radius:4px; font-weight:bold; font-size:0.75rem;">RED FLAG</span> Vendor B takes 10 days longer.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Penalties & Obligations</strong></td>
+                            <td>None explicitly stated</td>
+                            <td>₹10,000 / day delay penalty</td>
+                            <td><span style="background:var(--warning-bg); color:var(--warning); padding:2px 4px; border-radius:4px; font-weight:bold; font-size:0.75rem;">RISK</span> Vendor B has strict penalty clauses.</td>
+                        </tr>
+                    `;
+                } else if (docA.id.includes('contract') || docB.id.includes('contract')) {
+                    html = `
+                        <tr>
+                            <td><strong>Payment Terms</strong></td>
+                            <td>45 days of invoice submission</td>
+                            <td>20% Advance, 80% within 30 days</td>
+                            <td><span style="background:var(--warning-bg); color:var(--warning); padding:2px 4px; border-radius:4px; font-weight:bold; font-size:0.75rem;">RISK</span> Vendor B requires heavy advance.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Liabilities</strong></td>
+                            <td>Capped at contract value</td>
+                            <td>Uncapped for structural failure</td>
+                            <td><span style="background:var(--danger-bg); color:var(--danger); padding:2px 4px; border-radius:4px; font-weight:bold; font-size:0.75rem;">RED FLAG</span> Vendor B has uncapped liability risk.</td>
+                        </tr>
+                    `;
+                } else {
+                    html = `
+                        <tr>
+                            <td colspan="4" class="text-center text-muted">Comparison generated for specific fields. Select Quote vs Quote(Alt) for the best demonstration.</td>
+                        </tr>
+                    `;
+                }
+                
+                document.getElementById('comparison-body').innerHTML = html;
+                document.getElementById('comparison-result').classList.remove('hidden');
+                
+                btn.disabled = false;
+                btn.innerText = "Extract & Compare (Detect Red Flags)";
+                showToast("Side-by-side comparison generated successfully.", "success");
+            }, 1000);
+        });
+
     }, 100);
 }
 
@@ -1483,4 +1900,589 @@ function renderModule1Challenges(container) {
             </div>
         </div>
     `;
+}
+
+function renderCaseStudies(container) {
+    container.innerHTML = `
+        <div class="mb-4">
+            <span class="badge badge-primary">Enterprise Showcase</span>
+            <h2 class="mt-4">AI Case Studies</h2>
+            <p class="text-muted">Real-world AI implementations for DEC Infra and DEC Industries.</p>
+        </div>
+        
+        <div class="dashboard-grid">
+            <!-- DEC Infra Case Study -->
+            <div class="card mb-8">
+                <div class="card-header"><h3 class="card-title">DEC Infra: Predictive Delay Simulator</h3></div>
+                <div class="card-body">
+                    <div class="mb-4">
+                        <span class="badge badge-info mb-2">Metro Line Project</span>
+                        <p class="text-sm text-muted"><strong>Problem:</strong> Unseasonal rain and resource clashes are predicting a 2-week delay on the critical path.</p>
+                        <p class="text-sm text-muted"><strong>AI Solution:</strong> Analyze synthetic logs to dynamically recommend resource reallocation.</p>
+                    </div>
+                    
+                    <div class="p-3 border rounded mb-4" style="background:#F8FAFC; border:1px solid #cbd5e1;">
+                        <h4 class="mb-2 text-sm">Synthetic Project Inputs:</h4>
+                        <ul class="text-xs text-muted mb-0" style="padding-left:1.2rem;">
+                            <li>Weather forecast: Heavy rain (Days 12-15)</li>
+                            <li>Excavator availability: 2 units (Site A), 0 units (Site B)</li>
+                            <li>Critical path: Foundation laying (Site B)</li>
+                        </ul>
+                    </div>
+
+                    <button class="btn btn-primary w-full mb-4" id="btn-run-infra-cs">Run AI Resource Simulator</button>
+                    
+                    <div id="infra-cs-results" class="hidden">
+                        <div class="ai-result-box mb-4" style="border-color: var(--warning);">
+                            <span class="ai-badge">AI Recommendation</span>
+                            <div class="mt-2 text-sm">
+                                <strong>Delay Mitigated!</strong><br>
+                                Shifted 1 Excavator from Site A to Site B. Accelerated foundation schedule by 4 days prior to rain event.
+                            </div>
+                        </div>
+                        <div style="height: 250px; border: 1px dashed #cbd5e1; border-radius: 8px; padding: 1rem;">
+                            <canvas id="infra-chart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DEC Industries Case Study -->
+            <div class="card mb-8">
+                <div class="card-header"><h3 class="card-title">DEC Industries: Predictive Maintenance</h3></div>
+                <div class="card-body">
+                    <div class="mb-4">
+                        <span class="badge badge-success mb-2">Steel Plant Operations</span>
+                        <p class="text-sm text-muted"><strong>Problem:</strong> Sudden equipment failures lowering OEE (Overall Equipment Effectiveness).</p>
+                        <p class="text-sm text-muted"><strong>AI Solution:</strong> Real-time anomaly detection on machinery vibration sensors.</p>
+                    </div>
+
+                    <div class="p-3 border rounded mb-4" style="background:#0F172A; color: #38BDF8; font-family: monospace; height: 120px; display:flex; flex-direction:column; justify-content:flex-end; overflow:hidden;">
+                        <div id="sensor-feed" style="font-size: 0.75rem; line-height:1.2;">
+                            > Connecting to Mill Motor A...<br>
+                            > Vibration: 2.1mm/s (Normal)<br>
+                            > Vibration: 2.2mm/s (Normal)<br>
+                        </div>
+                    </div>
+                    
+                    <button class="btn btn-primary w-full mb-4" id="btn-run-ind-cs">Start AI Sensor Monitoring</button>
+
+                    <div id="ind-cs-results" class="hidden">
+                        <div class="ai-result-box mb-4" style="border-color: var(--danger); background: rgba(239, 68, 68, 0.05);">
+                            <span class="ai-badge" style="background:var(--danger);">Anomaly Detected</span>
+                            <div class="mt-2 text-sm">
+                                <strong>High Risk of Bearing Failure</strong><br>
+                                Vibration spiked to 8.7mm/s. AI has automatically generated a maintenance ticket and scheduled downtime during shift change.
+                            </div>
+                        </div>
+                        <div style="height: 250px; border: 1px dashed #cbd5e1; border-radius: 8px; padding: 1rem;">
+                            <canvas id="ind-chart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+
+    setTimeout(() => {
+        let infraChartInst = null;
+        document.getElementById('btn-run-infra-cs')?.addEventListener('click', () => {
+            const btn = document.getElementById('btn-run-infra-cs');
+            btn.disabled = true;
+            btn.innerText = "Simulating Scenarios...";
+            
+            setTimeout(() => {
+                document.getElementById('infra-cs-results').classList.remove('hidden');
+                btn.innerText = "Scenario Simulated";
+                
+                if (infraChartInst) infraChartInst.destroy();
+                const ctx = document.getElementById('infra-chart').getContext('2d');
+                infraChartInst = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Original Plan', 'AI Reallocated Plan'],
+                        datasets: [{
+                            label: 'Estimated Delay (Days)',
+                            data: [14, 2],
+                            backgroundColor: ['#ef4444', '#10b981']
+                        }]
+                    },
+                    options: { maintainAspectRatio: false, scales: { y: { beginAtZero: true } } }
+                });
+            }, 800);
+        });
+
+        let indChartInst = null;
+        document.getElementById('btn-run-ind-cs')?.addEventListener('click', () => {
+            const btn = document.getElementById('btn-run-ind-cs');
+            btn.disabled = true;
+            btn.innerText = "Monitoring...";
+            
+            let feed = document.getElementById('sensor-feed');
+            let count = 0;
+            const interval = setInterval(() => {
+                count++;
+                let v = (2.0 + Math.random() * 0.5).toFixed(2);
+                feed.innerHTML += `> Vibration: ${v}mm/s (Normal)<br>`;
+                feed.scrollTop = feed.scrollHeight;
+                
+                if (count > 3) {
+                    clearInterval(interval);
+                    feed.innerHTML += `<span style="color:#ef4444;">> WARNING: Vibration spiked to 8.7mm/s!</span><br>`;
+                    feed.scrollTop = feed.scrollHeight;
+                    
+                    setTimeout(() => {
+                        document.getElementById('ind-cs-results').classList.remove('hidden');
+                        btn.innerText = "Analysis Complete";
+                        
+                        if (indChartInst) indChartInst.destroy();
+                        const ctx = document.getElementById('ind-chart').getContext('2d');
+                        indChartInst = new Chart(ctx, {
+                            type: 'line',
+                            data: {
+                                labels: ['10:00', '10:05', '10:10', '10:15', '10:20', '10:25 (Anomaly)'],
+                                datasets: [{
+                                    label: 'Vibration (mm/s)',
+                                    data: [2.1, 2.3, 2.0, 2.2, 2.4, 8.7],
+                                    borderColor: '#f59e0b',
+                                    tension: 0.1
+                                }]
+                            },
+                            options: { maintainAspectRatio: false, scales: { y: { beginAtZero: true } } }
+                        });
+                    }, 500);
+                }
+            }, 300);
+        });
+
+    }, 100);
+}
+
+function renderProductivityForms(container) {
+    const beforeData = State.get('productivityFormBefore');
+    const afterData = State.get('productivityFormAfter');
+    
+    // Choose active tab
+    let activeTab = 'before';
+    if (beforeData) activeTab = 'after';
+    if (beforeData && afterData) activeTab = 'dashboard';
+    
+    // Temporary state during editing
+    let selectedBeforeStars = beforeData ? beforeData.usefulnessRating : 3;
+    let selectedBeforeRating = beforeData ? beforeData.chatgptRating : 5;
+    let selectedAfterRating = afterData ? afterData.chatgptRating : 9;
+    
+    function renderStars(rating, prefix = '') {
+        let starsHtml = '';
+        for (let i = 1; i <= 5; i++) {
+            const isActive = i <= rating;
+            starsHtml += `<span class="star-btn" data-star="${i}" data-prefix="${prefix}" style="font-size: 1.75rem; cursor: pointer; color: ${isActive ? 'var(--accent)' : '#CBD5E1'}; margin-right: 0.5rem; transition: color 0.1s;">★</span>`;
+        }
+        return starsHtml;
+    }
+    
+    function renderRatingScale(rating, prefix = '') {
+        let html = '<div class="flex gap-2 flex-wrap" style="display:flex; gap: 0.5rem; flex-wrap: wrap;">';
+        for (let i = 1; i <= 10; i++) {
+            const isActive = i === rating;
+            html += `<button type="button" class="btn scale-btn ${isActive ? 'btn-primary' : 'btn-secondary'}" data-rating="${i}" data-prefix="${prefix}" style="min-width: 38px; height: 38px; padding: 0; display: inline-flex; align-items: center; justify-content: center; border-radius: 6px; font-weight: bold; border: 1px solid ${isActive ? 'var(--primary)' : '#CBD5E1'};">${i}</button>`;
+        }
+        html += '</div>';
+        return html;
+    }
+    
+    function drawView() {
+        container.innerHTML = `
+            <div class="mb-4">
+                <span class="badge badge-info" style="margin-bottom: 0.5rem;">AI Performance Assessment</span>
+                <h2 class="mt-2">AI Productivity & ROI Tracker</h2>
+                <p class="text-muted">Analyze your productivity gains, AI utilization shift, and satisfaction delta before and after the sessions.</p>
+            </div>
+            
+            <div class="flex gap-2 mb-6" style="display: flex; gap: 0.5rem; border-bottom: 2px solid var(--border-color); padding-bottom: 0.5rem; margin-bottom: 2rem;">
+                <button class="btn tab-btn ${activeTab === 'before' ? 'btn-primary' : 'btn-secondary'}" data-tab="before" style="border-radius: var(--radius-sm);">1. Pre-Session Survey</button>
+                <button class="btn tab-btn ${activeTab === 'after' ? 'btn-primary' : 'btn-secondary'} ${!beforeData ? 'disabled' : ''}" data-tab="after" ${!beforeData ? 'disabled' : ''} style="border-radius: var(--radius-sm);">2. Post-Session Feedback</button>
+                <button class="btn tab-btn ${activeTab === 'dashboard' ? 'btn-primary' : 'btn-secondary'} ${(!beforeData || !afterData) ? 'disabled' : ''}" data-tab="dashboard" ${(!beforeData || !afterData) ? 'disabled' : ''} style="border-radius: var(--radius-sm);">3. ROI Impact Dashboard</button>
+            </div>
+
+            <div id="productivity-tab-content"></div>
+        `;
+        
+        renderTabContent(activeTab);
+        bindTabListeners();
+    }
+    
+    function renderTabContent(tab) {
+        const contentDiv = document.getElementById('productivity-tab-content');
+        if (!contentDiv) return;
+        
+        if (tab === 'before') {
+            contentDiv.innerHTML = `
+                <div class="card">
+                    <div class="card-header"><h3 class="card-title">Pre-Session Baseline Survey (Before Training)</h3></div>
+                    <div class="card-body">
+                        <form id="pre-survey-form">
+                            <div class="form-group mb-6" style="margin-bottom: 1.5rem;">
+                                <label class="form-label font-bold" style="font-weight: 600; margin-bottom: 0.75rem;">1. What percentage of your daily tasks currently utilize AI?</label>
+                                <div class="flex gap-2 flex-wrap" style="display:flex; gap:0.5rem; flex-wrap:wrap;">
+                                    <label class="p-3 border rounded flex items-center gap-2 cursor-pointer" style="background:var(--bg-main); padding: 0.75rem 1rem; border-radius: 6px; border: 1px solid #CBD5E1; cursor: pointer; display: flex; align-items: center; gap: 0.5rem;">
+                                        <input type="radio" name="before-ai-usage" value="10" ${beforeData && beforeData.aiUsagePct === 10 ? 'checked' : ''}> 0% - 10%
+                                    </label>
+                                    <label class="p-3 border rounded flex items-center gap-2 cursor-pointer" style="background:var(--bg-main); padding: 0.75rem 1rem; border-radius: 6px; border: 1px solid #CBD5E1; cursor: pointer; display: flex; align-items: center; gap: 0.5rem;">
+                                        <input type="radio" name="before-ai-usage" value="20" ${(!beforeData || beforeData.aiUsagePct === 20) ? 'checked' : ''}> 10% - 20% (Typical Baseline)
+                                    </label>
+                                    <label class="p-3 border rounded flex items-center gap-2 cursor-pointer" style="background:var(--bg-main); padding: 0.75rem 1rem; border-radius: 6px; border: 1px solid #CBD5E1; cursor: pointer; display: flex; align-items: center; gap: 0.5rem;">
+                                        <input type="radio" name="before-ai-usage" value="30" ${beforeData && beforeData.aiUsagePct === 30 ? 'checked' : ''}> 20% - 30% (Typical Baseline)
+                                    </label>
+                                    <label class="p-3 border rounded flex items-center gap-2 cursor-pointer" style="background:var(--bg-main); padding: 0.75rem 1rem; border-radius: 6px; border: 1px solid #CBD5E1; cursor: pointer; display: flex; align-items: center; gap: 0.5rem;">
+                                        <input type="radio" name="before-ai-usage" value="40" ${beforeData && beforeData.aiUsagePct === 40 ? 'checked' : ''}> 30% - 40%
+                                    </label>
+                                    <label class="p-3 border rounded flex items-center gap-2 cursor-pointer" style="background:var(--bg-main); padding: 0.75rem 1rem; border-radius: 6px; border: 1px solid #CBD5E1; cursor: pointer; display: flex; align-items: center; gap: 0.5rem;">
+                                        <input type="radio" name="before-ai-usage" value="50" ${beforeData && beforeData.aiUsagePct >= 50 ? 'checked' : ''}> 50%+
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-group mb-6" style="margin-bottom: 1.5rem;">
+                                <label class="form-label font-bold" style="font-weight: 600; margin-bottom: 0.75rem;">2. Rate the usefulness of AI in your current daily tasks:</label>
+                                <div class="rating-stars-container" id="before-stars">
+                                    ${renderStars(selectedBeforeStars, 'before')}
+                                </div>
+                            </div>
+
+                            <div class="form-group mb-6" style="margin-bottom: 1.5rem;">
+                                <label class="form-label font-bold" style="font-weight: 600; margin-bottom: 0.75rem;">3. How many marks would you give ChatGPT's performance in assisting your work (out of 10)?</label>
+                                <div id="before-rating-container">
+                                    ${renderRatingScale(selectedBeforeRating, 'before')}
+                                </div>
+                            </div>
+
+                            <div class="form-group mb-6" style="margin-bottom: 1.5rem;">
+                                <label class="form-label font-bold" style="font-weight: 600; margin-bottom: 0.75rem;">4. How many hours per week do you spend on repetitive Excel formulas, attendance registers, and manual drafting?</label>
+                                <input type="number" id="before-manual-time" class="form-control" placeholder="e.g. 10" value="${beforeData ? beforeData.manualTime : '10'}" min="1" max="100" required style="max-width: 250px;">
+                            </div>
+
+                            <div class="form-group mb-6" style="margin-bottom: 1.5rem;">
+                                <label class="form-label font-bold" style="font-weight: 600; margin-bottom: 0.75rem;">5. What is the primary blocker keeping you from using AI more?</label>
+                                <select id="before-blocker" class="form-control" style="max-width: 500px;">
+                                    <option value="training" ${beforeData && beforeData.blocker === 'training' ? 'selected' : ''}>Lack of training & structured prompting knowledge</option>
+                                    <option value="security" ${beforeData && beforeData.blocker === 'security' ? 'selected' : ''}>Data security / privacy policies</option>
+                                    <option value="accuracy" ${beforeData && beforeData.blocker === 'accuracy' ? 'selected' : ''}>AI hallucinations & inaccuracy</option>
+                                    <option value="relevance" ${beforeData && beforeData.blocker === 'relevance' ? 'selected' : ''}>Not applicable or relevant to my specific role</option>
+                                </select>
+                            </div>
+
+                            <button type="submit" class="btn btn-accent w-full" style="padding: 0.75rem; font-size: 1rem; margin-top: 1rem;">
+                                ${beforeData ? 'Update Baseline Survey' : 'Submit Baseline Survey'}
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            `;
+            bindFormListeners('before');
+        } else if (tab === 'after') {
+            contentDiv.innerHTML = `
+                <div class="card">
+                    <div class="card-header"><h3 class="card-title">Session Feedback & Impact (After Session)</h3></div>
+                    <div class="card-body">
+                        <form id="post-survey-form">
+                            <div class="form-group mb-6" style="margin-bottom: 1.5rem;">
+                                <label class="form-label font-bold" style="font-weight: 600; margin-bottom: 0.75rem;">1. What percentage of your daily tasks do you expect to perform using AI after this training?</label>
+                                <div class="flex gap-2 flex-wrap" style="display:flex; gap:0.5rem; flex-wrap:wrap;">
+                                    <label class="p-3 border rounded flex items-center gap-2 cursor-pointer" style="background:var(--bg-main); padding: 0.75rem 1rem; border-radius: 6px; border: 1px solid #CBD5E1; cursor: pointer; display: flex; align-items: center; gap: 0.5rem;">
+                                        <input type="radio" name="after-ai-usage" value="60" ${afterData && afterData.aiUsagePct === 60 ? 'checked' : ''}> 50% - 60%
+                                    </label>
+                                    <label class="p-3 border rounded flex items-center gap-2 cursor-pointer" style="background:var(--bg-main); padding: 0.75rem 1rem; border-radius: 6px; border: 1px solid #CBD5E1; cursor: pointer; display: flex; align-items: center; gap: 0.5rem;">
+                                        <input type="radio" name="after-ai-usage" value="70" ${afterData && afterData.aiUsagePct === 70 ? 'checked' : ''}> 60% - 70%
+                                    </label>
+                                    <label class="p-3 border rounded flex items-center gap-2 cursor-pointer" style="background:var(--bg-main); padding: 0.75rem 1rem; border-radius: 6px; border: 1px solid #CBD5E1; cursor: pointer; display: flex; align-items: center; gap: 0.5rem;">
+                                        <input type="radio" name="after-ai-usage" value="80" ${(!afterData || afterData.aiUsagePct === 80) ? 'checked' : ''}> 70% - 80% (Typical Impact)
+                                    </label>
+                                    <label class="p-3 border rounded flex items-center gap-2 cursor-pointer" style="background:var(--bg-main); padding: 0.75rem 1rem; border-radius: 6px; border: 1px solid #CBD5E1; cursor: pointer; display: flex; align-items: center; gap: 0.5rem;">
+                                        <input type="radio" name="after-ai-usage" value="90" ${afterData && afterData.aiUsagePct === 90 ? 'checked' : ''}> 80% - 90% (Typical Impact)
+                                    </label>
+                                    <label class="p-3 border rounded flex items-center gap-2 cursor-pointer" style="background:var(--bg-main); padding: 0.75rem 1rem; border-radius: 6px; border: 1px solid #CBD5E1; cursor: pointer; display: flex; align-items: center; gap: 0.5rem;">
+                                        <input type="radio" name="after-ai-usage" value="100" ${afterData && afterData.aiUsagePct === 100 ? 'checked' : ''}> 90% - 100%
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-group mb-6" style="margin-bottom: 1.5rem;">
+                                <label class="form-label font-bold" style="font-weight: 600; margin-bottom: 0.75rem;">2. Do you feel your daily productivity has increased after learning these AI foundations?</label>
+                                <div class="flex gap-2 flex-wrap" style="display:flex; gap:0.5rem; flex-wrap:wrap;">
+                                    <label class="p-3 border rounded flex items-center gap-2 cursor-pointer" style="background:var(--bg-main); padding: 0.75rem 1rem; border-radius: 6px; border: 1px solid #CBD5E1; cursor: pointer; display: flex; align-items: center; gap: 0.5rem;">
+                                        <input type="radio" name="after-productivity" value="high" ${(!afterData || afterData.productivityIncrease === 'high') ? 'checked' : ''}> Yes, significantly (>50% gain)
+                                    </label>
+                                    <label class="p-3 border rounded flex items-center gap-2 cursor-pointer" style="background:var(--bg-main); padding: 0.75rem 1rem; border-radius: 6px; border: 1px solid #CBD5E1; cursor: pointer; display: flex; align-items: center; gap: 0.5rem;">
+                                        <input type="radio" name="after-productivity" value="moderate" ${afterData && afterData.productivityIncrease === 'moderate' ? 'checked' : ''}> Yes, moderately (10-50% gain)
+                                    </label>
+                                    <label class="p-3 border rounded flex items-center gap-2 cursor-pointer" style="background:var(--bg-main); padding: 0.75rem 1rem; border-radius: 6px; border: 1px solid #CBD5E1; cursor: pointer; display: flex; align-items: center; gap: 0.5rem;">
+                                        <input type="radio" name="after-productivity" value="none" ${afterData && afterData.productivityIncrease === 'none' ? 'checked' : ''}> Neutral / No major change
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-group mb-6" style="margin-bottom: 1.5rem;">
+                                <label class="form-label font-bold" style="font-weight: 600; margin-bottom: 0.75rem;">3. How many marks would you give ChatGPT & Claude's performance now (out of 10)?</label>
+                                <div id="after-rating-container">
+                                    ${renderRatingScale(selectedAfterRating, 'after')}
+                                </div>
+                            </div>
+
+                            <div class="form-group mb-6" style="margin-bottom: 1.5rem;">
+                                <label class="form-label font-bold" style="font-weight: 600; margin-bottom: 0.75rem;">4. How many hours per week do you expect to spend on repetitive tasks using your AI assistants now?</label>
+                                <input type="number" id="after-manual-time" class="form-control" placeholder="e.g. 2" value="${afterData ? afterData.manualTime : '2'}" min="0" max="100" required style="max-width: 250px;">
+                            </div>
+
+                            <div class="form-group mb-6" style="margin-bottom: 1.5rem;">
+                                <label class="form-label font-bold" style="font-weight: 600; margin-bottom: 0.75rem;">5. Share your key feedback pointers or learning takeaways from this session (minimum 3 bullet points recommended):</label>
+                                <textarea id="after-feedback" class="form-control" rows="4" placeholder="e.g., - Learned how to write structured system prompts to act as a Site Manager.\n- Discovered Data Labs to find ledgers anomalies automatically.\n- Gained understanding of green/amber/red data classification rules to prevent leaks." required>${afterData ? afterData.feedbackPointers : ''}</textarea>
+                            </div>
+
+                            <button type="submit" class="btn btn-accent w-full" style="padding: 0.75rem; font-size: 1rem; margin-top: 1rem;">
+                                ${afterData ? 'Update Feedback & View ROI' : 'Submit Feedback & View ROI'}
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            `;
+            bindFormListeners('after');
+        } else if (tab === 'dashboard') {
+            const b = State.get('productivityFormBefore');
+            const a = State.get('productivityFormAfter');
+            if (!b || !a) {
+                contentDiv.innerHTML = `<div class="card p-8 text-center text-muted">Complete both forms to unlock the ROI Dashboard.</div>`;
+                return;
+            }
+            
+            const timeSaved = Math.max(0, b.manualTime - a.manualTime);
+            const timeSavedPct = b.manualTime > 0 ? Math.round((timeSaved / b.manualTime) * 100) : 0;
+            const annualHoursSaved = timeSaved * 52;
+            const utilityGainPct = Math.round(((a.chatgptRating - b.chatgptRating) / b.chatgptRating) * 100);
+            
+            contentDiv.innerHTML = `
+                <div class="dashboard-hero mb-8 card" style="background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%); color: white; padding: 2rem; border: none;">
+                    <h3 style="color: white; margin-bottom: 0.5rem;">🎯 Participant ROI & Productivity Impact Analysis</h3>
+                    <p style="opacity: 0.9;" class="text-sm">Real-time productivity comparison derived from your training entries.</p>
+                    
+                    <div class="flex gap-4 mt-8 flex-wrap" style="display:flex; gap:1.5rem; flex-wrap:wrap; margin-top:2rem;">
+                        <div style="flex:1; min-width:180px; background:rgba(255,255,255,0.08); padding:1.25rem; border-radius:8px; border:1px solid rgba(255,255,255,0.1);">
+                            <div class="text-xs" style="color:var(--accent); text-transform:uppercase; font-weight:600; letter-spacing:0.05em;">AI Integration</div>
+                            <div style="font-size:2.25rem; font-weight:700; margin-top:0.5rem; font-family:var(--font-heading);">${b.aiUsagePct}% ➔ ${a.aiUsagePct}%</div>
+                            <div class="text-xs text-muted" style="color:#94A3B8 !important; margin-top:0.25rem;">+${a.aiUsagePct - b.aiUsagePct}% active workflows</div>
+                        </div>
+                        <div style="flex:1; min-width:180px; background:rgba(255,255,255,0.08); padding:1.25rem; border-radius:8px; border:1px solid rgba(255,255,255,0.1);">
+                            <div class="text-xs" style="color:var(--accent); text-transform:uppercase; font-weight:600; letter-spacing:0.05em;">Weekly Time Saved</div>
+                            <div style="font-size:2.25rem; font-weight:700; margin-top:0.5rem; font-family:var(--font-heading);">${timeSaved} hrs</div>
+                            <div class="text-xs text-muted" style="color:#94A3B8 !important; margin-top:0.25rem;">${timeSavedPct}% reduction in manual delay</div>
+                        </div>
+                        <div style="flex:1; min-width:180px; background:rgba(255,255,255,0.08); padding:1.25rem; border-radius:8px; border:1px solid rgba(255,255,255,0.1);">
+                            <div class="text-xs" style="color:var(--accent); text-transform:uppercase; font-weight:600; letter-spacing:0.05em;">Annual Hours Gained</div>
+                            <div style="font-size:2.25rem; font-weight:700; margin-top:0.5rem; font-family:var(--font-heading);">${annualHoursSaved} hrs</div>
+                            <div class="text-xs text-muted" style="color:#94A3B8 !important; margin-top:0.25rem;">Reclaimed for core activities</div>
+                        </div>
+                        <div style="flex:1; min-width:180px; background:rgba(255,255,255,0.08); padding:1.25rem; border-radius:8px; border:1px solid rgba(255,255,255,0.1);">
+                            <div class="text-xs" style="color:var(--accent); text-transform:uppercase; font-weight:600; letter-spacing:0.05em;">AI Tool Rating Shift</div>
+                            <div style="font-size:2.25rem; font-weight:700; margin-top:0.5rem; font-family:var(--font-heading);">${b.chatgptRating}/10 ➔ ${a.chatgptRating}/10</div>
+                            <div class="text-xs text-muted" style="color:#94A3B8 !important; margin-top:0.25rem;">${utilityGainPct >= 0 ? '+' : ''}${utilityGainPct}% output quality jump</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dashboard-grid">
+                    <div class="card" style="display: flex; flex-direction: column;">
+                        <div class="card-header"><h3 class="card-title">Before vs After AI Capability Shift</h3></div>
+                        <div class="card-body" style="height: 280px; position: relative; flex-grow: 1;">
+                            <canvas id="roi-chart" style="width: 100%; height: 100%;"></canvas>
+                        </div>
+                    </div>
+                    <div class="card" style="display: flex; flex-direction: column; justify-content: space-between;">
+                        <div>
+                            <div class="card-header" style="margin-bottom: 1rem;"><h3 class="card-title">Key Feedback & Takeaways</h3></div>
+                            <div class="card-body" style="padding: 0;">
+                                <h4 style="color:var(--accent); margin-bottom: 0.5rem;">Feedback Pointers submitted:</h4>
+                                <div class="p-4 rounded text-sm mb-4" style="background:var(--bg-main); line-height: 1.6; border-left: 4px solid var(--accent); font-style: italic; white-space: pre-wrap;">"${a.feedbackPointers}"</div>
+                                <p class="text-muted text-sm">Your feedback and ROI stats have been logged into the enterprise training system. You can generate a formal PDF summary below.</p>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary w-full" id="btn-export-roi" style="margin-top: 1.5rem;">Export ROI PDF Report & Certificate</button>
+                    </div>
+                </div>
+            `;
+            
+            setTimeout(() => {
+                const ctx = document.getElementById('roi-chart').getContext('2d');
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['AI Usage %', 'Weekly Manual Hrs', 'AI Performance (/10)'],
+                        datasets: [
+                            {
+                                label: 'Pre-Session Baseline',
+                                data: [b.aiUsagePct, b.manualTime, b.chatgptRating],
+                                backgroundColor: '#EF4444'
+                            },
+                            {
+                                label: 'Post-Session Impact',
+                                data: [a.aiUsagePct, a.manualTime, a.chatgptRating],
+                                backgroundColor: '#10B981'
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                max: Math.max(100, b.manualTime, a.manualTime)
+                            }
+                        }
+                    }
+                });
+                
+                // PDF Export Listener
+                document.getElementById('btn-export-roi')?.addEventListener('click', () => {
+                    const html = `
+                        <div style="text-align: center; border: 4px double #0A192F; padding: 2.5rem; margin-bottom: 2rem; border-radius: 8px;">
+                            <h1 style="color:#0A192F; margin:0 0 0.5rem 0; font-family:sans-serif; font-size:2.25rem;">DEC AI FOUNDATIONS</h1>
+                            <h2 style="color:#F59E0B; margin:0 0 1.5rem 0; font-family:sans-serif; font-weight:normal; font-size:1.25rem;">AI Productivity ROI Certificate & Report</h2>
+                            <p style="font-family:sans-serif; color:#475569; font-size:0.95rem;">This certifies that the participant has successfully completed the 6-hour AI Foundations training covering prompt optimization, data intelligence pipeline automation, safe AI usage frameworks, and custom Claude Projects.</p>
+                        </div>
+                        
+                        <h2 style="font-family:sans-serif; color:#0A192F; border-bottom:2px solid #E2E8F0; padding-bottom:0.5rem; margin-top:2rem;">Productivity Impact Parameters</h2>
+                        <table style="width: 100%; border-collapse: collapse; margin-top: 1rem; font-family:sans-serif; font-size:0.95rem;">
+                            <thead>
+                                <tr style="background:#0A192F; color:white;">
+                                    <th style="padding:12px; text-align:left; border:1px solid #CBD5E1;">Evaluation Parameter</th>
+                                    <th style="padding:12px; text-align:center; border:1px solid #CBD5E1;">Pre-Session Baseline</th>
+                                    <th style="padding:12px; text-align:center; border:1px solid #CBD5E1;">Post-Session Impact</th>
+                                    <th style="padding:12px; text-align:center; border:1px solid #CBD5E1;">Net Improvement</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td style="padding:12px; border:1px solid #CBD5E1; font-weight:bold;">Daily Tasks AI Usage Level</td>
+                                    <td style="padding:12px; text-align:center; border:1px solid #CBD5E1;">${b.aiUsagePct}%</td>
+                                    <td style="padding:12px; text-align:center; border:1px solid #CBD5E1;">${a.aiUsagePct}%</td>
+                                    <td style="padding:12px; text-align:center; border:1px solid #CBD5E1; color:#10B981; font-weight:bold;">+${a.aiUsagePct - b.aiUsagePct}% Integration</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding:12px; border:1px solid #CBD5E1; font-weight:bold;">Repetitive Task Commitment</td>
+                                    <td style="padding:12px; text-align:center; border:1px solid #CBD5E1;">${b.manualTime} hours/week</td>
+                                    <td style="padding:12px; text-align:center; border:1px solid #CBD5E1;">${a.manualTime} hours/week</td>
+                                    <td style="padding:12px; text-align:center; border:1px solid #CBD5E1; color:#10B981; font-weight:bold;">-${timeSaved} hours/week (${timeSavedPct}% Time Saved)</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding:12px; border:1px solid #CBD5E1; font-weight:bold;">ChatGPT & LLM performance Rating</td>
+                                    <td style="padding:12px; text-align:center; border:1px solid #CBD5E1;">${b.chatgptRating} / 10</td>
+                                    <td style="padding:12px; text-align:center; border:1px solid #CBD5E1;">${a.chatgptRating} / 10</td>
+                                    <td style="padding:12px; text-align:center; border:1px solid #CBD5E1; color:#10B981; font-weight:bold;">+${a.chatgptRating - b.chatgptRating} Marks Gain</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        
+                        <h2 style="font-family:sans-serif; color:#0A192F; border-bottom:2px solid #E2E8F0; padding-bottom:0.5rem; margin-top:2rem;">Participant Feedback Takeaways & Pointers</h2>
+                        <div style="background:#F8FAFC; border-left:4px solid #F59E0B; padding:1.5rem; margin-top:1rem; border-radius:4px; font-family:sans-serif; font-size:0.95rem; line-height:1.6; font-style:italic; white-space:pre-wrap;">
+"${a.feedbackPointers}"
+                        </div>
+                        
+                        <div style="margin-top:3rem; text-align:center; font-family:sans-serif;">
+                            <div style="font-size:1.15rem; font-weight:bold; color:#0A192F;">Annualized Gained Back Time: <span style="color:#10B981;">${annualHoursSaved} Hours / Year</span></div>
+                            <p style="font-size:0.85rem; color:#64748B; margin-top:0.25rem;">Calculated based on 52 business weeks of workflow acceleration.</p>
+                        </div>
+                    `;
+                    window.downloadPDF('DEC AI Foundations - Productivity ROI Certificate', html);
+                });
+            }, 100);
+        }
+    }
+    
+    function bindTabListeners() {
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                if (e.target.classList.contains('disabled')) return;
+                activeTab = e.target.getAttribute('data-tab');
+                drawView();
+            });
+        });
+    }
+    
+    function bindFormListeners(type) {
+        // Star listener
+        document.querySelectorAll('.star-btn').forEach(star => {
+            star.addEventListener('click', (e) => {
+                const val = parseInt(e.target.getAttribute('data-star'));
+                const prefix = e.target.getAttribute('data-prefix');
+                if (prefix === 'before') {
+                    selectedBeforeStars = val;
+                    document.getElementById('before-stars').innerHTML = renderStars(selectedBeforeStars, 'before');
+                    bindFormListeners('before'); // Rebind listeners on replace
+                }
+            });
+        });
+        
+        // Rating scale listener
+        document.querySelectorAll('.scale-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const val = parseInt(e.target.getAttribute('data-rating'));
+                const prefix = e.target.getAttribute('data-prefix');
+                if (prefix === 'before') {
+                    selectedBeforeRating = val;
+                    document.getElementById('before-rating-container').innerHTML = renderRatingScale(selectedBeforeRating, 'before');
+                    bindFormListeners('before'); // Rebind
+                } else if (prefix === 'after') {
+                    selectedAfterRating = val;
+                    document.getElementById('after-rating-container').innerHTML = renderRatingScale(selectedAfterRating, 'after');
+                    bindFormListeners('after'); // Rebind
+                }
+            });
+        });
+        
+        if (type === 'before') {
+            document.getElementById('pre-survey-form')?.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const usage = parseInt(document.querySelector('input[name="before-ai-usage"]:checked').value);
+                const manualTime = parseInt(document.getElementById('before-manual-time').value);
+                const blocker = document.getElementById('before-blocker').value;
+                
+                const data = {
+                    aiUsagePct: usage,
+                    usefulnessRating: selectedBeforeStars,
+                    chatgptRating: selectedBeforeRating,
+                    manualTime: manualTime,
+                    blocker: blocker
+                };
+                
+                State.set('productivityFormBefore', data);
+                showToast('Pre-session baseline recorded!', 'success');
+                activeTab = 'after';
+                drawView();
+            });
+        } else if (type === 'after') {
+            document.getElementById('post-survey-form')?.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const usage = parseInt(document.querySelector('input[name="after-ai-usage"]:checked').value);
+                const prodIncrease = document.querySelector('input[name="after-productivity"]:checked').value;
+                const manualTime = parseInt(document.getElementById('after-manual-time').value);
+                const feedback = document.getElementById('after-feedback').value;
+                
+                const data = {
+                    aiUsagePct: usage,
+                    productivityIncrease: prodIncrease,
+                    chatgptRating: selectedAfterRating,
+                    manualTime: manualTime,
+                    feedbackPointers: feedback
+                };
+                
+                State.set('productivityFormAfter', data);
+                showToast('Post-session feedback recorded!', 'success');
+                activeTab = 'dashboard';
+                drawView();
+            });
+        }
+    }
+    
+    // Initial draw call
+    drawView();
 }

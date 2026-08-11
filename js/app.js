@@ -2249,7 +2249,6 @@ function renderProductivityForms(container) {
                 await fetch(webhookUrl, {
                     method: 'POST',
                     mode: 'no-cors',
-                    headers: { 'Content-Type': 'text/plain' },
                     body: JSON.stringify(payload)
                 });
             } catch (err) {

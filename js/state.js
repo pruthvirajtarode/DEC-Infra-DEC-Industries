@@ -54,10 +54,18 @@ const State = {
 
     recalculateProgress(moduleId) {
         if (!this._state.badges) this._state.badges = [];
-        let count = this._state.completedExercises.filter(id => id.startsWith(moduleId)).length;
-        // Adjusted for current exercises: M1=1, M2=1, M3=2, M4=1
+        
+        // Match m1, m2, m3, m4 prefixes
+        const prefix = 'm' + moduleId.replace('module', '');
+        let count = this._state.completedExercises.filter(id => id.startsWith(prefix)).length;
+        
+        // Required exercises per module
         let required = 1;
-        if (moduleId === 'module3') required = 2;
+        if (moduleId === 'module1') required = 3; // Prompt, Persona, Excel
+        if (moduleId === 'module2') required = 2; // Pipeline, Chart
+        if (moduleId === 'module3') required = 3; // Mistake, Decision, RedTeam
+        if (moduleId === 'module4') required = 1; // Capstone
+        
         let pct = Math.min(100, Math.round((count / required) * 100));
         this._state.progress[moduleId] = pct;
         

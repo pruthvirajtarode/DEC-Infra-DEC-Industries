@@ -421,6 +421,7 @@ function renderModule1(container) {
                 document.getElementById('sys-persona-out').innerHTML = out;
                 btn.disabled = false;
                 btn.innerText = "Run with Persona";
+                State.markExerciseComplete('m1_persona', 'module1');
             }, 600);
         });
 
@@ -445,6 +446,7 @@ function renderModule1(container) {
                 document.getElementById('excel-out').innerText = formula;
                 btn.disabled = false;
                 btn.innerText = "Generate Formula ✨";
+                State.markExerciseComplete('m1_excel', 'module1');
             }, 500);
         });
 
@@ -474,7 +476,7 @@ function renderModule1(container) {
             const format = document.getElementById('prompt-format').value;
             
             const finalPrompt = PromptEngine.buildPrompt(role, context, task, input, constraints, format);
-            State.markExerciseComplete('m1', 'module1');
+            State.markExerciseComplete('m1_prompt', 'module1');
             document.getElementById('final-prompt-text').innerText = finalPrompt;
             
             const evalResult = PromptEngine.evaluatePrompt(finalPrompt);
@@ -682,6 +684,7 @@ function renderModule2(container) {
                     document.getElementById('pipeline-step-3').style.opacity = "1";
                     btn.innerText = "Pipeline Complete ✨";
                     showToast('Data processed through AI Pipeline successfully!', 'success');
+                    State.markExerciseComplete('m2_pipeline', 'module2');
                 }, 1000);
             }, 1000);
         });
@@ -713,7 +716,7 @@ function renderModule2(container) {
             document.getElementById('ai-data-text').innerHTML = `<p>${response.replace(/\\n/g, '<br>')}</p>`;
             
             // Mark progress
-            State.markExerciseComplete('m2', 'module2');
+            State.markExerciseComplete('m2_chart', 'module2');
             
             // Generate basic chart
             const labels = currentData.slice(0,5).map(r => r.id);

@@ -50,6 +50,74 @@ Payment within 45 days of invoice submission and GRN approval.
 3. LIABILITIES
 Total liability is capped at the contract value.
             `
+        },
+        'quote_demo': {
+            title: 'Subcontractor Quote - Earthworks',
+            type: 'Quote',
+            content: `
+SYNTHETIC TRAINING DOCUMENT — NOT ACTUAL DEC DATA
+
+QUOTE REF: SUB-EW-2026-001
+CONTRACTOR: TerraFirma Excavations Pvt Ltd
+
+1. SCOPE OF WORK
+Excavation and earth removal for Site B foundation. Estimated volume: 15,000 Cubic Meters.
+
+2. PRICING
+Base Rate: ₹250 per Cu.M
+Total Base Cost: ₹3,750,000
+Transportation (Disposal up to 10km): ₹500,000
+Taxes: 18% GST Extra
+
+3. TIMELINE & CONDITIONS
+Work to commence within 7 days of PO. 
+Expected duration: 25 working days.
+Validity of Quote: 30 days from submission.
+            `
+        },
+        'policy_demo': {
+            title: 'HR Policy - Site Safety & Leave',
+            type: 'Policy',
+            content: `
+SYNTHETIC TRAINING DOCUMENT — NOT ACTUAL DEC DATA
+
+POLICY REF: HR-POL-042
+EFFECTIVE DATE: 01-Jan-2026
+
+1. SITE SAFETY COMPLIANCE
+All field personnel must wear Level 2 PPE (Hard hat, high-vis vest, steel-toe boots) at all active construction zones.
+Failure to comply will result in a formal warning for the first offense, and suspension for repeat offenses.
+
+2. LEAVE ALLOWANCE
+Site engineers are entitled to 24 Annual Leaves, 7 Sick Leaves, and 5 Casual Leaves per calendar year.
+Leaves exceeding 3 consecutive days require approval from the Project Manager at least 1 week in advance.
+
+3. INCIDENT REPORTING
+Any workplace injury, regardless of severity, must be reported to the Site Safety Officer within 12 hours using Form SS-1.
+            `
+        },
+        'specs_demo': {
+            title: 'Engineering Specs - HVAC Installation',
+            type: 'Specification',
+            content: `
+SYNTHETIC TRAINING DOCUMENT — NOT ACTUAL DEC DATA
+
+DOCUMENT REF: ENG-SPEC-HVAC-99
+SYSTEM: Central Chiller Plant - Tower C
+
+1. EQUIPMENT REQUIREMENTS
+Primary Chillers: 2x 500 TR Water-Cooled Centrifugal Chillers.
+Efficiency: Minimum COP of 6.1 at full load.
+Refrigerant: R-134a or equivalent low-GWP alternative.
+
+2. INSTALLATION STANDARDS
+All chilled water piping must be Schedule 40 MS pipe with 50mm Nitrile rubber insulation.
+Vibration isolators must be installed on all rotating equipment with a minimum deflection of 25mm.
+
+3. TESTING & COMMISSIONING
+System must pass a pressure test at 1.5x working pressure for 24 hours.
+Air balancing report must be submitted prior to final handover.
+            `
         }
     },
 

@@ -176,6 +176,45 @@ function showToast(message, type = 'info') {
 }
 window.showToast = showToast;
 
+// Global UI Utility: Download PDF
+window.downloadPDF = function(title, contentHTML) {
+    showToast('Preparing PDF...', 'info');
+    setTimeout(() => {
+        const printWindow = window.open('', '_blank');
+        if (!printWindow) {
+            showToast('Popup blocked. Cannot generate PDF.', 'error');
+            return;
+        }
+        printWindow.document.write(`
+            <html>
+            <head>
+                <title>${title}</title>
+                <style>
+                    body { font-family: sans-serif; padding: 2rem; color: #1e293b; max-width: 800px; margin: 0 auto; line-height: 1.6; }
+                    h1 { color: #0f172a; border-bottom: 2px solid #e2e8f0; padding-bottom: 1rem; margin-bottom: 2rem; }
+                    h2 { margin-top: 2rem; color: #334155; }
+                    .alert { padding: 1rem; border-left: 4px solid; margin-bottom: 1rem; background: #f8fafc; }
+                    .alert-green { border-color: #10b981; }
+                    .alert-amber { border-color: #f59e0b; }
+                    .alert-red { border-color: #ef4444; }
+                </style>
+            </head>
+            <body>
+                <h1>${title}</h1>
+                ${contentHTML}
+                <script>
+                    window.onload = function() {
+                        window.print();
+                        setTimeout(() => window.close(), 500);
+                    }
+                </script>
+            </body>
+            </html>
+        `);
+        printWindow.document.close();
+    }, 500);
+};
+
 function renderModule1(container) {
     container.innerHTML = `
         <div class="mb-4">
@@ -1058,7 +1097,19 @@ function renderModule4(container) {
         });
 
         document.getElementById('btn-capstone-report')?.addEventListener('click', () => {
-            showToast('Generating Capstone Report for Download...', 'info');
+            const promptStr = document.getElementById('cap-sys-prompt')?.innerText || 'Not generated yet';
+            const html = `
+                <div style="text-align: center; border: 4px double #cbd5e1; padding: 2rem; margin-bottom: 2rem;">
+                    <h2>DEC AI Foundations - Completion Certificate</h2>
+                    <p>This certifies the successful completion of the 6-hour AI foundations workshop and the deployment of a custom Capstone Assistant.</p>
+                </div>
+                <h2>Custom AI Assistant Configuration</h2>
+                <div class="alert alert-green">
+                    <h3>System Prompt</h3>
+                    <pre style="white-space: pre-wrap; font-family: sans-serif;">${promptStr}</pre>
+                </div>
+            `;
+            window.downloadPDF('DEC AI Foundations - Capstone Report', html);
         });
     }, 100);
 }
@@ -1231,19 +1282,54 @@ function renderResourceCenter(container) {
                             <strong>Human Verification Checklist</strong>
                             <div class="text-sm text-muted">What to check before sending AI output.</div>
                         </div>
-                        <button class="btn btn-secondary btn-small" onclick="showToast('Downloading PDF...', 'info')">Download PDF</button>
+                        <button class="btn btn-secondary btn-small" id="btn-dl-verify">Download PDF</button>
                     </div>
                     <div class="ai-result-box flex justify-between items-center" style="display:flex;">
                         <div>
                             <strong>Enterprise Copilot vs ChatGPT</strong>
                             <div class="text-sm text-muted">When to use which tool at DEC.</div>
                         </div>
-                        <button class="btn btn-secondary btn-small" onclick="showToast('Downloading PDF...', 'info')">Download PDF</button>
+                        <button class="btn btn-secondary btn-small" id="btn-dl-compare">Download PDF</button>
                     </div>
                 </div>
             </div>
         </div>
     `;
+
+    setTimeout(() => {
+        document.getElementById('btn-dl-verify')?.addEventListener('click', () => {
+            const html = `
+                <h2>Pre-Flight Checks</h2>
+                <ul>
+                    <li><b>Source Checked:</b> Have you verified the numbers against the original ERP/CRM data?</li>
+                    <li><b>Math Verified:</b> Did you manually spot-check any calculations? AI struggles with arithmetic.</li>
+                    <li><b>Confidentiality:</b> Have you stripped out PII, salaries, and non-public financials?</li>
+                    <li><b>Tone Check:</b> Does this sound like a DEC employee wrote it?</li>
+                </ul>
+                <div class="alert alert-amber"><b>Rule of Thumb:</b> If you wouldn't send it to the CEO without checking it, don't send the AI's output without checking it.</div>
+            `;
+            window.downloadPDF('Human Verification Checklist', html);
+        });
+
+        document.getElementById('btn-dl-compare')?.addEventListener('click', () => {
+            const html = `
+                <h2>Which AI Should I Use?</h2>
+                <div class="alert alert-green">
+                    <h3>Public ChatGPT / Claude</h3>
+                    <p>Great for general brainstorming, generic coding, public summaries, and drafting emails that do not contain client specifics.</p>
+                </div>
+                <div class="alert alert-amber">
+                    <h3>Enterprise Copilot (DEC Secure)</h3>
+                    <p>Required for analyzing internal project reports, reading vendor quotes, generating meeting minutes, and summarizing internal policies.</p>
+                </div>
+                <div class="alert alert-red">
+                    <h3>No AI Allowed</h3>
+                    <p>Never use AI for generating payroll, highly confidential HR matters, or sharing unreleased proprietary algorithms.</p>
+                </div>
+            `;
+            window.downloadPDF('Enterprise Copilot vs ChatGPT', html);
+        });
+    }, 100);
 }
 
 function renderModule1Docs(container) {

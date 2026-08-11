@@ -32,6 +32,13 @@ const Router = {
 
         this.updateNavLinks(path);
 
+        // Auto-close sidebar on mobile
+        if (window.innerWidth <= 768) {
+            const sidebar = document.getElementById('sidebar');
+            if (sidebar && sidebar.classList.contains('open')) {
+                sidebar.classList.remove('open');
+            }
+        }
         const viewContainer = document.getElementById('view-container');
         viewContainer.innerHTML = ''; // Clear current view
 

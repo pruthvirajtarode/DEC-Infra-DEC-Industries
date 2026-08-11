@@ -253,7 +253,9 @@ a:hover {
 
 /* Layout Utilities */
 .hidden { display: none !important; }
+.mobile-only { display: none; }
 .flex { display: flex; }
+.flex-wrap { flex-wrap: wrap; }
 .flex-col { display: flex; flex-direction: column; }
 .items-center { align-items: center; }
 .justify-between { justify-content: space-between; }

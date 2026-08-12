@@ -1511,19 +1511,90 @@ function renderTrainerDashboard(container) {
                         <p class="text-xs text-muted mb-2">Open your Google Sheet, go to <b>Extensions > Apps Script</b>, paste the code below, and **Deploy as a Web App** (execute as: Me, access: Anyone):</p>
                         <pre style="background:var(--bg-main); padding: 0.75rem; border-radius: 6px; font-size: 0.7rem; max-height: 150px; overflow-y: auto; border: 1px solid #CBD5E1;" id="script-code-block">
 function doPost(e) {
-  var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
-  var json = JSON.parse(e.postData.contents);
-  var rowData = [
-    new Date(),
-    json.participantName,
-    json.type,
-    json.data.aiUsagePct + "%",
-    json.data.chatgptRating + "/10",
-    json.data.manualTime + " hrs",
-    json.data.feedbackPointers || json.data.blocker || ""
-  ];
-  sheet.appendRow(rowData);
-  return ContentService.createTextOutput("Success");
+  try {
+    // Opens the active sheet of the bound spreadsheet
+    var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+    var json = JSON.parse(e.postData.contents);
+    
+    // Append the new row data
+    var rowData = [
+      new Date(),
+      json.participantName,
+      json.type,
+      json.data.aiUsagePct + "%",
+      json.data.chatgptRating + "/10",
+      json.data.manualTime + " hrs",
+      json.data.feedbackPointers || json.data.blocker || ""
+    ];
+    sheet.appendRow(rowData);
+    
+    // Format the entire sheet (styles, badges, column widths for both old and new rows)
+    formatEntireSheet(sheet);
+    
+    return ContentService.createTextOutput("Success");
+  } catch (error) {
+    return ContentService.createTextOutput("Error: " + error.toString());
+  }
+}
+
+function formatEntireSheet(sheet) {
+  var headers = ["Timestamp", "Participant Name", "Survey Type", "AI Usage Level", "Tool Performance", "Weekly Manual Hours", "Key Takeaway / Blocker / Feedback"];
+  
+  // 1. Ensure header is present and styled
+  var firstCell = sheet.getRange(1, 1).getValue();
+  if (firstCell !== "Timestamp") {
+    sheet.insertRowBefore(1);
+  }
+  var headerRange = sheet.getRange(1, 1, 1, headers.length);
+  headerRange.setValues([headers]);
+  headerRange.setBackground("#0A192F"); // Premium Navy Blue
+  headerRange.setFontColor("#FFFFFF"); // White text
+  headerRange.setFontWeight("bold");
+  headerRange.setHorizontalAlignment("center");
+  headerRange.setFontSize(11);
+  
+  var lastRow = sheet.getLastRow();
+  if (lastRow < 2) return;
+  
+  // 2. Format all data rows (font size and alignment)
+  var dataRange = sheet.getRange(2, 1, lastRow - 1, headers.length);
+  dataRange.setFontSize(10);
+  dataRange.setVerticalAlignment("middle");
+  
+  // Center-align specific structured data columns
+  sheet.getRange(2, 1, lastRow - 1, 1).setHorizontalAlignment("center"); // Column 1: Timestamp
+  sheet.getRange(2, 4, lastRow - 1, 1).setHorizontalAlignment("center"); // Column 4: AI Usage Level
+  sheet.getRange(2, 5, lastRow - 1, 1).setHorizontalAlignment("center"); // Column 5: Tool Performance
+  sheet.getRange(2, 6, lastRow - 1, 1).setHorizontalAlignment("center"); // Column 6: Weekly Manual Hours
+  
+  // 3. Clean and convert Survey Type values into styled badges
+  var typeRange = sheet.getRange(2, 3, lastRow - 1, 1);
+  var typeValues = typeRange.getValues();
+  for (var i = 0; i < typeValues.length; i++) {
+    var rowNum = i + 2;
+    var cell = sheet.getRange(rowNum, 3);
+    var val = typeValues[i][0].toString().trim().toLowerCase();
+    
+    if (val === "before" || val === "pre-session survey") {
+      cell.setValue("Pre-Session Survey");
+      cell.setBackground("#FFF3CD").setFontColor("#856404"); // Warm Yellow badge
+      cell.setFontWeight("bold").setHorizontalAlignment("center");
+    } else if (val === "after" || val === "post-session feedback") {
+      cell.setValue("Post-Session Feedback");
+      cell.setBackground("#D4EDDA").setFontColor("#155724"); // Light Green badge
+      cell.setFontWeight("bold").setHorizontalAlignment("center");
+    }
+  }
+  
+  // 4. Auto-fit columns with a professional minimum width to prevent header overlapping
+  var minWidths = [140, 160, 160, 130, 130, 150, 300];
+  for (var col = 1; col <= headers.length; col++) {
+    sheet.autoResizeColumn(col);
+    var currentWidth = sheet.getColumnWidth(col);
+    if (currentWidth < minWidths[col - 1]) {
+      sheet.setColumnWidth(col, minWidths[col - 1]);
+    }
+  }
 }
                         </pre>
                         <button class="btn btn-secondary btn-small w-full mt-2" id="btn-copy-script">Copy Apps Script Code</button>
@@ -1583,7 +1654,7 @@ function doPost(e) {
     setTimeout(() => {
         // Save Webhook URL
         document.getElementById('btn-save-webhook')?.addEventListener('click', () => {
-            const url = document.getElementById('webhook-url-input').value;
+            const url = document.getElementById('webhook-url-input').value.trim();
             State.set('surveyWebhookUrl', url);
             showToast('Google Sheet Webhook URL saved successfully!', 'success');
         });
@@ -2236,8 +2307,8 @@ function renderProductivityForms(container) {
         State.set('localSubmissions', subs);
         
         // 2. Post to Webhook if URL exists
-        const webhookUrl = State.get('surveyWebhookUrl');
-        if (webhookUrl && webhookUrl.trim() !== '') {
+        const webhookUrl = (State.get('surveyWebhookUrl') || '').trim();
+        if (webhookUrl !== '') {
             try {
                 const payload = {
                     participantName: name,
@@ -2253,6 +2324,7 @@ function renderProductivityForms(container) {
                 });
             } catch (err) {
                 console.error('Failed to submit to webhook:', err);
+                showToast('Failed to connect to Google Sheets Webhook. Please verify the URL.', 'error');
             }
         }
     }

@@ -1556,35 +1556,60 @@ function formatEntireSheet(sheet) {
   var lastRow = sheet.getLastRow();
   if (lastRow < 2) return;
   
+  var numRows = lastRow - 1;
+  
   // 2. Format all data rows (font size and alignment)
-  var dataRange = sheet.getRange(2, 1, lastRow - 1, headers.length);
+  var dataRange = sheet.getRange(2, 1, numRows, headers.length);
   dataRange.setFontSize(10);
   dataRange.setVerticalAlignment("middle");
   
   // Center-align specific structured data columns
-  sheet.getRange(2, 1, lastRow - 1, 1).setHorizontalAlignment("center"); // Column 1: Timestamp
-  sheet.getRange(2, 4, lastRow - 1, 1).setHorizontalAlignment("center"); // Column 4: AI Usage Level
-  sheet.getRange(2, 5, lastRow - 1, 1).setHorizontalAlignment("center"); // Column 5: Tool Performance
-  sheet.getRange(2, 6, lastRow - 1, 1).setHorizontalAlignment("center"); // Column 6: Weekly Manual Hours
+  sheet.getRange(2, 1, numRows, 1).setHorizontalAlignment("center"); // Column 1: Timestamp
+  sheet.getRange(2, 4, numRows, 1).setHorizontalAlignment("center"); // Column 4: AI Usage Level
+  sheet.getRange(2, 5, numRows, 1).setHorizontalAlignment("center"); // Column 5: Tool Performance
+  sheet.getRange(2, 6, numRows, 1).setHorizontalAlignment("center"); // Column 6: Weekly Manual Hours
   
-  // 3. Clean and convert Survey Type values into styled badges
-  var typeRange = sheet.getRange(2, 3, lastRow - 1, 1);
+  // 3. Clean and convert Survey Type values into styled badges (Pre-Session vs Post-Session) in BATCH
+  var typeRange = sheet.getRange(2, 3, numRows, 1);
   var typeValues = typeRange.getValues();
+  
+  // Prepare batch arrays for updating values and styles
+  var newValues = [];
+  var backgrounds = [];
+  var fontColors = [];
+  var fontWeights = [];
+  var alignments = [];
+  
   for (var i = 0; i < typeValues.length; i++) {
-    var rowNum = i + 2;
-    var cell = sheet.getRange(rowNum, 3);
-    var val = typeValues[i][0].toString().trim().toLowerCase();
+    var rawVal = typeValues[i][0].toString().trim().toLowerCase();
     
-    if (val === "before" || val === "pre-session survey") {
-      cell.setValue("Pre-Session Survey");
-      cell.setBackground("#FFF3CD").setFontColor("#856404"); // Warm Yellow badge
-      cell.setFontWeight("bold").setHorizontalAlignment("center");
-    } else if (val === "after" || val === "post-session feedback") {
-      cell.setValue("Post-Session Feedback");
-      cell.setBackground("#D4EDDA").setFontColor("#155724"); // Light Green badge
-      cell.setFontWeight("bold").setHorizontalAlignment("center");
+    if (rawVal === "before" || rawVal === "pre-session survey") {
+      newValues.push(["Pre-Session Survey"]);
+      backgrounds.push(["#FFF3CD"]); // Warm Yellow badge
+      fontColors.push(["#856404"]);
+      fontWeights.push(["bold"]);
+      alignments.push(["center"]);
+    } else if (rawVal === "after" || rawVal === "post-session feedback") {
+      newValues.push(["Post-Session Feedback"]);
+      backgrounds.push(["#D4EDDA"]); // Light Green badge
+      fontColors.push(["#155724"]);
+      fontWeights.push(["bold"]);
+      alignments.push(["center"]);
+    } else {
+      newValues.push([typeValues[i][0]]);
+      backgrounds.push(["#FFFFFF"]);
+      fontColors.push(["#000000"]);
+      fontWeights.push(["normal"]);
+      alignments.push(["left"]);
     }
   }
+  
+  // Apply batch updates
+  typeRange.setValues(newValues);
+  typeRange.setBackgrounds(backgrounds);
+  typeRange.setFontColors(fontColors);
+  typeRange.setFontWeights(fontWeights);
+  typeRange.setHorizontalAlignments(alignments);
   
   // 4. Auto-fit columns with a professional minimum width to prevent header overlapping
   var minWidths = [140, 160, 160, 130, 130, 150, 300];
@@ -2709,6 +2734,11 @@ function renderProductivityForms(container) {
         if (type === 'before') {
             document.getElementById('pre-survey-form')?.addEventListener('submit', async (e) => {
                 e.preventDefault();
+                const submitBtn = e.target.querySelector('button[type="submit"]');
+                if (submitBtn) {
+                    submitBtn.disabled = true;
+                    submitBtn.innerText = "Recording Survey...";
+                }
                 const name = document.getElementById('before-name').value;
                 const usage = parseInt(document.querySelector('input[name="before-ai-usage"]:checked').value);
                 const manualTime = parseInt(document.getElementById('before-manual-time').value);
@@ -2732,6 +2762,11 @@ function renderProductivityForms(container) {
         } else if (type === 'after') {
             document.getElementById('post-survey-form')?.addEventListener('submit', async (e) => {
                 e.preventDefault();
+                const submitBtn = e.target.querySelector('button[type="submit"]');
+                if (submitBtn) {
+                    submitBtn.disabled = true;
+                    submitBtn.innerText = "Recording Feedback...";
+                }
                 const name = document.getElementById('after-name').value;
                 const usage = parseInt(document.querySelector('input[name="after-ai-usage"]:checked').value);
                 const prodIncrease = document.querySelector('input[name="after-productivity"]:checked').value;

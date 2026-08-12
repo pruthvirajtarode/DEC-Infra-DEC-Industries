@@ -1991,7 +1991,7 @@ function renderModule1Docs(container) {
             </div>
         </div>
 
-        <div class="dashboard-grid" style="grid-template-columns: 1fr 1fr; gap: 2rem;">
+        <div class="dashboard-grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
             <!-- Left Pane: Document Viewer -->
             <div class="card mb-8" style="display: flex; flex-direction: column;">
                 <div class="card-header"><h3 class="card-title">Single Document Source</h3></div>
@@ -2204,7 +2204,7 @@ function renderCaseStudies(container) {
             <p class="text-muted">Real-world AI implementations for DEC Infra and DEC Industries.</p>
         </div>
         
-        <div class="dashboard-grid" style="grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 2rem;">
+        <div class="dashboard-grid" style="grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem;">
             <!-- DEC Infra Case Study -->
             <div class="card mb-8">
                 <div class="card-header"><h3 class="card-title">DEC Infra: Predictive Delay Simulator</h3></div>

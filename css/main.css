@@ -411,3 +411,65 @@ a:hover {
 .rounded { border-radius: var(--radius-md); }
 .h-full { height: 100%; }
 .flex-col { flex-direction: column; }
+
+/* ── Hide number input spinners (arrows) on all browsers ── */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+input[type=number] { -moz-appearance: textfield; }
+.no-spinner::-webkit-inner-spin-button,
+.no-spinner::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+.no-spinner { -moz-appearance: textfield; }
+
+/* ── Mobile responsive fixes for Productivity Tracker ── */
+@media (max-width: 600px) {
+
+    /* QR button: collapse to icon only on small screens */
+    #btn-show-qr .qr-btn-text { display: none; }
+    #btn-show-qr {
+        padding: 0.5rem 0.75rem !important;
+        font-size: 1.3rem !important;
+        border-radius: 50% !important;
+        min-width: 44px;
+        min-height: 44px;
+        justify-content: center;
+    }
+
+    /* Radio/option labels stack vertically on mobile */
+    .survey-radio-group {
+        flex-direction: column !important;
+    }
+    .survey-radio-group label {
+        width: 100% !important;
+    }
+
+    /* Number inputs fill full width on mobile */
+    input.form-control[style*="max-width: 250px"],
+    input.form-control[style*="max-width: 400px"],
+    select.form-control[style*="max-width: 500px"] {
+        max-width: 100% !important;
+        width: 100% !important;
+    }
+
+    /* Tab buttons: smaller font on very small screens */
+    .tab-btn {
+        font-size: 0.72rem !important;
+        padding: 0.45rem 0.6rem !important;
+    }
+
+    /* Scale rating buttons: slightly smaller on mobile */
+    .scale-btn {
+        min-width: 34px !important;
+        height: 34px !important;
+        font-size: 0.85rem !important;
+    }
+
+    /* Productivity header: stack vertically */
+    .productivity-header-row {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+    }
+}
+

@@ -2784,8 +2784,8 @@ function renderProductivityForms(container) {
     let selectedBeforeRating = beforeData ? beforeData.chatgptRating : 5;
     let selectedAfterRating = afterData ? afterData.chatgptRating : 9;
     
-    async function saveAndPostSubmission(name, type, surveyData) {
-        // 1. Save locally in State for Trainer Dashboard View
+    function saveAndPostSubmission(name, type, surveyData) {
+        // 1. Save locally in State INSTANTLY (synchronous — zero delay)
         let subs = State.get('localSubmissions') || [];
         const idx = subs.findIndex(s => s.name.toLowerCase() === name.toLowerCase());
         
@@ -2802,26 +2802,20 @@ function renderProductivityForms(container) {
         }
         State.set('localSubmissions', subs);
         
-        // 2. Post to Webhook if URL exists
+        // 2. Fire-and-forget webhook POST (non-blocking — user is NOT made to wait)
         const webhookUrl = (State.get('surveyWebhookUrl') || '').trim();
         if (webhookUrl !== '') {
-            try {
-                const payload = {
-                    participantName: name,
-                    type: type,
-                    data: surveyData,
-                    timestamp: new Date().toLocaleString()
-                };
-                
-                await fetch(webhookUrl, {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    body: JSON.stringify(payload)
-                });
-            } catch (err) {
-                console.error('Failed to submit to webhook:', err);
-                showToast('Failed to connect to Google Sheets Webhook. Please verify the URL.', 'error');
-            }
+            const payload = {
+                participantName: name,
+                type: type,
+                data: surveyData,
+                timestamp: new Date().toLocaleString()
+            };
+            fetch(webhookUrl, {
+                method: 'POST',
+                mode: 'no-cors',
+                body: JSON.stringify(payload)
+            }).catch(err => console.warn('Webhook post failed (non-critical):', err));
         }
     }
     
@@ -2852,7 +2846,7 @@ function renderProductivityForms(container) {
                     <p class="text-muted">Analyze your productivity gains, AI utilization shift, and satisfaction delta before and after the sessions.</p>
                 </div>
                 <button id="btn-show-qr" class="btn btn-secondary" style="display:inline-flex; align-items:center; gap:0.5rem; white-space:nowrap; border: 2px solid var(--primary); color: var(--primary); font-weight:600; padding: 0.6rem 1.2rem; border-radius: 8px; flex-shrink:0;" title="Show QR code for employees to scan">
-                    <span style="font-size:1.25rem;">📱</span> Show QR Code for Employees
+                    <span style="font-size:1.25rem;">📱</span><span class="qr-btn-text"> Show QR Code for Employees</span>
                 </button>
             </div>
 
@@ -2985,7 +2979,7 @@ function renderProductivityForms(container) {
 
                             <div class="form-group mb-6" style="margin-bottom: 1.5rem;">
                                 <label class="form-label font-bold" style="font-weight: 600; margin-bottom: 0.75rem;">1. What percentage of your daily tasks currently utilize AI?</label>
-                                <div class="flex gap-2 flex-wrap" style="display:flex; gap:0.5rem; flex-wrap:wrap;">
+                                <div class="flex gap-2 flex-wrap survey-radio-group" style="display:flex; gap:0.5rem; flex-wrap:wrap;">
                                     <label class="p-3 border rounded flex items-center gap-2 cursor-pointer" style="background:var(--bg-main); padding: 0.75rem 1rem; border-radius: 6px; border: 1px solid #CBD5E1; cursor: pointer; display: flex; align-items: center; gap: 0.5rem;">
                                         <input type="radio" name="before-ai-usage" value="10" ${beforeData && beforeData.aiUsagePct === 10 ? 'checked' : ''}> 0% - 10%
                                     </label>
@@ -3020,7 +3014,7 @@ function renderProductivityForms(container) {
 
                             <div class="form-group mb-6" style="margin-bottom: 1.5rem;">
                                 <label class="form-label font-bold" style="font-weight: 600; margin-bottom: 0.75rem;">4. How many hours per week do you spend on repetitive Excel formulas, attendance registers, and manual drafting?</label>
-                                <input type="number" id="before-manual-time" class="form-control" placeholder="e.g. 10" value="${beforeData ? beforeData.manualTime : '10'}" min="1" max="100" required style="max-width: 250px;">
+                                <input type="text" inputmode="numeric" pattern="[0-9]*" id="before-manual-time" class="form-control no-spinner" placeholder="e.g. 10" value="${beforeData ? beforeData.manualTime : '10'}" required style="max-width: 250px;">
                             </div>
 
                             <div class="form-group mb-6" style="margin-bottom: 1.5rem;">
@@ -3054,7 +3048,7 @@ function renderProductivityForms(container) {
 
                             <div class="form-group mb-6" style="margin-bottom: 1.5rem;">
                                 <label class="form-label font-bold" style="font-weight: 600; margin-bottom: 0.75rem;">1. What percentage of your daily tasks do you expect to perform using AI after this training?</label>
-                                <div class="flex gap-2 flex-wrap" style="display:flex; gap:0.5rem; flex-wrap:wrap;">
+                                <div class="flex gap-2 flex-wrap survey-radio-group" style="display:flex; gap:0.5rem; flex-wrap:wrap;">
                                     <label class="p-3 border rounded flex items-center gap-2 cursor-pointer" style="background:var(--bg-main); padding: 0.75rem 1rem; border-radius: 6px; border: 1px solid #CBD5E1; cursor: pointer; display: flex; align-items: center; gap: 0.5rem;">
                                         <input type="radio" name="after-ai-usage" value="60" ${afterData && afterData.aiUsagePct === 60 ? 'checked' : ''}> 50% - 60%
                                     </label>
@@ -3075,7 +3069,7 @@ function renderProductivityForms(container) {
 
                             <div class="form-group mb-6" style="margin-bottom: 1.5rem;">
                                 <label class="form-label font-bold" style="font-weight: 600; margin-bottom: 0.75rem;">2. Do you feel your daily productivity has increased after learning these AI foundations?</label>
-                                <div class="flex gap-2 flex-wrap" style="display:flex; gap:0.5rem; flex-wrap:wrap;">
+                                <div class="flex gap-2 flex-wrap survey-radio-group" style="display:flex; gap:0.5rem; flex-wrap:wrap;">
                                     <label class="p-3 border rounded flex items-center gap-2 cursor-pointer" style="background:var(--bg-main); padding: 0.75rem 1rem; border-radius: 6px; border: 1px solid #CBD5E1; cursor: pointer; display: flex; align-items: center; gap: 0.5rem;">
                                         <input type="radio" name="after-productivity" value="high" ${(!afterData || afterData.productivityIncrease === 'high') ? 'checked' : ''}> Yes, significantly (>50% gain)
                                     </label>
@@ -3097,7 +3091,7 @@ function renderProductivityForms(container) {
 
                             <div class="form-group mb-6" style="margin-bottom: 1.5rem;">
                                 <label class="form-label font-bold" style="font-weight: 600; margin-bottom: 0.75rem;">4. How many hours per week do you expect to spend on repetitive tasks using your AI assistants now?</label>
-                                <input type="number" id="after-manual-time" class="form-control" placeholder="e.g. 2" value="${afterData ? afterData.manualTime : '2'}" min="0" max="100" required style="max-width: 250px;">
+                                <input type="text" inputmode="numeric" pattern="[0-9]*" id="after-manual-time" class="form-control no-spinner" placeholder="e.g. 2" value="${afterData ? afterData.manualTime : '2'}" required style="max-width: 250px;">
                             </div>
 
                             <div class="form-group mb-6" style="margin-bottom: 1.5rem;">
@@ -3209,53 +3203,104 @@ function renderProductivityForms(container) {
                 
                 // PDF Export Listener
                 document.getElementById('btn-export-roi')?.addEventListener('click', () => {
+                    const today = new Date().toLocaleDateString('en-IN', { day:'2-digit', month:'long', year:'numeric' });
                     const html = `
-                        <div style="text-align: center; border: 4px double #0A192F; padding: 2.5rem; margin-bottom: 2rem; border-radius: 8px;">
-                            <h1 style="color:#0A192F; margin:0 0 0.5rem 0; font-family:sans-serif; font-size:2.25rem;">DEC AI FOUNDATIONS</h1>
-                            <h2 style="color:#F59E0B; margin:0 0 1.5rem 0; font-family:sans-serif; font-weight:normal; font-size:1.25rem;">AI Productivity ROI Certificate & Report</h2>
-                            <p style="font-family:sans-serif; color:#475569; font-size:0.95rem;">This certifies that ${b.name || 'the participant'} has successfully completed the 6-hour AI Foundations training covering prompt optimization, data intelligence pipeline automation, safe AI usage frameworks, and custom Claude Projects.</p>
+                        <style>
+                            @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Outfit:wght@700;800&display=swap');
+                            * { box-sizing: border-box; }
+                            body { font-family: 'Inter', sans-serif; background: white; color: #1E293B; margin: 0; padding: 0; }
+                        </style>
+
+                        <!-- HEADER BANNER -->
+                        <div style="background: linear-gradient(135deg, #0A192F 0%, #112240 60%, #1a3a6b 100%); padding: 2.5rem 3rem; border-radius: 0 0 24px 24px; text-align:center; position:relative; overflow:hidden;">
+                            <div style="position:absolute; top:-60px; right:-60px; width:200px; height:200px; background:rgba(245,158,11,0.08); border-radius:50%;"></div>
+                            <div style="position:absolute; bottom:-40px; left:-40px; width:160px; height:160px; background:rgba(16,185,129,0.06); border-radius:50%;"></div>
+                            <div style="font-size:3rem; margin-bottom:0.5rem;">🏆</div>
+                            <div style="font-family:'Outfit',sans-serif; font-size:0.72rem; font-weight:700; color:#F59E0B; letter-spacing:0.15em; text-transform:uppercase; margin-bottom:0.5rem;">Certificate of Completion</div>
+                            <h1 style="font-family:'Outfit',sans-serif; color:white; font-size:2rem; margin:0 0 0.25rem; font-weight:800;">DEC AI FOUNDATIONS</h1>
+                            <div style="color:rgba(255,255,255,0.6); font-size:0.85rem; margin-bottom:1.5rem;">Enterprise AI Training Program &nbsp;|&nbsp; ${today}</div>
+                            <div style="background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2); border-radius:12px; padding:1.25rem 2rem; display:inline-block; max-width:600px;">
+                                <div style="color:rgba(255,255,255,0.7); font-size:0.8rem; margin-bottom:0.4rem;">This certifies that</div>
+                                <div style="font-size:1.75rem; font-weight:700; color:white; font-family:'Outfit',sans-serif;">${b.name || 'Participant'}</div>
+                                <div style="color:rgba(255,255,255,0.7); font-size:0.85rem; margin-top:0.4rem;">has successfully completed the <strong style="color:#F59E0B;">6-Hour AI Foundations</strong> program covering prompt engineering, data intelligence, safe AI usage & AI assistant building.</div>
+                            </div>
                         </div>
-                        
-                        <h2 style="font-family:sans-serif; color:#0A192F; border-bottom:2px solid #E2E8F0; padding-bottom:0.5rem; margin-top:2rem;">Productivity Impact Parameters</h2>
-                        <table style="width: 100%; border-collapse: collapse; margin-top: 1rem; font-family:sans-serif; font-size:0.95rem;">
-                            <thead>
-                                <tr style="background:#0A192F; color:white;">
-                                    <th style="padding:12px; text-align:left; border:1px solid #CBD5E1;">Evaluation Parameter</th>
-                                    <th style="padding:12px; text-align:center; border:1px solid #CBD5E1;">Pre-Session Baseline</th>
-                                    <th style="padding:12px; text-align:center; border:1px solid #CBD5E1;">Post-Session Impact</th>
-                                    <th style="padding:12px; text-align:center; border:1px solid #CBD5E1;">Net Improvement</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td style="padding:12px; border:1px solid #CBD5E1; font-weight:bold;">Daily Tasks AI Usage Level</td>
-                                    <td style="padding:12px; text-align:center; border:1px solid #CBD5E1;">${b.aiUsagePct}%</td>
-                                    <td style="padding:12px; text-align:center; border:1px solid #CBD5E1;">${a.aiUsagePct}%</td>
-                                    <td style="padding:12px; text-align:center; border:1px solid #CBD5E1; color:#10B981; font-weight:bold;">+${a.aiUsagePct - b.aiUsagePct}% Integration</td>
-                                </tr>
-                                <tr>
-                                    <td style="padding:12px; border:1px solid #CBD5E1; font-weight:bold;">Repetitive Task Commitment</td>
-                                    <td style="padding:12px; text-align:center; border:1px solid #CBD5E1;">${b.manualTime} hours/week</td>
-                                    <td style="padding:12px; text-align:center; border:1px solid #CBD5E1;">${a.manualTime} hours/week</td>
-                                    <td style="padding:12px; text-align:center; border:1px solid #CBD5E1; color:#10B981; font-weight:bold;">-${timeSaved} hours/week (${timeSavedPct}% Time Saved)</td>
-                                </tr>
-                                <tr>
-                                    <td style="padding:12px; border:1px solid #CBD5E1; font-weight:bold;">ChatGPT & LLM performance Rating</td>
-                                    <td style="padding:12px; text-align:center; border:1px solid #CBD5E1;">${b.chatgptRating} / 10</td>
-                                    <td style="padding:12px; text-align:center; border:1px solid #CBD5E1;">${a.chatgptRating} / 10</td>
-                                    <td style="padding:12px; text-align:center; border:1px solid #CBD5E1; color:#10B981; font-weight:bold;">+${a.chatgptRating - b.chatgptRating} Marks Gain</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        
-                        <h2 style="font-family:sans-serif; color:#0A192F; border-bottom:2px solid #E2E8F0; padding-bottom:0.5rem; margin-top:2rem;">Participant Feedback Takeaways & Pointers</h2>
-                        <div style="background:#F8FAFC; border-left:4px solid #F59E0B; padding:1.5rem; margin-top:1rem; border-radius:4px; font-family:sans-serif; font-size:0.95rem; line-height:1.6; font-style:italic; white-space:pre-wrap;">
-"${a.feedbackPointers}"
-                        </div>
-                        
-                        <div style="margin-top:3rem; text-align:center; font-family:sans-serif;">
-                            <div style="font-size:1.15rem; font-weight:bold; color:#0A192F;">Annualized Gained Back Time: <span style="color:#10B981;">${annualHoursSaved} Hours / Year</span></div>
-                            <p style="font-size:0.85rem; color:#64748B; margin-top:0.25rem;">Calculated based on 52 business weeks of workflow acceleration.</p>
+
+                        <!-- ROI METRIC CARDS -->
+                        <div style="padding: 2rem 3rem 1rem;">
+                            <h2 style="font-family:'Outfit',sans-serif; color:#0A192F; font-size:1.1rem; font-weight:700; margin-bottom:1.25rem; display:flex; align-items:center; gap:0.5rem;">📊 Productivity Impact Summary</h2>
+                            <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:1rem; margin-bottom:2rem;">
+                                <div style="background:linear-gradient(135deg,#0A192F,#1a3a6b); border-radius:12px; padding:1.25rem; text-align:center; color:white;">
+                                    <div style="font-size:0.68rem; font-weight:700; color:#F59E0B; letter-spacing:0.08em; text-transform:uppercase; margin-bottom:0.5rem;">AI Integration</div>
+                                    <div style="font-size:1.5rem; font-weight:800; font-family:'Outfit',sans-serif;">${b.aiUsagePct}%→${a.aiUsagePct}%</div>
+                                    <div style="font-size:0.72rem; color:rgba(255,255,255,0.6); margin-top:0.25rem;">+${a.aiUsagePct-b.aiUsagePct}% shift</div>
+                                </div>
+                                <div style="background:linear-gradient(135deg,#064e3b,#065f46); border-radius:12px; padding:1.25rem; text-align:center; color:white;">
+                                    <div style="font-size:0.68rem; font-weight:700; color:#6EE7B7; letter-spacing:0.08em; text-transform:uppercase; margin-bottom:0.5rem;">Weekly Time Saved</div>
+                                    <div style="font-size:1.5rem; font-weight:800; font-family:'Outfit',sans-serif;">${timeSaved} hrs</div>
+                                    <div style="font-size:0.72rem; color:rgba(255,255,255,0.6); margin-top:0.25rem;">${timeSavedPct}% reduction</div>
+                                </div>
+                                <div style="background:linear-gradient(135deg,#1e1b4b,#312e81); border-radius:12px; padding:1.25rem; text-align:center; color:white;">
+                                    <div style="font-size:0.68rem; font-weight:700; color:#A5B4FC; letter-spacing:0.08em; text-transform:uppercase; margin-bottom:0.5rem;">Annual Hours Gained</div>
+                                    <div style="font-size:1.5rem; font-weight:800; font-family:'Outfit',sans-serif;">${annualHoursSaved} hrs</div>
+                                    <div style="font-size:0.72rem; color:rgba(255,255,255,0.6); margin-top:0.25rem;">per year reclaimed</div>
+                                </div>
+                                <div style="background:linear-gradient(135deg,#78350f,#92400e); border-radius:12px; padding:1.25rem; text-align:center; color:white;">
+                                    <div style="font-size:0.68rem; font-weight:700; color:#FCD34D; letter-spacing:0.08em; text-transform:uppercase; margin-bottom:0.5rem;">AI Tool Rating</div>
+                                    <div style="font-size:1.5rem; font-weight:800; font-family:'Outfit',sans-serif;">${b.chatgptRating}→${a.chatgptRating}/10</div>
+                                    <div style="font-size:0.72rem; color:rgba(255,255,255,0.6); margin-top:0.25rem;">+${a.chatgptRating-b.chatgptRating} marks gain</div>
+                                </div>
+                            </div>
+
+                            <!-- DETAILED TABLE -->
+                            <h2 style="font-family:'Outfit',sans-serif; color:#0A192F; font-size:1rem; font-weight:700; margin-bottom:0.75rem;">📋 Detailed Assessment Comparison</h2>
+                            <table style="width:100%; border-collapse:collapse; border-radius:10px; overflow:hidden; font-size:0.875rem; margin-bottom:2rem;">
+                                <thead>
+                                    <tr style="background:#0A192F; color:white;">
+                                        <th style="padding:12px 14px; text-align:left;">Parameter</th>
+                                        <th style="padding:12px 14px; text-align:center;">Before Training</th>
+                                        <th style="padding:12px 14px; text-align:center;">After Training</th>
+                                        <th style="padding:12px 14px; text-align:center; background:#10B981;">Net Gain ✅</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr style="background:#F8FAFC;">
+                                        <td style="padding:12px 14px; font-weight:600; border-bottom:1px solid #E2E8F0;">Daily AI Task Usage</td>
+                                        <td style="padding:12px 14px; text-align:center; border-bottom:1px solid #E2E8F0; color:#EF4444; font-weight:600;">${b.aiUsagePct}%</td>
+                                        <td style="padding:12px 14px; text-align:center; border-bottom:1px solid #E2E8F0; color:#10B981; font-weight:600;">${a.aiUsagePct}%</td>
+                                        <td style="padding:12px 14px; text-align:center; border-bottom:1px solid #E2E8F0; color:#10B981; font-weight:700;">+${a.aiUsagePct-b.aiUsagePct}% Integration</td>
+                                    </tr>
+                                    <tr style="background:white;">
+                                        <td style="padding:12px 14px; font-weight:600; border-bottom:1px solid #E2E8F0;">Weekly Manual Work Hours</td>
+                                        <td style="padding:12px 14px; text-align:center; border-bottom:1px solid #E2E8F0; color:#EF4444; font-weight:600;">${b.manualTime} hrs/week</td>
+                                        <td style="padding:12px 14px; text-align:center; border-bottom:1px solid #E2E8F0; color:#10B981; font-weight:600;">${a.manualTime} hrs/week</td>
+                                        <td style="padding:12px 14px; text-align:center; border-bottom:1px solid #E2E8F0; color:#10B981; font-weight:700;">-${timeSaved} hrs (${timeSavedPct}% saved)</td>
+                                    </tr>
+                                    <tr style="background:#F8FAFC;">
+                                        <td style="padding:12px 14px; font-weight:600;">AI Performance Rating (/10)</td>
+                                        <td style="padding:12px 14px; text-align:center; color:#EF4444; font-weight:600;">${b.chatgptRating}/10</td>
+                                        <td style="padding:12px 14px; text-align:center; color:#10B981; font-weight:600;">${a.chatgptRating}/10</td>
+                                        <td style="padding:12px 14px; text-align:center; color:#10B981; font-weight:700;">+${a.chatgptRating-b.chatgptRating} marks gain</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <!-- FEEDBACK SECTION -->
+                            <h2 style="font-family:'Outfit',sans-serif; color:#0A192F; font-size:1rem; font-weight:700; margin-bottom:0.75rem;">💬 My Key Takeaways & Learnings</h2>
+                            <div style="background:#FFFBEB; border:1px solid #F59E0B; border-left:5px solid #F59E0B; border-radius:10px; padding:1.5rem; font-size:0.9rem; line-height:1.8; color:#1E293B; white-space:pre-wrap; margin-bottom:2rem; font-style:italic;">${a.feedbackPointers}</div>
+
+                            <!-- ANNUAL ROI CALLOUT -->
+                            <div style="background:linear-gradient(135deg,#ECFDF5,#D1FAE5); border:2px solid #10B981; border-radius:14px; padding:1.5rem 2rem; text-align:center; margin-bottom:1.5rem;">
+                                <div style="font-size:0.75rem; font-weight:700; color:#065F46; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:0.5rem;">🌟 Total Annual Productivity Gain</div>
+                                <div style="font-size:2.5rem; font-weight:800; color:#065F46; font-family:'Outfit',sans-serif;">${annualHoursSaved} Hours / Year</div>
+                                <div style="font-size:0.85rem; color:#047857; margin-top:0.25rem;">Reclaimed from manual tasks · Calculated over 52 business weeks</div>
+                            </div>
+
+                            <!-- FOOTER -->
+                            <div style="border-top:2px solid #E2E8F0; padding-top:1rem; display:flex; justify-content:space-between; align-items:center; font-size:0.75rem; color:#94A3B8;">
+                                <span>DEC Infra &amp; DEC Industries &nbsp;|&nbsp; AI Foundations Training</span>
+                                <span>Generated: ${today}</span>
+                            </div>
                         </div>
                     `;
                     window.downloadPDF('DEC AI Foundations - Productivity ROI Certificate', html);
@@ -3306,59 +3351,45 @@ function renderProductivityForms(container) {
         });
         
         if (type === 'before') {
-            document.getElementById('pre-survey-form')?.addEventListener('submit', async (e) => {
+            document.getElementById('pre-survey-form')?.addEventListener('submit', (e) => {
                 e.preventDefault();
                 const submitBtn = e.target.querySelector('button[type="submit"]');
-                if (submitBtn) {
-                    submitBtn.disabled = true;
-                    submitBtn.innerText = "Recording Survey...";
-                }
+                if (submitBtn) { submitBtn.disabled = true; submitBtn.innerText = "Saving..."; }
                 const name = document.getElementById('before-name').value;
                 const usage = parseInt(document.querySelector('input[name="before-ai-usage"]:checked').value);
                 const manualTime = parseInt(document.getElementById('before-manual-time').value);
                 const blocker = document.getElementById('before-blocker').value;
-                
                 const data = {
-                    name: name,
-                    aiUsagePct: usage,
+                    name: name, aiUsagePct: usage,
                     usefulnessRating: selectedBeforeStars,
                     chatgptRating: selectedBeforeRating,
-                    manualTime: manualTime,
-                    blocker: blocker
+                    manualTime: manualTime, blocker: blocker
                 };
-                
                 State.set('productivityFormBefore', data);
-                await saveAndPostSubmission(name, 'before', data);
-                showToast('Pre-session baseline recorded!', 'success');
+                saveAndPostSubmission(name, 'before', data); // fire-and-forget
+                showToast('✅ Baseline recorded! Now complete your training.', 'success');
                 activeTab = 'after';
                 drawView();
             });
         } else if (type === 'after') {
-            document.getElementById('post-survey-form')?.addEventListener('submit', async (e) => {
+            document.getElementById('post-survey-form')?.addEventListener('submit', (e) => {
                 e.preventDefault();
                 const submitBtn = e.target.querySelector('button[type="submit"]');
-                if (submitBtn) {
-                    submitBtn.disabled = true;
-                    submitBtn.innerText = "Recording Feedback...";
-                }
+                if (submitBtn) { submitBtn.disabled = true; submitBtn.innerText = "Saving..."; }
                 const name = document.getElementById('after-name').value;
                 const usage = parseInt(document.querySelector('input[name="after-ai-usage"]:checked').value);
                 const prodIncrease = document.querySelector('input[name="after-productivity"]:checked').value;
                 const manualTime = parseInt(document.getElementById('after-manual-time').value);
                 const feedback = document.getElementById('after-feedback').value;
-                
                 const data = {
-                    name: name,
-                    aiUsagePct: usage,
+                    name: name, aiUsagePct: usage,
                     productivityIncrease: prodIncrease,
                     chatgptRating: selectedAfterRating,
-                    manualTime: manualTime,
-                    feedbackPointers: feedback
+                    manualTime: manualTime, feedbackPointers: feedback
                 };
-                
                 State.set('productivityFormAfter', data);
-                await saveAndPostSubmission(name, 'after', data);
-                showToast('Post-session feedback recorded!', 'success');
+                saveAndPostSubmission(name, 'after', data); // fire-and-forget
+                showToast('🎉 Feedback saved! Your ROI Dashboard is ready.', 'success');
                 activeTab = 'dashboard';
                 drawView();
             });

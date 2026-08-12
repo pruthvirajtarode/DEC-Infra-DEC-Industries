@@ -1056,7 +1056,8 @@ function renderModule3(container) {
 }
 
 function renderModule4(container) {
-    let activeSubTab = 'guide'; // 'guide' | 'builder'
+    let activeSubTab = sessionStorage.getItem('openCapstoneBuilder') === 'true' ? 'builder' : 'guide';
+    sessionStorage.removeItem('openCapstoneBuilder');
     
     // We store form fields in a local state so switching tabs doesn't wipe entries
     let formData = {

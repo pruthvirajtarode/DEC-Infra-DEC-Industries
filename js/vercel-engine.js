@@ -21,8 +21,15 @@ function renderVercelLab(container) {
         <div class="card mb-8" style="border-left: 4px solid var(--warning);">
             <div class="card-body">
                 <h3 style="color: var(--warning);">⚠️ No Capstone Prompt Found</h3>
-                <p>You haven't generated your Capstone System Prompt yet! Please go back to <strong>M4: Capstone</strong> and complete the wizard before deploying your app.</p>
-                <button class="btn btn-primary mt-4" onclick="window.location.hash='/module4'">Go to Capstone</button>
+                <p>You haven't generated your Capstone System Prompt yet!</p>
+                <ol style="margin-left: 1.5rem; margin-top: 1rem; margin-bottom: 1rem;">
+                    <li>Click the <strong>Go to Capstone</strong> button below.</li>
+                    <li>Switch to the <strong>🛠️ Department Assistant Builder</strong> tab.</li>
+                    <li>Fill out your AI requirements.</li>
+                    <li>Click <strong>Generate System Prompt & Build</strong>.</li>
+                </ol>
+                <p>Once you generate the prompt, return here to deploy it to Vercel!</p>
+                <button class="btn btn-primary mt-4" onclick="sessionStorage.setItem('openCapstoneBuilder', 'true'); window.location.hash='/module4'">Go to Capstone</button>
             </div>
         </div>
         ` : `

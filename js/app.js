@@ -1234,6 +1234,12 @@ function renderModule4(container) {
                             </div>
                             
                             <button class="btn btn-accent w-full" id="btn-capstone-report">Generate Capstone Report & Completion Certificate (PDF)</button>
+                            <div class="mt-4 p-3 rounded" style="background: linear-gradient(135deg, #0A192F, #233554); color: white; text-align: center; border-radius: 8px;">
+                                <p style="font-size: 0.9rem; margin-bottom: 0.75rem; color: #94a3b8;">✅ Prompt saved! Ready to go live?</p>
+                                <button class="btn w-full" id="btn-go-deploy" style="background: linear-gradient(135deg, #3B82F6, #0EA5E9); color: white; font-size: 1rem; padding: 0.85rem; border-radius: 6px;">
+                                    🚀 Deploy My AI Assistant to Vercel →
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1268,6 +1274,9 @@ function renderModule4(container) {
             
             compiledPrompt = CapstoneEngine.generateSystemPrompt(formData);
             evalRes = CapstoneEngine.evaluateAssistant(formData);
+            
+            // Save prompt to State so Vercel Lab can access it
+            State.set('capstoneSystemPrompt', compiledPrompt);
             
             // Re-render subtab content to show results panel
             renderSubTabContent('builder');
@@ -1428,6 +1437,11 @@ ${compiledPrompt}
                 </div>
             `;
             window.downloadPDF('DEC AI Foundations - Capstone Report', html);
+        });
+
+        document.getElementById('btn-go-deploy')?.addEventListener('click', () => {
+            showToast('🚀 Opening Vercel Deployment Lab!', 'success');
+            setTimeout(() => { window.location.hash = '/vercel-lab'; }, 500);
         });
     }
     

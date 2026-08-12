@@ -1520,17 +1520,34 @@ function doPost(e) {
     var lastRow = sheet.getLastRow();
     if (lastRow >= 2) {
       var lastRowValues = sheet.getRange(lastRow, 1, 1, 3).getValues()[0];
-      var lastTimestamp = new Date(lastRowValues[0]);
+      
+      var lastDateVal = lastRowValues[0];
+      if (typeof lastDateVal === 'string') {
+        var parts = lastDateVal.split(/[/\s:]/);
+        if (parts.length >= 6) {
+          lastDateVal = new Date(parts[2], parts[1] - 1, parts[0], parts[3], parts[4], parts[5]);
+        } else {
+          lastDateVal = new Date(lastDateVal);
+        }
+      }
+      
+      var sheetZone = SpreadsheetApp.getActiveSpreadsheet().getSpreadsheetTimeZone();
+      var lastStr = Utilities.formatDate(new Date(lastDateVal), sheetZone, "yyyy-MM-dd HH:mm:ss");
+      var nowStr = Utilities.formatDate(new Date(), sheetZone, "yyyy-MM-dd HH:mm:ss");
+      
+      var lastDate = new Date(lastStr.replace(/-/g, '/'));
+      var nowDate = new Date(nowStr.replace(/-/g, '/'));
+      var timeDiff = Math.abs(nowDate - lastDate);
+      
       var lastName = lastRowValues[1].toString().trim().toLowerCase();
       var lastType = lastRowValues[2].toString().trim().toLowerCase();
-      
       var newName = json.participantName.toString().trim().toLowerCase();
       var newType = json.type.toString().trim().toLowerCase();
+      
       var isSameType = (lastType === newType) || 
                        (newType === "before" && lastType === "pre-session survey") || 
                        (newType === "after" && lastType === "post-session feedback");
                        
-      var timeDiff = Math.abs(new Date() - lastTimestamp);
       if (lastName === newName && isSameType && timeDiff < 4000) {
         return ContentService.createTextOutput("Duplicate submission skipped");
       }

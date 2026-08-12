@@ -1516,6 +1516,26 @@ function doPost(e) {
     var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
     var json = JSON.parse(e.postData.contents);
     
+    // Deduplication check: ignore double-clicks (same name, same type, submitted within 4 seconds)
+    var lastRow = sheet.getLastRow();
+    if (lastRow >= 2) {
+      var lastRowValues = sheet.getRange(lastRow, 1, 1, 3).getValues()[0];
+      var lastTimestamp = new Date(lastRowValues[0]);
+      var lastName = lastRowValues[1].toString().trim().toLowerCase();
+      var lastType = lastRowValues[2].toString().trim().toLowerCase();
+      
+      var newName = json.participantName.toString().trim().toLowerCase();
+      var newType = json.type.toString().trim().toLowerCase();
+      var isSameType = (lastType === newType) || 
+                       (newType === "before" && lastType === "pre-session survey") || 
+                       (newType === "after" && lastType === "post-session feedback");
+                       
+      var timeDiff = Math.abs(new Date() - lastTimestamp);
+      if (lastName === newName && isSameType && timeDiff < 4000) {
+        return ContentService.createTextOutput("Duplicate submission skipped");
+      }
+    }
+    
     // Append the new row data
     var rowData = [
       new Date(),

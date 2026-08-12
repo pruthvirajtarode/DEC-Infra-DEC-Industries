@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DEC AI Foundations — Feedback QR Code</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <!-- QRCode.js CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+        :root {
+            --primary: #0A192F;
+            --accent: #F59E0B;
+            --accent-light: #FEF3C7;
+            --success: #10B981;
+            --bg: #F0F4F8;
+            --white: #ffffff;
+            --text: #1E293B;
+            --text-muted: #64748B;
+            --border: #E2E8F0;
+            --radius: 16px;
+            --shadow: 0 20px 60px rgba(10, 25, 47, 0.15);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            color: var(--text);
+        }
+
+        /* ── SCREEN VERSION ─────────────────────────── */
+        .screen-wrapper {
+            width: 100%;
+            max-width: 960px;
+        }
+
+        .hero-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .logo-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--primary);
+            color: white;
+            padding: 0.6rem 1.5rem;
+            border-radius: 50px;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 1rem;
+            letter-spacing: 0.03em;
+            margin-bottom: 1.5rem;
+        }
+
+        .logo-badge .dot {
+            width: 8px;
+            height: 8px;
+            background: var(--accent);
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(0.85); }
+        }
+
+        .main-card {
+            background: var(--white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            min-height: 520px;
+        }
+
+        /* Left Panel */
+        .left-panel {
+            background: linear-gradient(145deg, var(--primary) 0%, #0F2547 100%);
+            padding: 3rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .left-panel::before {
+            content: '';
+            position: absolute;
+            top: -80px;
+            right: -80px;
+            width: 280px;
+            height: 280px;
+            background: rgba(245, 158, 11, 0.08);
+            border-radius: 50%;
+        }
+
+        .left-panel::after {
+            content: '';
+            position: absolute;
+            bottom: -60px;
+            left: -60px;
+            width: 220px;
+            height: 220px;
+            background: rgba(245, 158, 11, 0.05);
+            border-radius: 50%;
+        }
+
+        .panel-badge {
+            display: inline-block;
+            background: rgba(245, 158, 11, 0.2);
+            color: var(--accent);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            padding: 0.35rem 1rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+        }
+
+        .panel-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: white;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
+
+        .panel-title span {
+            color: var(--accent);
+        }
+
+        .panel-desc {
+            color: rgba(255,255,255,0.7);
+            font-size: 0.95rem;
+            line-height: 1.7;
+            margin-bottom: 2rem;
+        }
+
+        .steps-list {
+            list-style: none;
+        }
+
+        .steps-list li {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: rgba(255,255,255,0.85);
+            font-size: 0.9rem;
+            padding: 0.6rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .steps-list li:last-child {
+            border-bottom: none;
+        }
+
+        .step-num {
+            width: 28px;
+            height: 28px;
+            background: var(--accent);
+            color: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.8rem;
+            flex-shrink: 0;
+        }
+
+        /* Right Panel */
+        .right-panel {
+            padding: 3rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 1.5rem;
+        }
+
+        .qr-container-label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+
+        .qr-frame {
+            position: relative;
+            padding: 1.25rem;
+            background: white;
+            border: 3px solid var(--primary);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(10, 25, 47, 0.12);
+        }
+
+        .qr-frame::before, .qr-frame::after {
+            content: '';
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            border-color: var(--accent);
+            border-style: solid;
+        }
+
+        .qr-frame::before {
+            top: -4px;
+            left: -4px;
+            border-width: 4px 0 0 4px;
+            border-radius: 4px 0 0 0;
+        }
+
+        .qr-frame::after {
+            bottom: -4px;
+            right: -4px;
+            border-width: 0 4px 4px 0;
+            border-radius: 0 0 4px 0;
+        }
+
+        #qr-code-box canvas,
+        #qr-code-box img {
+            display: block;
+            border-radius: 8px;
+        }
+
+        .qr-scan-label {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-align: center;
+        }
+
+        .url-chip {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 0.5rem 1rem;
+            font-size: 0.78rem;
+            font-family: monospace;
+            color: var(--text-muted);
+            text-align: center;
+            word-break: break-all;
+            max-width: 300px;
+        }
+
+        .action-row {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.65rem 1.4rem;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s ease;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #0F2547;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 16px rgba(10,25,47,0.25);
+        }
+
+        .btn-accent {
+            background: var(--accent);
+            color: var(--primary);
+        }
+
+        .btn-accent:hover {
+            background: #D97706;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 16px rgba(245,158,11,0.35);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--border);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--primary);
+            background: var(--bg);
+        }
+
+        /* Info strip */
+        .info-strip {
+            background: var(--accent-light);
+            border: 1px solid rgba(245,158,11,0.3);
+            border-radius: 10px;
+            padding: 1rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-top: 1rem;
+            font-size: 0.85rem;
+            color: #92400E;
+        }
+
+        .info-strip svg {
+            flex-shrink: 0;
+        }
+
+        /* ── PRINT VERSION ─────────────────────────── */
+        #print-page {
+            display: none; /* Hidden on screen */
+        }
+
+        @media print {
+            body {
+                background: white !important;
+                padding: 0;
+                margin: 0;
+            }
+
+            .screen-wrapper,
+            .action-row,
+            .info-strip {
+                display: none !important;
+            }
+
+            #print-page {
+                display: block !important;
+                width: 210mm;
+                min-height: 297mm;
+                margin: 0 auto;
+                padding: 20mm 20mm;
+                font-family: 'Inter', sans-serif;
+                color: #0A192F;
+            }
+
+            .print-header {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                border-bottom: 3px solid #0A192F;
+                padding-bottom: 12px;
+                margin-bottom: 24px;
+            }
+
+            .print-logo {
+                font-family: 'Outfit', sans-serif;
+                font-weight: 800;
+                font-size: 22px;
+                color: #0A192F;
+            }
+
+            .print-logo span {
+                color: #F59E0B;
+            }
+
+            .print-badge {
+                background: #0A192F;
+                color: white;
+                padding: 4px 14px;
+                border-radius: 20px;
+                font-size: 11px;
+                font-weight: 600;
+                letter-spacing: 0.08em;
+                text-transform: uppercase;
+            }
+
+            .print-body {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 24px;
+                margin-bottom: 24px;
+            }
+
+            .print-left h1 {
+                font-size: 26px;
+                font-weight: 800;
+                line-height: 1.2;
+                margin-bottom: 10px;
+            }
+
+            .print-left h1 span { color: #F59E0B; }
+
+            .print-left p {
+                font-size: 12px;
+                color: #475569;
+                line-height: 1.7;
+                margin-bottom: 16px;
+            }
+
+            .print-steps {
+                list-style: none;
+                margin: 0;
+                padding: 0;
+            }
+
+            .print-steps li {
+                display: flex;
+                align-items: flex-start;
+                gap: 10px;
+                margin-bottom: 10px;
+                font-size: 12px;
+                color: #1E293B;
+            }
+
+            .print-step-num {
+                width: 22px;
+                height: 22px;
+                background: #F59E0B;
+                color: #0A192F;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-weight: 700;
+                font-size: 11px;
+                flex-shrink: 0;
+                margin-top: 1px;
+            }
+
+            .print-right {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 12px;
+            }
+
+            .print-qr-frame {
+                border: 3px solid #0A192F;
+                border-radius: 16px;
+                padding: 12px;
+                background: white;
+                box-shadow: 0 4px 20px rgba(10,25,47,0.1);
+            }
+
+            .print-qr-label {
+                font-size: 11px;
+                font-weight: 700;
+                letter-spacing: 0.08em;
+                text-transform: uppercase;
+                color: #64748B;
+                text-align: center;
+            }
+
+            .print-scan-text {
+                font-size: 14px;
+                font-weight: 700;
+                text-align: center;
+                color: #0A192F;
+            }
+
+            .print-url {
+                font-size: 9px;
+                font-family: monospace;
+                color: #64748B;
+                text-align: center;
+                word-break: break-all;
+                border: 1px solid #E2E8F0;
+                border-radius: 6px;
+                padding: 4px 8px;
+                background: #F8FAFC;
+            }
+
+            .print-divider {
+                border: none;
+                border-top: 1px dashed #CBD5E1;
+                margin: 20px 0;
+            }
+
+            .print-footer {
+                text-align: center;
+                font-size: 10px;
+                color: #94A3B8;
+            }
+
+            .print-confidential {
+                background: #FEF3C7;
+                border: 1px solid #F59E0B;
+                border-radius: 8px;
+                padding: 10px 16px;
+                font-size: 11px;
+                color: #92400E;
+                text-align: center;
+                margin-top: 16px;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 680px) {
+            .main-card {
+                grid-template-columns: 1fr;
+            }
+
+            .left-panel {
+                padding: 2rem;
+            }
+
+            .panel-title {
+                font-size: 1.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════
+     SCREEN VERSION
+══════════════════════════════════════════ -->
+<div class="screen-wrapper">
+    <div class="hero-header">
+        <div class="logo-badge">
+            <span class="dot"></span>
+            DEC AI FOUNDATIONS &nbsp;|&nbsp; Employee Feedback Portal
+        </div>
+    </div>
+
+    <div class="main-card">
+
+        <!-- Left: Instructions -->
+        <div class="left-panel">
+            <div class="panel-badge">📋 Session Feedback</div>
+            <h1 class="panel-title">Scan to Share Your <span>Feedback</span></h1>
+            <p class="panel-desc">
+                Help us measure your AI productivity gains from today's training. Your feedback takes less than 2 minutes and is completely confidential.
+            </p>
+            <ul class="steps-list">
+                <li>
+                    <div class="step-num">1</div>
+                    Open your phone camera and point at the QR code
+                </li>
+                <li>
+                    <div class="step-num">2</div>
+                    Tap the link that appears on screen
+                </li>
+                <li>
+                    <div class="step-num">3</div>
+                    Fill in the Pre-Session Survey (30 seconds)
+                </li>
+                <li>
+                    <div class="step-num">4</div>
+                    After the training, complete the Post-Session Feedback
+                </li>
+                <li>
+                    <div class="step-num">5</div>
+                    View your personal ROI Dashboard 🚀
+                </li>
+            </ul>
+        </div>
+
+        <!-- Right: QR Code -->
+        <div class="right-panel">
+            <div class="qr-container-label">Scan with Any Phone Camera</div>
+
+            <div class="qr-frame">
+                <div id="qr-code-box"></div>
+            </div>
+
+            <div class="qr-scan-label">📱 Point & Tap to Open Instantly</div>
+
+            <div class="url-chip" id="feedback-url-display">https://dec-infra-dec-industries.vercel.app/#/productivity</div>
+
+            <div class="action-row">
+                <button class="btn btn-primary" onclick="window.print()">🖨️ Print QR Poster</button>
+                <button class="btn btn-accent" onclick="downloadQR()">⬇️ Download QR Image</button>
+                <a href="https://dec-infra-dec-industries.vercel.app/#/productivity" target="_blank" class="btn btn-outline">🔗 Open Link</a>
+            </div>
+
+            <div class="info-strip">
+                <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M12 2a10 10 0 100 20A10 10 0 0012 2z"/></svg>
+                <span>All responses are <strong>automatically saved</strong> to the trainer's Excel sheet via Google Sheets webhook.</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     PRINT VERSION (A4 Poster)
+══════════════════════════════════════════ -->
+<div id="print-page">
+    <div class="print-header">
+        <div class="print-logo">DEC <span>AI</span> FOUNDATIONS</div>
+        <div class="print-badge">Enterprise AI Training — 2026</div>
+    </div>
+
+    <div class="print-body">
+        <div class="print-left">
+            <h1>Scan to Submit Your <span>Session Feedback</span></h1>
+            <p>
+                Your feedback helps us measure productivity gains and prove the ROI of AI training for your department. It only takes 2 minutes.
+            </p>
+            <ul class="print-steps">
+                <li>
+                    <div class="print-step-num">1</div>
+                    <div>Open your phone camera and point it at the QR code on the right</div>
+                </li>
+                <li>
+                    <div class="print-step-num">2</div>
+                    <div>Tap the banner link that appears on your screen</div>
+                </li>
+                <li>
+                    <div class="print-step-num">3</div>
+                    <div>Fill in the <strong>Pre-Session Survey</strong> (before training begins — 30 sec)</div>
+                </li>
+                <li>
+                    <div class="print-step-num">4</div>
+                    <div>At the end of the session, complete <strong>Post-Session Feedback</strong></div>
+                </li>
+                <li>
+                    <div class="print-step-num">5</div>
+                    <div>Your personal <strong>ROI Impact Dashboard</strong> and certificate will be generated instantly ✅</div>
+                </li>
+            </ul>
+            <div class="print-confidential">
+                🔒 Your responses are confidential and stored securely. They will only be analyzed in aggregate by the trainer.
+            </div>
+        </div>
+
+        <div class="print-right">
+            <div class="print-qr-label">Scan With Your Phone Camera</div>
+            <div class="print-qr-frame" id="print-qr-box"></div>
+            <div class="print-scan-text">📱 Point. Tap. Done.</div>
+            <div class="print-url">https://dec-infra-dec-industries.vercel.app/#/productivity</div>
+        </div>
+    </div>
+
+    <hr class="print-divider">
+
+    <div class="print-footer">
+        DEC Infra &amp; DEC Industries &nbsp;|&nbsp; AI Foundations Training Program &nbsp;|&nbsp; Powered by Antigravity IDE
+    </div>
+</div>
+
+
+<script>
+    const FEEDBACK_URL = 'https://dec-infra-dec-industries.vercel.app/#/productivity';
+
+    // Generate QR for screen
+    const qrScreen = new QRCode(document.getElementById('qr-code-box'), {
+        text: FEEDBACK_URL,
+        width: 220,
+        height: 220,
+        colorDark: '#0A192F',
+        colorLight: '#ffffff',
+        correctLevel: QRCode.CorrectLevel.H
+    });
+
+    // Generate QR for print (slightly smaller)
+    const qrPrint = new QRCode(document.getElementById('print-qr-box'), {
+        text: FEEDBACK_URL,
+        width: 200,
+        height: 200,
+        colorDark: '#0A192F',
+        colorLight: '#ffffff',
+        correctLevel: QRCode.CorrectLevel.H
+    });
+
+    // Download QR as PNG
+    function downloadQR() {
+        setTimeout(() => {
+            const canvas = document.querySelector('#qr-code-box canvas');
+            if (!canvas) {
+                // Fallback: try img tag
+                const img = document.querySelector('#qr-code-box img');
+                if (img) {
+                    const a = document.createElement('a');
+                    a.href = img.src;
+                    a.download = 'DEC-AI-Feedback-QR.png';
+                    a.click();
+                }
+                return;
+            }
+            // Add padding and branding
+            const branded = document.createElement('canvas');
+            branded.width = canvas.width + 40;
+            branded.height = canvas.height + 80;
+            const ctx = branded.getContext('2d');
+
+            // White background
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, branded.width, branded.height);
+
+            // Border
+            ctx.strokeStyle = '#0A192F';
+            ctx.lineWidth = 3;
+            ctx.roundRect(2, 2, branded.width - 4, branded.height - 4, 12);
+            ctx.stroke();
+
+            // Header text
+            ctx.fillStyle = '#0A192F';
+            ctx.font = 'bold 14px Inter, sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('DEC AI FOUNDATIONS', branded.width / 2, 24);
+            ctx.fillStyle = '#F59E0B';
+            ctx.font = '11px Inter, sans-serif';
+            ctx.fillText('EMPLOYEE FEEDBACK', branded.width / 2, 40);
+
+            // QR Code
+            ctx.drawImage(canvas, 20, 50);
+
+            const a = document.createElement('a');
+            a.download = 'DEC-AI-Feedback-QR.png';
+            a.href = branded.toDataURL('image/png');
+            a.click();
+        }, 300);
+    }
+</script>
+</body>
+</html>

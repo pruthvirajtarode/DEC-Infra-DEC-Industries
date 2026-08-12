@@ -2833,7 +2833,6 @@ function renderProductivityForms(container) {
         }
         return starsHtml;
     }
-    
     function renderRatingScale(rating, prefix = '') {
         let html = '<div class="flex gap-2 flex-wrap" style="display:flex; gap: 0.5rem; flex-wrap: wrap;">';
         for (let i = 1; i <= 10; i++) {
@@ -2846,11 +2845,51 @@ function renderProductivityForms(container) {
     
     function drawView() {
         container.innerHTML = `
-            <div class="mb-4">
-                <span class="badge badge-info" style="margin-bottom: 0.5rem;">AI Performance Assessment</span>
-                <h2 class="mt-2">AI Productivity & ROI Tracker</h2>
-                <p class="text-muted">Analyze your productivity gains, AI utilization shift, and satisfaction delta before and after the sessions.</p>
+            <div class="mb-4" style="display:flex; align-items:flex-start; justify-content:space-between; flex-wrap:wrap; gap:1rem;">
+                <div>
+                    <span class="badge badge-info" style="margin-bottom: 0.5rem;">AI Performance Assessment</span>
+                    <h2 class="mt-2">AI Productivity &amp; ROI Tracker</h2>
+                    <p class="text-muted">Analyze your productivity gains, AI utilization shift, and satisfaction delta before and after the sessions.</p>
+                </div>
+                <button id="btn-show-qr" class="btn btn-secondary" style="display:inline-flex; align-items:center; gap:0.5rem; white-space:nowrap; border: 2px solid var(--primary); color: var(--primary); font-weight:600; padding: 0.6rem 1.2rem; border-radius: 8px; flex-shrink:0;" title="Show QR code for employees to scan">
+                    <span style="font-size:1.25rem;">📱</span> Show QR Code for Employees
+                </button>
             </div>
+
+            <!-- QR Code Modal Overlay -->
+            <div id="qr-modal-overlay" style="display:none; position:fixed; inset:0; background:rgba(10,25,47,0.7); z-index:9999; backdrop-filter:blur(6px); animation: fadeInOverlay 0.25s ease;" onclick="if(event.target===this) document.getElementById('qr-modal-overlay').style.display='none';">
+                <div style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); background:white; border-radius:20px; box-shadow:0 32px 80px rgba(10,25,47,0.3); padding:2.5rem; max-width:520px; width:90%; text-align:center; animation: scaleInModal 0.25s ease;">
+                    <button onclick="document.getElementById('qr-modal-overlay').style.display='none'" style="position:absolute; top:1rem; right:1rem; background:none; border:none; font-size:1.5rem; cursor:pointer; color:#94A3B8; line-height:1;">✕</button>
+
+                    <div style="margin-bottom:0.5rem;">
+                        <span style="background:#0A192F; color:white; padding:0.35rem 1rem; border-radius:50px; font-size:0.72rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase;">DEC AI FOUNDATIONS</span>
+                    </div>
+                    <h3 style="font-family:var(--font-heading); font-size:1.5rem; color:#0A192F; margin:0.75rem 0 0.4rem;">Employee Feedback QR Code</h3>
+                    <p style="font-size:0.85rem; color:#64748B; margin-bottom:1.5rem;">Employees scan this code to directly open the feedback form. Responses are saved to Excel automatically.</p>
+
+                    <div style="display:inline-block; padding:1rem; border:3px solid #0A192F; border-radius:16px; background:white; box-shadow:0 8px 24px rgba(10,25,47,0.12); margin-bottom:1rem;">
+                        <div id="qr-modal-code"></div>
+                    </div>
+
+                    <div style="background:#F1F5F9; border-radius:8px; padding:0.5rem 1rem; font-size:0.75rem; font-family:monospace; color:#64748B; margin-bottom:1.5rem; word-break:break-all;">
+                        https://dec-infra-dec-industries.vercel.app/#/productivity
+                    </div>
+
+                    <div style="display:flex; gap:0.75rem; justify-content:center; flex-wrap:wrap;">
+                        <button onclick="window.open('qr-feedback.html','_blank')" style="display:inline-flex; align-items:center; gap:0.5rem; background:#0A192F; color:white; border:none; padding:0.65rem 1.4rem; border-radius:8px; font-size:0.875rem; font-weight:600; cursor:pointer;">🖨️ Open Print Poster</button>
+                        <button onclick="downloadQRFromModal()" style="display:inline-flex; align-items:center; gap:0.5rem; background:#F59E0B; color:#0A192F; border:none; padding:0.65rem 1.4rem; border-radius:8px; font-size:0.875rem; font-weight:600; cursor:pointer;">⬇️ Download QR Image</button>
+                    </div>
+
+                    <div style="background:#FEF3C7; border:1px solid rgba(245,158,11,0.3); border-radius:8px; padding:0.75rem 1rem; font-size:0.8rem; color:#92400E; margin-top:1.25rem; text-align:left;">
+                        💡 <strong>Tip for Sir:</strong> Open the Print Poster page and press Ctrl+P to print a clean A4 QR poster. Place it in the training room before the session starts.
+                    </div>
+                </div>
+            </div>
+
+            <style>
+                @keyframes fadeInOverlay { from { opacity:0; } to { opacity:1; } }
+                @keyframes scaleInModal { from { opacity:0; transform:translate(-50%,-50%) scale(0.92); } to { opacity:1; transform:translate(-50%,-50%) scale(1); } }
+            </style>
             
             <div class="flex gap-2 mb-6" style="display: flex; flex-wrap: wrap; gap: 0.5rem; border-bottom: 2px solid var(--border-color); padding-bottom: 0.5rem; margin-bottom: 2rem;">
                 <button class="btn tab-btn ${activeTab === 'before' ? 'btn-primary' : 'btn-secondary'}" data-tab="before" style="border-radius: var(--radius-sm);">1. Pre-Session Survey</button>
@@ -2863,7 +2902,71 @@ function renderProductivityForms(container) {
         
         renderTabContent(activeTab);
         bindTabListeners();
+        
+        // QR Modal Logic
+        const qrBtn = document.getElementById('btn-show-qr');
+        if (qrBtn) {
+            qrBtn.addEventListener('click', () => {
+                const overlay = document.getElementById('qr-modal-overlay');
+                overlay.style.display = 'block';
+                const qrBox = document.getElementById('qr-modal-code');
+                if (qrBox && !qrBox._qrGenerated) {
+                    qrBox._qrGenerated = true;
+                    // Use QRCode.js if loaded, else use Google Charts API
+                    if (typeof QRCode !== 'undefined') {
+                        new QRCode(qrBox, {
+                            text: 'https://dec-infra-dec-industries.vercel.app/#/productivity',
+                            width: 200,
+                            height: 200,
+                            colorDark: '#0A192F',
+                            colorLight: '#ffffff',
+                            correctLevel: QRCode.CorrectLevel.H
+                        });
+                    } else {
+                        const img = document.createElement('img');
+                        img.src = 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=' + encodeURIComponent('https://dec-infra-dec-industries.vercel.app/#/productivity') + '&color=0A192F&bgcolor=FFFFFF&ecc=H';
+                        img.alt = 'Feedback QR Code';
+                        img.style.cssText = 'width:200px;height:200px;display:block;border-radius:8px;';
+                        qrBox.appendChild(img);
+                    }
+                }
+            });
+        }
     }
+    
+    window.downloadQRFromModal = function() {
+        const canvas = document.querySelector('#qr-modal-code canvas');
+        if (canvas) {
+            const branded = document.createElement('canvas');
+            branded.width = canvas.width + 40;
+            branded.height = canvas.height + 80;
+            const ctx = branded.getContext('2d');
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, branded.width, branded.height);
+            ctx.strokeStyle = '#0A192F';
+            ctx.lineWidth = 3;
+            ctx.strokeRect(2, 2, branded.width - 4, branded.height - 4);
+            ctx.fillStyle = '#0A192F';
+            ctx.font = 'bold 13px Inter, sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('DEC AI FOUNDATIONS', branded.width / 2, 22);
+            ctx.fillStyle = '#F59E0B';
+            ctx.font = '10px Inter, sans-serif';
+            ctx.fillText('EMPLOYEE FEEDBACK PORTAL', branded.width / 2, 38);
+            ctx.drawImage(canvas, 20, 48);
+            const a = document.createElement('a');
+            a.download = 'DEC-AI-Feedback-QR.png';
+            a.href = branded.toDataURL('image/png');
+            a.click();
+        } else {
+            // Fallback: download from QR API
+            const a = document.createElement('a');
+            a.href = 'https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=' + encodeURIComponent('https://dec-infra-dec-industries.vercel.app/#/productivity') + '&color=0A192F&bgcolor=FFFFFF&ecc=H';
+            a.download = 'DEC-AI-Feedback-QR.png';
+            a.target = '_blank';
+            a.click();
+        }
+    };
     
     function renderTabContent(tab) {
         const contentDiv = document.getElementById('productivity-tab-content');

@@ -2783,6 +2783,8 @@ function renderProductivityForms(container) {
     let selectedBeforeStars = beforeData ? beforeData.usefulnessRating : 3;
     let selectedBeforeRating = beforeData ? beforeData.chatgptRating : 5;
     let selectedAfterRating = afterData ? afterData.chatgptRating : 9;
+    let selectedBeforeHours = beforeData ? beforeData.manualTime : 10;
+    let selectedAfterHours = afterData ? afterData.manualTime : 2;
     
     function saveAndPostSubmission(name, type, surveyData) {
         // 1. Save locally in State INSTANTLY (synchronous — zero delay)
@@ -2831,9 +2833,20 @@ function renderProductivityForms(container) {
         let html = '<div class="flex gap-2 flex-wrap" style="display:flex; gap: 0.5rem; flex-wrap: wrap;">';
         for (let i = 1; i <= 10; i++) {
             const isActive = i === rating;
-            html += `<button type="button" class="btn scale-btn ${isActive ? 'btn-primary' : 'btn-secondary'}" data-rating="${i}" data-prefix="${prefix}" style="min-width: 38px; height: 38px; padding: 0; display: inline-flex; align-items: center; justify-content: center; border-radius: 6px; font-weight: bold; border: 1px solid ${isActive ? 'var(--primary)' : '#CBD5E1'};">${i}</button>`;
+            html += `<button type="button" class="btn scale-btn ${isActive ? 'btn-primary' : 'btn-secondary'}" data-rating="${i}" data-prefix="${prefix}" style="min-width: 38px; height: 38px; padding: 0; display: inline-flex; align-items: center; justify-content: center; border-radius: 6px; font-weight: bold; border: 1px solid ${isActive ? 'var(--primary)' : '#CBD5E1'};"><span style="pointer-events:none;">${i}</span></button>`;
         }
         html += '</div>';
+        return html;
+    }
+
+    function renderHourSelector(selected, prefix = '', hoursArr = []) {
+        let html = '<div class="flex gap-2 flex-wrap" style="display:flex; gap: 0.5rem; flex-wrap: wrap;">';
+        hoursArr.forEach(h => {
+            const isActive = h === selected;
+            html += `<button type="button" class="btn hour-btn ${isActive ? 'btn-primary' : 'btn-secondary'}" data-hour="${h}" data-prefix="${prefix}" style="min-width: 44px; height: 44px; padding: 0; display: inline-flex; align-items: center; justify-content: center; border-radius: 8px; font-weight: 700; font-size: 0.9rem; border: 1px solid ${isActive ? 'var(--primary)' : '#CBD5E1'}; position:relative;"><span style="pointer-events:none;">${h}</span></button>`;
+        });
+        html += '</div>';
+        html += `<div style="margin-top:0.5rem; font-size:0.78rem; color:var(--text-muted);">Selected: <strong style="color:var(--primary);">${selected} hr${selected !== 1 ? 's' : ''} / week</strong></div>`;
         return html;
     }
     
@@ -3014,7 +3027,9 @@ function renderProductivityForms(container) {
 
                             <div class="form-group mb-6" style="margin-bottom: 1.5rem;">
                                 <label class="form-label font-bold" style="font-weight: 600; margin-bottom: 0.75rem;">4. How many hours per week do you spend on repetitive Excel formulas, attendance registers, and manual drafting?</label>
-                                <input type="text" inputmode="numeric" pattern="[0-9]*" id="before-manual-time" class="form-control no-spinner" placeholder="e.g. 10" value="${beforeData ? beforeData.manualTime : '10'}" required style="max-width: 250px;">
+                                <div id="before-hours-container">
+                                    ${renderHourSelector(selectedBeforeHours, 'before', [1,2,3,4,5,6,7,8,10,12,15,20])}
+                                </div>
                             </div>
 
                             <div class="form-group mb-6" style="margin-bottom: 1.5rem;">
@@ -3091,7 +3106,9 @@ function renderProductivityForms(container) {
 
                             <div class="form-group mb-6" style="margin-bottom: 1.5rem;">
                                 <label class="form-label font-bold" style="font-weight: 600; margin-bottom: 0.75rem;">4. How many hours per week do you expect to spend on repetitive tasks using your AI assistants now?</label>
-                                <input type="text" inputmode="numeric" pattern="[0-9]*" id="after-manual-time" class="form-control no-spinner" placeholder="e.g. 2" value="${afterData ? afterData.manualTime : '2'}" required style="max-width: 250px;">
+                                <div id="after-hours-container">
+                                    ${renderHourSelector(selectedAfterHours, 'after', [0,1,2,3,4,5,6,7,8,10])}
+                                </div>
                             </div>
 
                             <div class="form-group mb-6" style="margin-bottom: 1.5rem;">
@@ -3336,16 +3353,35 @@ function renderProductivityForms(container) {
         // Rating scale listener
         document.querySelectorAll('.scale-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
-                const val = parseInt(e.target.getAttribute('data-rating'));
-                const prefix = e.target.getAttribute('data-prefix');
+                const val = parseInt(e.target.getAttribute('data-rating') || e.target.closest('.scale-btn')?.getAttribute('data-rating'));
+                const prefix = e.target.getAttribute('data-prefix') || e.target.closest('.scale-btn')?.getAttribute('data-prefix');
                 if (prefix === 'before') {
                     selectedBeforeRating = val;
                     document.getElementById('before-rating-container').innerHTML = renderRatingScale(selectedBeforeRating, 'before');
-                    bindFormListeners('before'); // Rebind
+                    bindFormListeners('before');
                 } else if (prefix === 'after') {
                     selectedAfterRating = val;
                     document.getElementById('after-rating-container').innerHTML = renderRatingScale(selectedAfterRating, 'after');
-                    bindFormListeners('after'); // Rebind
+                    bindFormListeners('after');
+                }
+            });
+        });
+
+        // Hour selector listener
+        document.querySelectorAll('.hour-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const tgt = e.target.closest('.hour-btn');
+                if (!tgt) return;
+                const val = parseInt(tgt.getAttribute('data-hour'));
+                const prefix = tgt.getAttribute('data-prefix');
+                if (prefix === 'before') {
+                    selectedBeforeHours = val;
+                    document.getElementById('before-hours-container').innerHTML = renderHourSelector(selectedBeforeHours, 'before', [1,2,3,4,5,6,7,8,10,12,15,20]);
+                    bindFormListeners('before');
+                } else if (prefix === 'after') {
+                    selectedAfterHours = val;
+                    document.getElementById('after-hours-container').innerHTML = renderHourSelector(selectedAfterHours, 'after', [0,1,2,3,4,5,6,7,8,10]);
+                    bindFormListeners('after');
                 }
             });
         });
@@ -3357,13 +3393,12 @@ function renderProductivityForms(container) {
                 if (submitBtn) { submitBtn.disabled = true; submitBtn.innerText = "Saving..."; }
                 const name = document.getElementById('before-name').value;
                 const usage = parseInt(document.querySelector('input[name="before-ai-usage"]:checked').value);
-                const manualTime = parseInt(document.getElementById('before-manual-time').value);
                 const blocker = document.getElementById('before-blocker').value;
                 const data = {
                     name: name, aiUsagePct: usage,
                     usefulnessRating: selectedBeforeStars,
                     chatgptRating: selectedBeforeRating,
-                    manualTime: manualTime, blocker: blocker
+                    manualTime: selectedBeforeHours, blocker: blocker
                 };
                 State.set('productivityFormBefore', data);
                 saveAndPostSubmission(name, 'before', data); // fire-and-forget
@@ -3379,13 +3414,12 @@ function renderProductivityForms(container) {
                 const name = document.getElementById('after-name').value;
                 const usage = parseInt(document.querySelector('input[name="after-ai-usage"]:checked').value);
                 const prodIncrease = document.querySelector('input[name="after-productivity"]:checked').value;
-                const manualTime = parseInt(document.getElementById('after-manual-time').value);
                 const feedback = document.getElementById('after-feedback').value;
                 const data = {
                     name: name, aiUsagePct: usage,
                     productivityIncrease: prodIncrease,
                     chatgptRating: selectedAfterRating,
-                    manualTime: manualTime, feedbackPointers: feedback
+                    manualTime: selectedAfterHours, feedbackPointers: feedback
                 };
                 State.set('productivityFormAfter', data);
                 saveAndPostSubmission(name, 'after', data); // fire-and-forget

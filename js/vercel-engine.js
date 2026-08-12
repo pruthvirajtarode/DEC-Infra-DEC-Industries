@@ -42,8 +42,8 @@ function renderVercelLab(container) {
                     <div class="p-3 border rounded mb-4" style="background:#F8FAFC; border:1px solid #cbd5e1;">
                         <h4 class="text-sm mb-2">Included in your App:</h4>
                         <ul class="text-sm text-muted mb-0" style="padding-left:1.2rem;">
-                            <li>Clean, responsive Chat UI (HTML/CSS)</li>
-                            <li>Your custom System Prompt baked into the logic</li>
+                            <li>Clean, responsive Chat UI with 2 tabs (Chat + View System Prompt)</li>
+                            <li>Your actual System Prompt displayed in the "View System Prompt" tab</li>
                             <li>Simulated API connection ready for real Claude API keys</li>
                         </ul>
                     </div>
@@ -98,168 +98,179 @@ function renderVercelLab(container) {
 }
 
 function generateAndDownloadApp(systemPrompt) {
-    // Generate a standalone HTML file that contains a simple chat interface
-    // and embeds the user's system prompt.
-    
-    // Escape the prompt for embedding in JS string
     const escapedPrompt = systemPrompt.replace(/`/g, '\\`').replace(/\$/g, '\\$');
+    const displayPrompt = systemPrompt
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/\n/g, '<br>');
     
     const htmlContent = `<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My AI Assistant</title>
+    <title>My DEC AI Assistant</title>
     <style>
-        :root {
-            --primary: #0A192F;
-            --secondary: #F8FAFC;
-            --accent: #3B82F6;
-        }
+        :root { --primary: #0A192F; --accent: #3B82F6; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f1f5f9;
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-        .chat-container {
-            width: 100%;
-            max-width: 600px;
-            background: white;
-            height: 80vh;
-            border-radius: 12px;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            background: linear-gradient(135deg, #0F172A, #1E3A5F);
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
-            overflow: hidden;
+            align-items: center;
+            padding: 2rem 1rem;
         }
+        .app-wrapper { width: 100%; max-width: 760px; }
         .header {
             background: var(--primary);
             color: white;
-            padding: 1.5rem;
-            text-align: center;
-        }
-        .header h1 { margin: 0; font-size: 1.25rem; }
-        .header p { margin: 0.5rem 0 0 0; font-size: 0.85rem; opacity: 0.8; }
-        .messages {
-            flex-grow: 1;
-            padding: 1.5rem;
-            overflow-y: auto;
+            padding: 1.5rem 2rem;
+            border-radius: 12px 12px 0 0;
             display: flex;
-            flex-direction: column;
-            gap: 1rem;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 3px solid var(--accent);
+        }
+        .header h1 { font-size: 1.25rem; color: white; }
+        .header p { font-size: 0.8rem; opacity: 0.7; margin-top: 0.25rem; }
+        .badge { background: var(--accent); color: white; padding: 0.25rem 0.75rem; border-radius: 99px; font-size: 0.75rem; font-weight: 600; }
+        .tabs { display: flex; background: #1E293B; }
+        .tab-btn {
+            flex: 1; padding: 0.75rem; border: none; cursor: pointer;
+            background: #1E293B; color: #94A3B8; font-size: 0.9rem;
+            border-bottom: 2px solid transparent; transition: all 0.2s;
+        }
+        .tab-btn.active { color: white; border-bottom-color: var(--accent); background: #0F172A; }
+        .tab-content { background: white; border-radius: 0 0 12px 12px; overflow: hidden; }
+        .chat-area { height: 55vh; display: flex; flex-direction: column; }
+        .messages {
+            flex-grow: 1; padding: 1.5rem; overflow-y: auto;
+            display: flex; flex-direction: column; gap: 1rem;
         }
         .message {
-            max-width: 80%;
-            padding: 1rem;
-            border-radius: 8px;
-            line-height: 1.5;
-            font-size: 0.95rem;
+            max-width: 80%; padding: 0.9rem 1.1rem;
+            border-radius: 12px; line-height: 1.6; font-size: 0.9rem;
         }
-        .message.bot {
-            background: #f1f5f9;
-            color: #334155;
-            align-self: flex-start;
-            border-bottom-left-radius: 0;
-        }
-        .message.user {
-            background: var(--accent);
-            color: white;
-            align-self: flex-end;
-            border-bottom-right-radius: 0;
-        }
+        .message.bot { background: #F1F5F9; color: #334155; align-self: flex-start; border-bottom-left-radius: 0; }
+        .message.user { background: var(--accent); color: white; align-self: flex-end; border-bottom-right-radius: 0; }
         .input-area {
-            padding: 1.5rem;
-            background: white;
-            border-top: 1px solid #e2e8f0;
-            display: flex;
-            gap: 0.5rem;
+            padding: 1rem 1.5rem; background: white;
+            border-top: 1px solid #E2E8F0; display: flex; gap: 0.5rem;
         }
-        input {
-            flex-grow: 1;
-            padding: 0.75rem 1rem;
-            border: 1px solid #cbd5e1;
-            border-radius: 6px;
-            outline: none;
-            font-size: 1rem;
+        input[type=text] {
+            flex-grow: 1; padding: 0.75rem 1rem; border: 1px solid #CBD5E1;
+            border-radius: 8px; outline: none; font-size: 0.95rem;
         }
-        input:focus { border-color: var(--accent); }
-        button {
-            background: var(--accent);
-            color: white;
-            border: none;
-            padding: 0 1.5rem;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: background 0.2s;
+        input[type=text]:focus { border-color: var(--accent); }
+        .send-btn {
+            background: var(--accent); color: white; border: none;
+            padding: 0.75rem 1.5rem; border-radius: 8px;
+            cursor: pointer; font-weight: 600; font-size: 0.95rem;
         }
-        button:hover { background: #2563eb; }
+        .send-btn:hover { background: #2563EB; }
+        .prompt-panel { padding: 1.5rem; display: none; height: 55vh; overflow-y: auto; }
+        .prompt-panel.active { display: block; }
+        .prompt-box {
+            background: #0F172A; color: #38BDF8;
+            font-family: 'Courier New', monospace; font-size: 0.82rem;
+            padding: 1.5rem; border-radius: 8px; white-space: pre-wrap;
+            line-height: 1.6; border: 1px solid #1E3A5F;
+        }
+        .info-box {
+            background: #ECFDF5; border: 1px solid #A7F3D0;
+            border-radius: 8px; padding: 1rem; margin-bottom: 1rem;
+            font-size: 0.88rem; color: #065F46;
+        }
+        .footer { text-align: center; color: #64748B; font-size: 0.75rem; margin-top: 1rem; }
     </style>
 </head>
 <body>
 
-<div class="chat-container">
+<div class="app-wrapper">
     <div class="header">
-        <h1>DEC Custom AI Assistant</h1>
-        <p>Built with DEC AI Foundations</p>
-    </div>
-    
-    <div class="messages" id="chat-messages">
-        <div class="message bot">
-            Hello! I am your custom AI Assistant. I have been configured with the following instructions:<br><br>
-            <em style="font-size: 0.8rem; opacity: 0.8;">"SYSTEM PROMPT LOADED SUCCESSFULLY"</em><br><br>
-            How can I help you today?
+        <div>
+            <h1>🤖 My DEC AI Assistant</h1>
+            <p>Built with DEC AI Foundations Training Program</p>
         </div>
+        <span class="badge">AI-Powered</span>
     </div>
     
-    <div class="input-area">
-        <input type="text" id="chat-input" placeholder="Type your message..." autocomplete="off">
-        <button id="send-btn">Send</button>
+    <div class="tabs">
+        <button class="tab-btn active" onclick="switchTab('chat')">💬 Chat</button>
+        <button class="tab-btn" onclick="switchTab('prompt')">📄 View System Prompt</button>
+    </div>
+    
+    <div class="tab-content">
+        <div class="chat-area" id="chat-panel">
+            <div class="messages" id="chat-messages">
+                <div class="message bot">
+                    <strong>Hello! 👋</strong><br><br>
+                    I am your custom AI Assistant built during the <strong>DEC AI Foundations</strong> training.<br><br>
+                    My instructions are configured via a <strong>custom System Prompt</strong>. Click the <em>"📄 View System Prompt"</em> tab above to see it!<br><br>
+                    How can I help you today?
+                </div>
+            </div>
+            <div class="input-area">
+                <input type="text" id="chat-input" placeholder="Ask your AI assistant a question..." autocomplete="off">
+                <button class="send-btn" id="send-btn">Send</button>
+            </div>
+        </div>
+
+        <div class="prompt-panel" id="prompt-panel">
+            <div class="info-box">
+                ✅ <strong>Your Custom System Prompt is shown below.</strong> Copy this into Claude.ai Projects → Custom Instructions to activate your real AI assistant!
+            </div>
+            <div class="prompt-box">${displayPrompt}</div>
+        </div>
     </div>
 </div>
 
+<div class="footer">Built with ❤️ during DEC AI Foundations | Deployed via Vercel</div>
+
 <script>
     const SYSTEM_PROMPT = \`${escapedPrompt}\`;
-    
     const messagesDiv = document.getElementById('chat-messages');
     const input = document.getElementById('chat-input');
     const btn = document.getElementById('send-btn');
     
+    function switchTab(tab) {
+        document.querySelectorAll('.tab-btn').forEach((b, i) => {
+            b.classList.toggle('active', (tab === 'chat' && i === 0) || (tab === 'prompt' && i === 1));
+        });
+        document.getElementById('chat-panel').style.display = tab === 'chat' ? 'flex' : 'none';
+        document.getElementById('prompt-panel').classList.toggle('active', tab === 'prompt');
+    }
+    
     function addMessage(text, isUser) {
         const div = document.createElement('div');
         div.className = 'message ' + (isUser ? 'user' : 'bot');
-        div.innerHTML = text.replace(/\\n/g, '<br>');
+        div.innerHTML = text;
         messagesDiv.appendChild(div);
         messagesDiv.scrollTop = messagesDiv.scrollHeight;
     }
     
     function handleSend() {
         const text = input.value.trim();
-        if(!text) return;
-        
+        if (!text) return;
         addMessage(text, true);
         input.value = '';
-        
-        // Simulate API delay
+        btn.disabled = true;
         setTimeout(() => {
-            addMessage("This is a simulated response. To make this app real, you will need to replace this JavaScript logic with an API call to Claude or OpenAI, passing the SYSTEM_PROMPT defined in the code!", false);
-        }, 1000);
+            addMessage("✅ <strong>Simulated Response</strong><br><br>Your system prompt is active and embedded in this app! To connect to a real AI, replace this block with a fetch() call to the Claude or OpenAI API, passing <code>SYSTEM_PROMPT</code> as the system instruction.", false);
+            btn.disabled = false;
+        }, 800);
     }
     
     btn.addEventListener('click', handleSend);
-    input.addEventListener('keypress', (e) => {
-        if(e.key === 'Enter') handleSend();
-    });
+    input.addEventListener('keypress', (e) => { if (e.key === 'Enter') handleSend(); });
 </script>
 
 </body>
 </html>`;
 
-    // Trigger download
     const blob = new Blob([htmlContent], { type: 'text/html' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -270,7 +281,7 @@ function generateAndDownloadApp(systemPrompt) {
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
     
-    showToast('Web App downloaded successfully! Proceed to Step 2.', 'success');
+    showToast('✅ Web App downloaded! Open it to see your prompt, then deploy to Vercel!', 'success');
 }
 
 window.renderVercelLab = renderVercelLab;

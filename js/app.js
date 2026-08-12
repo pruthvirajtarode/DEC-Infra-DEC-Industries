@@ -22,6 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
     Router.add('/case-studies', renderCaseStudies);
     Router.add('/resources', renderResourceCenter);
     Router.add('/datasets', renderDatasetHub);
+    Router.add('/vercel-lab', renderVercelLab);
     Router.add('/trainer', renderTrainerDashboard);
     Router.add('/flagship-demo', renderFlagshipDemo);
 

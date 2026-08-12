@@ -76,6 +76,7 @@ const Router = {
         if(path === 'module3') return 'Module 3: Safe AI Usage';
         if(path === 'module4') return 'Module 4: Capstone Assistant';
         if(path === 'case-studies') return 'Enterprise Case Studies';
+        if(path === 'vercel-lab') return 'Vercel Deployment Lab';
         return path.charAt(0).toUpperCase() + path.slice(1).replace('-', ' ');
     }
 };

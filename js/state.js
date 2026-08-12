@@ -24,14 +24,9 @@ const State = {
     },
 
     init() {
-        const saved = localStorage.getItem('dec_ai_state');
-        if (saved) {
-            try {
-                this._state = JSON.parse(saved);
-            } catch(e) {
-                console.error('Failed to parse saved state, resetting.');
-            }
-        }
+        // Ensure state resets to zero on every page refresh
+        localStorage.removeItem('dec_ai_state');
+        sessionStorage.removeItem('dec_ai_state');
         // Force upgrade old/empty webhook URLs to the new working bound script URL
         const oldUrl1 = "https://script.google.com/macros/s/AKfycbzztghKVuTii2St02I4le5Dm73GmawS6LDRHCUZmuIRy6kBwRoH6nFPDI5WjoFfcgahYA/exec";
         if (!this._state.surveyWebhookUrl || this._state.surveyWebhookUrl === "" || this._state.surveyWebhookUrl === oldUrl1) {

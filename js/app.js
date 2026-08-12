@@ -2259,6 +2259,110 @@ function renderCaseStudies(container) {
                     </div>
                 </div>
             </div>
+
+            <!-- DEC Agro Case Study -->
+            <div class="card mb-8">
+                <div class="card-header"><h3 class="card-title">DEC Agro: Crop Yield Predictor</h3></div>
+                <div class="card-body">
+                    <div class="mb-4">
+                        <span class="badge badge-warning mb-2">Agricultural Analytics</span>
+                        <p class="text-sm text-muted"><strong>Problem:</strong> Fluctuating weather patterns causing unpredictable crop yields and supply chain issues.</p>
+                        <p class="text-sm text-muted"><strong>AI Solution:</strong> Machine learning model analyzing historical weather and soil data to predict harvest times and yields.</p>
+                    </div>
+
+                    <div class="p-3 border rounded mb-4" style="background:#F8FAFC; border:1px solid #cbd5e1;">
+                        <h4 class="mb-2 text-sm">Synthetic Project Inputs:</h4>
+                        <ul class="text-xs text-muted mb-0" style="padding-left:1.2rem;">
+                            <li>Weather data: Above average rainfall expected</li>
+                            <li>Soil moisture levels: 45% (Optimal)</li>
+                            <li>Crop Type: Hybrid Wheat</li>
+                        </ul>
+                    </div>
+                    
+                    <button class="btn btn-primary w-full mb-4" id="btn-run-agro-cs">Run Yield Prediction Model</button>
+
+                    <div id="agro-cs-results" class="hidden">
+                        <div class="ai-result-box mb-4" style="border-color: var(--success); background: rgba(16, 185, 129, 0.05);">
+                            <span class="ai-badge" style="background:var(--success);">Yield Optimized!</span>
+                            <div class="mt-2 text-sm">
+                                <strong>Harvest Timeline Adjusted</strong><br>
+                                Shifted planting schedule by 1 week to avoid heavy rain. Expecting a 15% increase in total yield.
+                            </div>
+                        </div>
+                        <div style="height: 250px; border: 1px dashed #cbd5e1; border-radius: 8px; padding: 1rem;">
+                            <canvas id="agro-chart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DEC Finance Case Study -->
+            <div class="card mb-8">
+                <div class="card-header"><h3 class="card-title">DEC Finance: Invoice Processing Automation</h3></div>
+                <div class="card-body">
+                    <div class="mb-4">
+                        <span class="badge badge-info mb-2">Financial Operations</span>
+                        <p class="text-sm text-muted"><strong>Problem:</strong> Manual data entry of hundreds of invoices leading to human errors and delayed payments.</p>
+                        <p class="text-sm text-muted"><strong>AI Solution:</strong> OCR and NLP to automatically extract data from invoices and match them with Purchase Orders.</p>
+                    </div>
+
+                    <div class="p-3 border rounded mb-4" style="background:#0F172A; color: #10B981; font-family: monospace; height: 120px; display:flex; flex-direction:column; justify-content:flex-end; overflow:hidden;">
+                        <div id="invoice-feed" style="font-size: 0.75rem; line-height:1.2;">
+                            > Waiting for batch...<br>
+                        </div>
+                    </div>
+                    
+                    <button class="btn btn-primary w-full mb-4" id="btn-run-fin-cs">Start Automated Invoice Processing</button>
+
+                    <div id="fin-cs-results" class="hidden">
+                        <div class="ai-result-box mb-4" style="border-color: var(--primary);">
+                            <span class="ai-badge">Processing Complete</span>
+                            <div class="mt-2 text-sm">
+                                <strong>Data Extraction Successful</strong><br>
+                                Processed 500 invoices in 2 minutes. Flagged 12 discrepancies for manual review.
+                            </div>
+                        </div>
+                        <div style="height: 250px; border: 1px dashed #cbd5e1; border-radius: 8px; padding: 1rem;">
+                            <canvas id="fin-chart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DEC Tech Case Study -->
+            <div class="card mb-8">
+                <div class="card-header"><h3 class="card-title">DEC Tech: Vercel App Deployment Simulator</h3></div>
+                <div class="card-body">
+                    <div class="mb-4">
+                        <span class="badge badge-primary mb-2">DevOps & Deployment</span>
+                        <p class="text-sm text-muted"><strong>Problem:</strong> Need a fast, reliable, and automated way to deploy internal enterprise web tools.</p>
+                        <p class="text-sm text-muted"><strong>AI Solution:</strong> Automated CI/CD pipeline integrated with GitHub and Vercel for seamless deployments.</p>
+                    </div>
+
+                    <div class="p-3 border rounded mb-4" style="background:#0F172A; color: #F8FAFC; font-family: monospace; height: 150px; display:flex; flex-direction:column; justify-content:flex-end; overflow:hidden;">
+                        <div id="vercel-feed" style="font-size: 0.75rem; line-height:1.2;">
+                            > Ready to deploy to production...<br>
+                        </div>
+                    </div>
+                    
+                    <button class="btn btn-primary w-full mb-4" id="btn-run-tech-cs">Deploy to Vercel</button>
+
+                    <div id="tech-cs-results" class="hidden">
+                        <div class="ai-result-box mb-4" style="border-color: var(--success); background: rgba(16, 185, 129, 0.05);">
+                            <span class="ai-badge" style="background:var(--success);">Deployment Successful!</span>
+                            <div class="mt-2 text-sm">
+                                <strong>Application Live</strong><br>
+                                Built and deployed successfully in 45 seconds. Global CDN cache updated. Live URL generated.
+                            </div>
+                        </div>
+                        <div style="height: 250px; border: 1px dashed #cbd5e1; border-radius: 8px; padding: 1rem; display: flex; align-items: center; justify-content: center; flex-direction: column;">
+                            <span style="font-size: 4rem;">🚀</span>
+                            <h3 class="mt-2">Build Completed</h3>
+                            <p class="text-muted text-sm">100% Uptime Guaranteed</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     `;
 
@@ -2331,6 +2435,108 @@ function renderCaseStudies(container) {
                     }, 500);
                 }
             }, 300);
+        });
+
+        let agroChartInst = null;
+        document.getElementById('btn-run-agro-cs')?.addEventListener('click', () => {
+            const btn = document.getElementById('btn-run-agro-cs');
+            btn.disabled = true;
+            btn.innerText = "Running Model...";
+            
+            setTimeout(() => {
+                document.getElementById('agro-cs-results').classList.remove('hidden');
+                btn.innerText = "Model Executed";
+                
+                if (agroChartInst) agroChartInst.destroy();
+                const ctx = document.getElementById('agro-chart').getContext('2d');
+                agroChartInst = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5'],
+                        datasets: [{
+                            label: 'Predicted Yield (Tons)',
+                            data: [120, 125, 130, 145, 160],
+                            borderColor: '#10b981',
+                            backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                            fill: true,
+                            tension: 0.3
+                        }]
+                    },
+                    options: { maintainAspectRatio: false, scales: { y: { beginAtZero: true } } }
+                });
+            }, 800);
+        });
+
+        let finChartInst = null;
+        document.getElementById('btn-run-fin-cs')?.addEventListener('click', () => {
+            const btn = document.getElementById('btn-run-fin-cs');
+            btn.disabled = true;
+            btn.innerText = "Processing Invoices...";
+            
+            let feed = document.getElementById('invoice-feed');
+            let count = 0;
+            const interval = setInterval(() => {
+                count++;
+                let num = Math.floor(Math.random() * 50) + 10;
+                feed.innerHTML += `> Batch ${count}: Processed ${num} invoices. Status: OK<br>`;
+                feed.scrollTop = feed.scrollHeight;
+                
+                if (count > 4) {
+                    clearInterval(interval);
+                    feed.innerHTML += `<span style="color:#ef4444;">> WARNING: Discrepancy detected in PO-4092. Flagged for review.</span><br>`;
+                    feed.scrollTop = feed.scrollHeight;
+                    
+                    setTimeout(() => {
+                        document.getElementById('fin-cs-results').classList.remove('hidden');
+                        btn.innerText = "Processing Complete";
+                        
+                        if (finChartInst) finChartInst.destroy();
+                        const ctx = document.getElementById('fin-chart').getContext('2d');
+                        finChartInst = new Chart(ctx, {
+                            type: 'doughnut',
+                            data: {
+                                labels: ['Auto-Matched', 'Flagged for Review'],
+                                datasets: [{
+                                    data: [488, 12],
+                                    backgroundColor: ['#3b82f6', '#ef4444']
+                                }]
+                            },
+                            options: { maintainAspectRatio: false, cutout: '70%' }
+                        });
+                    }, 500);
+                }
+            }, 300);
+        });
+
+        document.getElementById('btn-run-tech-cs')?.addEventListener('click', () => {
+            const btn = document.getElementById('btn-run-tech-cs');
+            btn.disabled = true;
+            btn.innerText = "Deploying...";
+            
+            let feed = document.getElementById('vercel-feed');
+            let steps = [
+                "> Cloning repository...",
+                "> Installing dependencies...",
+                "> Running build script (npm run build)...",
+                "> Optimizing static assets...",
+                "> Assigning custom domains...",
+                "<span style='color:#10B981;'>> Deployment successfully completed!</span>"
+            ];
+            let count = 0;
+            const interval = setInterval(() => {
+                feed.innerHTML += steps[count] + "<br>";
+                feed.scrollTop = feed.scrollHeight;
+                count++;
+                
+                if (count >= steps.length) {
+                    clearInterval(interval);
+                    
+                    setTimeout(() => {
+                        document.getElementById('tech-cs-results').classList.remove('hidden');
+                        btn.innerText = "Live on Vercel";
+                    }, 400);
+                }
+            }, 400);
         });
 
     }, 100);

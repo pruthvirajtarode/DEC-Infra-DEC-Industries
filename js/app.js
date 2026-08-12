@@ -2188,7 +2188,7 @@ function renderCaseStudies(container) {
             <p class="text-muted">Real-world AI implementations for DEC Infra and DEC Industries.</p>
         </div>
         
-        <div class="dashboard-grid">
+        <div class="dashboard-grid" style="grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 2rem;">
             <!-- DEC Infra Case Study -->
             <div class="card mb-8">
                 <div class="card-header"><h3 class="card-title">DEC Infra: Predictive Delay Simulator</h3></div>
@@ -2359,6 +2359,108 @@ function renderCaseStudies(container) {
                             <span style="font-size: 4rem;">🚀</span>
                             <h3 class="mt-2">Build Completed</h3>
                             <p class="text-muted text-sm">100% Uptime Guaranteed</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DEC HR Case Study -->
+            <div class="card mb-8">
+                <div class="card-header"><h3 class="card-title">DEC HR: Automated Employee Onboarding</h3></div>
+                <div class="card-body">
+                    <div class="mb-4">
+                        <span class="badge badge-success mb-2">Talent Management</span>
+                        <p class="text-sm text-muted"><strong>Problem:</strong> Manual onboarding process takes 2 weeks and HR spends 15 hours per employee.</p>
+                        <p class="text-sm text-muted"><strong>AI Solution:</strong> Conversational AI assistant guides new hires through document submission and policy training.</p>
+                    </div>
+
+                    <div class="p-3 border rounded mb-4" style="background:#F8FAFC; border:1px solid #cbd5e1;">
+                        <h4 class="mb-2 text-sm">Synthetic Project Inputs:</h4>
+                        <ul class="text-xs text-muted mb-0" style="padding-left:1.2rem;">
+                            <li>New Hires: 50 employees/month</li>
+                            <li>Required Documents: ID, Tax Form, Bank Details</li>
+                            <li>Current Onboarding Time: 14 days</li>
+                        </ul>
+                    </div>
+                    
+                    <button class="btn btn-primary w-full mb-4" id="btn-run-hr-cs">Simulate AI Onboarding</button>
+
+                    <div id="hr-cs-results" class="hidden">
+                        <div class="ai-result-box mb-4" style="border-color: var(--success); background: rgba(16, 185, 129, 0.05);">
+                            <span class="ai-badge" style="background:var(--success);">Efficiency Unlocked!</span>
+                            <div class="mt-2 text-sm">
+                                <strong>Onboarding Accelerated</strong><br>
+                                Average onboarding time reduced to 3 days, saving 12 hours of HR time per hire.
+                            </div>
+                        </div>
+                        <div style="height: 250px; border: 1px dashed #cbd5e1; border-radius: 8px; padding: 1rem;">
+                            <canvas id="hr-chart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DEC Logistics Case Study -->
+            <div class="card mb-8">
+                <div class="card-header"><h3 class="card-title">DEC Logistics: Fleet Route Optimization</h3></div>
+                <div class="card-body">
+                    <div class="mb-4">
+                        <span class="badge badge-info mb-2">Supply Chain</span>
+                        <p class="text-sm text-muted"><strong>Problem:</strong> High fuel costs and delayed material deliveries due to inefficient truck routing.</p>
+                        <p class="text-sm text-muted"><strong>AI Solution:</strong> Real-time AI routing algorithm utilizing traffic, weather, and delivery priorities.</p>
+                    </div>
+
+                    <div class="p-3 border rounded mb-4" style="background:#0F172A; color: #38BDF8; font-family: monospace; height: 120px; display:flex; flex-direction:column; justify-content:flex-end; overflow:hidden;">
+                        <div id="logistics-feed" style="font-size: 0.75rem; line-height:1.2;">
+                            > Tracking 120 active fleets...<br>
+                        </div>
+                    </div>
+                    
+                    <button class="btn btn-primary w-full mb-4" id="btn-run-logistics-cs">Optimize Routes</button>
+
+                    <div id="logistics-cs-results" class="hidden">
+                        <div class="ai-result-box mb-4" style="border-color: var(--info);">
+                            <span class="ai-badge">Routes Optimized</span>
+                            <div class="mt-2 text-sm">
+                                <strong>Cost Savings Achieved</strong><br>
+                                Fuel consumption reduced by 18% and on-time deliveries increased by 25%.
+                            </div>
+                        </div>
+                        <div style="height: 250px; border: 1px dashed #cbd5e1; border-radius: 8px; padding: 1rem;">
+                            <canvas id="logistics-chart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DEC Safety Case Study -->
+            <div class="card mb-8">
+                <div class="card-header"><h3 class="card-title">DEC Safety: Site Hazard Detection</h3></div>
+                <div class="card-body">
+                    <div class="mb-4">
+                        <span class="badge badge-danger mb-2">Health & Safety</span>
+                        <p class="text-sm text-muted"><strong>Problem:</strong> Manual safety audits are infrequent, leading to overlooked hazards on construction sites.</p>
+                        <p class="text-sm text-muted"><strong>AI Solution:</strong> Computer vision analyzing CCTV feeds to detect missing PPE and hazardous zones in real-time.</p>
+                    </div>
+
+                    <div class="p-3 border rounded mb-4" style="background:#0F172A; color: #EF4444; font-family: monospace; height: 120px; display:flex; flex-direction:column; justify-content:flex-end; overflow:hidden;">
+                        <div id="safety-feed" style="font-size: 0.75rem; line-height:1.2;">
+                            > Connecting to Site CCTV feeds...<br>
+                        </div>
+                    </div>
+                    
+                    <button class="btn btn-primary w-full mb-4" id="btn-run-safety-cs">Start Vision AI Monitoring</button>
+
+                    <div id="safety-cs-results" class="hidden">
+                        <div class="ai-result-box mb-4" style="border-color: var(--danger); background: rgba(239, 68, 68, 0.05);">
+                            <span class="ai-badge" style="background:var(--danger);">Real-time Alert</span>
+                            <div class="mt-2 text-sm">
+                                <strong>Safety Improved</strong><br>
+                                Automated real-time alerts sent to site managers. Compliance increased by 40%.
+                            </div>
+                        </div>
+                        <div style="height: 250px; border: 1px dashed #cbd5e1; border-radius: 8px; padding: 1rem;">
+                            <canvas id="safety-chart"></canvas>
                         </div>
                     </div>
                 </div>
@@ -2537,6 +2639,116 @@ function renderCaseStudies(container) {
                     }, 400);
                 }
             }, 400);
+        });
+
+        let hrChartInst = null;
+        document.getElementById('btn-run-hr-cs')?.addEventListener('click', () => {
+            const btn = document.getElementById('btn-run-hr-cs');
+            btn.disabled = true;
+            btn.innerText = "Simulating Onboarding...";
+            
+            setTimeout(() => {
+                document.getElementById('hr-cs-results').classList.remove('hidden');
+                btn.innerText = "Simulation Complete";
+                
+                if (hrChartInst) hrChartInst.destroy();
+                const ctx = document.getElementById('hr-chart').getContext('2d');
+                hrChartInst = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Manual Onboarding', 'AI-Assisted Onboarding'],
+                        datasets: [{
+                            label: 'Days to complete',
+                            data: [14, 3],
+                            backgroundColor: ['#94a3b8', '#10b981']
+                        }]
+                    },
+                    options: { maintainAspectRatio: false, scales: { y: { beginAtZero: true } } }
+                });
+            }, 800);
+        });
+
+        let logisticsChartInst = null;
+        document.getElementById('btn-run-logistics-cs')?.addEventListener('click', () => {
+            const btn = document.getElementById('btn-run-logistics-cs');
+            btn.disabled = true;
+            btn.innerText = "Calculating Routes...";
+            
+            let feed = document.getElementById('logistics-feed');
+            let count = 0;
+            const interval = setInterval(() => {
+                count++;
+                let fleet = Math.floor(Math.random() * 50) + 1;
+                feed.innerHTML += `> Rerouting Fleet ${fleet} around traffic block...<br>`;
+                feed.scrollTop = feed.scrollHeight;
+                
+                if (count > 4) {
+                    clearInterval(interval);
+                    feed.innerHTML += `<span style="color:#10b981;">> All routes optimized. ETA updated.</span><br>`;
+                    feed.scrollTop = feed.scrollHeight;
+                    
+                    setTimeout(() => {
+                        document.getElementById('logistics-cs-results').classList.remove('hidden');
+                        btn.innerText = "Optimization Complete";
+                        
+                        if (logisticsChartInst) logisticsChartInst.destroy();
+                        const ctx = document.getElementById('logistics-chart').getContext('2d');
+                        logisticsChartInst = new Chart(ctx, {
+                            type: 'line',
+                            data: {
+                                labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'],
+                                datasets: [{
+                                    label: 'Fuel Consumption (Liters)',
+                                    data: [5000, 4900, 4100, 4050, 4000],
+                                    borderColor: '#3b82f6',
+                                    tension: 0.1
+                                }]
+                            },
+                            options: { maintainAspectRatio: false, scales: { y: { beginAtZero: true } } }
+                        });
+                    }, 500);
+                }
+            }, 300);
+        });
+
+        let safetyChartInst = null;
+        document.getElementById('btn-run-safety-cs')?.addEventListener('click', () => {
+            const btn = document.getElementById('btn-run-safety-cs');
+            btn.disabled = true;
+            btn.innerText = "Monitoring...";
+            
+            let feed = document.getElementById('safety-feed');
+            let count = 0;
+            const interval = setInterval(() => {
+                count++;
+                feed.innerHTML += `> Scanning Sector ${count}... Status: Clear<br>`;
+                feed.scrollTop = feed.scrollHeight;
+                
+                if (count > 3) {
+                    clearInterval(interval);
+                    feed.innerHTML += `<span style="color:#ef4444;">> ALERT: Missing Hardhat detected in Zone B!</span><br>`;
+                    feed.scrollTop = feed.scrollHeight;
+                    
+                    setTimeout(() => {
+                        document.getElementById('safety-cs-results').classList.remove('hidden');
+                        btn.innerText = "Monitoring Active";
+                        
+                        if (safetyChartInst) safetyChartInst.destroy();
+                        const ctx = document.getElementById('safety-chart').getContext('2d');
+                        safetyChartInst = new Chart(ctx, {
+                            type: 'doughnut',
+                            data: {
+                                labels: ['Compliant', 'Non-Compliant'],
+                                datasets: [{
+                                    data: [95, 5],
+                                    backgroundColor: ['#10b981', '#ef4444']
+                                }]
+                            },
+                            options: { maintainAspectRatio: false, cutout: '70%' }
+                        });
+                    }, 500);
+                }
+            }, 300);
         });
 
     }, 100);

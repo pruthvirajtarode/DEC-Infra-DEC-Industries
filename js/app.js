@@ -3047,9 +3047,9 @@ function renderProductivityForms(container) {
     // Temporary state during editing
     let selectedBeforeStars = beforeData ? beforeData.usefulnessRating : 3;
     let selectedBeforeRating = beforeData ? beforeData.chatgptRating : 5;
-    let selectedAfterRating = afterData ? afterData.chatgptRating : 9;
+    let selectedAfterRating = afterData ? afterData.chatgptRating : 8;
     let selectedBeforeHours = beforeData ? beforeData.manualTime : 10;
-    let selectedAfterHours = afterData ? afterData.manualTime : 2;
+    let selectedAfterHours = afterData ? afterData.manualTime : 6;
     
     function saveAndPostSubmission(name, type, surveyData) {
         // 1. Save locally in State INSTANTLY (synchronous — zero delay)
@@ -3330,19 +3330,16 @@ function renderProductivityForms(container) {
                                 <label class="form-label font-bold" style="font-weight: 600; margin-bottom: 0.75rem;">1. What percentage of your daily tasks do you expect to perform using AI after this training?</label>
                                 <div class="flex gap-2 flex-wrap survey-radio-group" style="display:flex; gap:0.5rem; flex-wrap:wrap;">
                                     <label class="p-3 border rounded flex items-center gap-2 cursor-pointer" style="background:var(--bg-main); padding: 0.75rem 1rem; border-radius: 6px; border: 1px solid #CBD5E1; cursor: pointer; display: flex; align-items: center; gap: 0.5rem;">
+                                        <input type="radio" name="after-ai-usage" value="30" ${afterData && afterData.aiUsagePct === 30 ? 'checked' : ''}> 20% - 30%
+                                    </label>
+                                    <label class="p-3 border rounded flex items-center gap-2 cursor-pointer" style="background:var(--bg-main); padding: 0.75rem 1rem; border-radius: 6px; border: 1px solid #CBD5E1; cursor: pointer; display: flex; align-items: center; gap: 0.5rem;">
+                                        <input type="radio" name="after-ai-usage" value="40" ${afterData && afterData.aiUsagePct === 40 ? 'checked' : ''}> 30% - 40%
+                                    </label>
+                                    <label class="p-3 border rounded flex items-center gap-2 cursor-pointer" style="background:var(--bg-main); padding: 0.75rem 1rem; border-radius: 6px; border: 1px solid #CBD5E1; cursor: pointer; display: flex; align-items: center; gap: 0.5rem;">
+                                        <input type="radio" name="after-ai-usage" value="50" ${(!afterData || afterData.aiUsagePct === 50) ? 'checked' : ''}> 40% - 50% (Typical Impact)
+                                    </label>
+                                    <label class="p-3 border rounded flex items-center gap-2 cursor-pointer" style="background:var(--bg-main); padding: 0.75rem 1rem; border-radius: 6px; border: 1px solid #CBD5E1; cursor: pointer; display: flex; align-items: center; gap: 0.5rem;">
                                         <input type="radio" name="after-ai-usage" value="60" ${afterData && afterData.aiUsagePct === 60 ? 'checked' : ''}> 50% - 60%
-                                    </label>
-                                    <label class="p-3 border rounded flex items-center gap-2 cursor-pointer" style="background:var(--bg-main); padding: 0.75rem 1rem; border-radius: 6px; border: 1px solid #CBD5E1; cursor: pointer; display: flex; align-items: center; gap: 0.5rem;">
-                                        <input type="radio" name="after-ai-usage" value="70" ${afterData && afterData.aiUsagePct === 70 ? 'checked' : ''}> 60% - 70%
-                                    </label>
-                                    <label class="p-3 border rounded flex items-center gap-2 cursor-pointer" style="background:var(--bg-main); padding: 0.75rem 1rem; border-radius: 6px; border: 1px solid #CBD5E1; cursor: pointer; display: flex; align-items: center; gap: 0.5rem;">
-                                        <input type="radio" name="after-ai-usage" value="80" ${(!afterData || afterData.aiUsagePct === 80) ? 'checked' : ''}> 70% - 80% (Typical Impact)
-                                    </label>
-                                    <label class="p-3 border rounded flex items-center gap-2 cursor-pointer" style="background:var(--bg-main); padding: 0.75rem 1rem; border-radius: 6px; border: 1px solid #CBD5E1; cursor: pointer; display: flex; align-items: center; gap: 0.5rem;">
-                                        <input type="radio" name="after-ai-usage" value="90" ${afterData && afterData.aiUsagePct === 90 ? 'checked' : ''}> 80% - 90% (Typical Impact)
-                                    </label>
-                                    <label class="p-3 border rounded flex items-center gap-2 cursor-pointer" style="background:var(--bg-main); padding: 0.75rem 1rem; border-radius: 6px; border: 1px solid #CBD5E1; cursor: pointer; display: flex; align-items: center; gap: 0.5rem;">
-                                        <input type="radio" name="after-ai-usage" value="100" ${afterData && afterData.aiUsagePct === 100 ? 'checked' : ''}> 90% - 100%
                                     </label>
                                 </div>
                             </div>

@@ -254,6 +254,40 @@ function renderModule1(container) {
             <p class="text-muted">Turn AI from a simple question-answering tool into a structured work assistant.</p>
         </div>
         
+        <!-- NEW: Anatomy of a Good Prompt -->
+        <div class="card mb-8" style="border-left: 4px solid var(--primary);">
+            <div class="card-header"><h3 class="card-title">Anatomy of a Good Prompt (Theoretical Framework)</h3></div>
+            <div class="card-body">
+                <p class="text-muted mb-4">A structured prompt acts as a clear set of instructions for the AI, reducing ambiguity and hallucination.</p>
+                <div class="dashboard-grid">
+                    <div class="p-3 border rounded" style="background:var(--bg-main);">
+                        <strong style="color:var(--primary);">1. Role</strong><br>
+                        <span class="text-sm text-muted">Who is the AI? (e.g., "Act as a Senior Procurement Manager")</span>
+                    </div>
+                    <div class="p-3 border rounded" style="background:var(--bg-main);">
+                        <strong style="color:var(--accent);">2. Context</strong><br>
+                        <span class="text-sm text-muted">What is the background? (e.g., "We are comparing 3 vendor quotes for Metro Line B.")</span>
+                    </div>
+                    <div class="p-3 border rounded" style="background:var(--bg-main);">
+                        <strong style="color:var(--success);">3. Task</strong><br>
+                        <span class="text-sm text-muted">What exactly must the AI do? (e.g., "Create a comparison table.")</span>
+                    </div>
+                    <div class="p-3 border rounded" style="background:var(--bg-main);">
+                        <strong style="color:var(--warning);">4. Input Data</strong><br>
+                        <span class="text-sm text-muted">What data is provided? (e.g., "See the attached CSV data.")</span>
+                    </div>
+                    <div class="p-3 border rounded" style="background:var(--bg-main);">
+                        <strong style="color:var(--danger);">5. Constraints</strong><br>
+                        <span class="text-sm text-muted">What should it NOT do? (e.g., "Do not invent prices if missing.")</span>
+                    </div>
+                    <div class="p-3 border rounded" style="background:var(--bg-main);">
+                        <strong style="color:var(--info);">6. Output Format</strong><br>
+                        <span class="text-sm text-muted">How should it look? (e.g., "Format as Markdown table with a summary.")</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- NEW: Prompting Patterns -->
         <div class="card mb-8">
             <div class="card-header"><h3 class="card-title">Prompting Patterns Library</h3></div>
@@ -477,14 +511,26 @@ function renderModule1(container) {
             
             setTimeout(() => {
                 const persona = document.getElementById('sys-persona').value;
+                const promptVal = document.getElementById('sys-user-prompt').value.toLowerCase();
                 let out = "";
+                
+                const isEmail = promptVal.includes("email") || promptVal.includes("message");
+                const isReport = promptVal.includes("report") || promptVal.includes("progress") || promptVal.includes("update");
+                
                 if (persona === 'legal') {
-                    out = "<b>DISCLAIMER:</b> This summary does not constitute legal advice.<br><br>The provided text outlines a standard vendor agreement. <b>Key Liabilities:</b> Section 4.2 stipulates a ₹5,000/day penalty for delays. <b>Termination:</b> Either party may terminate with 30 days written notice. It is recommended to have Compliance review Section 7.";
+                    if (isEmail) out = "<b>DISCLAIMER:</b> Draft email subject to review.<br><br>To Whom It May Concern,<br>Please find the official correspondence regarding the recent developments. Ensure all actions comply with clause 4.a of our policy.";
+                    else if (isReport) out = "<b>CONFIDENTIAL REPORT</b><br><br>This document logs the activities on site. All incidents have been recorded in compliance with OSHA standards. No liabilities assumed without formal signature.";
+                    else out = "<b>DISCLAIMER:</b> This summary does not constitute legal advice.<br><br>The provided text outlines a standard vendor agreement. <b>Key Liabilities:</b> Section 4.2 stipulates a ₹5,000/day penalty for delays. <b>Termination:</b> Either party may terminate with 30 days written notice. It is recommended to have Compliance review Section 7.";
                 } else if (persona === 'marketing') {
-                    out = "Hey team! 🚀<br><br>Here's the quick scoop on the vendor contract:<br>- <b>They're locked in!</b> Great terms for us.<br>- Watch out for the delay penalty (we don't want to pay that!).<br>- Easy out: we can cancel anytime with a 30-day notice.<br><br>Let's get this signed and start creating! ✨";
-                } else {
-                    out = "<b>Contract Summary:</b><br>- <b>Type:</b> Vendor Agreement<br>- <b>Penalty:</b> ₹5k/day delay<br>- <b>Termination:</b> 30 days notice<br><br><b>Action Required:</b> Awaiting signature.";
+                    if (isEmail) out = "Hey team! 🚀<br><br>Just wanted to drop a quick note about our latest update. Let's keep the momentum going! ✨";
+                    else if (isReport) out = "🌟 <b>Awesome Site Update!</b> 🌟<br><br>Our team is crushing it this week! We're ahead of schedule on the main build and the client is loving the energy. Check out these wins!";
+                    else out = "Hey team! 🚀<br><br>Here's the quick scoop on the vendor contract:<br>- <b>They're locked in!</b> Great terms for us.<br>- Watch out for the delay penalty (we don't want to pay that!).<br>- Easy out: we can cancel anytime with a 30-day notice.<br><br>Let's get this signed and start creating! ✨";
+                } else { // concise
+                    if (isEmail) out = "<b>Email Draft:</b><br>Subject: Update<br>Body: Please review the latest details attached. Awaiting your approval.";
+                    else if (isReport) out = "<b>Status Report:</b><br>- Progress: 45%<br>- Issues: 0<br>- Next step: Foundation pour.";
+                    else out = "<b>Contract Summary:</b><br>- <b>Type:</b> Vendor Agreement<br>- <b>Penalty:</b> ₹5k/day delay<br>- <b>Termination:</b> 30 days notice<br><br><b>Action Required:</b> Awaiting signature.";
                 }
+                
                 document.getElementById('sys-persona-out').innerHTML = out;
                 btn.disabled = false;
                 btn.innerText = "Run with Persona";
@@ -502,12 +548,27 @@ function renderModule1(container) {
                 const prompt = document.getElementById('excel-prompt').value.toLowerCase();
                 let formula = "=IFERROR(VLOOKUP(A2, Sheet2!A:B, 2, FALSE), \"Not Found\")";
                 
-                if (prompt.includes("if") || prompt.includes("condition")) {
+                if (prompt.includes("if") && (prompt.includes("multiple") || prompt.includes("nested"))) {
+                    formula = "=IFS(A2>1000, \"High\", A2>500, \"Medium\", TRUE, \"Low\")";
+                } else if (prompt.includes("if") || prompt.includes("condition")) {
                     formula = "=IF(A2>1000, \"Over Budget\", \"OK\")";
+                } else if (prompt.includes("sum") && prompt.includes("multiple")) {
+                    formula = "=SUMIFS(C:C, A:A, \">1000\", B:B, \"Approved\")";
                 } else if (prompt.includes("sum") || prompt.includes("total")) {
-                    formula = "=SUMIFS(B:B, A:A, \">1000\", C:C, \"Approved\")";
+                    formula = "=SUM(A2:A100)";
+                } else if (prompt.includes("count") && prompt.includes("blank")) {
+                    formula = "=COUNTBLANK(A2:A100)";
+                } else if (prompt.includes("count")) {
+                    formula = "=COUNTIF(B:B, \"Pending\")";
                 } else if (prompt.includes("index") || prompt.includes("match")) {
                     formula = "=INDEX(Sheet2!B:B, MATCH(A2, Sheet2!A:A, 0))";
+                } else if (prompt.includes("date") || prompt.includes("days")) {
+                    formula = "=DATEDIF(A2, TODAY(), \"d\")";
+                } else if (prompt.includes("average") || prompt.includes("mean")) {
+                    formula = "=AVERAGE(B2:B100)";
+                } else if (!prompt.includes("lookup")) {
+                    // Generic fallback that echoes some of the prompt to show it's "dynamic"
+                    formula = `/* AI generated formula for: ${prompt.substring(0, 20)}... */\n=LET(data, A2:B100, "Requires more specific logic")`;
                 }
                 
                 document.getElementById('excel-out').innerText = formula;
@@ -518,19 +579,55 @@ function renderModule1(container) {
         });
 
         // Optimizer
+        let optimizedData = {};
+
         document.getElementById('btn-optimize-prompt')?.addEventListener('click', () => {
-            const bad = document.getElementById('bad-prompt-input').value;
-            const good = `Act as a Project Manager for DEC Infra.\nContext: We are experiencing a 2-week delay due to unseasonal rain.\nTask: Write an update email to the client.\nConstraints: Maintain a professional, reassuring tone. Do not mention financial penalties.\nFormat: Subject line + 3 short paragraphs.`;
+            const bad = document.getElementById('bad-prompt-input').value.toLowerCase();
+            let role = "Assistant";
+            let context = "General task";
+            let task = "Provide information";
+            let constraints = "Be concise";
+            let format = "Paragraph";
+            
+            if (bad.includes("email")) {
+                role = "Project Manager";
+                context = "Project update communication";
+                task = "Write an email to the client or team.";
+                constraints = "Maintain a professional, reassuring tone. Do not mention financial penalties.";
+                format = "Subject line + 3 short paragraphs.";
+            } else if (bad.includes("report") || bad.includes("summary")) {
+                role = "Data Analyst";
+                context = "Weekly status reporting";
+                task = "Summarize the key metrics and activities.";
+                constraints = "Focus only on completed items. Do not include assumptions.";
+                format = "Markdown list with bold headers.";
+            } else if (bad.includes("vendor") || bad.includes("quote") || bad.includes("price")) {
+                role = "Procurement Executive";
+                context = "Vendor rate comparison";
+                task = "Analyze the provided vendor quotes.";
+                constraints = "Highlight the cheapest option. Flag missing items.";
+                format = "Comparison table + recommendation.";
+            } else {
+                role = "DEC AI Assistant";
+                context = "Executing a user request";
+                task = `Fulfill the request: "${document.getElementById('bad-prompt-input').value}"`;
+                constraints = "Ensure factual accuracy. Avoid hallucination.";
+                format = "Clear, structured format.";
+            }
+
+            optimizedData = { role, context, task, constraints, format };
+            
+            const good = `Act as a ${role} for DEC Infra.\nContext: ${context}.\nTask: ${task}\nConstraints: ${constraints}\nFormat: ${format}`;
             document.getElementById('good-prompt-output').value = good;
             document.getElementById('btn-use-optimized').disabled = false;
         });
 
         document.getElementById('btn-use-optimized')?.addEventListener('click', () => {
-            document.getElementById('prompt-role').value = "Project Manager";
-            document.getElementById('prompt-context').value = "We are experiencing a 2-week delay due to unseasonal rain.";
-            document.getElementById('prompt-task').value = "Write an update email to the client.";
-            document.getElementById('prompt-constraints').value = "Maintain a professional, reassuring tone. Do not mention financial penalties.";
-            document.getElementById('prompt-format').value = "Subject line + 3 short paragraphs.";
+            document.getElementById('prompt-role').value = optimizedData.role || "Project Manager";
+            document.getElementById('prompt-context').value = optimizedData.context || "Project update communication";
+            document.getElementById('prompt-task').value = optimizedData.task || "Write an email";
+            document.getElementById('prompt-constraints').value = optimizedData.constraints || "Be concise";
+            document.getElementById('prompt-format').value = optimizedData.format || "Paragraph";
             showToast('Prompt Builder populated!', 'success');
         });
 
@@ -645,6 +742,44 @@ function renderModule2(container) {
                     </div>
                 </div>
                 <button class="btn btn-primary w-full" id="btn-run-pipeline">Run Pipeline Step-by-Step ▶</button>
+            </div>
+        </div>
+
+        <!-- NEW: Advanced Data Anomaly Hunt -->
+        <div class="card mb-8" style="border-left: 4px solid var(--danger);">
+            <div class="card-header"><h3 class="card-title">Advanced Data Anomaly Hunt (2-Hour Lab)</h3></div>
+            <div class="card-body">
+                <p class="mb-4 text-muted"><strong>Objective:</strong> A vendor submitted 50 invoice records. Find the 3 hidden anomalies (duplicates, inflated amounts, or missing POs). You can search manually or use the AI Query tool.</p>
+                <div class="dashboard-grid">
+                    <div>
+                        <div style="height: 250px; overflow-y: auto; font-family: monospace; font-size: 0.75rem; background: var(--bg-main); border: 1px solid var(--border-color); padding: 0.5rem; border-radius: 4px;" id="anomaly-dataset">
+                            <!-- Populated via JS -->
+                        </div>
+                        <p class="text-xs text-muted mt-2">Time elapsed (Manual): <span id="manual-timer" style="font-weight: bold; color: var(--danger);">00:00</span></p>
+                    </div>
+                    <div>
+                        <div class="form-group mb-2">
+                            <label class="form-label font-bold text-sm">AI Query Tool</label>
+                            <textarea id="ai-anomaly-prompt" class="form-control" rows="2" placeholder="e.g., Are there any duplicate Invoice IDs?"></textarea>
+                        </div>
+                        <button class="btn btn-primary w-full mb-4" id="btn-run-ai-query">Run AI Analysis (Takes 3 secs)</button>
+                        
+                        <div class="ai-result-box" style="margin-top:0; min-height:100px;">
+                            <span class="ai-badge">AI Assistant</span>
+                            <div id="ai-anomaly-out" class="mt-2 text-sm" style="line-height: 1.5;">Waiting for query...</div>
+                        </div>
+                        
+                        <div class="mt-4">
+                            <h4 class="text-sm mb-2">Identify Anomalies:</h4>
+                            <label class="flex items-center gap-2 text-sm mb-1"><input type="checkbox" class="chk-anomaly" data-correct="true"> Invoice INV-992 (Duplicate)</label>
+                            <label class="flex items-center gap-2 text-sm mb-1"><input type="checkbox" class="chk-anomaly" data-correct="false"> Invoice INV-105 (Missing Date)</label>
+                            <label class="flex items-center gap-2 text-sm mb-1"><input type="checkbox" class="chk-anomaly" data-correct="true"> Invoice INV-881 (Amount > 10x Average)</label>
+                            <label class="flex items-center gap-2 text-sm mb-1"><input type="checkbox" class="chk-anomaly" data-correct="false"> Invoice INV-402 (Unapproved Vendor)</label>
+                            <label class="flex items-center gap-2 text-sm mb-1"><input type="checkbox" class="chk-anomaly" data-correct="true"> Invoice INV-773 (Missing PO Number)</label>
+                            <button class="btn btn-secondary btn-small w-full mt-2" id="btn-submit-anomalies">Submit Findings</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -772,11 +907,85 @@ function renderModule2(container) {
                 setTimeout(() => {
                     document.getElementById('pipeline-step-3').style.opacity = "1";
                     btn.innerText = "Pipeline Complete ✨";
-                    showToast('Data processed through AI Pipeline successfully!', 'success');
-                    State.markExerciseComplete('m2_pipeline', 'module2');
+                    showToast('Data processed through AI pipeline.', 'success');
                 }, 1000);
             }, 1000);
         });
+
+        // Advanced Data Anomaly Hunt Logic
+        const datasetDiv = document.getElementById('anomaly-dataset');
+        if (datasetDiv) {
+            let dataHtml = "ID, DATE, VENDOR, INV_NUM, PO_NUM, AMOUNT\n";
+            for (let i=1; i<=50; i++) {
+                let inv = `INV-${100+i}`;
+                let po = `PO-2023-${i}`;
+                let amt = Math.floor(Math.random() * 5000) + 1000;
+                
+                if (i === 15) { inv = "INV-992"; } // Duplicate 1
+                if (i === 42) { inv = "INV-992"; } // Duplicate 2
+                if (i === 28) { amt = 95000; inv = "INV-881"; } // Inflated
+                if (i === 35) { po = "MISSING"; inv = "INV-773"; } // Missing PO
+                
+                dataHtml += `${i}, 2023-10-${(i%30)+1}, Vendor_${(i%5)+1}, ${inv}, ${po}, ₹${amt}\n`;
+            }
+            datasetDiv.innerText = dataHtml;
+            
+            let timer = 0;
+            const timerEl = document.getElementById('manual-timer');
+            const interval = setInterval(() => {
+                if (!document.getElementById('manual-timer')) { clearInterval(interval); return; }
+                timer++;
+                let m = Math.floor(timer/60).toString().padStart(2, '0');
+                let s = (timer%60).toString().padStart(2, '0');
+                timerEl.innerText = `${m}:${s}`;
+            }, 1000);
+            
+            document.getElementById('btn-run-ai-query')?.addEventListener('click', () => {
+                const btn = document.getElementById('btn-run-ai-query');
+                btn.disabled = true;
+                btn.innerText = "Analyzing 50 rows...";
+                document.getElementById('ai-anomaly-out').innerText = "Scanning...";
+                
+                setTimeout(() => {
+                    const prompt = document.getElementById('ai-anomaly-prompt').value.toLowerCase();
+                    let out = "I have analyzed the data.\n\n";
+                    if (prompt.includes("duplicate") || prompt.includes("same")) {
+                        out += "- Found Duplicate: INV-992 appears twice (Row 15 and Row 42).\n";
+                    }
+                    if (prompt.includes("amount") || prompt.includes("high") || prompt.includes("large") || prompt.includes("outlier")) {
+                        out += "- Found Anomaly: INV-881 amount is ₹95,000, which is unusually high compared to the average of ~₹3,500.\n";
+                    }
+                    if (prompt.includes("missing") || prompt.includes("po") || prompt.includes("empty") || prompt.includes("null")) {
+                        out += "- Found Anomaly: INV-773 has a missing PO_NUM.\n";
+                    }
+                    if (out === "I have analyzed the data.\n\n") {
+                        out += "Everything looks normal based on your query. Try asking about duplicates, missing fields, or unusually high amounts.";
+                    }
+                    
+                    document.getElementById('ai-anomaly-out').innerText = out;
+                    btn.disabled = false;
+                    btn.innerText = "Run AI Analysis (Takes 3 secs)";
+                }, 3000);
+            });
+            
+            document.getElementById('btn-submit-anomalies')?.addEventListener('click', () => {
+                const checkboxes = document.querySelectorAll('.chk-anomaly');
+                let correctCount = 0;
+                let errorCount = 0;
+                checkboxes.forEach(chk => {
+                    if (chk.checked && chk.getAttribute('data-correct') === 'true') correctCount++;
+                    if (chk.checked && chk.getAttribute('data-correct') === 'false') errorCount++;
+                });
+                
+                if (correctCount === 3 && errorCount === 0) {
+                    clearInterval(interval);
+                    showToast('Success! You found all anomalies.', 'success');
+                    State.markExerciseComplete('m2_anomaly', 'module2');
+                } else {
+                    showToast('Incorrect. Keep searching!', 'error');
+                }
+            });
+        }
     
         let currentData = [];
         document.getElementById('btn-generate-data')?.addEventListener('click', () => {
@@ -876,6 +1085,30 @@ function renderModule3(container) {
                         <strong>AI Report:</strong> "Site progress was delayed because <span class="mistake-option" style="cursor:pointer; background: #FEF3C7; padding: 0.1rem 0.25rem; border-radius: 4px;" data-correct="false">the weather was rainy</span>, and additionally <span class="mistake-option" style="cursor:pointer; background: #FEF3C7; padding: 0.1rem 0.25rem; border-radius: 4px;" data-correct="true">the excavator ran out of fuel</span> at 2PM."
                     </div>
                     <div id="mistake-feedback" class="mt-4 hidden text-sm font-bold"></div>
+                </div>
+            </div>
+
+            <!-- NEW: Live Hands-On PII Redaction -->
+            <div class="card mb-8" style="border-left: 4px solid var(--warning);">
+                <div class="card-header"><h3 class="card-title">Live Hands-On: PII Redaction Challenge</h3></div>
+                <div class="card-body">
+                    <p class="mb-4 text-muted"><strong>Objective:</strong> Redact all sensitive Personally Identifiable Information (PII) before uploading this text to a public LLM. Use the AI tool to draft the redaction, but <strong>verify it carefully</strong>.</p>
+                    <div class="dashboard-grid">
+                        <div>
+                            <h4 class="text-sm mb-2">Original Text</h4>
+                            <div class="p-3 border rounded text-sm mb-4" style="background: var(--bg-main); font-family: monospace; white-space: pre-wrap; line-height: 1.5;">Performance Review - Q3
+Employee: Rahul Sharma (ID: EMP-8821)
+Salary: ₹12,50,000 p.a.
+Notes: Rahul has shown excellent progress on the Metro Phase 2 project. We recommend a 10% bonus.
+Contact: rahul.s@dec-infra.com / +91-9876543210</div>
+                            <button class="btn btn-primary w-full" id="btn-ai-redact">AI Auto-Redact ✨</button>
+                        </div>
+                        <div>
+                            <h4 class="text-sm mb-2">Redacted Text (Review & Edit)</h4>
+                            <textarea id="redacted-text-output" class="form-control" rows="8" placeholder="Redacted text will appear here. Edit it manually to fix any AI mistakes before approving." style="font-family: monospace;"></textarea>
+                            <button class="btn btn-success w-full mt-2" id="btn-approve-redaction">Approve & Upload to LLM</button>
+                        </div>
+                    </div>
                 </div>
             </div>
             
@@ -988,6 +1221,38 @@ function renderModule3(container) {
                     fb.innerHTML = '<span style="color: var(--danger);">Incorrect. While weather wasn\'t mentioned, that is not the primary hallucination based on the log.</span>';
                 }
             });
+        });
+
+        // PII Redaction Logic
+        document.getElementById('btn-ai-redact')?.addEventListener('click', () => {
+            const btn = document.getElementById('btn-ai-redact');
+            btn.disabled = true;
+            btn.innerText = "Redacting...";
+            
+            setTimeout(() => {
+                // The AI intentionally misses the phone number and ID to simulate hallucination/failure
+                const redacted = `Performance Review - Q3\nEmployee: [REDACTED NAME] (ID: EMP-8821)\nSalary: [REDACTED SALARY]\nNotes: [REDACTED NAME] has shown excellent progress on the Metro Phase 2 project. We recommend a 10% bonus.\nContact: [REDACTED EMAIL] / +91-9876543210`;
+                document.getElementById('redacted-text-output').value = redacted;
+                btn.disabled = false;
+                btn.innerText = "AI Auto-Redact ✨";
+                showToast('AI Draft completed. Please review carefully.', 'info');
+            }, 1500);
+        });
+        
+        document.getElementById('btn-approve-redaction')?.addEventListener('click', () => {
+            const text = document.getElementById('redacted-text-output').value;
+            if (!text) {
+                showToast('Please run redaction first.', 'warning');
+                return;
+            }
+            if (text.includes('EMP-8821') || text.includes('9876543210')) {
+                showToast('Upload Blocked! Sensitive data (ID or Phone) is still present. The AI missed it.', 'error');
+            } else if (text.includes('Rahul') || text.includes('12,50,000') || text.includes('rahul.s')) {
+                showToast('Upload Blocked! Sensitive data is still present.', 'error');
+            } else {
+                showToast('Approved! Safe to upload to public LLM.', 'success');
+                State.markExerciseComplete('m3_redaction', 'module3');
+            }
         });
 
         // Decision Tree Logic

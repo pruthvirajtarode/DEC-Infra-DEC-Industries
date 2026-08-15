@@ -84,7 +84,7 @@ function renderVercelLab(container) {
         ${makeStep(2, '👁️', 'Preview Your AI Assistant App', 'See what you\'re about to deploy', stepsCompleted['2'], `
             <p style="margin-bottom:1.25rem; line-height:1.7;">Before downloading, let's preview exactly what your deployed app will look like. This is the app that will go live on the internet — a chat interface with <strong>your custom AI assistant</strong> built into it.</p>
 
-            <div style="background:#F1F5F9; border-radius:10px; padding:1.25rem; margin-bottom:1.25rem; border:1px solid #CBD5E1;">
+            <div style="background:var(--bg-card); border-radius:10px; padding:1.25rem; margin-bottom:1.25rem; border:1px solid #CBD5E1;">
                 <h4 style="margin-bottom:0.75rem; display:flex; align-items:center; gap:0.5rem; color:var(--primary);">📦 What's inside your app file:</h4>
                 <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px,1fr)); gap:0.75rem;">
                     <div style="background:white; border-radius:8px; padding:0.9rem; display:flex; align-items:flex-start; gap:0.75rem;">
@@ -121,7 +121,7 @@ function renderVercelLab(container) {
         ${makeStep(3, '⬇️', 'Download Your AI App', 'Get the file ready on your computer', stepsCompleted['3'], `
             <p style="margin-bottom:1.25rem; line-height:1.7;">Click the button below to download your AI assistant as a single HTML file. This is the file you will upload to Vercel in the next step.</p>
 
-            <div style="background:#F8FAFC; border:2px dashed #CBD5E1; border-radius:12px; padding:2rem; text-align:center; margin-bottom:1.5rem;">
+            <div style="background:var(--bg-card); border:2px dashed #CBD5E1; border-radius:12px; padding:2rem; text-align:center; margin-bottom:1.5rem;">
                 <div style="font-size:3rem; margin-bottom:0.75rem;">📄</div>
                 <div style="font-weight:700; color:var(--primary); font-size:1.1rem; margin-bottom:0.25rem;">my-ai-assistant.html</div>
                 <div style="color:var(--text-muted); font-size:0.85rem; margin-bottom:1.5rem;">Single file · HTML · ~15KB · Ready to deploy</div>
@@ -392,7 +392,7 @@ function generateAndDownloadApp(systemPrompt) {
         .tab-btn.active { color: white; border-bottom-color: var(--accent); background: #0A192F; }
 
         /* Chat */
-        .tab-content { background: #f8fafc; border-radius: 0 0 16px 16px; overflow: hidden; box-shadow: 0 24px 60px rgba(0,0,0,0.4); }
+        .tab-content { background:var(--bg-card); border-radius: 0 0 16px 16px; overflow: hidden; box-shadow: 0 24px 60px rgba(0,0,0,0.4); }
         .chat-area { height: 60vh; display: flex; flex-direction: column; }
         .messages {
             flex-grow: 1; padding: 1.25rem; overflow-y: auto;
@@ -405,10 +405,10 @@ function generateAndDownloadApp(systemPrompt) {
             animation: fadeUp 0.2s ease;
         }
         @keyframes fadeUp { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:none; } }
-        .message.bot { background: #F1F5F9; color: #334155; align-self: flex-start; border-bottom-left-radius: 4px; }
+        .message.bot { background:var(--bg-card); color: #334155; align-self: flex-start; border-bottom-left-radius: 4px; }
         .message.bot .bot-label { font-size: 0.68rem; font-weight: 700; color: var(--accent); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 0.35rem; display: block; }
         .message.user { background: linear-gradient(135deg, #0A192F, #1a3a6b); color: white; align-self: flex-end; border-bottom-right-radius: 4px; }
-        .typing-indicator { display: flex; align-items: center; gap: 4px; padding: 0.75rem 1rem; background: #F1F5F9; border-radius: 14px; border-bottom-left-radius: 4px; align-self: flex-start; }
+        .typing-indicator { display: flex; align-items: center; gap: 4px; padding: 0.75rem 1rem; background:var(--bg-card); border-radius: 14px; border-bottom-left-radius: 4px; align-self: flex-start; }
         .typing-indicator span { width: 7px; height: 7px; background: #94A3B8; border-radius: 50%; animation: bounce 1.4s infinite both; }
         .typing-indicator span:nth-child(2) { animation-delay: 0.16s; }
         .typing-indicator span:nth-child(3) { animation-delay: 0.32s; }
@@ -459,7 +459,7 @@ function generateAndDownloadApp(systemPrompt) {
         .copy-btn:hover { background: #334155; }
 
         /* Suggested Prompts */
-        .suggestions { padding: 0.75rem 1.25rem; background: #F8FAFC; border-top: 1px solid #E2E8F0; display: flex; gap: 0.5rem; flex-wrap: wrap; }
+        .suggestions { padding: 0.75rem 1.25rem; background:var(--bg-card); border-top: 1px solid #E2E8F0; display: flex; gap: 0.5rem; flex-wrap: wrap; }
         .suggest-btn {
             background: white; border: 1px solid #CBD5E1; border-radius: 20px;
             padding: 0.4rem 0.9rem; font-size: 0.78rem; color: #475569;

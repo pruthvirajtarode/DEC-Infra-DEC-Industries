@@ -230,7 +230,7 @@ function renderDashboard(container) {
             <div class="card-header"><h3 class="card-title">My Achievements</h3></div>
             <div class="card-body">
                 ${State.get('badges') && State.get('badges').length > 0 ? 
-                    '<div class="flex gap-4 flex-wrap">' + State.get('badges').map(b => `<div class="badge badge-warning" style="font-size: 1rem; padding: 0.75rem 1.5rem; border: 1px solid var(--accent); background: #FFFBEB;">🏆 ${b}</div>`).join('') + '</div>'
+                    '<div class="flex gap-4 flex-wrap">' + State.get('badges').map(b => `<div class="badge badge-warning" style="font-size: 1rem; padding: 0.75rem 1.5rem; border: 1px solid var(--accent); background:rgba(255, 222, 89, 0.1);">🏆 ${b}</div>`).join('') + '</div>'
                     : '<p class="text-muted">Complete modules to unlock your AI badges.</p>'
                 }
             </div>
@@ -336,7 +336,7 @@ window.downloadPDF = function(title, contentHTML) {
                     body { font-family: sans-serif; padding: 2rem; color: #1e293b; max-width: 800px; margin: 0 auto; line-height: 1.6; }
                     h1 { color: #0f172a; border-bottom: 2px solid #e2e8f0; padding-bottom: 1rem; margin-bottom: 2rem; }
                     h2 { margin-top: 2rem; color: #334155; }
-                    .alert { padding: 1rem; border-left: 4px solid; margin-bottom: 1rem; background: #f8fafc; }
+                    .alert { padding: 1rem; border-left: 4px solid; margin-bottom: 1rem; background:var(--bg-card); }
                     .alert-green { border-color: #10b981; }
                     .alert-amber { border-color: #f59e0b; }
                     .alert-red { border-color: #ef4444; }
@@ -625,7 +625,7 @@ function renderModule1(container) {
                 </div>
                 <div>
                     <h4 class="mb-2">Optimized Structured Prompt</h4>
-                    <textarea class="form-control mb-2" id="good-prompt-output" rows="4" readonly style="background:#F8FAFC; border-color:var(--accent);"></textarea>
+                    <textarea class="form-control mb-2" id="good-prompt-output" rows="4" readonly style="background:var(--bg-card); border-color:var(--accent);"></textarea>
                     <button class="btn btn-primary w-full" id="btn-use-optimized" disabled>Use This Structure</button>
                 </div>
             </div>
@@ -1519,7 +1519,7 @@ Questions:
     font-size: 13px;
   }
   .tip-box {
-    background: #faeeda;
+    background: rgba(255, 222, 89, 0.15);
     border-left: 3px solid var(--text-warning);
     padding: 12px;
     margin: 12px 0;
@@ -3843,7 +3843,7 @@ function renderModule4(container) {
                             </div>
                         </div>
 
-                        <div class="p-4 border rounded" style="background:#FFFBEB; border: 1px dashed var(--accent); border-radius: 8px;">
+                        <div class="p-4 border rounded" style="background:rgba(255, 222, 89, 0.1); border: 1px dashed var(--accent); border-radius: 8px;">
                             <h4 style="color:var(--accent);" class="mb-2">💡 Why build a Claude Project?</h4>
                             <p class="text-sm text-muted" style="line-height: 1.6; margin-bottom: 0;">
                                 In contrast to public chats, Claude Projects remember all your templates, instructions, and rules in every new chat session. It acts as a dedicated departmental AI colleague that doesn't hallucinate metrics outside your uploaded files.
@@ -3923,7 +3923,7 @@ function renderModule4(container) {
                             </div>
                             
                             <h4 class="mb-2">4. Test Drive Assistant</h4>
-                            <div class="p-3 border rounded mb-4" style="background:#F8FAFC; border:1px solid #cbd5e1; height: 180px; display:flex; flex-direction:column; border-radius: 6px;">
+                            <div class="p-3 border rounded mb-4" style="background:var(--bg-card); border:1px solid #cbd5e1; height: 180px; display:flex; flex-direction:column; border-radius: 6px;">
                                 <div id="cap-chat-log" style="flex-grow:1; overflow-y:auto; font-size:0.875rem; margin-bottom:0.5rem; padding-right:0.25rem;">
                                     <div class="text-muted italic mb-2">Assistant is ready. Ask it a question...</div>
                                 </div>
@@ -4126,7 +4126,7 @@ function renderModule4(container) {
                             <td style="padding:10px; text-align:center; border:1px solid #CBD5E1; font-weight:bold;">${evalRes.breakdown.safety} / 5 Marks</td>
                             <td style="padding:10px; border:1px solid #CBD5E1;">Precautionary instructions to prevent hallucination.</td>
                         </tr>
-                        <tr style="background:#F8FAFC; font-weight:bold;">
+                        <tr style="background:var(--bg-card); font-weight:bold;">
                             <td style="padding:10px; border:1px solid #CBD5E1;">Total Score</td>
                             <td style="padding:10px; text-align:center; border:1px solid #CBD5E1; font-size:1.1rem; color:#10B981;">${evalRes.score} / 25 Marks</td>
                             <td style="padding:10px; border:1px solid #CBD5E1;">Status: ${evalRes.label}</td>
@@ -4150,7 +4150,7 @@ function renderModule4(container) {
                 </ul>
 
                 <h2 style="font-family:sans-serif; color:#0A192F; border-bottom:2px solid #E2E8F0; padding-bottom:0.5rem; margin-top:2rem;">Compiled System instructions</h2>
-                <div style="background:#F8FAFC; border:1px solid #CBD5E1; padding:1rem; border-radius:4px; font-family:monospace; font-size:0.85rem; white-space:pre-wrap;">
+                <div style="background:var(--bg-card); border:1px solid #CBD5E1; padding:1rem; border-radius:4px; font-family:monospace; font-size:0.85rem; white-space:pre-wrap;">
 ${compiledPrompt}
                 </div>
             `;
@@ -4936,7 +4936,7 @@ function renderCaseStudies(container) {
                         <p class="text-sm text-muted"><strong>AI Solution:</strong> Analyze synthetic logs to dynamically recommend resource reallocation.</p>
                     </div>
                     
-                    <div class="p-3 border rounded mb-4" style="background:#F8FAFC; border:1px solid #cbd5e1;">
+                    <div class="p-3 border rounded mb-4" style="background:var(--bg-card); border:1px solid #cbd5e1;">
                         <h4 class="mb-2 text-sm">Synthetic Project Inputs:</h4>
                         <ul class="text-xs text-muted mb-0" style="padding-left:1.2rem;">
                             <li>Weather forecast: Heavy rain (Days 12-15)</li>
@@ -5007,7 +5007,7 @@ function renderCaseStudies(container) {
                         <p class="text-sm text-muted"><strong>AI Solution:</strong> Machine learning model analyzing historical weather and soil data to predict harvest times and yields.</p>
                     </div>
 
-                    <div class="p-3 border rounded mb-4" style="background:#F8FAFC; border:1px solid #cbd5e1;">
+                    <div class="p-3 border rounded mb-4" style="background:var(--bg-card); border:1px solid #cbd5e1;">
                         <h4 class="mb-2 text-sm">Synthetic Project Inputs:</h4>
                         <ul class="text-xs text-muted mb-0" style="padding-left:1.2rem;">
                             <li>Weather data: Above average rainfall expected</li>
@@ -5111,7 +5111,7 @@ function renderCaseStudies(container) {
                         <p class="text-sm text-muted"><strong>AI Solution:</strong> Conversational AI assistant guides new hires through document submission and policy training.</p>
                     </div>
 
-                    <div class="p-3 border rounded mb-4" style="background:#F8FAFC; border:1px solid #cbd5e1;">
+                    <div class="p-3 border rounded mb-4" style="background:var(--bg-card); border:1px solid #cbd5e1;">
                         <h4 class="mb-2 text-sm">Synthetic Project Inputs:</h4>
                         <ul class="text-xs text-muted mb-0" style="padding-left:1.2rem;">
                             <li>New Hires: 50 employees/month</li>
@@ -6002,7 +6002,7 @@ function renderProductivityForms(container) {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr style="background:#F8FAFC;">
+                                    <tr style="background:var(--bg-card);">
                                         <td style="padding:12px 14px; font-weight:600; border-bottom:1px solid #E2E8F0;">Daily AI Task Usage</td>
                                         <td style="padding:12px 14px; text-align:center; border-bottom:1px solid #E2E8F0; color:#EF4444; font-weight:600;">${b.aiUsagePct}%</td>
                                         <td style="padding:12px 14px; text-align:center; border-bottom:1px solid #E2E8F0; color:#10B981; font-weight:600;">${a.aiUsagePct}%</td>
@@ -6014,7 +6014,7 @@ function renderProductivityForms(container) {
                                         <td style="padding:12px 14px; text-align:center; border-bottom:1px solid #E2E8F0; color:#10B981; font-weight:600;">${a.manualTime} hrs/week</td>
                                         <td style="padding:12px 14px; text-align:center; border-bottom:1px solid #E2E8F0; color:#10B981; font-weight:700;">-${timeSaved} hrs (${timeSavedPct}% saved)</td>
                                     </tr>
-                                    <tr style="background:#F8FAFC;">
+                                    <tr style="background:var(--bg-card);">
                                         <td style="padding:12px 14px; font-weight:600;">AI Performance Rating (/10)</td>
                                         <td style="padding:12px 14px; text-align:center; color:#EF4444; font-weight:600;">${b.chatgptRating}/10</td>
                                         <td style="padding:12px 14px; text-align:center; color:#10B981; font-weight:600;">${a.chatgptRating}/10</td>

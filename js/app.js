@@ -194,13 +194,13 @@ function renderDashboard(container) {
     container.innerHTML = `
         <div class="dashboard-hero card mb-8" style="background: linear-gradient(135deg, var(--bg-card) 0%, rgba(243, 198, 35, 0.05) 100%); position: relative; overflow: hidden; padding: 3rem;">
             <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 2rem;">
-                <div style="flex: 1; min-width: 300px; z-index: 2;">
+                <div id="dashboard-left-col" style="flex: 1; min-width: 300px; z-index: 2; position: relative;">
                     <style>
                         #mobile-qr-code.zoomed-dashboard-qr { position: fixed !important; top: 50% !important; left: 50% !important; transform: translate(-50%, -50%) scale(5.5) !important; z-index: 100000 !important; cursor: zoom-out !important; box-shadow: 0 0 0 3000px rgba(10,25,47,0.95) !important; }
                     </style>
                     <!-- Mobile QR Code -->
                     <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; background: rgba(255,255,255,0.05); padding: 0.75rem 1rem; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); width: fit-content; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
-                        <div id="mobile-qr-code" title="Click to zoom in/out" onclick="this.classList.toggle('zoomed-dashboard-qr')" style="background: white; padding: 4px; border-radius: 6px; width: 72px; height: 72px; display: flex; align-items: center; justify-content: center; cursor: zoom-in; transition: transform 0.3s ease;"></div>
+                        <div id="mobile-qr-code" title="Click to zoom in/out" onclick="const isZoomed = this.classList.toggle('zoomed-dashboard-qr'); document.getElementById('dashboard-left-col').style.zIndex = isZoomed ? '100000' : '2';" style="background: white; padding: 4px; border-radius: 6px; width: 72px; height: 72px; display: flex; align-items: center; justify-content: center; cursor: zoom-in; transition: transform 0.3s ease;"></div>
                         <div>
                             <div style="font-size: 0.75rem; color: #00d4ff; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 0.25rem;">📱 Mobile Access</div>
                             <div style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.3;">Scan this QR to open the<br>project on your phone. <span style="font-size:0.7rem; color:#F59E0B; display:block; margin-top:3px; font-weight:600;">🔍 Click QR to Zoom</span></div>

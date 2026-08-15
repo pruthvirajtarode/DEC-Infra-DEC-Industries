@@ -185,8 +185,18 @@ function renderDashboard(container) {
                         <button class="btn btn-secondary" onclick="window.location.hash='/flagship-demo'">VIEW CAPSTONE</button>
                     </div>
                 </div>
-                <div style="flex: 1; min-width: 300px; display: flex; justify-content: center; z-index: 2;">
-                    <img src="hero-3d.png" class="float-3d" style="width: 100%; max-width: 450px; border-radius: 20px; filter: drop-shadow(0 20px 40px rgba(0,0,0,0.5));" alt="3D Gamified SaaS Hero">
+                <div style="flex: 1; min-width: 300px; display: flex; justify-content: center; z-index: 2; position: relative;">
+                    <div style="position: relative; display: inline-block;">
+                        <div style="position: absolute; inset: -3px; background: linear-gradient(135deg, var(--accent), #00d4ff, #7c3aed, var(--accent)); border-radius: 24px; animation: gradientBorder 3s linear infinite; background-size: 200% 200%; z-index: 0;"></div>
+                        <img src="https://github.com/abhisheknaiidu/abhisheknaiidu/blob/master/code.gif?raw=true" style="width: 100%; max-width: 420px; border-radius: 20px; display: block; position: relative; z-index: 1; border: 3px solid transparent;" alt="Realistic Coding Animation">
+                    </div>
+                    <style>
+                        @keyframes gradientBorder {
+                            0% { background-position: 0% 50%; }
+                            50% { background-position: 100% 50%; }
+                            100% { background-position: 0% 50%; }
+                        }
+                    </style>
                 </div>
             </div>
             <div style="position: absolute; top: -50%; right: -10%; width: 500px; height: 500px; background: radial-gradient(circle, rgba(243,198,35,0.15) 0%, transparent 70%); border-radius: 50%; z-index: 1;"></div>
@@ -2581,7 +2591,7 @@ If any test FAILS, recommend: Reject batch OR Request retesting OR Accept with w
                 <h2 class="mt-4" style="background: -webkit-linear-gradient(45deg, #F8FAFC, #FFDE59); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Module 1: Prompting & Document Intelligence</h2>
                 <p class="text-muted">Turn AI from a simple question-answering tool into a structured work assistant.</p>
             </div>
-            <img src="3d-doc.png" class="float-3d" style="width: 140px; height: auto;" alt="3D Document">
+            <img src="https://media.giphy.com/media/qgQUggAC3Pfv687qPC/giphy.gif" class="float-3d" style="width: 140px; height: auto; border-radius: 12px; border: 2px solid var(--accent); box-shadow: 0 0 18px rgba(255,222,89,0.35);" alt="AI Doc Animation">
         </div>
 
         <div class="flex gap-2 mb-6" style="display: flex; flex-wrap: wrap; gap: 0.5rem; border-bottom: 2px solid var(--border-color); padding-bottom: 0.5rem; margin-bottom: 2rem;">
@@ -2815,7 +2825,7 @@ function renderModule2(container) {
                 <h2 class="mt-4" style="background: -webkit-linear-gradient(45deg, #F8FAFC, #06B6D4); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Module 2: AI-Powered Data Analysis</h2>
                 <p class="text-muted">From manual Excel to AI analysis. Work with DEC synthetic data.</p>
             </div>
-            <img src="3d-data.png" class="float-3d" style="width: 140px; height: auto;" alt="3D Data">
+            <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExcDlqMXk4Y2oyZjhuaHNsMjFkeHJhMjdmcjhob2Z5ZXkxN2ZqcGJqcyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/l0HlHFRbmaZtBKhJG/giphy.gif" class="float-3d" style="width: 140px; height: auto; border-radius: 12px; border: 2px solid var(--accent); box-shadow: 0 0 18px rgba(255,222,89,0.35);" alt="AI Data Animation">
         </div>
         
         <!-- NEW: Visual AI Data Pipeline -->
@@ -3176,7 +3186,7 @@ function renderModule3(container) {
                 <h2 class="mt-4" style="background: -webkit-linear-gradient(45deg, #F8FAFC, #FFDE59); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Module 3: Safe AI Usage & Responsible Adoption</h2>
                 <p class="text-muted">Data classification, identifying hallucinations, and human-in-the-loop verification.</p>
             </div>
-            <img src="3d-shield.png" class="float-3d" style="width: 140px; height: auto;" alt="3D Shield">
+            <img src="https://media.giphy.com/media/3o7aCWDyW0PJCsxHna/giphy.gif" class="float-3d" style="width: 140px; height: auto; border-radius: 12px; border: 2px solid #10B981; box-shadow: 0 0 18px rgba(16,185,129,0.35);" alt="AI Shield Animation">
         </div>
         
         <div class="m3-content-wrapper mt-8">
@@ -3797,7 +3807,7 @@ function renderModule4(container) {
                     <h2 class="mt-2" style="background: -webkit-linear-gradient(45deg, #F8FAFC, #FFDE59); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Module 4: Capstone - Build Your Department Assistant</h2>
                     <p class="text-muted">Combine structured prompting, data intelligence, and safe policies into a working Claude Project.</p>
                 </div>
-                <img src="3d-rocket.png" class="float-3d" style="width: 140px; height: auto;" alt="3D Rocket">
+                <img src="https://media.giphy.com/media/3oKIPnAiaMCws8nOsE/giphy.gif" class="float-3d" style="width: 140px; height: auto; border-radius: 12px; border: 2px solid var(--accent); box-shadow: 0 0 18px rgba(255,222,89,0.35);" alt="AI Rocket Animation">
             </div>
             
             <div class="flex gap-2 mb-6" style="display: flex; flex-wrap: wrap; gap: 0.5rem; border-bottom: 2px solid var(--border-color); padding-bottom: 0.5rem; margin-bottom: 2rem;">
@@ -4542,7 +4552,7 @@ function renderPromptLibrary(container) {
                 <h2 class="mt-4" style="background: -webkit-linear-gradient(45deg, #F8FAFC, #FFDE59); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Prompt Library</h2>
                 <p class="text-muted">A collection of ready-to-use prompts for DEC workflows.</p>
             </div>
-            <img src="bot-3d.png" class="float-3d" style="width: 140px; height: auto;" alt="3D AI Bot">
+            <img src="https://media.giphy.com/media/RbDKaczqWovIugyJmW/giphy.gif" class="float-3d" style="width: 140px; height: auto; border-radius: 12px; border: 2px solid var(--accent); box-shadow: 0 0 20px rgba(255,222,89,0.4);" alt="AI Bot Animation">
         </div>
         
         <div class="dashboard-grid">
@@ -5567,7 +5577,7 @@ function renderProductivityForms(container) {
             html += `<button type="button" class="btn hour-btn ${isActive ? 'btn-primary' : 'btn-secondary'}" data-hour="${h}" data-prefix="${prefix}" style="min-width: 44px; height: 44px; padding: 0; display: inline-flex; align-items: center; justify-content: center; border-radius: 8px; font-weight: 700; font-size: 0.9rem; border: 1px solid ${isActive ? 'var(--primary)' : '#CBD5E1'}; position:relative;"><span style="pointer-events:none;">${h}</span></button>`;
         });
         html += '</div>';
-        html += `<div style="margin-top:0.5rem; font-size:0.78rem; color:var(--text-muted);">Selected: <strong style="color:var(--primary);">${selected} hr${selected !== 1 ? 's' : ''} / week</strong></div>`;
+        html += `<div style="margin-top:0.5rem; font-size:0.78rem; color:var(--text-muted);">Selected: <strong style="color:var(--accent);">${selected} hr${selected !== 1 ? 's' : ''} / week</strong></div>`;
         return html;
     }
     
@@ -5580,7 +5590,7 @@ function renderProductivityForms(container) {
                         <h2 class="mt-2">AI Productivity &amp; ROI Tracker</h2>
                         <p class="text-muted">Analyze your productivity gains, AI utilization shift, and satisfaction delta before and after the sessions.</p>
                     </div>
-                    <img src="bot-3d.png" class="float-3d" style="width: 120px; height: auto; filter: drop-shadow(0 10px 20px rgba(0,0,0,0.4)); margin-top: -20px;" alt="3D AI Bot">
+                    <img src="https://media.giphy.com/media/RbDKaczqWovIugyJmW/giphy.gif" class="float-3d" style="width: 120px; height: auto; filter: drop-shadow(0 10px 20px rgba(0,0,0,0.4)); margin-top: -20px; border-radius: 12px; border: 2px solid var(--accent); box-shadow: 0 0 18px rgba(255,222,89,0.35);" alt="3D AI Bot">
                 </div>
                 <button id="btn-show-qr" class="btn btn-secondary" style="display:inline-flex; align-items:center; gap:0.5rem; white-space:nowrap; font-weight:600; padding: 0.6rem 1.2rem; border-radius: 8px; flex-shrink:0;" title="Show QR code for employees to scan">
                     <span style="font-size:1.25rem;">📱</span><span class="qr-btn-text"> Show QR Code for Employees</span>

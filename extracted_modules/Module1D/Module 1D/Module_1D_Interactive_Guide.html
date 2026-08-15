@@ -1,0 +1,779 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 1D: Advanced AI Applications - Interactive Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #1F4788 0%, #378ADD 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+        
+        header h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+        
+        header p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+        
+        .intro-section {
+            padding: 30px;
+            background: #f8f9fa;
+            border-bottom: 2px solid #e0e0e0;
+        }
+        
+        .intro-section h2 {
+            color: #1F4788;
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+        
+        .intro-section p {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+        
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 30px;
+        }
+        
+        .option-card {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .option-card:hover {
+            border-color: #378ADD;
+            box-shadow: 0 8px 24px rgba(55, 138, 221, 0.15);
+            transform: translateY(-4px);
+        }
+        
+        .option-header {
+            background: linear-gradient(135deg, #378ADD 0%, #2196F3 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .option-letter {
+            display: inline-block;
+            background: rgba(255,255,255,0.3);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            line-height: 40px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 18px;
+            margin-right: 10px;
+        }
+        
+        .option-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin: 10px 0;
+        }
+        
+        .option-content {
+            padding: 20px;
+        }
+        
+        .option-content h3 {
+            color: #1F4788;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        
+        .duration {
+            display: inline-block;
+            background: #E3F2FD;
+            color: #1976D2;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+            margin-bottom: 15px;
+        }
+        
+        .benefit-list {
+            list-style: none;
+            margin-bottom: 15px;
+        }
+        
+        .benefit-list li {
+            color: #666;
+            padding: 8px 0;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 14px;
+        }
+        
+        .benefit-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .benefit-list li:before {
+            content: "✓ ";
+            color: #4CAF50;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+        
+        .financial-impact {
+            background: #F0F7FF;
+            border-left: 4px solid #378ADD;
+            padding: 12px;
+            margin-top: 15px;
+            border-radius: 4px;
+            font-size: 13px;
+            color: #1F4788;
+            font-weight: 500;
+        }
+        
+        .financial-impact strong {
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        .tabs {
+            display: flex;
+            gap: 0;
+            background: #f8f9fa;
+            padding: 0;
+            border-bottom: 2px solid #e0e0e0;
+            overflow-x: auto;
+        }
+        
+        .tab-btn {
+            padding: 15px 20px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            color: #666;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+        
+        .tab-btn:hover {
+            color: #378ADD;
+        }
+        
+        .tab-btn.active {
+            color: #378ADD;
+            border-bottom-color: #378ADD;
+        }
+        
+        .tab-content {
+            padding: 30px;
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .scenario-box {
+            background: #f8f9fa;
+            border-left: 4px solid #378ADD;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+        
+        .scenario-box h4 {
+            color: #1F4788;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        
+        .scenario-box p {
+            color: #666;
+            font-size: 13px;
+            line-height: 1.5;
+            margin: 5px 0;
+        }
+        
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 13px;
+        }
+        
+        .comparison-table th {
+            background: #1F4788;
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        .comparison-table td {
+            padding: 10px 12px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .comparison-table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+        
+        .comparison-table tr:hover {
+            background: #E3F2FD;
+        }
+        
+        .footer {
+            background: #f8f9fa;
+            padding: 30px;
+            text-align: center;
+            border-top: 2px solid #e0e0e0;
+        }
+        
+        .footer h3 {
+            color: #1F4788;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #378ADD 0%, #1976D2 100%);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            margin: 5px;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(55, 138, 221, 0.3);
+        }
+        
+        .highlight {
+            background: #FFF3CD;
+            padding: 15px;
+            border-left: 4px solid #FFC107;
+            margin: 20px 0;
+            border-radius: 4px;
+            font-size: 14px;
+            color: #856404;
+        }
+        
+        .success-box {
+            background: #D4EDDA;
+            padding: 15px;
+            border-left: 4px solid #28A745;
+            margin: 20px 0;
+            border-radius: 4px;
+            font-size: 14px;
+            color: #155724;
+        }
+        
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 24px;
+            }
+            
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .tabs {
+                flex-direction: column;
+            }
+            
+            .tab-btn {
+                border-bottom: none;
+                border-right: 3px solid transparent;
+            }
+            
+            .tab-btn.active {
+                border-bottom: none;
+                border-right-color: #378ADD;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Module 1D: Advanced AI Applications for Construction</h1>
+            <p>Choose your specialized workflow - 8 options available</p>
+        </header>
+        
+        <div class="intro-section">
+            <h2>What is Module 1D?</h2>
+            <p>Module 1D extends the core AI skills (Modules 1A, 1B, 1C) into specialized construction workflows that save even more time and money.</p>
+            <p><strong>Duration:</strong> 90 minutes (1.5 hours) | <strong>Difficulty:</strong> Intermediate | <strong>Audience:</strong> Project Managers, Engineers, Safety Officers</p>
+            <div class="highlight">
+                <strong>Choose one module below and I'll create a complete 90-minute workshop with real DEC Infra examples, scripts, prompts, and materials!</strong>
+            </div>
+        </div>
+        
+        <div class="options-grid">
+            <!-- Option A -->
+            <div class="option-card" onclick="selectOption('A')">
+                <div class="option-header">
+                    <div class="option-letter">A</div>
+                    <div class="option-title">Image & Photo Analysis</div>
+                </div>
+                <div class="option-content">
+                    <h3>Safety & Quality Detection</h3>
+                    <div class="duration">90 minutes</div>
+                    <ul class="benefit-list">
+                        <li>Analyze site photos with AI vision</li>
+                        <li>Detect safety hazards automatically</li>
+                        <li>Identify quality defects in 2 mins</li>
+                        <li>Generate photo reports</li>
+                    </ul>
+                    <div class="financial-impact">
+                        <strong>Impact:</strong> ₹2-5L defect avoidance | 5-10 hrs/month saved
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Option B -->
+            <div class="option-card" onclick="selectOption('B')">
+                <div class="option-header">
+                    <div class="option-letter">B</div>
+                    <div class="option-title">Email & Report Automation</div>
+                </div>
+                <div class="option-content">
+                    <h3>Auto-Generate Reports</h3>
+                    <div class="duration">90 minutes</div>
+                    <ul class="benefit-list">
+                        <li>Generate weekly reports in 5 mins</li>
+                        <li>Create daily site reports auto</li>
+                        <li>Meeting minutes from transcripts</li>
+                        <li>Consistent formatting always</li>
+                    </ul>
+                    <div class="financial-impact">
+                        <strong>Impact:</strong> 15-20 hrs/month saved | Never miss action items
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Option C -->
+            <div class="option-card" onclick="selectOption('C')">
+                <div class="option-header">
+                    <div class="option-letter">C</div>
+                    <div class="option-title">Schedule & Resource Optimization</div>
+                </div>
+                <div class="option-content">
+                    <h3>Compress Timeline & Optimize Labor</h3>
+                    <div class="duration">90 minutes</div>
+                    <ul class="benefit-list">
+                        <li>Compress timeline 2-3 weeks</li>
+                        <li>Optimize resource allocation</li>
+                        <li>Critical path analysis</li>
+                        <li>What-if scenario analysis</li>
+                    </ul>
+                    <div class="financial-impact">
+                        <strong>Impact:</strong> ₹5-10L timeline savings | 15-20% labor productivity gain
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Option D -->
+            <div class="option-card" onclick="selectOption('D')">
+                <div class="option-header">
+                    <div class="option-letter">D</div>
+                    <div class="option-title">Cost Estimation & Budgeting</div>
+                </div>
+                <div class="option-content">
+                    <h3>Accurate Cost Forecasting</h3>
+                    <div class="duration">90 minutes</div>
+                    <ul class="benefit-list">
+                        <li>AI-assisted cost estimation</li>
+                        <li>Historical benchmarking</li>
+                        <li>Overrun prediction & prevention</li>
+                        <li>Better contingency planning</li>
+                    </ul>
+                    <div class="financial-impact">
+                        <strong>Impact:</strong> 5-10% better accuracy | Fewer overruns & disputes
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Option E -->
+            <div class="option-card" onclick="selectOption('E')">
+                <div class="option-header">
+                    <div class="option-letter">E</div>
+                    <div class="option-title">Compliance & Documentation</div>
+                </div>
+                <div class="option-content">
+                    <h3>Safety & Audit Automation</h3>
+                    <div class="duration">90 minutes</div>
+                    <ul class="benefit-list">
+                        <li>Auto-generate safety checklists</li>
+                        <li>Create compliance documents</li>
+                        <li>Audit trail organization</li>
+                        <li>Never miss requirements</li>
+                    </ul>
+                    <div class="financial-impact">
+                        <strong>Impact:</strong> Avoid ₹5-15L in fines | 100% audit compliance
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Option F -->
+            <div class="option-card" onclick="selectOption('F')">
+                <div class="option-header">
+                    <div class="option-letter">F</div>
+                    <div class="option-title">Change Order & Claims</div>
+                </div>
+                <div class="option-content">
+                    <h3>Protect Claims & Manage Changes</h3>
+                    <div class="duration">90 minutes</div>
+                    <ul class="benefit-list">
+                        <li>Change order impact analysis</li>
+                        <li>Claims documentation ready</li>
+                        <li>Dispute risk assessment</li>
+                        <li>Timeline impact calculation</li>
+                    </ul>
+                    <div class="financial-impact">
+                        <strong>Impact:</strong> ₹20-50L claim recovery | 50% less disputes
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Option G -->
+            <div class="option-card" onclick="selectOption('G')">
+                <div class="option-header">
+                    <div class="option-letter">G</div>
+                    <div class="option-title">Sustainability & Green Building</div>
+                </div>
+                <div class="option-content">
+                    <h3>LEED & Carbon Tracking</h3>
+                    <div class="duration">90 minutes</div>
+                    <ul class="benefit-list">
+                        <li>LEED compliance tracking</li>
+                        <li>Carbon footprint calculation</li>
+                        <li>Waste optimization</li>
+                        <li>Energy efficiency analysis</li>
+                    </ul>
+                    <div class="financial-impact">
+                        <strong>Impact:</strong> LEED premium pricing | ₹2-5L waste savings
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Option H -->
+            <div class="option-card" onclick="selectOption('H')">
+                <div class="option-header">
+                    <div class="option-letter">H</div>
+                    <div class="option-title">Predictive Analytics</div>
+                </div>
+                <div class="option-content">
+                    <h3>Forecast Risk & Overruns</h3>
+                    <div class="duration">90 minutes</div>
+                    <ul class="benefit-list">
+                        <li>Predict project success rate</li>
+                        <li>Forecast cost overruns early</li>
+                        <li>Schedule delay prediction</li>
+                        <li>Quality issue prediction</li>
+                    </ul>
+                    <div class="financial-impact">
+                        <strong>Impact:</strong> Avoid ₹10-20L through early action | Data-driven decisions
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Tabs for detailed comparison -->
+        <div class="tabs">
+            <button class="tab-btn active" onclick="openTab(event, 'overview')">Overview</button>
+            <button class="tab-btn" onclick="openTab(event, 'comparison')">Comparison</button>
+            <button class="tab-btn" onclick="openTab(event, 'details')">Details</button>
+            <button class="tab-btn" onclick="openTab(event, 'next-steps')">Next Steps</button>
+        </div>
+        
+        <!-- Tab 1: Overview -->
+        <div id="overview" class="tab-content active">
+            <h2>Why Module 1D?</h2>
+            <p>After learning Modules 1A (Prompting), 1B (Excel Analysis), and 1C (PDF Comparison), participants want to apply AI to their specific workflows. Module 1D provides specialized solutions for different roles:</p>
+            
+            <div class="scenario-box">
+                <h4>For Site Engineers:</h4>
+                <p>Use Image Analysis (A) or Compliance (E) to detect defects and maintain safety standards automatically.</p>
+            </div>
+            
+            <div class="scenario-box">
+                <h4>For Project Managers:</h4>
+                <p>Use Report Automation (B) or Schedule Optimization (C) to manage projects with 20+ hours/month in time savings.</p>
+            </div>
+            
+            <div class="scenario-box">
+                <h4>For Finance/Planning:</h4>
+                <p>Use Cost Estimation (D) or Predictive Analytics (H) to forecast budgets and catch overruns 3 months early.</p>
+            </div>
+            
+            <div class="scenario-box">
+                <h4>For Contracts/Procurement:</h4>
+                <p>Use Change Order Management (F) to recover ₹20-50L in claims and reduce disputes by 50%.</p>
+            </div>
+        </div>
+        
+        <!-- Tab 2: Comparison Table -->
+        <div id="comparison" class="tab-content">
+            <h2>Quick Comparison of All Options</h2>
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Option</th>
+                        <th>Focus Area</th>
+                        <th>Time Saved/Month</th>
+                        <th>Financial Impact</th>
+                        <th>Best For</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>A</strong></td>
+                        <td>Image Analysis</td>
+                        <td>5-10 hours</td>
+                        <td>₹2-5L defect avoidance</td>
+                        <td>Site Engineers, QA</td>
+                    </tr>
+                    <tr>
+                        <td><strong>B</strong></td>
+                        <td>Report Automation</td>
+                        <td>15-20 hours</td>
+                        <td>Labor savings</td>
+                        <td>Project Managers</td>
+                    </tr>
+                    <tr>
+                        <td><strong>C</strong></td>
+                        <td>Schedule Optimization</td>
+                        <td>5-10 hours</td>
+                        <td>₹5-10L timeline savings</td>
+                        <td>PMs, Planners</td>
+                    </tr>
+                    <tr>
+                        <td><strong>D</strong></td>
+                        <td>Cost Estimation</td>
+                        <td>10-15 hours</td>
+                        <td>Better accuracy, fewer overruns</td>
+                        <td>Finance, Estimators</td>
+                    </tr>
+                    <tr>
+                        <td><strong>E</strong></td>
+                        <td>Compliance</td>
+                        <td>8-12 hours</td>
+                        <td>Avoid ₹5-15L in fines</td>
+                        <td>Safety, Compliance</td>
+                    </tr>
+                    <tr>
+                        <td><strong>F</strong></td>
+                        <td>Change Orders</td>
+                        <td>5-10 hours</td>
+                        <td>₹20-50L claim recovery</td>
+                        <td>Contracts, Legal</td>
+                    </tr>
+                    <tr>
+                        <td><strong>G</strong></td>
+                        <td>Sustainability</td>
+                        <td>8-10 hours</td>
+                        <td>LEED premium + ₹2-5L savings</td>
+                        <td>Green Projects, Planners</td>
+                    </tr>
+                    <tr>
+                        <td><strong>H</strong></td>
+                        <td>Predictive Analytics</td>
+                        <td>10-15 hours</td>
+                        <td>Avoid ₹10-20L overruns</td>
+                        <td>Senior PMs, Strategy</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- Tab 3: Details -->
+        <div id="details" class="tab-content">
+            <h2>What's Included in Each Module 1D?</h2>
+            <div class="success-box">
+                <strong>✓ Complete 90-Minute Facilitator Script</strong> - Word-for-word instructions with timing
+            </div>
+            <div class="success-box">
+                <strong>✓ Real DEC Infra Scenarios</strong> - 3-5 actual project examples with real data
+            </div>
+            <div class="success-box">
+                <strong>✓ Live Demo Prompts</strong> - Copy-paste ready, tested AI prompts
+            </div>
+            <div class="success-box">
+                <strong>✓ Hands-On Exercises</strong> - Group activities participants can do themselves
+            </div>
+            <div class="success-box">
+                <strong>✓ Expected AI Outputs</strong> - Examples of what participants will see
+            </div>
+            <div class="success-box">
+                <strong>✓ Tools & Software List</strong> - Everything needed to deliver the module
+            </div>
+            <div class="success-box">
+                <strong>✓ Success Metrics & ROI</strong> - How to measure impact after workshop
+            </div>
+            <div class="success-box">
+                <strong>✓ Implementation Guide</strong> - How teams use it after the workshop
+            </div>
+            <div class="success-box">
+                <strong>✓ Troubleshooting Tips</strong> - Common issues and how to fix them
+            </div>
+            <div class="success-box">
+                <strong>✓ Follow-Up Resources</strong> - Templates, checklists, reference guides
+            </div>
+        </div>
+        
+        <!-- Tab 4: Next Steps -->
+        <div id="next-steps" class="tab-content">
+            <h2>How to Get Your Module 1D</h2>
+            <h3 style="color: #1F4788; margin-top: 20px;">Step 1: Choose Your Option</h3>
+            <p>Click on any of the 8 option cards above (A through H) or reply with your choice.</p>
+            
+            <h3 style="color: #1F4788; margin-top: 20px;">Step 2: Confirm Selection</h3>
+            <p>You can also choose:</p>
+            <ul style="margin-left: 20px; margin-top: 10px;">
+                <li><strong>I) Multiple Modules</strong> - Get 2-3 modules combined (8-12 hours to create)</li>
+                <li><strong>J) Custom Module</strong> - Tell me your specific need and I'll create a custom solution</li>
+            </ul>
+            
+            <h3 style="color: #1F4788; margin-top: 20px;">Step 3: Creation Timeline</h3>
+            <p><strong>Single Module (A-H):</strong> 4-6 hours content creation</p>
+            <p><strong>Multiple Modules (I):</strong> 8-12 hours content creation</p>
+            <p><strong>Custom Module (J):</strong> 6-10 hours content creation</p>
+            
+            <h3 style="color: #1F4788; margin-top: 20px;">Step 4: You'll Receive</h3>
+            <div class="success-box">
+                ✓ Complete 90-minute workshop guide<br/>
+                ✓ Real DEC Infra project scenarios<br/>
+                ✓ Ready-to-use AI prompts<br/>
+                ✓ Sample outputs & expected results<br/>
+                ✓ Interactive HTML guides<br/>
+                ✓ PDF reference documents<br/>
+                ✓ Facilitator notes & talking points<br/>
+                ✓ Printable handouts for participants
+            </div>
+            
+            <h3 style="color: #1F4788; margin-top: 20px;">Ready to Proceed?</h3>
+            <p>Reply with your choice: <strong>A, B, C, D, E, F, G, H, I, or J</strong></p>
+        </div>
+        
+        <div class="footer">
+            <h3>📊 Quick Stats</h3>
+            <p>Each Module 1D provides:</p>
+            <p style="font-size: 14px; margin: 10px 0;">
+                <strong>5-20 hours/month</strong> time savings | 
+                <strong>₹2-50L</strong> financial impact | 
+                <strong>90 minutes</strong> workshop duration
+            </p>
+            <p style="margin-top: 20px;">
+                <button class="cta-button" onclick="copyToClipboard('I want Module 1D Option A: Image & Photo Analysis')">Copy Selection</button>
+                <button class="cta-button" onclick="copyToClipboard('I want Module 1D Option B: Email & Report Automation')">Copy Selection</button>
+                <button class="cta-button" onclick="copyToClipboard('I want Module 1D Option C: Schedule & Resource Optimization')">Copy Selection</button>
+            </p>
+            <p style="margin-top: 15px; color: #666; font-size: 13px;">
+                Choose any option above and I'll create a complete, ready-to-deliver workshop module with real DEC Infra examples!
+            </p>
+        </div>
+    </div>
+    
+    <script>
+        function openTab(evt, tabName) {
+            const tabContents = document.querySelectorAll('.tab-content');
+            tabContents.forEach(tab => tab.classList.remove('active'));
+            
+            const tabBtns = document.querySelectorAll('.tab-btn');
+            tabBtns.forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById(tabName).classList.add('active');
+            evt.currentTarget.classList.add('active');
+        }
+        
+        function selectOption(option) {
+            const options = {
+                'A': 'Image & Photo Analysis',
+                'B': 'Email & Report Automation',
+                'C': 'Schedule & Resource Optimization',
+                'D': 'Cost Estimation & Budgeting',
+                'E': 'Compliance & Documentation',
+                'F': 'Change Order & Claims Management',
+                'G': 'Sustainability & Green Building',
+                'H': 'Predictive Analytics'
+            };
+            
+            const message = `I want Module 1D Option ${option}: ${options[option]}`;
+            alert(message + '\n\nCopy this and reply to confirm your selection!');
+            copyToClipboard(message);
+        }
+        
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                alert('Selection copied! Paste it in your reply to confirm.');
+            }).catch(() => {
+                const textarea = document.createElement('textarea');
+                textarea.value = text;
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                alert('Selection copied! Paste it in your reply to confirm.');
+            });
+        }
+    </script>
+</body>
+</html>

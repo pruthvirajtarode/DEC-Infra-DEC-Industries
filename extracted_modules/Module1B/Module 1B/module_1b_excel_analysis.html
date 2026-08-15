@@ -1,0 +1,585 @@
+<style>
+  .excel-module {
+    font-family: var(--font-sans);
+  }
+  .demo-card {
+    background: var(--surface-2);
+    border: 0.5px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  .demo-title {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--text-primary);
+    margin: 0 0 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .role-badge {
+    display: inline-block;
+    background: var(--bg-accent);
+    color: var(--text-accent);
+    font-size: 11px;
+    font-weight: 500;
+    padding: 4px 8px;
+    border-radius: var(--radius);
+    margin-bottom: 12px;
+  }
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin: 12px 0;
+    border: 0.5px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .data-table thead {
+    background: var(--surface-1);
+  }
+  .data-table th {
+    padding: 10px;
+    text-align: left;
+    font-weight: 500;
+    color: var(--text-primary);
+    border-bottom: 0.5px solid var(--border);
+  }
+  .data-table td {
+    padding: 10px;
+    border-bottom: 0.5px solid var(--border);
+    color: var(--text-primary);
+  }
+  .data-table tbody tr:last-child td {
+    border-bottom: none;
+  }
+  .analysis-box {
+    background: var(--surface-1);
+    border: 0.5px solid var(--border);
+    border-radius: 8px;
+    padding: 12px;
+    margin: 12px 0;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+  .step-section {
+    background: #eaf3de;
+    border-left: 3px solid var(--text-success);
+    padding: 12px;
+    margin: 12px 0;
+    border-radius: 6px;
+    font-size: 13px;
+  }
+  .warning-box {
+    background: #fcebeb;
+    border-left: 3px solid var(--text-danger);
+    padding: 12px;
+    margin: 12px 0;
+    border-radius: 6px;
+    font-size: 13px;
+  }
+  .protection-tip {
+    background: #faeeda;
+    border-left: 3px solid var(--text-warning);
+    padding: 12px;
+    margin: 12px 0;
+    border-radius: 6px;
+    font-size: 13px;
+  }
+  .code-block {
+    background: var(--surface-1);
+    padding: 12px;
+    border-radius: 6px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    overflow-x: auto;
+    color: var(--text-primary);
+    margin: 12px 0;
+    line-height: 1.4;
+  }
+  .prompt-input {
+    background: var(--surface-1);
+    border: 0.5px solid var(--border);
+    padding: 12px;
+    border-radius: 6px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-primary);
+    margin: 12px 0;
+    line-height: 1.5;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+  .key-section {
+    border-top: 0.5px solid var(--border);
+    padding-top: 12px;
+    margin-top: 12px;
+  }
+  .tabs-container {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+    border-bottom: 0.5px solid var(--border);
+    overflow-x: auto;
+  }
+  .tab-btn {
+    padding: 12px 16px;
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid transparent;
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    white-space: nowrap;
+    transition: color 0.2s;
+  }
+  .tab-btn.active {
+    color: var(--text-primary);
+    border-bottom-color: var(--text-accent);
+  }
+  .tab-content {
+    display: none;
+  }
+  .tab-content.active {
+    display: block;
+  }
+  .insights-list {
+    list-style: none;
+    padding: 0;
+    margin: 8px 0;
+  }
+  .insights-list li {
+    padding: 8px 0;
+    border-bottom: 0.5px solid var(--border);
+    font-size: 13px;
+  }
+  .insights-list li:last-child {
+    border-bottom: none;
+  }
+  .insights-list li:before {
+    content: "→ ";
+    color: var(--text-accent);
+    font-weight: 500;
+    margin-right: 6px;
+  }
+</style>
+
+<div class="excel-module">
+  <h2 style="font-size: 18px; font-weight: 500; margin: 0 0 20px; color: var(--text-primary);">Module 1B: Protect & Analyze Excel Files with AI</h2>
+
+  <div class="tabs-container">
+    <button class="tab-btn active" onclick="switchTab(event, 'demo1')">Budget Analysis</button>
+    <button class="tab-btn" onclick="switchTab(event, 'demo2')">Variance Analysis</button>
+    <button class="tab-btn" onclick="switchTab(event, 'demo3')">Data Protection</button>
+    <button class="tab-btn" onclick="switchTab(event, 'demo4')">Cost Breakdown</button>
+  </div>
+
+  <!-- DEMO 1: Budget Analysis -->
+  <div id="demo1" class="tab-content active">
+    <div class="demo-card">
+      <div class="role-badge">Project Manager / Finance</div>
+      <h3 class="demo-title">
+        <span>💰</span>
+        AI Budget Variance Analysis (Live Demo)
+      </h3>
+
+      <div style="margin-bottom: 16px;">
+        <p style="font-size: 14px; color: var(--text-secondary); margin: 0 0 12px; font-weight: 500;">Scenario: IISER Library Project - Monthly Budget Review</p>
+        <p style="font-size: 13px; color: var(--text-secondary); margin: 0;">Raw Excel data (scraped values from your spreadsheet):</p>
+      </div>
+
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Budget Line Item</th>
+            <th>Budgeted (₹ Lacs)</th>
+            <th>Spent to Date (₹ Lacs)</th>
+            <th>% Spent</th>
+            <th>Remaining (₹ Lacs)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Civil Works - Foundation</td>
+            <td>45.00</td>
+            <td>48.50</td>
+            <td>107.8%</td>
+            <td>-3.50</td>
+          </tr>
+          <tr>
+            <td>Structural - RCC Frame</td>
+            <td>65.00</td>
+            <td>52.30</td>
+            <td>80.5%</td>
+            <td>12.70</td>
+          </tr>
+          <tr>
+            <td>MEP (Mechanical)</td>
+            <td>28.00</td>
+            <td>15.20</td>
+            <td>54.3%</td>
+            <td>12.80</td>
+          </tr>
+          <tr>
+            <td>Electrical Systems</td>
+            <td>22.00</td>
+            <td>18.90</td>
+            <td>85.9%</td>
+            <td>3.10</td>
+          </tr>
+          <tr>
+            <td>Finishes (Paint, Flooring)</td>
+            <td>35.00</td>
+            <td>8.50</td>
+            <td>24.3%</td>
+            <td>26.50</td>
+          </tr>
+          <tr style="background: var(--surface-1); font-weight: 500;">
+            <td>TOTAL</td>
+            <td>195.00</td>
+            <td>143.40</td>
+            <td>73.5%</td>
+            <td>51.60</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="step-section">
+        <strong>Step 1: Copy this data from Excel</strong>
+        <p style="margin: 8px 0 0; font-size: 12px;">Select the table → Copy → Paste into ChatGPT/Claude</p>
+      </div>
+
+      <div class="step-section">
+        <strong>Step 2: Use this prompt with AI</strong>
+      </div>
+
+      <div class="prompt-input">Analyze this project budget data from our IISER Library project:
+
+[PASTE YOUR EXCEL TABLE HERE]
+
+Provide:
+1. Key findings (which line items are over/under budget?)
+2. Red flags (items exceeding 100% - why?)
+3. Risk assessment (will remaining budget cover finish work?)
+4. Top 3 recommendations to stay on budget
+5. Forecast: If spending continues at current rate, what will final project cost be?
+
+Keep it 200 words max, use rupees, be specific with numbers.</div>
+
+      <div class="analysis-box">
+        <strong style="color: var(--text-success);">🤖 Example AI Output:</strong>
+        <p style="margin: 8px 0;">Foundation work is <strong>7.8% over budget</strong> (₹48.5L vs ₹45L budget) - likely due to soil conditions requiring extra reinforcement. RCC frame is on track at 80.5%. Biggest risk: Finishes phase only started (24.3% spent) but ₹26.5L remains - if finish costs inflate (common in India due to labor), project could exceed budget by ₹2-3L. <strong>Recommendation:</strong> Lock finish material rates NOW, negotiate labor contracts, and monitor daily rates on site.</p>
+      </div>
+
+      <div class="protection-tip">
+        <strong>🔒 Data Protection Tip:</strong> Don't paste sensitive vendor rates or client costs. Instead: "Our Foundation work exceeded budget by 8%. What could cause this?" → AI gives you generic troubleshooting without seeing real amounts.
+      </div>
+
+      <div class="key-section">
+        <strong style="color: var(--text-primary);">🎯 What This Does:</strong>
+        <ul class="insights-list">
+          <li>Spot budget overruns in seconds (would take Excel formulas + manual review)</li>
+          <li>Flags risks automatically (foundation overage → soil issues → supply chain delays?)</li>
+          <li>Suggests corrective actions (negotiate, reallocate, fast-track)</li>
+          <li>Gives you talking points for client calls</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- DEMO 2: Variance Analysis -->
+  <div id="demo2" class="tab-content">
+    <div class="demo-card">
+      <div class="role-badge">Project Manager / Cost Controller</div>
+      <h3 class="demo-title">
+        <span>📊</span>
+        AI Detects Budget Variances You Might Miss
+      </h3>
+
+      <p style="font-size: 14px; color: var(--text-secondary); margin: 0 0 12px;">Real scenario: Monthly spend by category across 3 concurrent DEC Infra projects:</p>
+
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Project</th>
+            <th>Civil Works (₹L)</th>
+            <th>MEP (₹L)</th>
+            <th>Finishes (₹L)</th>
+            <th>Contingency Used (₹L)</th>
+            <th>Total Month (₹L)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>IISER Library</td>
+            <td>18.5</td>
+            <td>6.2</td>
+            <td>3.1</td>
+            <td>2.0</td>
+            <td>29.8</td>
+          </tr>
+          <tr>
+            <td>Medical College</td>
+            <td>22.3</td>
+            <td>8.5</td>
+            <td>1.8</td>
+            <td>1.5</td>
+            <td>34.1</td>
+          </tr>
+          <tr>
+            <td>IT Park</td>
+            <td>12.1</td>
+            <td>9.8</td>
+            <td>5.6</td>
+            <td>3.2</td>
+            <td>30.7</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="prompt-input">Compare spending patterns across our 3 projects:
+
+[PASTE TABLE]
+
+Questions:
+1. Which project is spending contingency highest? Red flag?
+2. Why is IT Park spending more on MEP than others?
+3. Which project is most at risk if delays happen?
+4. Rank projects by budget health (1 = best, 3 = worst)
+5. What should we monitor closely next month?
+
+Give actionable insights, not just numbers.</div>
+
+      <div class="analysis-box">
+        <strong style="color: var(--text-success);">🤖 Sample AI Output:</strong>
+        <p style="margin: 8px 0;"><strong>At Risk: IT Park</strong> - Already using 32% of contingency (₹3.2L of ~₹10L total). MEP spend (₹9.8L) is higher than peers, suggesting complex systems or scope creep. <strong>Healthiest: Medical College</strong> - Spending contingency at 16% rate, linear civil progress. <strong>Monitor:</strong> IISER's finishing cost trajectory; current ₹3.1L/month suggests ₹9-12L total (may exceed budget if interior specs expand).</p>
+      </div>
+
+      <div class="warning-box">
+        <strong>⚠️ Why Manual Review Misses This:</strong> You'd scan numbers, see IT Park MEP at ₹9.8L and think "OK, engineering is complex." AI connects it to contingency burn + project timeline → "high risk of overrun if delays cascade."
+      </div>
+
+      <div class="key-section">
+        <strong style="color: var(--text-primary);">Benefits of AI Variance Analysis:</strong>
+        <ul class="insights-list">
+          <li>Spots cross-project spending anomalies (which PM is over-spending?)</li>
+          <li>Flags contingency burn rate (how many months until reserves dry up?)</li>
+          <li>Predicts which projects will need cost intervention</li>
+          <li>Gives early warnings before problems blow up</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- DEMO 3: Data Protection -->
+  <div id="demo3" class="tab-content">
+    <div class="demo-card">
+      <div class="role-badge">All Roles</div>
+      <h3 class="demo-title">
+        <span>🔐</span>
+        Protecting Sensitive Data While Using AI
+      </h3>
+
+      <p style="font-size: 14px; color: var(--text-secondary); margin: 0 0 16px; font-weight: 500;">Critical: What you paste into ChatGPT/Claude gets logged. Never paste client pricing, salaries, confidential costs.</p>
+
+      <div style="margin: 16px 0;">
+        <p style="font-size: 13px; font-weight: 500; color: var(--text-primary); margin: 0 0 12px;">Method 1: Anonymize Before Sharing</p>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th style="width: 45%;">❌ DON'T Send This</th>
+              <th style="width: 45%;">✅ ANONYMIZE & Send This</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="font-family: var(--font-mono); font-size: 11px;">Project: IISER Tirupati
+Vendor A: ₹45L
+Vendor B: ₹52L
+[Real names & rates]</td>
+              <td style="font-family: var(--font-mono); font-size: 11px;">Project: Library Project
+Option 1: ₹45L
+Option 2: ₹52L
+[No vendor names]</td>
+            </tr>
+            <tr>
+              <td style="font-family: var(--font-mono); font-size: 11px;">Salary: Manager ₹8.5L
+Sr. Engineer: ₹6L
+Labor cost: ₹2.1L/day</td>
+              <td style="font-family: var(--font-mono); font-size: 11px;">Personnel Cost Budget: Line A (₹8.5L), Line B (₹6L)
+Productivity rate: ₹X/day
+[No names, masked amounts]</td>
+            </tr>
+            <tr>
+              <td style="font-family: var(--font-mono); font-size: 11px;">Client: IISER
+Budget: ₹195L
+Profit margin: 12%</td>
+              <td style="font-family: var(--font-mono); font-size: 11px;">Project Budget: ₹XYZ
+Cost: ₹ABC
+Margin analysis: compare %</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="protection-tip">
+        <strong>✅ What's SAFE to share:</strong>
+        <ul style="margin: 8px 0; padding-left: 20px; font-size: 13px;">
+          <li>Budget line items without vendor names</li>
+          <li>Percentages instead of actual rupee amounts</li>
+          <li>Timeline/schedule data (no client names needed)</li>
+          <li>General problem ("We're 15% over on foundations") without specifics</li>
+          <li>Anonymized metrics (project size, duration, team size)</li>
+        </ul>
+      </div>
+
+      <div style="margin: 16px 0;">
+        <p style="font-size: 13px; font-weight: 500; color: var(--text-primary); margin: 0 0 12px;">Method 2: Use ChatGPT Enterprise/Claude Teams (Paid, Private)</p>
+        <p style="font-size: 13px; color: var(--text-secondary); margin: 0;">For sensitive data, use paid enterprise versions that don't log conversations. But even then, follow anonymization best practices.</p>
+      </div>
+
+      <div style="margin: 16px 0;">
+        <p style="font-size: 13px; font-weight: 500; color: var(--text-primary); margin: 0 0 12px;">Method 3: Replace Sensitive Values</p>
+        <div class="code-block">BEFORE (Don't do this):
+Foundation cost: ₹48.5L (10% over ₹45L budget)
+
+AFTER (Do this):
+Foundation cost: ₹XXL (10% over ₹YYL budget)
+What causes 10% overruns in foundation work?</div>
+      </div>
+
+      <div class="warning-box">
+        <strong>⚠️ Real Risk:</strong> ChatGPT free version trains on your data. If you paste client budget ₹195L for IISER, someone else might ask "summarize IISER project budgets" and get generic learnings from YOUR data. Always anonymize.
+      </div>
+
+      <div class="key-section">
+        <strong style="color: var(--text-primary);">Golden Rule for DEC Infra:</strong>
+        <p style="font-size: 13px; margin: 8px 0;">✓ Anonymize client names, vendor names, exact rupee amounts
+✓ Share: Project type, phase, duration, generic cost categories
+✓ Ask: Generic questions ("What causes cost overruns in X phase?")
+✗ Never share: Specific vendor quotes, salary info, client pricing, profit margins, confidential contracts</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- DEMO 4: Cost Breakdown -->
+  <div id="demo4" class="tab-content">
+    <div class="demo-card">
+      <div class="role-badge">Cost Controller / Finance</div>
+      <h3 class="demo-title">
+        <span>🔍</span>
+        Drill Down: AI Explains Cost Breakdowns
+      </h3>
+
+      <p style="font-size: 14px; color: var(--text-secondary); margin: 0 0 12px;">Your CFO asks: "Why is our cost per sq.m. higher than industry average?"</p>
+
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Category</th>
+            <th>Amount (₹L)</th>
+            <th>% of Total</th>
+            <th>Cost/Sq.M (₹)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Civil Works</td>
+            <td>85.2</td>
+            <td>43.7%</td>
+            <td>3,408</td>
+          </tr>
+          <tr>
+            <td>MEP (Mech, Elec, Plumb)</td>
+            <td>45.3</td>
+            <td>23.2%</td>
+            <td>1,812</td>
+          </tr>
+          <tr>
+            <td>Finishes</td>
+            <td>38.5</td>
+            <td>19.8%</td>
+            <td>1,540</td>
+          </tr>
+          <tr>
+            <td>Project Management (PM)</td>
+            <td>12.8</td>
+            <td>6.6%</td>
+            <td>512</td>
+          </tr>
+          <tr>
+            <td>Contingency (Used)</td>
+            <td>12.2</td>
+            <td>6.3%</td>
+            <td>488</td>
+          </tr>
+          <tr style="background: var(--surface-1); font-weight: 500;">
+            <td>TOTAL</td>
+            <td>194.0</td>
+            <td>100%</td>
+            <td>7,760</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="prompt-input">Our library project cost breakdown:
+
+[PASTE TABLE]
+
+Industry benchmarks for similar projects:
+- Civil: ₹3,000/sq.m
+- MEP: ₹1,600/sq.m
+- Finishes: ₹1,200/sq.m
+- PM overhead: 5%
+
+Questions:
+1. Where are we above/below benchmark?
+2. Is our cost structure justified? (Any red flags?)
+3. Which categories have most variance from industry?
+4. For future projects, what should we tighten?</div>
+
+      <div class="analysis-box">
+        <strong style="color: var(--text-success);">🤖 Sample Output:</strong>
+        <p style="margin: 8px 0;"><strong>Variance Analysis:</strong></p>
+        <ul style="margin: 8px 0; padding-left: 20px; font-size: 13px;">
+          <li><strong>Civil (₹3,408 vs ₹3,000 bench):</strong> +13.6% → Likely due to complex foundation (IISER specs), soil conditions, or site logistics. <strong>Justified</strong>.</li>
+          <li><strong>MEP (₹1,812 vs ₹1,600 bench):</strong> +13.3% → Higher than peers. Is IISER library spec'd with premium HVAC/IT infrastructure? If yes, justified; if no, investigate vendor rates.</li>
+          <li><strong>Finishes (₹1,540 vs ₹1,200 bench):</strong> +28.3% → <strong>Biggest gap.</strong> Review material selections, labor rates. Potential to reduce ₹3-4L by negotiating finish suppliers.</li>
+          <li><strong>PM overhead (6.6% vs 5% bench):</strong> Slightly high but acceptable for educational project complexity.</li>
+        </ul>
+        <p style="margin: 8px 0;"><strong>Recommendation:</strong> Civil & MEP are defensible given project type. Focus cost recovery efforts on Finishes phase — negotiate now before work starts.</p>
+      </div>
+
+      <div class="key-section">
+        <strong style="color: var(--text-primary);">Why This Matters:</strong>
+        <ul class="insights-list">
+          <li>Benchmarking costs manually = 2-3 hours research + spreadsheets</li>
+          <li>AI does it in 2 minutes, with industry context</li>
+          <li>Identifies where you have leverage (Finishes for negotiation)</li>
+          <li>Justifies cost differences to clients/stakeholders</li>
+        </ul>
+      </div>
+
+      <div style="margin-top: 16px; background: var(--surface-1); padding: 12px; border-radius: 8px; border-left: 3px solid var(--text-accent);">
+        <p style="font-size: 13px; color: var(--text-secondary); margin: 0;"><strong>💡 Pro Tip for Workshop:</strong> Use REAL DEC Infra budget data (anonymized) for this demo. Participants will see "this is OUR project" and engage 10x more.</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function switchTab(e, tabName) {
+  const tabs = document.querySelectorAll('.tab-content');
+  tabs.forEach(t => t.classList.remove('active'));
+  
+  const btns = document.querySelectorAll('.tab-btn');
+  btns.forEach(b => b.classList.remove('active'));
+  
+  document.getElementById(tabName).classList.add('active');
+  e.target.classList.add('active');
+}
+</script>

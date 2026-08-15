@@ -1,0 +1,529 @@
+<style>
+  .module-container {
+    font-family: var(--font-sans);
+  }
+  .section-header {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--text-primary);
+    margin: 20px 0 12px;
+    padding-bottom: 8px;
+    border-bottom: 0.5px solid var(--border);
+  }
+  .scenario-card {
+    background: var(--surface-2);
+    border: 0.5px solid var(--border);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 16px;
+  }
+  .scenario-title {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--text-primary);
+    margin: 0 0 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .role-badge {
+    display: inline-block;
+    background: var(--bg-accent);
+    color: var(--text-accent);
+    font-size: 11px;
+    font-weight: 500;
+    padding: 4px 8px;
+    border-radius: var(--radius);
+    margin-bottom: 12px;
+  }
+  .prompt-box {
+    background: var(--surface-1);
+    border-left: 3px solid var(--text-accent);
+    padding: 12px;
+    border-radius: 6px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    overflow-x: auto;
+    color: var(--text-primary);
+    margin: 12px 0;
+    line-height: 1.5;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+  .key-insight {
+    background: #eaf3de;
+    border-left: 3px solid var(--text-success);
+    padding: 12px;
+    margin: 12px 0;
+    border-radius: 6px;
+    font-size: 13px;
+  }
+  .warning-box {
+    background: #fcebeb;
+    border-left: 3px solid var(--text-danger);
+    padding: 12px;
+    margin: 12px 0;
+    border-radius: 6px;
+    font-size: 13px;
+  }
+  .tip-box {
+    background: #faeeda;
+    border-left: 3px solid var(--text-warning);
+    padding: 12px;
+    margin: 12px 0;
+    border-radius: 6px;
+    font-size: 13px;
+  }
+  .comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+    margin: 12px 0;
+  }
+  .comparison-table th {
+    background: var(--surface-1);
+    padding: 8px;
+    text-align: left;
+    font-weight: 500;
+    border-bottom: 0.5px solid var(--border);
+    color: var(--text-primary);
+  }
+  .comparison-table td {
+    padding: 8px;
+    border-bottom: 0.5px solid var(--border);
+    color: var(--text-primary);
+  }
+  .tabs-container {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+    border-bottom: 0.5px solid var(--border);
+    overflow-x: auto;
+  }
+  .tab-btn {
+    padding: 12px 14px;
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid transparent;
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    white-space: nowrap;
+    transition: color 0.2s;
+  }
+  .tab-btn.active {
+    color: var(--text-primary);
+    border-bottom-color: var(--text-accent);
+  }
+  .tab-content {
+    display: none;
+  }
+  .tab-content.active {
+    display: block;
+  }
+  .workflow-box {
+    background: var(--surface-1);
+    border: 0.5px solid var(--border);
+    padding: 12px;
+    border-radius: 6px;
+    margin: 12px 0;
+    font-size: 13px;
+  }
+  .step-number {
+    display: inline-block;
+    background: var(--text-accent);
+    color: white;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 24px;
+    font-weight: 500;
+    margin-right: 6px;
+  }
+</style>
+
+<div class="module-container">
+  <h2 style="font-size: 18px; font-weight: 500; margin: 0 0 12px; color: var(--text-primary);">Module 1C: Analyzing PDFs & Vendor Documents with AI</h2>
+  <p style="font-size: 13px; color: var(--text-secondary); margin: 0 0 16px;">Extract data from vendor quotes, compare specifications, identify cost discrepancies in 5 minutes instead of 2 hours</p>
+
+  <div class="tabs-container">
+    <button class="tab-btn active" onclick="switchTab(event, 'tab1')">Vendor Quote Comparison</button>
+    <button class="tab-btn" onclick="switchTab(event, 'tab2')">Specification Analysis</button>
+    <button class="tab-btn" onclick="switchTab(event, 'tab3')">Contract Review</button>
+    <button class="tab-btn" onclick="switchTab(event, 'tab4')">Quality Standards Check</button>
+  </div>
+
+  <!-- TAB 1: Vendor Quote Comparison -->
+  <div id="tab1" class="tab-content active">
+    <div class="scenario-card">
+      <div class="role-badge">Procurement / Project Manager</div>
+      <h3 class="scenario-title">
+        <span>🏗️</span>
+        Compare Concrete Vendor Quotes (Real Scenario)
+      </h3>
+
+      <p style="font-size: 13px; color: var(--text-secondary); margin: 0 0 12px;"><strong>Situation:</strong> You have 3 concrete vendor quotes for IISER Library foundation (150 cubic meters needed). All PDFs are different formats. Manual comparison = 45 minutes. AI comparison = 3 minutes.</p>
+
+      <div class="section-header">The 3 Vendor PDFs (What You'd Receive):</div>
+
+      <div style="margin: 12px 0;">
+        <p style="font-size: 13px; font-weight: 500; color: var(--text-primary); margin: 0 0 8px;">Vendor A: Concrete Suppliers Inc (PDF with tables)</p>
+        <div style="background: var(--surface-1); padding: 12px; border-radius: 6px; font-size: 12px; border-left: 3px solid #378ADD;">
+          <strong>Product Offering:</strong><br/>
+          • M30 Grade Concrete (Strength 30 MPa)<br/>
+          • Unit Rate: ₹4,500 per cubic meter<br/>
+          • Minimum Order: 50 cum<br/>
+          • Delivery Time: 3-5 days<br/>
+          • Delivery Charges: ₹500 per load (10 cum per load)<br/>
+          • Payment Terms: 50% advance, 50% on delivery<br/>
+          • Quality Cert: IS 456 certified, lab test reports included<br/>
+          • Warranty: 10-year structural guarantee<br/>
+          • Total Cost for 150 cum: ₹4,500 × 150 = ₹6,75,000 + (15 × ₹500) = ₹6,82,500
+        </div>
+      </div>
+
+      <div style="margin: 12px 0;">
+        <p style="font-size: 13px; font-weight: 500; color: var(--text-primary); margin: 0 0 8px;">Vendor B: Quality Concrete Ltd (Different format, embedded in text)</p>
+        <div style="background: var(--surface-1); padding: 12px; border-radius: 6px; font-size: 12px; border-left: 3px solid #1D9E75;">
+          <strong>Our Offer:</strong><br/>
+          We supply premium M30 grade at ₹4,200/cum for orders >100 cum (you get 5% volume discount).<br/>
+          Effective rate: ₹3,990/cum<br/>
+          Free delivery on orders >100 cum<br/>
+          Delivery: 5-7 days but can rush for ₹2,000 surcharge per load<br/>
+          Payment: 30% advance, 70% on completion (better terms)<br/>
+          Certifications: IS 456 + LEED compliant<br/>
+          Warranty: 15-year guarantee<br/>
+          Total Cost for 150 cum: ₹3,990 × 150 = ₹5,98,500 (no delivery charges)
+        </div>
+      </div>
+
+      <div style="margin: 12px 0;">
+        <p style="font-size: 13px; font-weight: 500; color: var(--text-primary); margin: 0 0 8px;">Vendor C: Budget Concrete Co (Price-sensitive, minimal specs)</p>
+        <div style="background: var(--surface-1); padding: 12px; border-radius: 6px; font-size: 12px; border-left: 3px solid #993C1D;">
+          <strong>Rock Bottom Pricing:</strong><br/>
+          M30 Concrete @ ₹3,800/cum<br/>
+          Bulk Order (150+): ₹3,500/cum<br/>
+          Your order qualifies: ₹3,500/cum<br/>
+          Delivery: ₹1,000/load (extra)<br/>
+          Terms: COD only (100% upfront)<br/>
+          Test Reports: Available upon request (may be delayed)<br/>
+          No explicit warranty (standard 5 years, unwritten)<br/>
+          Total Cost for 150 cum: ₹3,500 × 150 + (15 × ₹1,000) = ₹525,000 + ₹15,000 = ₹540,000
+        </div>
+      </div>
+
+      <div class="section-header">Step 1: What Manual Comparison Looks Like (Tedious)</div>
+
+      <table class="comparison-table">
+        <tr>
+          <th>Criteria</th>
+          <th>Vendor A</th>
+          <th>Vendor B</th>
+          <th>Vendor C</th>
+        </tr>
+        <tr>
+          <td><strong>Rate/cum</strong></td>
+          <td>₹4,500</td>
+          <td>₹3,990</td>
+          <td>₹3,500</td>
+        </tr>
+        <tr>
+          <td><strong>Discount</strong></td>
+          <td>None</td>
+          <td>5% (₹225)</td>
+          <td>N/A (already bulk)</td>
+        </tr>
+        <tr>
+          <td><strong>Delivery</strong></td>
+          <td>₹500/load × 15 = ₹7,500</td>
+          <td>FREE</td>
+          <td>₹1,000/load × 15 = ₹15,000</td>
+        </tr>
+        <tr>
+          <td><strong>Payment Terms</strong></td>
+          <td>50/50</td>
+          <td>30/70 (better)</td>
+          <td>100% upfront (worst)</td>
+        </tr>
+        <tr>
+          <td><strong>Delivery Time</strong></td>
+          <td>3-5 days</td>
+          <td>5-7 days (rush: +₹2K/load)</td>
+          <td>Not specified</td>
+        </tr>
+        <tr>
+          <td><strong>Quality Cert</strong></td>
+          <td>IS 456 (standard)</td>
+          <td>IS 456 + LEED</td>
+          <td>Upon request (risky)</td>
+        </tr>
+        <tr>
+          <td><strong>Warranty</strong></td>
+          <td>10 years</td>
+          <td>15 years (best)</td>
+          <td>5 years (implied)</td>
+        </tr>
+        <tr>
+          <td><strong>TOTAL COST</strong></td>
+          <td><strong>₹6,82,500</strong></td>
+          <td><strong>₹5,98,500</strong></td>
+          <td><strong>₹5,40,000</strong></td>
+        </tr>
+      </table>
+
+      <p style="font-size: 13px; color: var(--text-secondary); margin: 12px 0;"><strong>Manual time to create this table:</strong> 45 minutes (copy-pasting, formatting, math errors)</p>
+
+      <div class="section-header">Step 2: AI Does This Instantly</div>
+
+      <div class="prompt-box">Upload 3 PDF quotes for M30 concrete (150 cum needed) from:
+- Vendor A: Concrete Suppliers Inc
+- Vendor B: Quality Concrete Ltd  
+- Vendor C: Budget Concrete Co
+
+Compare them on:
+1. Unit rate (final rate after discounts)
+2. Total cost for 150 cum (including delivery)
+3. Payment terms (which is most flexible?)
+4. Quality certifications (which is most credible?)
+5. Warranty terms (what's the protection?)
+6. Timeline risk (any red flags on delivery?)
+7. Which vendor should we choose? Why?
+
+Create a comparison table + give final recommendation with risk assessment.</div>
+
+      <div class="key-insight">
+        <strong>Expected AI Output (instantly):</strong><br/>
+        <br/>
+        <strong>Cost Analysis:</strong><br/>
+        Vendor C = ₹5,40,000 (LOWEST but risky)<br/>
+        Vendor B = ₹5,98,500 (BEST VALUE - good warranty + free delivery)<br/>
+        Vendor A = ₹6,82,500 (HIGHEST + worst terms)<br/>
+        <br/>
+        <strong>Risk Assessment:</strong><br/>
+        Vendor C: Cheapest but no quality cert upfront + COD payment = cash flow strain + quality risk<br/>
+        Vendor B: Saves ₹84K vs A, better warranty, free delivery. Payment terms support project cash flow. RECOMMEND.<br/>
+        Vendor A: Premium pricing, standard terms, no advantage.<br/>
+        <br/>
+        <strong>Decision:</strong> Go with Vendor B. Savings: ₹84,500 + better payment flexibility + superior warranty.
+      </div>
+
+      <div class="tip-box">
+        <strong>💡 Why This Matters for DEC Infra:</strong><br/>
+        If you process 20 vendor quotes per month (realistic for construction):<br/>
+        • Manual: 20 × 45 min = 15 hours/month<br/>
+        • AI: 20 × 3 min = 1 hour/month<br/>
+        • Savings: 14 hours/month = ₹3-5L in labor annually
+      </div>
+
+    </div>
+  </div>
+
+  <!-- TAB 2: Specification Analysis -->
+  <div id="tab2" class="tab-content">
+    <div class="scenario-card">
+      <div class="role-badge">Quality Controller / Engineer</div>
+      <h3 class="scenario-title">
+        <span>✓</span>
+        Extract & Compare Specifications from Vendor Datasheets
+      </h3>
+
+      <p style="font-size: 13px; color: var(--text-secondary); margin: 0 0 12px;"><strong>Scenario:</strong> NSDL Data Center needs UPS systems. Vendor A and Vendor B sent 20-page PDFs with technical specs scattered throughout. You need to verify both meet your requirements.</p>
+
+      <div class="section-header">What You Need to Check:</div>
+
+      <div style="background: var(--surface-1); padding: 12px; border-radius: 6px; margin: 12px 0; font-size: 13px;">
+        <p style="margin: 0 0 8px;"><strong>Your Requirements (from project spec):</strong></p>
+        ✓ Capacity: 500 KVA minimum<br/>
+        ✓ Battery Backup: 4 hours minimum<br/>
+        ✓ Efficiency: >95% (critical for data center)<br/>
+        ✓ Cooling: <40°C operating temperature<br/>
+        ✓ Certifications: CE marked + ISO 9001<br/>
+        ✓ Warranty: 5 years on-site support<br/>
+        ✓ Delivery: Within 8 weeks
+      </div>
+
+      <div class="prompt-box">I have 2 UPS system datasheets (PDFs) from vendors.
+
+Extract key specifications:
+1. Capacity (KVA)
+2. Battery backup time (hours)
+3. Efficiency rating (%)
+4. Operating temperature
+5. Certifications
+6. Warranty (years + type)
+7. Delivery timeline
+
+Then assess: Do both meet our project requirements?
+- Requirement 1: Capacity 500 KVA minimum
+- Requirement 2: Battery 4+ hours
+- Requirement 3: Efficiency >95%
+- Requirement 4: Operating temp <40°C
+- Requirement 5: CE marked + ISO 9001
+- Requirement 6: 5-year on-site warranty
+- Requirement 7: Delivery within 8 weeks
+
+Show: Vendor | Meets Req? | Gap | Risk | Recommendation</div>
+
+      <div class="key-insight">
+        <strong>Why This Works with AI:</strong><br/>
+        Vendor datasheets are chaos: specs on page 3, page 8, page 15. They use different units (kVA vs VA, Celsius vs Fahrenheit). AI reads all 40 pages, extracts the relevant specs, and compares to your requirements.<br/>
+        <br/>
+        Manual extraction: 1.5 hours per vendor<br/>
+        AI extraction: 2 minutes per vendor<br/>
+        <br/>
+        Plus: AI catches things you miss (e.g., "warranty valid only in North America" hidden in fine print on page 17).
+      </div>
+
+    </div>
+  </div>
+
+  <!-- TAB 3: Contract Review -->
+  <div id="tab3" class="tab-content">
+    <div class="scenario-card">
+      <div class="role-badge">Legal / Procurement Manager</div>
+      <h3 class="scenario-title">
+        <span>⚖️</span>
+        Review Contracts for Risk & Compliance
+      </h3>
+
+      <p style="font-size: 13px; color: var(--text-secondary); margin: 0 0 12px;"><strong>Scenario:</strong> Medical College project needs a 15-page MEP contractor agreement. Before signing, you need to flag any risky clauses or missing protections.</p>
+
+      <div class="section-header">Common Risks in Construction Contracts:</div>
+
+      <table class="comparison-table">
+        <tr>
+          <th>Clause</th>
+          <th>Risk</th>
+          <th>What to Look For</th>
+        </tr>
+        <tr>
+          <td><strong>Payment Terms</strong></td>
+          <td>Cash flow strain if 100% upfront</td>
+          <td>Should be 30% advance, 70% completion</td>
+        </tr>
+        <tr>
+          <td><strong>Penalty Clauses</strong></td>
+          <td>Ambiguous = legal disputes</td>
+          <td>Should be specific (₹X per day delay, max ₹Y)</td>
+        </tr>
+        <tr>
+          <td><strong>Warranty</strong></td>
+          <td>Short warranty = risk to you</td>
+          <td>Should be 2+ years post-completion</td>
+        </tr>
+        <tr>
+          <td><strong>Liability Cap</strong></td>
+          <td>If capped too low, limits recovery</td>
+          <td>Should be at least 10% of contract value</td>
+        </tr>
+        <tr>
+          <td><strong>Dispute Resolution</strong></td>
+          <td>Litigation = expensive & slow</td>
+          <td>Should include arbitration clause</td>
+        </tr>
+        <tr>
+          <td><strong>Force Majeure</strong></td>
+          <td>Vague terms lead to disputes</td>
+          <td>Should define what qualifies (pandemic, war, etc.)</td>
+        </tr>
+      </table>
+
+      <div class="prompt-box">Review this MEP contractor agreement (PDF attached). 
+
+Flag any high-risk clauses related to:
+1. Payment Terms - Is payment structure favorable to us?
+2. Delay Penalties - Are penalties clearly defined?
+3. Warranty Period - Is 2+ years guaranteed?
+4. Liability Cap - Is it sufficient (≥10% contract value)?
+5. Insurance Requirements - Are they adequate?
+6. Dispute Resolution - Is arbitration included?
+7. Force Majeure - Is it clearly defined?
+8. Scope of Work - Is it unambiguous?
+
+For each risk found:
+- Quote the clause (exact text)
+- Explain the risk
+- Recommend change or approval
+
+Overall: Safe to sign or needs revision? Why?</div>
+
+      <div class="warning-box">
+        <strong>⚠️ Real Example from DEC Infra Projects:</strong><br/>
+        A contractor once included "Force Majeure includes project delays due to supplier delays." This meant if the steel supplier was late, contractor had no penalty. Cost DEC ₹8L in delay costs before this was caught and renegotiated.<br/>
+        <br/>
+        AI would flag this in 2 minutes. Manual legal review: ₹50K+ in legal fees.
+      </div>
+
+    </div>
+  </div>
+
+  <!-- TAB 4: Quality Standards Check -->
+  <div id="tab4" class="tab-content">
+    <div class="scenario-card">
+      <div class="role-badge">Quality Controller / Compliance</div>
+      <h3 class="scenario-title">
+        <span>📋</span>
+        Verify Vendor Compliance Against Project Standards
+      </h3>
+
+      <p style="font-size: 13px; color: var(--text-secondary); margin: 0 0 12px;"><strong>Scenario:</strong> IISER Library has strict quality requirements (educational institution + research). Vendor submitted COA (Certificate of Analysis). You need to verify all test results meet IS 456 + IISER's specific requirements.</p>
+
+      <div class="section-header">What a COA Typically Contains:</div>
+
+      <div style="background: var(--surface-1); padding: 12px; border-radius: 6px; margin: 12px 0; font-size: 12px;">
+        <strong>Example COA Data (Concrete):</strong><br/>
+        Compressive Strength (7-day): 24.5 MPa (Required: ≥21 MPa) ✓<br/>
+        Compressive Strength (28-day): 32.1 MPa (Required: ≥30 MPa) ✓<br/>
+        Slump: 120mm (Required: 100-150mm) ✓<br/>
+        Water-Cement Ratio: 0.42 (Required: ≤0.45) ✓<br/>
+        Air Content: 4.2% (Required: 3-6%) ✓<br/>
+        Sulfate Content: 0.18% (Required: <0.3%) ✓<br/>
+        Chloride Content: 0.012% (Required: <0.05%) ✓<br/>
+      </div>
+
+      <div class="prompt-box">I have a Concrete COA (Certificate of Analysis) PDF from our vendor.
+
+Extract all test results and verify against standards:
+
+Standards to check:
+1. IS 456:2000 (Indian Standard)
+2. Project spec: IISER Library high-performance requirements
+3. Any special tests? (LEED, durability, sulfate resistance)
+
+Create a checklist:
+Test Name | Result | Specification | Pass/Fail | Notes
+
+Then assess:
+- All tests passed? (YES / NO - if NO, list failures)
+- Any borderline results (>90% but <100% of spec)?
+- Additional tests recommended? (e.g., durability)
+- Approve batch? (Yes/No/Conditional)
+
+If any test FAILS, recommend: Reject batch OR Request retesting OR Accept with written waiver (describe risk).</div>
+
+      <div class="tip-box">
+        <strong>🔍 Why AI Beats Manual Checking:</strong><br/>
+        A COA might have 15-20 test results in a table. You check manually: read each value, cross-reference spec sheet, mark pass/fail. Takes 20-30 minutes.<br/>
+        <br/>
+        AI: Reads table, cross-references specs, flags any failures instantly, 2 minutes.<br/>
+        <br/>
+        Plus: AI catches transposed numbers (e.g., 28-day should be 32 but says 23).
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<script>
+function switchTab(e, tabName) {
+  const tabs = document.querySelectorAll('.tab-content');
+  tabs.forEach(t => t.classList.remove('active'));
+  const btns = document.querySelectorAll('.tab-btn');
+  btns.forEach(b => b.classList.remove('active'));
+  document.getElementById(tabName).classList.add('active');
+  e.target.classList.add('active');
+}
+</script>

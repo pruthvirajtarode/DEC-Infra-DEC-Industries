@@ -1,0 +1,381 @@
+<style>
+  .prompt-module {
+    font-family: var(--font-sans);
+  }
+  .scenario-card {
+    background: var(--surface-2);
+    border: 0.5px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  .scenario-title {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--text-primary);
+    margin: 0 0 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .role-badge {
+    display: inline-block;
+    background: var(--bg-accent);
+    color: var(--text-accent);
+    font-size: 11px;
+    font-weight: 500;
+    padding: 4px 8px;
+    border-radius: var(--radius);
+    margin-bottom: 12px;
+  }
+  .prompt-section {
+    margin-bottom: 16px;
+  }
+  .section-label {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+  }
+  .bad-prompt {
+    background: #fcebeb;
+    border-left: 3px solid var(--text-danger);
+    padding: 12px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-family: var(--font-mono);
+    color: var(--text-primary);
+    margin-bottom: 12px;
+    line-height: 1.5;
+  }
+  .good-prompt {
+    background: #eaf3de;
+    border-left: 3px solid var(--text-success);
+    padding: 12px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-family: var(--font-mono);
+    color: var(--text-primary);
+    margin-bottom: 12px;
+    line-height: 1.5;
+  }
+  .comparison {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .comparison-col {
+    font-size: 13px;
+  }
+  .comparison-label {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin-bottom: 6px;
+    text-align: center;
+  }
+  .key-tips {
+    background: var(--surface-1);
+    border: 0.5px solid var(--border);
+    border-radius: 8px;
+    padding: 12px;
+    margin-top: 16px;
+    font-size: 13px;
+  }
+  .tip-item {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 8px;
+    align-items: flex-start;
+  }
+  .tip-icon {
+    font-size: 16px;
+    margin-top: 2px;
+    flex-shrink: 0;
+  }
+  .tabs-container {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+    border-bottom: 0.5px solid var(--border);
+    overflow-x: auto;
+  }
+  .tab-btn {
+    padding: 12px 16px;
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid transparent;
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    white-space: nowrap;
+    transition: color 0.2s;
+  }
+  .tab-btn.active {
+    color: var(--text-primary);
+    border-bottom-color: var(--text-accent);
+  }
+  .tab-content {
+    display: none;
+  }
+  .tab-content.active {
+    display: block;
+  }
+</style>
+
+<div class="prompt-module">
+  <h2 style="font-size: 18px; font-weight: 500; margin: 0 0 20px; color: var(--text-primary);">Module 1A: Crafting Effective Prompts for Construction</h2>
+  
+  <div class="tabs-container">
+    <button class="tab-btn active" onclick="switchTab(event, 'scenario1')">Project Summary</button>
+    <button class="tab-btn" onclick="switchTab(event, 'scenario2')">Site Report</button>
+    <button class="tab-btn" onclick="switchTab(event, 'scenario3')">Safety Protocol</button>
+    <button class="tab-btn" onclick="switchTab(event, 'scenario4')">Vendor Communication</button>
+  </div>
+
+  <!-- SCENARIO 1: Project Summary -->
+  <div id="scenario1" class="tab-content active">
+    <div class="scenario-card">
+      <div class="role-badge">Project Manager</div>
+      <h3 class="scenario-title">
+        <span>📋</span>
+        Generate Weekly Project Summary from Raw Data
+      </h3>
+
+      <div class="prompt-section">
+        <div class="section-label">Context</div>
+        <p style="font-size: 14px; color: var(--text-secondary); margin: 0;">You have scattered project updates from team members. You need a professional executive summary in 5 minutes instead of spending 1 hour compiling it.</p>
+      </div>
+
+      <div class="comparison">
+        <div class="comparison-col">
+          <div class="comparison-label" style="color: var(--text-danger);">❌ Vague Prompt</div>
+          <div class="bad-prompt">Summarize this week's work</div>
+        </div>
+        <div class="comparison-col">
+          <div class="comparison-label" style="color: var(--text-success);">✓ Better Prompt</div>
+          <div class="good-prompt">Create a weekly project summary for IISER Library project (Tirupati, AP). Include: 
+• Completed milestones this week
+• % progress vs. target
+• Budget spent vs. budget allocated
+• Top 3 risks/delays
+• Next week's priorities
+Keep it under 150 words, professional tone.</div>
+        </div>
+      </div>
+
+      <div class="key-tips">
+        <div class="tip-item">
+          <span class="tip-icon">🎯</span>
+          <span><strong>Be specific:</strong> Include project name, location, stakeholders involved</span>
+        </div>
+        <div class="tip-item">
+          <span class="tip-icon">📊</span>
+          <span><strong>Define structure:</strong> Tell AI exactly what sections you want (milestones, budget, risks)</span>
+        </div>
+        <div class="tip-item">
+          <span class="tip-icon">⏱️</span>
+          <span><strong>Set constraints:</strong> Word limits, tone (professional/casual), date formats</span>
+        </div>
+        <div class="tip-item">
+          <span class="tip-icon">📎</span>
+          <span><strong>Provide context:</strong> Paste raw meeting notes, emails, or status updates</span>
+        </div>
+      </div>
+
+      <div style="margin-top: 16px; background: var(--surface-1); padding: 12px; border-radius: 8px; border-left: 3px solid var(--text-accent);">
+        <p style="font-size: 13px; color: var(--text-secondary); margin: 0;"><strong>💡 Pro Tip:</strong> Use this prompt template: "Create a [type] for [project] including [specific sections]. Keep it [length] and use [tone]."</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCENARIO 2: Site Report -->
+  <div id="scenario2" class="tab-content">
+    <div class="scenario-card">
+      <div class="role-badge">Site Supervisor</div>
+      <h3 class="scenario-title">
+        <span>🏗️</span>
+        Convert Field Notes into Formal Daily Site Report
+      </h3>
+
+      <div class="prompt-section">
+        <div class="section-label">Context</div>
+        <p style="font-size: 14px; color: var(--text-secondary); margin: 0;">You've taken quick notes on your phone all day. Need to turn them into a formal report that the PM and client can read.</p>
+      </div>
+
+      <div class="comparison">
+        <div class="comparison-col">
+          <div class="comparison-label" style="color: var(--text-danger);">❌ Weak Prompt</div>
+          <div class="bad-prompt">Turn this into a report:
+"Had 45 workers. Poured concrete north wing. Weather was hot. Some delays"</div>
+        </div>
+        <div class="comparison-col">
+          <div class="comparison-label" style="color: var(--text-success);">✓ Strong Prompt</div>
+          <div class="good-prompt">Format as daily site report (date: 15-Aug-2026). Raw notes: "45 workers on-site. Poured 80 cubic meters concrete north wing foundation (target: 100m³ - 20% below due to heat). Weather: 42°C, high humidity. 2-hour lunch break extended by safety order. Rebar inspection passed. No incidents."
+
+Include: Date | Weather | Workforce | Major Activities | % of Planned Work Completed | Issues & Delays | Safety Notes | Next Day Plan</div>
+        </div>
+      </div>
+
+      <div class="key-tips">
+        <div class="tip-item">
+          <span class="tip-icon">📍</span>
+          <span><strong>Include meta-data:</strong> Date, project name, weather, workforce count</span>
+        </div>
+        <div class="tip-item">
+          <span class="tip-icon">🔢</span>
+          <span><strong>Add numbers:</strong> Quantities (concrete poured, workers), percentages, times</span>
+        </div>
+        <div class="tip-item">
+          <span class="tip-icon">⚠️</span>
+          <span><strong>Highlight issues:</strong> Delays, weather impacts, safety incidents, deviations</span>
+        </div>
+        <div class="tip-item">
+          <span class="tip-icon">👥</span>
+          <span><strong>Mention context:</strong> Workforce, equipment used, inspections passed</span>
+        </div>
+      </div>
+
+      <div style="margin-top: 16px; background: var(--surface-1); padding: 12px; border-radius: 8px; border-left: 3px solid var(--text-accent);">
+        <p style="font-size: 13px; color: var(--text-secondary); margin: 0;"><strong>💡 Pro Tip:</strong> Voice-record your notes on phone, transcribe with Whisper/Google Docs, then paste to AI. Saves 30 mins daily!</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCENARIO 3: Safety Protocol -->
+  <div id="scenario3" class="tab-content">
+    <div class="scenario-card">
+      <div class="role-badge">Safety Officer</div>
+      <h3 class="scenario-title">
+        <span>🛡️</span>
+        Create Safety Protocol from Regulatory Requirements
+      </h3>
+
+      <div class="prompt-section">
+        <div class="section-label">Context</div>
+        <p style="font-size: 14px; color: var(--text-secondary); margin: 0;">You have OSHA/Indian labor code requirements but need to turn them into an actionable site-specific procedure for DEC Infra teams.</p>
+      </div>
+
+      <div class="comparison">
+        <div class="comparison-col">
+          <div class="comparison-label" style="color: var(--text-danger);">❌ Generic Prompt</div>
+          <div class="bad-prompt">Write a safety protocol for height work</div>
+        </div>
+        <div class="comparison-col">
+          <div class="comparison-label" style="color: var(--text-success);">✓ Tailored Prompt</div>
+          <div class="good-prompt">Create a site safety protocol for DEC Infra - IISER Tirupati project (height work above 2 meters). Target audience: Site supervisors & workers (use simple language).
+
+Include:
+• Scope (applies to work >2m height)
+• Required PPE (with DEC company gear codes)
+• Pre-work checklist (3-5 items)
+• Responsibilities (supervisor, worker, safety officer)
+• Emergency procedures
+• Non-compliance consequences
+
+Comply with Indian Building Code + OSHA guidelines. Make it 1 page, printable.</div>
+        </div>
+      </div>
+
+      <div class="key-tips">
+        <div class="tip-item">
+          <span class="tip-icon">🏢</span>
+          <span><strong>Company-specific:</strong> Use DEC Infra name, actual project names, company standards</span>
+        </div>
+        <div class="tip-item">
+          <span class="tip-icon">👥</span>
+          <span><strong>Right audience:</strong> Write for site workers (simple language), not legal teams</span>
+        </div>
+        <div class="tip-item">
+          <span class="tip-icon">✅</span>
+          <span><strong>Compliance mention:</strong> Reference actual codes (Indian BC, OSHA, local regulations)</span>
+        </div>
+        <div class="tip-item">
+          <span class="tip-icon">📋</span>
+          <span><strong>Practical format:</strong> Checklists, bullet points, easy to print & post</span>
+        </div>
+      </div>
+
+      <div style="margin-top: 16px; background: var(--surface-1); padding: 12px; border-radius: 8px; border-left: 3px solid var(--text-accent);">
+        <p style="font-size: 13px; color: var(--text-secondary); margin: 0;"><strong>💡 Pro Tip:</strong> Ask AI to "summarize in 3 sentences" at the end so busy PMs get the gist instantly.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCENARIO 4: Vendor Communication -->
+  <div id="scenario4" class="tab-content">
+    <div class="scenario-card">
+      <div class="role-badge">Project Manager</div>
+      <h3 class="scenario-title">
+        <span>✉️</span>
+        Draft Professional Vendor Communications
+      </h3>
+
+      <div class="prompt-section">
+        <div class="section-label">Context</div>
+        <p style="font-size: 14px; color: var(--text-secondary); margin: 0;">Need to send a vendor a detailed RFQ (Request for Quote) but don't want to spend time on perfect wording.</p>
+      </div>
+
+      <div class="comparison">
+        <div class="comparison-col">
+          <div class="comparison-label" style="color: var(--text-danger);">❌ Unclear Prompt</div>
+          <div class="bad-prompt">Write an email asking for a quote on concrete</div>
+        </div>
+        <div class="comparison-col">
+          <div class="comparison-label" style="color: var(--text-success);">✓ Detailed Prompt</div>
+          <div class="good-prompt">Draft professional RFQ email to concrete supplier. Details:
+• Project: IISER Library, Tirupati
+• Requirement: 150 cubic meters M30 grade concrete
+• Delivery timeline: Week of 20-Aug
+• Delivery location: Site address [add address]
+• Required docs: COA (Certificate of Analysis), delivery slip
+• Payment terms: 30-day net
+• Compliance: Indian Standards IS 456
+
+Keep email tone: professional but friendly. Include subject line. Sign as [Your Name], DEC Infra.</div>
+        </div>
+      </div>
+
+      <div class="key-tips">
+        <div class="tip-item">
+          <span class="tip-icon">🏷️</span>
+          <span><strong>Exact specs:</strong> Grades, quantities, delivery dates, standards (IS 456, etc.)</span>
+        </div>
+        <div class="tip-item">
+          <span class="tip-icon">💼</span>
+          <span><strong>Business details:</strong> Payment terms, inspection requirements, penalties</span>
+        </div>
+        <div class="tip-item">
+          <span class="tip-icon">🎯</span>
+          <span><strong>Clear expectations:</strong> What docs they must provide (CoA, test reports)</span>
+        </div>
+        <div class="tip-item">
+          <span class="tip-icon">📧</span>
+          <span><strong>Tone setting:</strong> Request "professional but friendly," "formal," etc.</span>
+        </div>
+      </div>
+
+      <div style="margin-top: 16px; background: var(--surface-1); padding: 12px; border-radius: 8px; border-left: 3px solid var(--text-accent);">
+        <p style="font-size: 13px; color: var(--text-secondary); margin: 0;"><strong>💡 Pro Tip:</strong> Tell AI "Ensure all compliance points are covered" - it'll catch missing requirements you might forget!</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function switchTab(e, tabName) {
+  const tabs = document.querySelectorAll('.tab-content');
+  tabs.forEach(t => t.classList.remove('active'));
+  
+  const btns = document.querySelectorAll('.tab-btn');
+  btns.forEach(b => b.classList.remove('active'));
+  
+  document.getElementById(tabName).classList.add('active');
+  e.target.classList.add('active');
+}
+</script>

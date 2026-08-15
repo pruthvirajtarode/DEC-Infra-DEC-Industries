@@ -3,68 +3,55 @@
   Premium Enterprise SaaS + Corporate Learning Platform
 */
 
-:root {
-    /* Color Palette */
-    --primary: #0A192F; /* Deep Navy */
-    --primary-light: #112240;
-    --primary-lighter: #233554;
+:root, [data-theme="dark"] {
+    /* Color Palette - Premium Gamified Dark Theme */
+    --primary: #000000; /* Deepest black */
+    --primary-light: #111111; /* Sidebar / Deep elements */
+    --primary-lighter: #232323; /* Borders/Hover */
     
-    --secondary: #FFFFFF; /* White */
-    --bg-main: #F8FAFC; /* Light Gray/Blue background for app */
-    --bg-card: #FFFFFF;
-    --border-color: #E2E8F0;
+    --secondary: #0A0A0A; /* Secondary background */
+    --bg-main: #060606; /* App background (near black) */
+    --bg-card: rgba(22, 22, 22, 0.6); /* Glassmorphic card */
+    --border-color: rgba(255, 255, 255, 0.08); /* Subtle crisp borders */
     
-    --accent: #F59E0B; /* Warm Orange/Gold */
-    --accent-hover: #D97706;
+    --accent: #F3C623; /* Neon Yellow/Orange for gamified accent */
+    --accent-hover: #FFE66D; /* Lighter hover */
     
-    --text-main: #1E293B;
-    --text-muted: #64748B;
-    --text-light: #F8FAFC;
+    --text-main: #F8FAFC; /* Crisp white text */
+    --text-muted: #94A3B8; /* Subtle text */
+    --text-light: #FFFFFF;
     
-    /* Status Colors */
-    --success: #10B981; /* Green */
-    --success-bg: #D1FAE5;
-    --warning: #F59E0B; /* Amber */
-    --warning-bg: #FEF3C7;
-    --danger: #EF4444; /* Red */
-    --danger-bg: #FEE2E2;
-    --info: #3B82F6; /* Blue */
-    --info-bg: #DBEAFE;
+    /* Gamified Status Colors */
+    --success: #00FF66; /* Neon Green */
+    --success-bg: rgba(0, 255, 102, 0.15);
+    --warning: #FF9F1C; /* Neon Orange */
+    --warning-bg: rgba(255, 159, 28, 0.15);
+    --danger: #FF3366; /* Neon Pink/Red */
+    --danger-bg: rgba(255, 51, 102, 0.15);
+    --info: #00E5FF; /* Cyan */
+    --info-bg: rgba(0, 229, 255, 0.15);
     
     /* Typography */
     --font-heading: 'Outfit', sans-serif;
     --font-body: 'Inter', sans-serif;
     
     /* Spacing & Layout */
-    --sidebar-width: 260px;
-    --header-height: 64px;
+    --sidebar-width: 270px;
+    --header-height: 75px;
     
-    /* Shadows & Effects */
-    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    /* Gamified Shadows & Glass */
+    --shadow-sm: 0 4px 15px rgba(0, 0, 0, 0.2);
+    --shadow-md: 0 8px 30px rgba(0, 0, 0, 0.3);
+    --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.4);
     
-    --radius-sm: 4px;
-    --radius-md: 8px;
-    --radius-lg: 12px;
+    --shadow-glow-accent: 0 0 20px rgba(243, 198, 35, 0.25);
+    --shadow-glow-success: 0 0 20px rgba(0, 255, 102, 0.25);
     
-    --transition: all 0.2s ease-in-out;
-}
-
-[data-theme="dark"] {
-    --primary: #020617;
-    --primary-light: #0F172A;
-    --primary-lighter: #1E293B;
-    --secondary: #1E293B;
-    --bg-main: #0F172A;
-    --bg-card: #1E293B;
-    --border-color: #334155;
-    --text-main: #F8FAFC;
-    --text-muted: #94A3B8;
-    --success-bg: rgba(16, 185, 129, 0.2);
-    --warning-bg: rgba(245, 158, 11, 0.2);
-    --danger-bg: rgba(239, 68, 68, 0.2);
-    --info-bg: rgba(59, 130, 246, 0.2);
+    --radius-sm: 8px;
+    --radius-md: 14px;
+    --radius-lg: 24px; /* Pill shaped cards */
+    
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Reset & Base */
@@ -77,6 +64,7 @@
 body {
     font-family: var(--font-body);
     color: var(--text-main);
+    background: radial-gradient(circle at top right, #1a1a2e 0%, var(--bg-main) 40%, var(--bg-main) 100%);
     background-color: var(--bg-main);
     line-height: 1.5;
     -webkit-font-smoothing: antialiased;
@@ -109,7 +97,10 @@ a:hover {
 /* Sidebar */
 .sidebar {
     width: var(--sidebar-width);
-    background-color: var(--primary);
+    background-color: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-right: 1px solid var(--border-color);
     color: var(--text-light);
     display: flex;
     flex-direction: column;
@@ -223,7 +214,9 @@ a:hover {
 
 .topbar {
     height: var(--header-height);
-    background-color: var(--secondary);
+    background-color: rgba(10, 10, 10, 0.6);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
     display: flex;
     align-items: center;
     justify-content: space-between;

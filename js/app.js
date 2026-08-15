@@ -480,34 +480,34 @@ function renderModule1(container) {
 
         
         <!-- NEW: Anatomy of a Good Prompt -->
-        <div class="card mb-8" style="border-left: 4px solid var(--primary);">
+        <div class="card mb-8" style="border-left: 4px solid var(--info); box-shadow: 0 4px 20px rgba(6, 182, 212, 0.1);">
             <div class="card-header"><h3 class="card-title">Anatomy of a Good Prompt (Theoretical Framework)</h3></div>
             <div class="card-body">
                 <p class="text-muted mb-4">A structured prompt acts as a clear set of instructions for the AI, reducing ambiguity and hallucination.</p>
                 <div class="dashboard-grid">
-                    <div class="p-3 border rounded" style="background:var(--bg-main);">
-                        <strong style="color:var(--primary);">1. Role</strong><br>
-                        <span class="text-sm text-muted">Who is the AI? (e.g., "Act as a Senior Procurement Manager")</span>
+                    <div class="p-3 border rounded" style="background:var(--bg-card); border-top: 3px solid #38BDF8;">
+                        <strong style="color:#38BDF8; font-size: 1.1rem; display: block; margin-bottom: 0.25rem;">1. Role</strong>
+                        <span class="text-sm" style="color: #F8FAFC;">Who is the AI? (e.g., "Act as a Senior Procurement Manager")</span>
                     </div>
-                    <div class="p-3 border rounded" style="background:var(--bg-main);">
-                        <strong style="color:var(--accent);">2. Context</strong><br>
-                        <span class="text-sm text-muted">What is the background? (e.g., "We are comparing 3 vendor quotes for Metro Line B.")</span>
+                    <div class="p-3 border rounded" style="background:var(--bg-card); border-top: 3px solid var(--accent);">
+                        <strong style="color:var(--accent); font-size: 1.1rem; display: block; margin-bottom: 0.25rem;">2. Context</strong>
+                        <span class="text-sm" style="color: #F8FAFC;">What is the background? (e.g., "We are comparing 3 vendor quotes for Metro Line B.")</span>
                     </div>
-                    <div class="p-3 border rounded" style="background:var(--bg-main);">
-                        <strong style="color:var(--success);">3. Task</strong><br>
-                        <span class="text-sm text-muted">What exactly must the AI do? (e.g., "Create a comparison table.")</span>
+                    <div class="p-3 border rounded" style="background:var(--bg-card); border-top: 3px solid var(--success);">
+                        <strong style="color:var(--success); font-size: 1.1rem; display: block; margin-bottom: 0.25rem;">3. Task</strong>
+                        <span class="text-sm" style="color: #F8FAFC;">What exactly must the AI do? (e.g., "Create a comparison table.")</span>
                     </div>
-                    <div class="p-3 border rounded" style="background:var(--bg-main);">
-                        <strong style="color:var(--warning);">4. Input Data</strong><br>
-                        <span class="text-sm text-muted">What data is provided? (e.g., "See the attached CSV data.")</span>
+                    <div class="p-3 border rounded" style="background:var(--bg-card); border-top: 3px solid var(--warning);">
+                        <strong style="color:var(--warning); font-size: 1.1rem; display: block; margin-bottom: 0.25rem;">4. Input Data</strong>
+                        <span class="text-sm" style="color: #F8FAFC;">What data is provided? (e.g., "See the attached CSV data.")</span>
                     </div>
-                    <div class="p-3 border rounded" style="background:var(--bg-main);">
-                        <strong style="color:var(--danger);">5. Constraints</strong><br>
-                        <span class="text-sm text-muted">What should it NOT do? (e.g., "Do not invent prices if missing.")</span>
+                    <div class="p-3 border rounded" style="background:var(--bg-card); border-top: 3px solid var(--danger);">
+                        <strong style="color:var(--danger); font-size: 1.1rem; display: block; margin-bottom: 0.25rem;">5. Constraints</strong>
+                        <span class="text-sm" style="color: #F8FAFC;">What should it NOT do? (e.g., "Do not invent prices if missing.")</span>
                     </div>
-                    <div class="p-3 border rounded" style="background:var(--bg-main);">
-                        <strong style="color:var(--info);">6. Output Format</strong><br>
-                        <span class="text-sm text-muted">How should it look? (e.g., "Format as Markdown table with a summary.")</span>
+                    <div class="p-3 border rounded" style="background:var(--bg-card); border-top: 3px solid #E879F9;">
+                        <strong style="color:#E879F9; font-size: 1.1rem; display: block; margin-bottom: 0.25rem;">6. Output Format</strong>
+                        <span class="text-sm" style="color: #F8FAFC;">How should it look? (e.g., "Format as Markdown table with a summary.")</span>
                     </div>
                 </div>
             </div>
@@ -517,20 +517,20 @@ function renderModule1(container) {
         <div class="card mb-8">
             <div class="card-header"><h3 class="card-title">Prompting Patterns Library</h3></div>
             <div class="card-body dashboard-grid">
-                <div class="ai-result-box">
-                    <h4 class="mb-2">1. Zero-Shot Prompting</h4>
+                <div class="ai-result-box" style="background: var(--bg-card);">
+                    <h4 class="mb-2" style="color: var(--info);">1. Zero-Shot Prompting</h4>
                     <p class="text-sm text-muted mb-2">Asking the AI a question with no prior examples.</p>
-                    <pre class="p-2 rounded text-xs" style="background:var(--bg-main)">"What is a standard penalty clause for delays?"</pre>
+                    <pre class="p-2 rounded text-xs" style="background:rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1); color: #F8FAFC;">"What is a standard penalty clause for delays?"</pre>
                 </div>
-                <div class="ai-result-box">
-                    <h4 class="mb-2">2. Few-Shot Prompting</h4>
+                <div class="ai-result-box" style="background: var(--bg-card);">
+                    <h4 class="mb-2" style="color: var(--accent);">2. Few-Shot Prompting</h4>
                     <p class="text-sm text-muted mb-2">Providing 2-3 examples so the AI learns the format.</p>
-                    <pre class="p-2 rounded text-xs" style="background:var(--bg-main)">"Ex 1: Minor Delay -> 1% penalty.\nEx 2: Safety Issue -> ₹5000 penalty.\nNow classify this incident..."</pre>
+                    <pre class="p-2 rounded text-xs" style="background:rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1); color: #F8FAFC;">"Ex 1: Minor Delay -> 1% penalty.\nEx 2: Safety Issue -> ₹5000 penalty.\nNow classify this incident..."</pre>
                 </div>
-                <div class="ai-result-box">
-                    <h4 class="mb-2">3. Chain of Thought</h4>
+                <div class="ai-result-box" style="background: var(--bg-card);">
+                    <h4 class="mb-2" style="color: var(--success);">3. Chain of Thought</h4>
                     <p class="text-sm text-muted mb-2">Forcing the AI to explain its reasoning step-by-step.</p>
-                    <pre class="p-2 rounded text-xs" style="background:var(--bg-main)">"Think step-by-step to calculate the total manpower cost based on the attendance log before giving the final number."</pre>
+                    <pre class="p-2 rounded text-xs" style="background:rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1); color: #F8FAFC;">"Think step-by-step to calculate the total manpower cost based on the attendance log before giving the final number."</pre>
                 </div>
             </div>
         </div>

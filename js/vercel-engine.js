@@ -85,7 +85,7 @@ function renderVercelLab(container) {
             <p style="margin-bottom:1.25rem; line-height:1.7;">Before downloading, let's preview exactly what your deployed app will look like. This is the app that will go live on the internet — a chat interface with <strong>your custom AI assistant</strong> built into it.</p>
 
             <div style="background:var(--bg-card); border-radius:10px; padding:1.25rem; margin-bottom:1.25rem; border:1px solid #CBD5E1;">
-                <h4 style="margin-bottom:0.75rem; display:flex; align-items:center; gap:0.5rem; color:var(--primary);">📦 What's inside your app file:</h4>
+                <h4 style="margin-bottom:0.75rem; display:flex; align-items:center; gap:0.5rem; color:var(--accent);">📦 What's inside your app file:</h4>
                 <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px,1fr)); gap:0.75rem;">
                     <div style="background:rgba(255, 255, 255, 0.05); border-radius:8px; padding:0.9rem; display:flex; align-items:flex-start; gap:0.75rem;">
                         <span style="font-size:1.5rem;">💬</span>
@@ -123,7 +123,7 @@ function renderVercelLab(container) {
 
             <div style="background:var(--bg-card); border:2px dashed #CBD5E1; border-radius:12px; padding:2rem; text-align:center; margin-bottom:1.5rem;">
                 <div style="font-size:3rem; margin-bottom:0.75rem;">📄</div>
-                <div style="font-weight:700; color:var(--primary); font-size:1.1rem; margin-bottom:0.25rem;">my-ai-assistant.html</div>
+                <div style="font-weight:700; color:var(--accent); font-size:1.1rem; margin-bottom:0.25rem;">my-ai-assistant.html</div>
                 <div style="color:var(--text-muted); font-size:0.85rem; margin-bottom:1.5rem;">Single file · HTML · ~15KB · Ready to deploy</div>
                 ${hasPrompt ? `
                 <button class="btn btn-accent" id="btn-download-app" style="font-size:1rem; padding:0.85rem 2.5rem; border-radius:10px; font-weight:700; box-shadow:0 4px 14px rgba(245,158,11,0.3);">
@@ -155,7 +155,7 @@ function renderVercelLab(container) {
                 <div style="display:flex; gap:1rem; align-items:flex-start; background:rgba(255, 255, 255, 0.05); border:1px solid #E2E8F0; border-radius:12px; padding:1.1rem 1.25rem;">
                     <div style="background:#0A192F; color:white; border-radius:50%; width:32px; height:32px; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:0.9rem; flex-shrink:0;">1</div>
                     <div>
-                        <div style="font-weight:700; color:var(--primary); margin-bottom:0.25rem;">Open Vercel.com</div>
+                        <div style="font-weight:700; color:var(--accent); margin-bottom:0.25rem;">Open Vercel.com</div>
                         <div style="font-size:0.85rem; color:#64748B; line-height:1.6;">Go to <a href="https://vercel.com/signup" target="_blank" style="color:#3B82F6; font-weight:600;">vercel.com/signup</a> → Sign up with <strong>GitHub</strong> or your Email. It's 100% free. No credit card needed.</div>
                     </div>
                 </div>
@@ -163,7 +163,7 @@ function renderVercelLab(container) {
                 <div style="display:flex; gap:1rem; align-items:flex-start; background:rgba(255, 255, 255, 0.05); border:1px solid #E2E8F0; border-radius:12px; padding:1.1rem 1.25rem;">
                     <div style="background:#0A192F; color:white; border-radius:50%; width:32px; height:32px; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:0.9rem; flex-shrink:0;">2</div>
                     <div>
-                        <div style="font-weight:700; color:var(--primary); margin-bottom:0.25rem;">Click "Add New Project"</div>
+                        <div style="font-weight:700; color:var(--accent); margin-bottom:0.25rem;">Click "Add New Project"</div>
                         <div style="font-size:0.85rem; color:#64748B; line-height:1.6;">On your Vercel dashboard, find the <strong>"Add New"</strong> or <strong>"Deploy"</strong> button. Look for an option that says <strong>"Browse" or drag a file</strong> (not GitHub import).</div>
                     </div>
                 </div>
@@ -179,7 +179,7 @@ function renderVercelLab(container) {
                 <div style="display:flex; gap:1rem; align-items:flex-start; background:rgba(255, 255, 255, 0.05); border:1px solid #E2E8F0; border-radius:12px; padding:1.1rem 1.25rem;">
                     <div style="background:#0A192F; color:white; border-radius:50%; width:32px; height:32px; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:0.9rem; flex-shrink:0;">4</div>
                     <div>
-                        <div style="font-weight:700; color:var(--primary); margin-bottom:0.25rem;">Click "Deploy" and Wait 30 Seconds</div>
+                        <div style="font-weight:700; color:var(--accent); margin-bottom:0.25rem;">Click "Deploy" and Wait 30 Seconds</div>
                         <div style="font-size:0.85rem; color:#64748B; line-height:1.6;">Vercel builds your app in the cloud. You'll see a progress bar. In about 30 seconds, you'll see a <strong>🎉 success screen with confetti</strong>!</div>
                     </div>
                 </div>
@@ -207,7 +207,7 @@ function renderVercelLab(container) {
             <p style="margin-bottom:1.25rem; line-height:1.7;">Congratulations! Paste your live Vercel URL below and share it with Sir and your colleagues. This is your proof that you built and deployed a real AI web application!</p>
 
             <div style="background:rgba(255, 255, 255, 0.05); border:2px solid #E2E8F0; border-radius:12px; padding:1.25rem; margin-bottom:1.25rem;">
-                <label style="font-weight:700; font-size:0.9rem; color:var(--primary); display:block; margin-bottom:0.75rem;">🔗 Paste Your Live Vercel URL:</label>
+                <label style="font-weight:700; font-size:0.9rem; color:var(--accent); display:block; margin-bottom:0.75rem;">🔗 Paste Your Live Vercel URL:</label>
                 <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
                     <input type="url" id="vl-live-url" class="form-control" placeholder="https://your-app-name.vercel.app" value="${savedLiveUrl}" style="flex:1; min-width:200px;">
                     <button class="btn btn-primary" id="btn-save-url" style="white-space:nowrap;">Save & Open →</button>

@@ -2865,8 +2865,8 @@ function renderModule2(container) {
         <div class="mb-4" style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap;">
             <div>
                 <span class="badge badge-info">Session 2</span>
-                <h2 class="mt-4" style="background: -webkit-linear-gradient(45deg, #F8FAFC, #06B6D4); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Module 2: AI-Powered Data Analysis</h2>
-                <p class="text-muted">From manual Excel to AI analysis. Work with DEC synthetic data.</p>
+                <h2 class="mt-4" style="background: -webkit-linear-gradient(45deg, #F8FAFC, #06B6D4); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Module 2: Data Analysis with AI</h2>
+                <p class="text-muted">Upload the 242-row DEC Infra dataset to AI for instant budget analysis, risk scanning, vendor benchmarking.</p>
             </div>
             <div style="width:130px; height:130px; flex-shrink:0; position:relative; display:flex; align-items:center; justify-content:center;">
                 <div style="width:100px; height:100px; background:linear-gradient(135deg,rgba(6,182,212,0.15),rgba(6,182,212,0.03)); border:2px solid rgba(6,182,212,0.5); border-radius:22px; display:flex; align-items:center; justify-content:center; box-shadow:0 0 30px rgba(6,182,212,0.25); animation:modFloat 3s ease-in-out 0.4s infinite; font-size:2.8rem; position:relative;">📊
@@ -2883,353 +2883,563 @@ function renderModule2(container) {
             </div>
         </div>
         
-        <!-- NEW: Visual AI Data Pipeline -->
-        <div class="card mb-8">
-            <div class="card-header"><h3 class="card-title">Visual AI Data Pipeline</h3></div>
-            <div class="card-body">
-                <p class="mb-4 text-muted">Watch how AI transforms unstructured vendor data into business intelligence in 3 automated steps.</p>
-                <div class="flex gap-4 items-stretch mb-4" style="overflow-x:auto; padding-bottom:1rem;">
-                    
-                    <!-- Step 1 -->
-                    <div class="p-3 border rounded" style="flex: 1; min-width: 250px; background: var(--bg-main);">
-                        <div class="badge badge-warning mb-2">Step 1: Raw Extract</div>
-                        <pre class="text-xs" style="white-space: pre-wrap; font-family: monospace;">ID, VENDOR, AMT, DATE\n101, Omega mach., Rs5000, 12-01-2023\n102, OMEGA MACHINING, 4500, Jan 15 2023\n103, null, 1200, 2023/01/20</pre>
-                    </div>
-                    
-                    <div class="flex items-center text-muted">➔</div>
-                    
-                    <!-- Step 2 -->
-                    <div class="p-3 border rounded opacity-50" id="pipeline-step-2" style="flex: 1; min-width: 250px; transition: opacity 0.3s;">
-                        <div class="badge badge-success mb-2">Step 2: AI Standardize</div>
-                        <table class="table text-xs">
-                            <tr><th>VENDOR</th><th>AMT</th><th>DATE</th></tr>
-                            <tr><td>Omega Mach.</td><td>5000</td><td>2023-01-12</td></tr>
-                            <tr><td>Omega Mach.</td><td>4500</td><td>2023-01-15</td></tr>
-                            <tr><td>UNKNOWN</td><td>1200</td><td>2023-01-20</td></tr>
-                        </table>
-                    </div>
-                    
-                    <div class="flex items-center text-muted">➔</div>
-                    
-                    <!-- Step 3 -->
-                    <div class="p-3 border rounded opacity-50" id="pipeline-step-3" style="flex: 1; min-width: 250px; transition: opacity 0.3s;">
-                        <div class="badge badge-info mb-2">Step 3: AI Insights</div>
-                        <ul class="text-xs mt-2" style="padding-left:1.5rem; list-style-type: disc;">
-                            <li>Merged "Omega mach." and "OMEGA MACHINING"</li>
-                            <li>Flagged ID 103 for missing vendor name</li>
-                            <li>Converted dates to ISO-8601</li>
-                        </ul>
-                    </div>
-                </div>
-                <button class="btn btn-primary w-full" id="btn-run-pipeline">Run Pipeline Step-by-Step ▶</button>
-            </div>
+        <div class="m2-content-wrapper mt-8">
+
+
+<!-- OBJECTIVES -->
+<div class="section open">
+<div class="section-head" onclick="toggle(this)"><h2>🎯 Learning Objectives</h2><span class="arrow">▼</span></div>
+<div class="section-body">
+<div class="stats">
+<div class="stat"><span class="n">120</span><span class="l">Minutes</span></div>
+<div class="stat"><span class="n">7</span><span class="l">Prompts</span></div>
+<div class="stat"><span class="n">242</span><span class="l">Row Dataset</span></div>
+<div class="stat"><span class="n">₹28.8 Cr</span><span class="l">Portfolio Budget</span></div>
+</div>
+<div class="card"><p>By the end of this module, you will:</p><ul>
+<li>Upload any Excel/CSV to ChatGPT or Claude for instant analysis</li>
+<li>Scan a ₹28.8 Cr portfolio across 12 concurrent projects in 2 minutes</li>
+<li>Detect 28 budget overruns, 19 contingency burns, and rate anomalies</li>
+<li>Compare vendor rates across projects and find ₹4-12L in savings</li>
+<li>Generate board-level dashboards with 🟢🟡🔴 traffic lights automatically</li>
+<li>Anonymize data before uploading (data protection from Module 3)</li>
+<li>Build a personal prompt library for recurring analysis tasks</li>
+</ul></div>
+</div>
+</div>
+
+<!-- PART 1: THEORY -->
+<div class="section open">
+<div class="section-head" onclick="toggle(this)"><h2>🧠 Part 1: Why AI Changes Data Analysis in Construction</h2><span class="arrow">▼</span></div>
+<div class="section-body">
+<div class="card">
+<h3>The Problem: Data Overload at DEC Infra</h3>
+<p>DEC Infra manages 12 concurrent projects generating 242+ budget line items, hundreds of vendor invoices, and weekly schedule updates. A finance manager doing this manually faces:</p>
+<div class="grid-2">
+<div>
+<h4>📋 Manual Process</h4>
+<ul>
+<li>Open 12 separate Excel sheets</li>
+<li>Cross-reference budget vs actual per item</li>
+<li>Calculate variance for 242 rows</li>
+<li>Identify which items are over budget</li>
+<li>Check contingency across all projects</li>
+<li>Write an executive summary</li>
+<li>Create charts and dashboards</li>
+</ul>
+<p style="margin-top:10px;color:var(--danger);font-weight:600">⏱ Time: 4-6 hours per weekly review</p>
+</div>
+<div>
+<h4>🤖 With AI Analysis</h4>
+<ul>
+<li>Upload combined CSV to ChatGPT/Claude</li>
+<li>Paste one analysis prompt</li>
+<li>AI scans ALL 242 rows simultaneously</li>
+<li>AI flags every overrun, risk, anomaly</li>
+<li>AI generates executive summary</li>
+<li>AI provides recommendations & forecasts</li>
+<li>Ask follow-up for deeper analysis</li>
+</ul>
+<p style="margin-top:10px;color:var(--success);font-weight:600">⏱ Time: 2-5 minutes per analysis</p>
+</div>
+</div>
+</div>
+
+<div class="card">
+<h3>Three Levels of AI Data Analysis</h3>
+<div class="grid-3">
+<div style="background:rgba(33,150,243,0.06);padding:12px;border-radius:6px">
+<h4 style="color:var(--info)">📊 Descriptive</h4>
+<p>"What happened?"</p>
+<ul><li>Totals & summaries</li><li>Top/bottom performers</li><li>Trend identification</li></ul>
+</div>
+<div style="background:rgba(255,214,0,0.06);padding:12px;border-radius:6px">
+<h4 style="color:#FFD600">🔍 Diagnostic</h4>
+<p>"Why did it happen?"</p>
+<ul><li>Root cause analysis</li><li>Correlation detection</li><li>Anomaly explanation</li></ul>
+</div>
+<div style="background:rgba(76,175,80,0.06);padding:12px;border-radius:6px">
+<h4 style="color:var(--success)">🔮 Predictive</h4>
+<p>"What will happen?"</p>
+<ul><li>Cost forecasting</li><li>Contingency burnout date</li><li>Schedule completion</li></ul>
+</div>
+</div>
+</div>
+
+<div class="card">
+<h3>How to Upload Data — Step by Step</h3>
+<div class="diagram">
+<div class="flow">
+<div class="node">1. Export Excel<br/><span style="font-size:11px;opacity:0.7">Save as .csv</span></div>
+<div class="arr">→</div>
+<div class="node">2. Anonymize<br/><span style="font-size:11px;opacity:0.7">Replace names</span></div>
+<div class="arr">→</div>
+<div class="node">3. Upload to AI<br/><span style="font-size:11px;opacity:0.7">Click 📎</span></div>
+<div class="arr">→</div>
+<div class="node">4. Paste Prompt<br/><span style="font-size:11px;opacity:0.7">Be specific</span></div>
+<div class="arr">→</div>
+<div class="node">5. Get Analysis<br/><span style="font-size:11px;opacity:0.7">30-60 seconds</span></div>
+</div>
+</div>
+</div>
+
+<div class="card">
+<h3>Good vs Bad Prompts for Data Analysis</h3>
+<div class="grid-2">
+<div style="background:rgba(255,82,82,0.06);padding:12px;border-radius:6px;border-left:3px solid #FF5252">
+<h4 style="color:var(--danger)">❌ Bad Prompt</h4>
+<p>"Analyze this data"</p>
+<p style="font-size:13px;opacity:0.7;margin-top:6px">Result: Generic summary, misses key overruns, no actionable insight</p>
+</div>
+<div style="background:rgba(76,175,80,0.06);padding:12px;border-radius:6px;border-left:3px solid #4CAF50">
+<h4 style="color:var(--success)">✓ Good Prompt</h4>
+<p>"Flag every item where spent >100%. Rank 12 projects by risk score 1-10. For top 3 riskiest, give root cause and corrective action. CEO summary, 1 page."</p>
+<p style="font-size:13px;opacity:0.7;margin-top:6px">Result: 28 overruns found, ranked list, actionable plan</p>
+</div>
+</div>
+<div class="info-box"><strong>ABCD Framework from Module 1:</strong> <strong>A</strong>udience (CEO/PM/Board) → <strong>B</strong>ackground (12 projects, ₹28.8 Cr) → <strong>C</strong>ontent (flag overruns, rank risks) → <strong>D</strong>elivery (table, 1-page, risk scores)</div>
+</div>
+</div>
+</div>
+
+<!-- PART 2: THE DATASET -->
+<div class="section">
+<div class="section-head" onclick="toggle(this)"><h2>📊 Part 2: The DEC Infra Dataset — 242 Rows, 12 Projects</h2><span class="arrow">▼</span></div>
+<div class="section-body">
+<div class="card">
+<h3>Dataset Overview</h3>
+<p>A synthetic but realistic dataset modeled on DEC Infra's actual project portfolio. This is the file participants will upload to AI.</p>
+<h4>12 Projects:</h4>
+<div class="grid-3">
+<div><ul><li>IISER Library, Tirupati</li><li>Medical College, Suryapet</li><li>IT Park Tower, Mangalgiri</li><li>NSDL Data Center, Bangalore</li></ul></div>
+<div><ul><li>JNTU Campus, Anantapur</li><li>Urdu University, Hyderabad</li><li>APIIC Industrial Park</li><li>SWC Warehouse, Jaipur</li></ul></div>
+<div><ul><li>Kamareddy Auditorium</li><li>Gajwel Auditorium</li><li>Kollur Township</li><li>Nizamabad Water Plant</li></ul></div>
+</div>
+<h4>26 Columns Across 5 Categories:</h4>
+<table>
+<tr><th>Category</th><th>Columns</th></tr>
+<tr><td>Identity</td><td>Project_Name, Location, Project_Type</td></tr>
+<tr><td>Budget</td><td>Budget_Line_Item, Sub_Category, Main_Category, Phase</td></tr>
+<tr><td>Financial</td><td>Budgeted_Amount_Lacs, Spent_Amount_Lacs, Percentage_Spent, Remaining_Amount_Lacs</td></tr>
+<tr><td>Contingency</td><td>Contingency_Allocated_Lacs, Contingency_Used_Lacs</td></tr>
+<tr><td>Vendor</td><td>Vendor_Name, Unit_Rate_Rupees, Quantity_Units, Unit_Type</td></tr>
+<tr><td>Progress</td><td>Work_Status, Completion_Target_Percent, Actual_Completion_Percent, Timeline_Status</td></tr>
+<tr><td>Risk</td><td>Risk_Level, Risk_Description, Approval_Status, Invoice_Pending_Lacs, Notes</td></tr>
+</table>
+</div>
+
+<div class="grid-2">
+<div class="card">
+<h3>Portfolio at a Glance</h3>
+<table>
+<tr><td>Total Budget</td><td style="text-align:right;font-weight:700;color:#FFD600">₹2,883.2 Lac</td></tr>
+<tr><td>Total Spent</td><td style="text-align:right">₹1,913.0 Lac (66.4%)</td></tr>
+<tr><td>Remaining</td><td style="text-align:right">₹970.2 Lac</td></tr>
+<tr><td>Contingency Allocated</td><td style="text-align:right">₹203.2 Lac</td></tr>
+<tr><td>Contingency Used</td><td style="text-align:right;color:var(--warning)">₹34.0 Lac (16.7%)</td></tr>
+<tr><td>Pending Invoices</td><td style="text-align:right;color:var(--danger)">₹201.2 Lac</td></tr>
+<tr><td>Items Over Budget</td><td style="text-align:right;color:var(--danger)">28 of 242</td></tr>
+<tr><td>High/Critical Risk Items</td><td style="text-align:right;color:var(--danger)">84 items</td></tr>
+</table>
+</div>
+<div class="card">
+<h3>🚩 Red Flags (Don't Reveal Before Demo!)</h3>
+<ul>
+<li>Gajwel HVAC: <span style="color:var(--danger)">115% spent</span> — ₹1.8L over</li>
+<li>Nizamabad RCC Columns: <span style="color:var(--danger)">114.9%</span> — ₹2.9L over</li>
+<li>Kollur Slab Casting: <span style="color:var(--danger)">110.3%</span> — ₹2.5L over</li>
+<li>Kamareddy HVAC contingency: <span style="color:var(--warning)">91% burned</span></li>
+<li>Medical College Piling contingency: <span style="color:var(--warning)">88% burned</span></li>
+<li>Rebar rate gap: IT Park ₹51/kg vs Medical College ₹65/kg (<span style="color:var(--danger)">27% spread</span>)</li>
+<li>JNTU pending invoice: <span style="color:var(--warning)">₹9.87L stuck</span></li>
+<li>Healthiest: <span style="color:var(--success)">IT Park & JNTU — zero overruns, zero contingency burn</span></li>
+</ul>
+</div>
+</div>
+
+<div class="card">
+<h3>Project Risk Heatmap</h3>
+<table>
+<tr><th>Project</th><th>Rows</th><th>Budget</th><th>% Spent</th><th>Overruns</th><th>High Risk</th><th>Status</th></tr>
+<tr><td>Medical College</td><td>21</td><td>₹292.4L</td><td>70.6%</td><td style="color:var(--danger)">3</td><td style="color:var(--danger)">8</td><td>🔴 Stressed</td></tr>
+<tr><td>Kollur Township</td><td>21</td><td>₹239.8L</td><td>77.7%</td><td style="color:var(--danger)">3</td><td style="color:var(--danger)">10</td><td>🔴 Stressed</td></tr>
+<tr><td>Kamareddy Auditorium</td><td>22</td><td>₹203.3L</td><td>73.4%</td><td style="color:var(--warning)">4</td><td style="color:var(--danger)">11</td><td>🟠 Watch</td></tr>
+<tr><td>Nizamabad Water Plant</td><td>23</td><td>₹250.8L</td><td>74.1%</td><td style="color:var(--warning)">3</td><td style="color:var(--danger)">11</td><td>🟠 Watch</td></tr>
+<tr><td>IISER Library</td><td>16</td><td>₹221.7L</td><td>78.0%</td><td style="color:var(--warning)">4</td><td>8</td><td>🟠 Watch</td></tr>
+<tr><td>Gajwel Auditorium</td><td>23</td><td>₹239.7L</td><td>62.3%</td><td style="color:var(--warning)">4</td><td>7</td><td>🟠 Watch</td></tr>
+<tr><td>NSDL Data Center</td><td>18</td><td>₹253.4L</td><td>64.8%</td><td>3</td><td>7</td><td>🟡 Caution</td></tr>
+<tr><td>SWC Warehouse</td><td>21</td><td>₹249.6L</td><td>62.0%</td><td>3</td><td>11</td><td>🟡 Caution</td></tr>
+<tr><td>APIIC Industrial Park</td><td>22</td><td>₹230.7L</td><td>63.6%</td><td>1</td><td>4</td><td>🟡 Caution</td></tr>
+<tr><td>Urdu University</td><td>17</td><td>₹185.2L</td><td>60.2%</td><td style="color:var(--success)">0</td><td>7</td><td>🟢 Healthy</td></tr>
+<tr><td style="color:var(--success)">IT Park Tower</td><td>18</td><td>₹261.8L</td><td style="color:var(--success)">56.9%</td><td style="color:var(--success)">0</td><td style="color:var(--success)">0</td><td>🟢 Best</td></tr>
+<tr><td style="color:var(--success)">JNTU Campus Block</td><td>20</td><td>₹254.8L</td><td style="color:var(--success)">53.7%</td><td style="color:var(--success)">0</td><td style="color:var(--success)">0</td><td>🟢 Best</td></tr>
+</table>
+<div class="tip"><strong>💡 Facilitator:</strong> Don't show this table before the demo. Let participants see AI discover these patterns live — that's the "wow" moment.</div>
+</div>
+</div>
+</div>
+
+<!-- PART 3: 7 PROMPTS -->
+<div class="section">
+<div class="section-head" onclick="toggle(this)"><h2>🎬 Part 3: Live Demo — 7 Analysis Prompts with Expected Outputs</h2><span class="arrow">▼</span></div>
+<div class="section-body">
+<p style="margin-bottom:15px">Upload the 242-row CSV first, then paste any prompt. Click each to expand and see expected AI output.</p>
+
+<!-- P1 -->
+<div class="cs" onclick="tcs(this)"><div class="cs-head"><h3><span class="cst cst-d">LIVE DEMO</span> Prompt 1: Portfolio Risk Scan</h3><span class="csa">▼</span></div><div class="cs-body">
+<p><span class="badge badge-time">⏱ 2 min</span> <span class="badge badge-risk">⚠ Most critical — run this first</span></p>
+<span class="prompt-label">COPY-PASTE PROMPT</span>
+<div class="prompt"><button class="copy-btn" onclick="cp(this)">📋 Copy</button>I've uploaded a CSV with 242 rows of construction project budget data across 12 concurrent projects, total portfolio budget ₹2,883 Lac.
+
+Run a PORTFOLIO RISK SCAN:
+
+1. FLAG every line item where Percentage_Spent exceeds 100%
+2. FLAG every item where Contingency_Used exceeds 50% of Contingency_Allocated
+3. FLAG every project where Actual_Completion < Completion_Target by more than 10%
+4. RANK all 12 projects from highest risk to lowest risk
+5. For the TOP 3 riskiest projects, provide:
+   - Specific overrun line items with amounts
+   - Root cause analysis
+   - Recommended corrective action
+   - Forecast: Will this project finish over budget? By how much?
+
+Format as a 1-page executive summary for the CEO.
+Include a risk score (1-10) for each project.
+Use 🔴🟡🟢 indicators.</div>
+
+<span class="output-label">EXPECTED AI OUTPUT</span>
+<div class="output">🚨 PORTFOLIO RISK SCAN — EXECUTIVE SUMMARY
+Portfolio: ₹2,883.2L across 12 projects | 66.4% spent | 28 overruns detected
+
+CRITICAL PROJECTS:
+━━━━━━━━━━━━━━━━━━
+
+🔴 Kamareddy Auditorium — Risk: 8.2/10
+├─ HVAC Units: 108.2% (₹2.2L over) + contingency 91% burned
+├─ Fire Fighting: 109.7% (₹0.8L over)
+├─ Lighting Fixtures: 110.3% (₹0.3L over)
+├─ Root cause: MEP scope underestimated, vendor rates escalated
+├─ Forecast: ₹4-6L final overrun if uncorrected
+└─ ACTION: Freeze MEP additions, renegotiate HVAC contract
+
+🔴 Kollur Township — Risk: 7.8/10
+├─ Slab Casting: 110.3% (₹2.5L over) + contingency 57% burned
+├─ Elevator: contingency 58% burned (₹1.8L of ₹3.1L)
+├─ Floor Tiling: contingency 80% burned (₹2.7L of ₹3.3L)
+├─ Root cause: Residential finishing costs exceeded estimates
+├─ Forecast: ₹3-5L additional contingency needed
+└─ ACTION: Value-engineering on remaining finishes
+
+🟠 Nizamabad Water Plant — Risk: 7.0/10
+├─ RCC Columns: 114.9% (₹2.9L over) + contingency 73% burned
+├─ Rebar contingency: 64% burned
+├─ Root cause: Foundation conditions required heavier RCC
+├─ Forecast: ₹3-4L overrun if current pace continues
+└─ ACTION: Design review for remaining structural scope
+
+HEALTHY PROJECTS:
+├─ 🟢 IT Park Tower: Risk 1.5/10 — Zero overruns, zero contingency burn
+├─ 🟢 JNTU Campus: Risk 1.8/10 — Under budget, ahead of schedule
+└─ 🟢 Urdu University: Risk 3.0/10 — On track, no overruns
+
+PORTFOLIO SUMMARY:
+├─ Total overrun items: 28 of 242 (11.6%)
+├─ Total contingency at risk: ₹34L used of ₹203L (16.7%)
+├─ Pending invoices: ₹201.2L (potential cash flow impact)
+└─ Forecast: Portfolio will finish within budget IF top 3 projects are corrected</div>
+</div></div>
+
+<!-- P2 -->
+<div class="cs" onclick="tcs(this)"><div class="cs-head"><h3><span class="cst cst-d">LIVE DEMO</span> Prompt 2: Cross-Project Variance Analysis</h3><span class="csa">▼</span></div><div class="cs-body">
+<span class="prompt-label">COPY-PASTE PROMPT</span>
+<div class="prompt"><button class="copy-btn" onclick="cp(this)">📋 Copy</button>Using the same 242-row dataset, perform a CROSS-PROJECT VARIANCE ANALYSIS:
+
+1. Compare budget utilization (% spent) across all 12 projects — rank most to least efficient
+2. Which project has BEST cost control? What are they doing right?
+3. Which has WORST cost control? What went wrong?
+4. Compare SAME materials across projects:
+   - Rebar/TMT Steel rate per kg across all projects
+   - Concrete rate per cum across all projects
+   - HVAC rate per unit across all projects
+5. Which vendors appear in multiple projects? Are their rates consistent?
+6. Calculate: If every project used the lowest rate for each material, total savings?
+
+Create a comparison table + key insights.
+Highlight: Top 5 procurement optimization opportunities.</div>
+</div></div>
+
+<!-- P3 -->
+<div class="cs" onclick="tcs(this)"><div class="cs-head"><h3><span class="cst cst-d">LIVE DEMO</span> Prompt 3: Phase-by-Phase Trend Analysis</h3><span class="csa">▼</span></div><div class="cs-body">
+<span class="prompt-label">COPY-PASTE PROMPT</span>
+<div class="prompt"><button class="copy-btn" onclick="cp(this)">📋 Copy</button>Analyze the 242-row dataset by CONSTRUCTION PHASE:
+
+1. Group all items by Main_Category (Civil, MEP, Finishing)
+2. For EACH phase across all 12 projects:
+   - Total budget vs total spent
+   - Average budget utilization (%)
+   - Number of overrun items
+   - Average contingency burn rate
+3. Which phase consistently runs over budget? By how much?
+4. Which phase is most predictable (lowest variance)?
+5. Civil vs MEP vs Finishing — which is the riskiest phase for DEC Infra?
+6. Recommend contingency allocation % per phase for future projects
+
+Create a phase benchmarking report with a summary table.</div>
+</div></div>
+
+<!-- P4 -->
+<div class="cs" onclick="tcs(this)"><div class="cs-head"><h3><span class="cst cst-d">LIVE DEMO</span> Prompt 4: Contingency Health Check</h3><span class="csa">▼</span></div><div class="cs-body">
+<span class="prompt-label">COPY-PASTE PROMPT</span>
+<div class="prompt"><button class="copy-btn" onclick="cp(this)">📋 Copy</button>Run a CONTINGENCY HEALTH CHECK on all 12 projects:
+
+1. Portfolio level: ₹203.2L allocated, ₹34.0L used — is this sustainable?
+2. Per project: contingency allocated, used, remaining, burn rate (%)
+3. Flag every item where contingency burn exceeds 50%
+4. At current burn rates, which projects exhaust contingency before completion?
+5. Which projects have barely touched contingency? Can we reallocate?
+6. Total additional contingency needed across portfolio to finish safely
+
+Create a RAG dashboard:
+🔴 RED: >60% contingency burned
+🟡 AMBER: 30-60% burned
+🟢 GREEN: <30% burned
+
+Recommend: Specific contingency reallocation from healthy to stressed projects.</div>
+</div></div>
+
+<!-- P5 -->
+<div class="cs" onclick="tcs(this)"><div class="cs-head"><h3><span class="cst cst-d">LIVE DEMO</span> Prompt 5: Vendor Rate Deep-Dive</h3><span class="csa">▼</span></div><div class="cs-body">
+<p><span class="badge badge-impact">💰 This prompt typically finds ₹4-12L in savings</span></p>
+<span class="prompt-label">COPY-PASTE PROMPT</span>
+<div class="prompt"><button class="copy-btn" onclick="cp(this)">📋 Copy</button>Perform a VENDOR RATE DEEP-DIVE across all 12 projects:
+
+1. Extract all unit rates from Unit_Rate_Rupees column
+2. Compare the SAME material/service across different projects:
+   - Rebar/TMT Steel per kg (I can see rates from ₹51-65/kg — why the spread?)
+   - Concrete per cum
+   - HVAC per unit
+   - Electrical wiring per Rmt
+   - Plumbing per Rmt
+3. For each material: Best rate, worst rate, % difference, which project pays most
+4. Flag any item where a project pays >20% above portfolio average
+5. Calculate total savings if all projects used the best available rate
+6. Are any vendors charging different rates for same work at different projects?
+
+Format as a procurement optimization report.
+Top 5 items where renegotiating saves the most money.
+Include a "Quick Win" section: savings achievable within 30 days.</div>
+
+<span class="output-label">EXPECTED FINDING: REBAR RATE ANOMALY</span>
+<div class="output">📊 REBAR / TMT STEEL — RATE COMPARISON ACROSS PROJECTS
+
+Project                Rate (₹/kg)    Vendor                    vs Best
+──────────────────────────────────────────────────────────────────────
+IT Park Tower          ₹51/kg         AP Infra Services         BEST ✓
+APIIC Industrial       ₹53/kg         Sri Balaji Infra          +3.9%
+Nizamabad Water        ₹53/kg         Hyderabad Civil Corp      +3.9%
+Gajwel Auditorium      ₹55/kg         Srinivasa Constructions   +7.8%
+SWC Warehouse          ₹63/kg         Ravi Foundations          +23.5% ⚠️
+Kamareddy Auditorium   ₹63/kg         Srinivasa Constructions   +23.5% ⚠️
+Medical College        ₹65/kg         SVS Contractors           +27.5% 🔴
+
+⚠️ FINDING: Medical College pays 27.5% MORE than IT Park for identical TMT steel.
+   If Medical College had 15,000 kg remaining at ₹65 → switch to ₹51 vendor:
+   Savings: 15,000 × ₹14 = ₹2.1L on ONE material at ONE project.
+
+💰 PORTFOLIO-WIDE: Standardizing rebar at ₹54/kg (volume discount) across
+   all projects with remaining quantities = estimated ₹4.8-6.2L annual savings.</div>
+</div></div>
+
+<!-- P6 -->
+<div class="cs" onclick="tcs(this)"><div class="cs-head"><h3><span class="cst cst-d">NEW</span> Prompt 6: Invoice & Payment Gap Analysis</h3><span class="csa">▼</span></div><div class="cs-body">
+<p><span class="badge badge-impact">💰 ₹201.2L in pending invoices — who gets paid first?</span></p>
+<span class="prompt-label">COPY-PASTE PROMPT</span>
+<div class="prompt"><button class="copy-btn" onclick="cp(this)">📋 Copy</button>Analyze INVOICE & PAYMENT GAPS across all 12 projects:
+
+1. Total pending invoices: ₹201.2L — break down by project
+2. List TOP 10 highest pending invoices (amount, project, item, vendor)
+3. Are any pending invoices linked to items that are OVER BUDGET?
+   (This could mean disputed billing or inflated charges)
+4. Are any pending invoices stuck at "Pending" or "Under Review" approval?
+5. Which vendors have the most pending invoices across multiple projects?
+6. Calculate: If we clear all undisputed invoices this month, what's the cash outflow?
+
+Create an invoice priority list:
+- CLEAR NOW: Approved, undisputed, vendor relationship at risk
+- INVESTIGATE: Linked to overruns or disputed items
+- HOLD: Under review, need more information
+
+Recommend: Top 5 invoices to clear this week and why.</div>
+</div></div>
+
+<!-- P7 -->
+<div class="cs" onclick="tcs(this)"><div class="cs-head"><h3><span class="cst cst-d">NEW</span> Prompt 7: Board-Level Dashboard</h3><span class="csa">▼</span></div><div class="cs-body">
+<p><span class="badge badge-time">⏱ 3 min</span> <span class="badge badge-impact">💰 Replaces 2 days of manual board prep</span></p>
+<span class="prompt-label">COPY-PASTE PROMPT</span>
+<div class="prompt"><button class="copy-btn" onclick="cp(this)">📋 Copy</button>Create a BOARD-LEVEL PROJECT HEALTH DASHBOARD from this 242-row dataset:
+
+For EACH of the 12 projects, create a status row:
+- Project Name & Location
+- Budget (₹L) | Spent (%) | Remaining
+- 🟢🟡🔴 Budget Status (Under/At/Over)
+- 🟢🟡🔴 Schedule Status (Ahead/On Track/Behind)
+- 🟢🟡🔴 Contingency Status (Safe/<50% used/>50% used)
+- Top Risk (1-line)
+- Risk Score (1-10)
+
+Then provide:
+1. PORTFOLIO OVERVIEW (3 sentences max — total budget, health, key concern)
+2. TOP 3 CONCERNS requiring board attention (with ₹ impact)
+3. TOP 3 ACHIEVEMENTS worth highlighting
+4. FORECAST: Will the ₹2,883L portfolio finish within budget?
+5. DECISION QUEUE: Items requiring board approval this month
+
+Format as professional board report. Max 2 pages. Traffic lights throughout.</div>
+</div></div>
+
+</div>
+</div>
+
+<!-- PART 4: CASE STUDIES -->
+<div class="section">
+<div class="section-head" onclick="toggle(this)"><h2>📂 Part 4: Case Studies — AI Catches What Humans Miss</h2><span class="arrow">▼</span></div>
+<div class="section-body">
+
+<div class="cs" onclick="tcs(this)"><div class="cs-head"><h3><span class="cst cst-c">CASE STUDY</span> CS-1: The ₹2.9L RCC Overrun Hidden in 242 Rows</h3><span class="csa">▼</span></div><div class="cs-body">
+<div class="cb" style="border-left:3px solid #FF5252"><h4 style="color:var(--danger)">📍 Situation</h4><p>Nizamabad Water Plant monthly report shows "on track" — overall 74.1% spent vs 75% planned. Looks fine at project level. But nobody drills into the 23 individual line items.</p></div>
+<div class="cb" style="border-left:3px solid #2196F3"><h4 style="color:var(--info)">🤖 What AI Found</h4><p>Portfolio Risk Scan prompt flagged RCC Columns & Beams at <strong>114.9% spent — ₹2.9L over budget</strong>, the single largest overrun in the entire 242-row dataset. The overrun was masked because earthwork and plastering were under budget, averaging out the total. AI also found contingency for this item was already 73% burned with 30% of work remaining.</p></div>
+<div class="cb" style="border-left:3px solid #4CAF50"><h4 style="color:var(--success)">💰 Impact</h4><p>Manual discovery: at project end (too late). AI discovery: at 74% completion (time to act). PM froze scope additions, renegotiated remaining rebar quantities. <strong>Saved ₹1.8L vs doing nothing.</strong> Time to find it manually: 3-4 hours scanning 242 rows. Time with AI: 90 seconds.</p></div>
+</div></div>
+
+<div class="cs" onclick="tcs(this)"><div class="cs-head"><h3><span class="cst cst-c">CASE STUDY</span> CS-2: ₹4.8L Saved by Comparing Rebar Rates</h3><span class="csa">▼</span></div><div class="cs-body">
+<div class="cb" style="border-left:3px solid #FF5252"><h4 style="color:var(--danger)">📍 Situation</h4><p>Each of DEC Infra's 12 projects negotiates rebar independently. Nobody compares rates across sites because data lives in separate spreadsheets managed by different PMs.</p></div>
+<div class="cb" style="border-left:3px solid #2196F3"><h4 style="color:var(--info)">🤖 What AI Found</h4><p>Vendor Rate Deep-Dive revealed: IT Park pays ₹51/kg, Medical College pays ₹65/kg — a <strong>27.5% gap</strong> for identical-grade TMT steel. SWC and Kamareddy also overpaying at ₹63/kg. AI calculated: standardizing at ₹54/kg (volume discount across portfolio) would save <strong>₹4.8-6.2L annually</strong>.</p></div>
+<div class="cb" style="border-left:3px solid #4CAF50"><h4 style="color:var(--success)">🎯 Action</h4><p>DEC Infra centralized rebar procurement. Single vendor negotiation across all sites. Result: ₹54/kg rate locked for 12 months. <strong>Annual savings: ₹8-12L.</strong> This one AI prompt paid for the entire training program.</p></div>
+</div></div>
+
+<div class="cs" onclick="tcs(this)"><div class="cs-head"><h3><span class="cst cst-c">CASE STUDY</span> CS-3: Kamareddy Contingency — 6 Weeks from Disaster</h3><span class="csa">▼</span></div><div class="cs-body">
+<div class="cb" style="border-left:3px solid #FF5252"><h4 style="color:var(--danger)">📍 Situation</h4><p>Kamareddy Auditorium has 4 overrun items and its HVAC contingency is 91% burned. Medical College piling contingency is 88% burned. Meanwhile, IT Park and JNTU have healthy untouched contingency reserves.</p></div>
+<div class="cb" style="border-left:3px solid #2196F3"><h4 style="color:var(--info)">🤖 What AI Found</h4><p>Contingency Health Check revealed: At current burn rate, Kamareddy would exhaust ALL contingency in 6 weeks. Medical College in 8 weeks. But IT Park had ₹0.4L barely touched, JNTU had ₹0.4L untouched — both projects under budget and won't need it.</p></div>
+<div class="cb" style="border-left:3px solid #4CAF50"><h4 style="color:var(--success)">💰 Impact</h4><p>CFO approved reallocating ₹5L from healthy projects to stressed projects. Without this: Kamareddy would pause work (₹3-5L in idle labor costs) or request emergency board approval (3-week delay). AI analysis done in 2 minutes. Manual: Would require a full-day cross-portfolio review that nobody had time for.</p></div>
+</div></div>
+
+<div class="cs" onclick="tcs(this)"><div class="cs-head"><h3><span class="cst cst-c">CASE STUDY</span> CS-4: ₹9.87L Invoice Stuck for 45 Days</h3><span class="csa">▼</span></div><div class="cs-body">
+<div class="cb" style="border-left:3px solid #FF5252"><h4 style="color:var(--danger)">📍 Situation</h4><p>JNTU Campus has a ₹9.87L pending invoice for piling work — the largest pending invoice in the entire portfolio. The vendor is threatening to stop work on another DEC Infra project.</p></div>
+<div class="cb" style="border-left:3px solid #2196F3"><h4 style="color:var(--info)">🤖 What AI Found</h4><p>Invoice Gap Analysis revealed: 10 invoices totaling ₹54L are pending across the portfolio. The JNTU ₹9.87L invoice was approved but stuck in payment processing. Meanwhile, 3 invoices totaling ₹8.5L were linked to over-budget items — flagged for investigation before payment.</p></div>
+<div class="cb" style="border-left:3px solid #4CAF50"><h4 style="color:var(--success)">🎯 Action</h4><p>Clear the 7 undisputed invoices (₹45.5L) immediately. Investigate 3 disputed invoices (₹8.5L) before payment. JNTU piling invoice cleared same day — vendor relationship preserved. <strong>One prompt prevented a vendor walkout that would have delayed JNTU by 3 weeks (₹8-10L impact).</strong></p></div>
+</div></div>
+
+<div class="cs" onclick="tcs(this)"><div class="cs-head"><h3><span class="cst cst-w">CAUTIONARY</span> CS-5: When AI Got the Recommendation Wrong</h3><span class="csa">▼</span></div><div class="cs-body">
+<div class="cb" style="border-left:3px solid #FF5252"><h4 style="color:var(--danger)">📍 What Went Wrong</h4><p>AI recommended dropping Srinivasa Constructions (₹63/kg rebar at Kamareddy) in favor of a cheaper vendor. Srinivasa also appears at Gajwel at ₹55/kg — so they can clearly supply at lower rates.</p></div>
+<div class="cb" style="border-left:3px solid #FF9800"><h4 style="color:var(--warning)">💥 What AI Didn't Know</h4><p>Srinivasa has a 12-year relationship with DEC Infra. They provide 24-hour emergency deliveries, 90-day credit terms, and have never missed a deadline. The ₹63/kg rate at Kamareddy included trucking to a remote location (2 hours from Hyderabad). The cheaper vendor would charge ₹12/kg extra for delivery — making them MORE expensive. AI analyzed data, not relationships.</p></div>
+<div class="cb" style="border-left:3px solid #4CAF50"><h4 style="color:var(--success)">✅ Lesson</h4><p><strong>AI analyzes what's IN the data. It doesn't know what's NOT in the data.</strong> Vendor relationships, delivery reliability, credit terms, site accessibility — these don't appear in spreadsheets. Always layer human judgment on AI analysis. AI is the starting point, never the final answer.</p></div>
+</div></div>
+
+</div>
+</div>
+
+<!-- PART 5: DATA PROTECTION -->
+<div class="section">
+<div class="section-head" onclick="toggle(this)"><h2>🔒 Part 5: Data Protection — Anonymize Before Uploading</h2><span class="arrow">▼</span></div>
+<div class="section-body">
+<div class="warning"><strong>⚠️ Free ChatGPT may train on your data.</strong> Use the anonymized version of the dataset for practice. See Module 3 for full data classification.</div>
+<div class="card">
+<h3>Quick Anonymization (2 minutes in Excel)</h3>
+<table>
+<tr><th>Step</th><th>Find</th><th>Replace With</th><th>Shortcut</th></tr>
+<tr><td>1</td><td>IISER Library</td><td>Project Alpha</td><td>Ctrl+H</td></tr>
+<tr><td>2</td><td>Medical College</td><td>Project Beta</td><td>Ctrl+H</td></tr>
+<tr><td>3</td><td>Tirupati, AP</td><td>Location 1</td><td>Ctrl+H</td></tr>
+<tr><td>4</td><td>SVS Contractors</td><td>Civil Vendor A</td><td>Ctrl+H</td></tr>
+<tr><td>5</td><td><em>...repeat for all vendors...</em></td><td></td><td></td></tr>
+<tr><td>6</td><td colspan="3">Keep ALL numbers intact — amounts, rates, percentages stay as-is</td></tr>
+</table>
+<p style="margin-top:10px"><strong>Pre-built anonymized file available:</strong> <code>DEC_Infra_Dataset_ANONYMIZED.csv</code> — ready to upload to free AI tools immediately.</p>
+</div>
+<div class="success"><strong>✓ Two files provided:</strong> (1) Master dataset with real names (facilitator reference only), (2) Anonymized dataset (safe for participant hands-on with any AI tool).</div>
+</div>
+</div>
+
+<!-- PART 6: EXERCISE -->
+<div class="section">
+<div class="section-head" onclick="toggle(this)"><h2>👨‍💻 Part 6: Hands-On Team Challenge (25 minutes)</h2><span class="arrow">▼</span></div>
+<div class="section-body">
+<div class="exercise"><h3>🏋️ Team Challenge: Analyze the ₹28.8 Cr Portfolio</h3><p>4 teams, each uploads the anonymized CSV and runs ONE assigned prompt. Present top 3 findings in 2 minutes. Judged on: insight quality, actionability, and clarity.</p></div>
+<div class="grid-2">
+<div class="card"><h3>Team 1: Budget Detectives 🔍</h3><p>Prompt #1 (Risk Scan). Find the 3 most dangerous overruns. What should the CEO know TODAY?</p><p style="font-size:13px;opacity:0.7;margin-top:8px">Judge asks: "If you fix only ONE item, which and why?"</p></div>
+<div class="card"><h3>Team 2: Cost Optimizers 💰</h3><p>Prompt #5 (Rate Deep-Dive). Find 3 materials where DEC Infra overpays. Total savings?</p><p style="font-size:13px;opacity:0.7;margin-top:8px">Judge asks: "How much can we save this quarter?"</p></div>
+<div class="card"><h3>Team 3: Contingency Watchers ⚠️</h3><p>Prompt #4 (Contingency Check). Which projects run out first? What do we do?</p><p style="font-size:13px;opacity:0.7;margin-top:8px">Judge asks: "Should we reallocate? From where to where?"</p></div>
+<div class="card"><h3>Team 4: Board Briefers 📋</h3><p>Prompt #7 (Board Dashboard). Create the board report. Present as if the board is listening NOW.</p><p style="font-size:13px;opacity:0.7;margin-top:8px">Judge asks: "What decision does the board make today?"</p></div>
+</div>
+<div class="tip"><strong>💡 Tips:</strong> Upload CSV first, then paste prompt. If ChatGPT is slow, try Claude. Focus on INSIGHTS not descriptions — tell us what you FOUND, not what you DID.</div>
+</div>
+</div>
+
+<!-- PART 7: ADVANCED -->
+<div class="section">
+<div class="section-head" onclick="toggle(this)"><h2>🚀 Part 7: Advanced — Follow-Up Questions & Prompt Library</h2><span class="arrow">▼</span></div>
+<div class="section-body">
+<div class="card">
+<h3>5 Powerful Follow-Up Patterns</h3>
+<p>After the first analysis, dig deeper. AI remembers your uploaded data within the conversation.</p>
+<table>
+<tr><th>Pattern</th><th>Example</th><th>Reveals</th></tr>
+<tr><td><strong>Drill Down</strong></td><td>"Zoom into Kamareddy only. Show every overrun sorted by severity."</td><td>Granular single-project view</td></tr>
+<tr><td><strong>What-If</strong></td><td>"If we renegotiate rebar to ₹54/kg everywhere, total savings?"</td><td>Scenario modeling for procurement</td></tr>
+<tr><td><strong>Compare</strong></td><td>"Why does IT Park have zero overruns but Kamareddy has 4? Compare."</td><td>Root cause by project comparison</td></tr>
+<tr><td><strong>Forecast</strong></td><td>"At current burn rates, forecast final cost for each project."</td><td>Early warning for budget requests</td></tr>
+<tr><td><strong>Action Plan</strong></td><td>"For the 5 worst overruns, create a 30-day corrective plan with owners."</td><td>Converts analysis into execution</td></tr>
+</table>
+</div>
+<div class="card">
+<h3>Build Your Prompt Library</h3>
+<div class="grid-2">
+<div><h4>For Project Managers</h4><ul><li>Weekly budget variance scan</li><li>Monthly board dashboard</li><li>Vendor performance ranking</li><li>Schedule risk assessment</li></ul></div>
+<div><h4>For Finance Teams</h4><ul><li>Invoice aging analysis</li><li>Cash flow forecasting</li><li>Cross-project benchmarking</li><li>Contingency utilization</li></ul></div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- TAKEAWAYS -->
+<div class="section">
+<div class="section-head" onclick="toggle(this)"><h2>🎯 Key Takeaways</h2><span class="arrow">▼</span></div>
+<div class="section-body">
+<div class="card">
+<table>
+<tr><th>#</th><th>Takeaway</th><th>Proof</th></tr>
+<tr><td style="font-size:20px;font-weight:800;color:#FFD600">1</td><td><strong>242 rows analyzed in 90 seconds</strong></td><td>28 overruns, 19 contingency burns found instantly</td></tr>
+<tr><td style="font-size:20px;font-weight:800;color:#FFD600">2</td><td><strong>AI catches what manual reviews miss</strong></td><td>₹2.9L RCC overrun hidden inside project-level totals</td></tr>
+<tr><td style="font-size:20px;font-weight:800;color:#FFD600">3</td><td><strong>Cross-project comparison reveals savings</strong></td><td>₹4.8-6.2L saved on rebar alone by standardizing rates</td></tr>
+<tr><td style="font-size:20px;font-weight:800;color:#FFD600">4</td><td><strong>Contingency reallocation prevents crises</strong></td><td>₹5L moved from healthy to stressed projects — avoided work stoppage</td></tr>
+<tr><td style="font-size:20px;font-weight:800;color:#FFD600">5</td><td><strong>Invoice analysis protects vendor relationships</strong></td><td>₹9.87L stuck invoice cleared — prevented vendor walkout</td></tr>
+<tr><td style="font-size:20px;font-weight:800;color:#FFD600">6</td><td><strong>Always anonymize before uploading</strong></td><td>2 min anonymization protects ₹crores of data</td></tr>
+<tr><td style="font-size:20px;font-weight:800;color:#FFD600">7</td><td><strong>AI assists, humans decide</strong></td><td>CS-5: AI recommended dropping best vendor — human judgment saved ₹8L</td></tr>
+</table>
+</div>
+<div class="stats">
+<div class="stat"><span class="n">90 sec</span><span class="l">vs 4-6 hrs manual</span></div>
+<div class="stat"><span class="n">₹28.8 Cr</span><span class="l">Portfolio analyzed</span></div>
+<div class="stat"><span class="n">7</span><span class="l">Ready prompts</span></div>
+<div class="stat"><span class="n">₹12-24L</span><span class="l">Annual savings</span></div>
+</div>
+<div class="card"><h3>Your 1-Week Action Plan</h3><ul>
+<li><strong>Today:</strong> Download both CSV files and try Prompt #1 yourself</li>
+<li><strong>Tomorrow:</strong> Export YOUR project's budget as CSV, anonymize it, run Risk Scan</li>
+<li><strong>This week:</strong> Try 3 different prompts on your actual data</li>
+<li><strong>Next week:</strong> Start building your personal prompt library</li>
+<li><strong>This month:</strong> Replace one manual reporting task with AI analysis</li>
+</ul></div>
+</div>
+</div>
+
+
         </div>
-
-        <!-- NEW: Advanced Data Anomaly Hunt -->
-        <div class="card mb-8" style="border-left: 4px solid var(--danger);">
-            <div class="card-header"><h3 class="card-title">Advanced Data Anomaly Hunt (2-Hour Lab)</h3></div>
-            <div class="card-body">
-                <p class="mb-4 text-muted"><strong>Objective:</strong> A vendor submitted 50 invoice records. Find the 3 hidden anomalies (duplicates, inflated amounts, or missing POs). You can search manually or use the AI Query tool.</p>
-                <div class="dashboard-grid">
-                    <div>
-                        <div style="height: 250px; overflow-y: auto; font-family: monospace; font-size: 0.75rem; background: var(--bg-main); border: 1px solid var(--border-color); padding: 0.5rem; border-radius: 4px;" id="anomaly-dataset">
-                            <!-- Populated via JS -->
-                        </div>
-                        <p class="text-xs text-muted mt-2">Time elapsed (Manual): <span id="manual-timer" style="font-weight: bold; color: var(--danger);">00:00</span></p>
-                    </div>
-                    <div>
-                        <div class="form-group mb-2">
-                            <label class="form-label font-bold text-sm">AI Query Tool</label>
-                            <textarea id="ai-anomaly-prompt" class="form-control" rows="2" placeholder="e.g., Are there any duplicate Invoice IDs?"></textarea>
-                        </div>
-                        <button class="btn btn-primary w-full mb-4" id="btn-run-ai-query">Run AI Analysis (Takes 3 secs)</button>
-                        
-                        <div class="ai-result-box" style="margin-top:0; min-height:100px;">
-                            <span class="ai-badge">AI Assistant</span>
-                            <div id="ai-anomaly-out" class="mt-2 text-sm" style="line-height: 1.5;">Waiting for query...</div>
-                        </div>
-                        
-                        <div class="mt-4">
-                            <h4 class="text-sm mb-2">Identify Anomalies:</h4>
-                            <label class="flex items-center gap-2 text-sm mb-1"><input type="checkbox" class="chk-anomaly" data-correct="true"> Invoice INV-992 (Duplicate)</label>
-                            <label class="flex items-center gap-2 text-sm mb-1"><input type="checkbox" class="chk-anomaly" data-correct="false"> Invoice INV-105 (Missing Date)</label>
-                            <label class="flex items-center gap-2 text-sm mb-1"><input type="checkbox" class="chk-anomaly" data-correct="true"> Invoice INV-881 (Amount > 10x Average)</label>
-                            <label class="flex items-center gap-2 text-sm mb-1"><input type="checkbox" class="chk-anomaly" data-correct="false"> Invoice INV-402 (Unapproved Vendor)</label>
-                            <label class="flex items-center gap-2 text-sm mb-1"><input type="checkbox" class="chk-anomaly" data-correct="true"> Invoice INV-773 (Missing PO Number)</label>
-                            <button class="btn btn-secondary btn-small w-full mt-2" id="btn-submit-anomalies">Submit Findings</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="card mb-8">
-            <div class="card-header flex justify-between items-center" style="display:flex;">
-                <h3 class="card-title">Data Lab</h3>
-                <div class="flex gap-2">
-                    <select id="data-type-select" class="form-control" style="width: auto; padding: 0.25rem; margin-bottom: 0;">
-                        <option value="procurement">Procurement (Extropeak)</option>
-                        <option value="ledger">Ledger (Focus)</option>
-                        <option value="attendance">Attendance (True-In)</option>
-                        <option value="fuel">Fuel Logs (Tabi)</option>
-                    </select>
-                    <button class="btn btn-secondary btn-small" id="btn-generate-data">Generate 100 Rows</button>
-                </div>
-            </div>
-            <div class="card-body table-responsive" style="max-height: 400px; overflow-y: auto;">
-                <table class="table" id="data-lab-table">
-                    <thead id="data-lab-head">
-                        <tr><th>Waiting for data generation...</th></tr>
-                    </thead>
-                    <tbody id="data-lab-body">
-                        <tr><td class="text-muted text-center" style="padding: 2rem;">No dataset selected. Click Generate.</td></tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="card-footer" style="padding: 1.5rem; border-top: 1px solid #E2E8F0; display:flex; gap:1rem;">
-                <button class="btn btn-primary" id="btn-analyze-data" disabled>AI Analysis & Anomaly Check</button>
-            </div>
-        </div>
-
-        <!-- ENHANCED: Interactive Chart Builder & Insights -->
-        <div class="card mb-8 hidden" id="data-analysis-result">
-            <div class="card-header">
-                <h3 class="card-title">AI Analyst Report & Chart Builder</h3>
-            </div>
-            <div class="card-body">
-                <div class="dashboard-grid">
-                    <div>
-                        <div id="ai-data-insights" class="ai-result-box mb-4">
-                            <span class="ai-badge verification-required">Verification Required</span>
-                            <div id="ai-data-text"></div>
-                        </div>
-                        
-                        <!-- NEW: Chart Prompt -->
-                        <h4 class="mb-2">Generate Custom Chart</h4>
-                        <div class="flex gap-2">
-                            <input type="text" class="form-control" id="chart-prompt" placeholder="e.g., Show me spend by vendor as a pie chart">
-                            <button class="btn btn-secondary" id="btn-build-chart">Build</button>
-                        </div>
-                    </div>
-                    <div>
-                        <h4 class="mb-4">Data Visualization</h4>
-                        <div style="height: 300px; display:flex; align-items:center; justify-content:center; border: 1px dashed #cbd5e1; border-radius: 8px;">
-                            <canvas id="vendor-spend-chart"></canvas>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- ENHANCED: More Mini Tools -->
-        <div class="card mb-8">
-            <div class="card-header"><h3 class="card-title">Working Mini-Tools (No-Code)</h3></div>
-            <div class="card-body dashboard-grid">
-                <div class="ai-result-box" id="tool-comparator">
-                    <h4 class="mb-2">Material Rate Comparator</h4>
-                    <p class="text-muted text-sm mb-4">Paste multiple vendor quotes to automatically output a comparison table.</p>
-                    <button class="btn btn-secondary btn-small w-full btn-open-tool" data-target="ui-comparator">Open Tool</button>
-                    <div id="ui-comparator" class="hidden mt-4">
-                        <textarea class="form-control mb-2" rows="3" placeholder="Paste Vendor A & Vendor B quotes here..."></textarea>
-                        <button class="btn btn-primary btn-small w-full mb-2 btn-run-tool" data-tool="comparator">Compare Rates</button>
-                        <div class="tool-output hidden p-2 rounded text-sm font-mono" style="background: rgba(16, 185, 129, 0.1); color: var(--success);">Comparison Complete. Omega Machining is 12% cheaper.</div>
-                    </div>
-                </div>
-                
-                <div class="ai-result-box" id="tool-calculator">
-                    <h4 class="mb-2">Manpower Cost Calculator</h4>
-                    <p class="text-muted text-sm mb-4">Calculate site manpower costs based on True-In attendance logs.</p>
-                    <button class="btn btn-secondary btn-small w-full btn-open-tool" data-target="ui-calculator">Open Tool</button>
-                    <div id="ui-calculator" class="hidden mt-4">
-                        <input type="number" class="form-control mb-2" placeholder="Total Hours from True-In">
-                        <input type="number" class="form-control mb-2" placeholder="Average Hourly Rate (₹)">
-                        <button class="btn btn-primary btn-small w-full mb-2 btn-run-tool" data-tool="calculator">Calculate Total</button>
-                        <div class="tool-output hidden p-2 rounded text-sm font-mono" style="background: rgba(16, 185, 129, 0.1); color: var(--success);">Total Cost: ₹...</div>
-                    </div>
-                </div>
-                
-                <div class="ai-result-box" id="tool-invoice">
-                    <h4 class="mb-2">Invoice Anomaly Detector</h4>
-                    <p class="text-muted text-sm mb-4">Scan focus ERP ledger dump for duplicate invoice numbers or suspicious amounts.</p>
-                    <button class="btn btn-secondary btn-small w-full btn-open-tool" data-target="ui-invoice">Open Tool</button>
-                    <div id="ui-invoice" class="hidden mt-4">
-                        <textarea class="form-control mb-2" rows="2" placeholder="Paste CSV/Ledger rows..."></textarea>
-                        <button class="btn btn-primary btn-small w-full mb-2 btn-run-tool" data-tool="invoice">Run Scan</button>
-                        <div class="tool-output hidden p-2 rounded text-sm font-mono" style="background: rgba(239, 68, 68, 0.1); color: var(--danger);">⚠️ Duplicate Invoice #INV-8822 detected for Vendor X and Y.</div>
-                    </div>
-                </div>
-                
-                <div class="ai-result-box" id="tool-risk">
-                    <h4 class="mb-2">Project Risk Scorer</h4>
-                    <p class="text-muted text-sm mb-4">Analyze weekly progress reports and assign a RAG (Red/Amber/Green) risk score.</p>
-                    <button class="btn btn-secondary btn-small w-full btn-open-tool" data-target="ui-risk">Open Tool</button>
-                    <div id="ui-risk" class="hidden mt-4">
-                        <textarea class="form-control mb-2" rows="2" placeholder="Paste Weekly Progress Report..."></textarea>
-                        <button class="btn btn-primary btn-small w-full mb-2 btn-run-tool" data-tool="risk">Score Risk</button>
-                        <div class="tool-output hidden p-2 rounded text-sm font-mono" style="background: rgba(245, 158, 11, 0.1); color: var(--warning);">Status: AMBER. 2 critical path items are delayed by >3 days.</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    `;
-
-    setTimeout(() => {
-        // Data Pipeline Simulator
-        document.getElementById('btn-run-pipeline')?.addEventListener('click', (e) => {
-            const btn = e.target;
-            btn.disabled = true;
-            btn.innerText = "Processing Step 1...";
-            
-            setTimeout(() => {
-                document.getElementById('pipeline-step-2').style.opacity = "1";
-                btn.innerText = "Processing Step 2...";
-                
-                setTimeout(() => {
-                    document.getElementById('pipeline-step-3').style.opacity = "1";
-                    btn.innerText = "Pipeline Complete ✨";
-                    showToast('Data processed through AI pipeline.', 'success');
-                }, 1000);
-            }, 1000);
-        });
-
-        // Advanced Data Anomaly Hunt Logic
-        const datasetDiv = document.getElementById('anomaly-dataset');
-        if (datasetDiv) {
-            let dataHtml = "ID, DATE, VENDOR, INV_NUM, PO_NUM, AMOUNT\n";
-            for (let i=1; i<=50; i++) {
-                let inv = `INV-${100+i}`;
-                let po = `PO-2023-${i}`;
-                let amt = Math.floor(Math.random() * 5000) + 1000;
-                
-                if (i === 15) { inv = "INV-992"; } // Duplicate 1
-                if (i === 42) { inv = "INV-992"; } // Duplicate 2
-                if (i === 28) { amt = 95000; inv = "INV-881"; } // Inflated
-                if (i === 35) { po = "MISSING"; inv = "INV-773"; } // Missing PO
-                
-                dataHtml += `${i}, 2023-10-${(i%30)+1}, Vendor_${(i%5)+1}, ${inv}, ${po}, ₹${amt}\n`;
-            }
-            datasetDiv.innerText = dataHtml;
-            
-            let timer = 0;
-            const timerEl = document.getElementById('manual-timer');
-            const interval = setInterval(() => {
-                if (!document.getElementById('manual-timer')) { clearInterval(interval); return; }
-                timer++;
-                let m = Math.floor(timer/60).toString().padStart(2, '0');
-                let s = (timer%60).toString().padStart(2, '0');
-                timerEl.innerText = `${m}:${s}`;
-            }, 1000);
-            
-            document.getElementById('btn-run-ai-query')?.addEventListener('click', () => {
-                const btn = document.getElementById('btn-run-ai-query');
-                btn.disabled = true;
-                btn.innerText = "Analyzing 50 rows...";
-                document.getElementById('ai-anomaly-out').innerText = "Scanning...";
-                
-                setTimeout(() => {
-                    const prompt = document.getElementById('ai-anomaly-prompt').value.toLowerCase();
-                    let out = "I have analyzed the data.\n\n";
-                    if (prompt.includes("duplicate") || prompt.includes("same")) {
-                        out += "- Found Duplicate: INV-992 appears twice (Row 15 and Row 42).\n";
-                    }
-                    if (prompt.includes("amount") || prompt.includes("high") || prompt.includes("large") || prompt.includes("outlier")) {
-                        out += "- Found Anomaly: INV-881 amount is ₹95,000, which is unusually high compared to the average of ~₹3,500.\n";
-                    }
-                    if (prompt.includes("missing") || prompt.includes("po") || prompt.includes("empty") || prompt.includes("null")) {
-                        out += "- Found Anomaly: INV-773 has a missing PO_NUM.\n";
-                    }
-                    if (out === "I have analyzed the data.\n\n") {
-                        out += "Everything looks normal based on your query. Try asking about duplicates, missing fields, or unusually high amounts.";
-                    }
-                    
-                    document.getElementById('ai-anomaly-out').innerText = out;
-                    btn.disabled = false;
-                    btn.innerText = "Run AI Analysis (Takes 3 secs)";
-                }, 3000);
-            });
-            
-            document.getElementById('btn-submit-anomalies')?.addEventListener('click', () => {
-                const checkboxes = document.querySelectorAll('.chk-anomaly');
-                let correctCount = 0;
-                let errorCount = 0;
-                checkboxes.forEach(chk => {
-                    if (chk.checked && chk.getAttribute('data-correct') === 'true') correctCount++;
-                    if (chk.checked && chk.getAttribute('data-correct') === 'false') errorCount++;
-                });
-                
-                if (correctCount === 3 && errorCount === 0) {
-                    clearInterval(interval);
-                    showToast('Success! You found all anomalies.', 'success');
-                    State.markExerciseComplete('m2_anomaly', 'module2');
-                } else {
-                    showToast('Incorrect. Keep searching!', 'error');
-                }
-            });
-        }
+`;
     
-        let currentData = [];
-        document.getElementById('btn-generate-data')?.addEventListener('click', () => {
-            const type = document.getElementById('data-type-select').value;
-            currentData = DataEngine.generateDataset(type, 100);
-            
-            if(currentData.length > 0) {
-                const keys = Object.keys(currentData[0]);
-                document.getElementById('data-lab-head').innerHTML = '<tr>' + keys.map(k => `<th>${k.toUpperCase()}</th>`).join('') + '</tr>';
-                document.getElementById('data-lab-body').innerHTML = currentData.map(row => 
-                    `<tr class="${row.notes && row.notes !== 'Standard' ? 'danger-bg' : ''}">
-                        ${keys.map(k => `<td>${row[k]}</td>`).join('')}
-                    </tr>`
-                ).join('');
-            }
-            
-            document.getElementById('btn-analyze-data').disabled = false;
-            showToast(`Generated 100 rows of synthetic ${type} data.`, 'success');
-        });
-
-        document.getElementById('btn-analyze-data')?.addEventListener('click', async () => {
-            const resultCard = document.getElementById('data-analysis-result');
-            resultCard.classList.remove('hidden');
-            
-            const response = await AIService.analyzeData(currentData, "Find anomalies");
-            document.getElementById('ai-data-text').innerHTML = `<p>${response.replace(/\\n/g, '<br>')}</p>`;
-            
-            // Mark progress
-            State.markExerciseComplete('m2_chart', 'module2');
-            
-            // Generate basic chart
-            const labels = currentData.slice(0,5).map(r => r.id);
-            const dataArr = currentData.slice(0,5).map(r => r.totalAmount || r.debit || r.hoursWorked || r.fuelConsumedLiters || 1);
-            AnalysisEngine.renderChart('vendor-spend-chart', 'bar', 'Sample Values', labels, dataArr);
-        });
-        
-        document.getElementById('btn-build-chart')?.addEventListener('click', () => {
-            showToast('AI dynamically interpreting prompt and rendering chart...', 'info');
-            // Mocking dynamic chart update
-            const labels = currentData.slice(5,10).map(r => r.id || 'N/A');
-            const dataArr = currentData.slice(5,10).map(r => r.totalAmount || Math.random()*1000);
-            AnalysisEngine.renderChart('vendor-spend-chart', 'pie', 'Custom View', labels, dataArr);
-        });
-
-        document.querySelectorAll('.btn-open-tool').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                e.target.classList.add('hidden');
-                document.getElementById(e.target.getAttribute('data-target')).classList.remove('hidden');
-            });
-        });
-        document.querySelectorAll('.btn-run-tool').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                const out = e.target.nextElementSibling;
-                out.classList.remove('hidden');
-                
-                const toolType = e.target.getAttribute('data-tool');
-                if (toolType === 'calculator') {
-                    const inputs = e.target.parentElement.querySelectorAll('input');
-                    const total = (parseFloat(inputs[0].value || 0) * parseFloat(inputs[1].value || 0)).toFixed(2);
-                    out.innerText = 'Total Cost: ₹' + total;
-                }
-            });
-        });
-
+    // Auto-scroll to top
+    setTimeout(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     }, 100);
 }
 
@@ -3842,909 +4052,585 @@ the actual IS 456 standard. Award points for each hallucination caught.]</div>
 }
 
 function renderModule4(container) {
-    let activeSubTab = sessionStorage.getItem('openCapstoneBuilder') === 'true' ? 'builder' : 'guide';
-    sessionStorage.removeItem('openCapstoneBuilder');
-    
-    // We store form fields in a local state so switching tabs doesn't wipe entries
-    let formData = {
-        department: 'Procurement (Quotes)',
-        role: 'Procurement Executive',
-        context: 'Compare vendor quotes and flag missing items.',
-        inputs: 'Synthetic Quotes CSV, Tender Specs',
-        outputs: 'Comparison Table, Markdown',
-        rules: 'Do not automatically select the cheapest vendor.',
-        manualTime: 4,
-        aiTime: 15
-    };
-    
-    let compiledPrompt = '';
-    let evalRes = null;
-
-    function drawModule4View() {
-        container.innerHTML = `
-            <div class="mb-4" style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap;">
-                <div>
-                    <span class="badge badge-danger" style="margin-bottom:0.5rem;">Session 3 / Final Capstone</span>
-                    <h2 class="mt-2" style="background: -webkit-linear-gradient(45deg, #F8FAFC, #FFDE59); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Module 4: Capstone - Build Your Department Assistant</h2>
-                    <p class="text-muted">Combine structured prompting, data intelligence, and safe policies into a working Claude Project.</p>
-                </div>
-                <div style="width:130px; height:130px; flex-shrink:0; position:relative; display:flex; align-items:center; justify-content:center;">
-                    <div style="width:100px; height:100px; background:linear-gradient(135deg,rgba(255,222,89,0.15),rgba(255,222,89,0.03)); border:2px solid rgba(255,222,89,0.5); border-radius:22px; display:flex; align-items:center; justify-content:center; box-shadow:0 0 30px rgba(255,222,89,0.25); animation:rocketLaunch 2s ease-in-out infinite; font-size:2.8rem;">🚀</div>
-                    <div style="position:absolute; inset:-8px; border:1px solid rgba(255,222,89,0.2); border-radius:30px; animation:modSpin 5s linear infinite;"></div>
-                    <div style="position:absolute; bottom:-4px; left:50%; transform:translateX(-50%); width:3px; height:30px; background:linear-gradient(180deg, rgba(255,100,0,0.8), transparent); border-radius:2px; animation:thruster 0.3s ease-in-out infinite;"></div>
-                    <style>@keyframes rocketLaunch{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}} @keyframes thruster{0%,100%{height:30px;opacity:0.8}50%{height:15px;opacity:0.4}}</style>
-                </div>
-            </div>
-            
-            <div class="flex gap-2 mb-6" style="display: flex; flex-wrap: wrap; gap: 0.5rem; border-bottom: 2px solid var(--border-color); padding-bottom: 0.5rem; margin-bottom: 2rem;">
-                <button class="btn sub-tab-btn ${activeSubTab === 'guide' ? 'btn-primary' : 'btn-secondary'}" data-subtab="guide" style="border-radius: var(--radius-sm); display: flex; align-items: center; gap: 0.25rem;">📖 Claude Project Guide</button>
-                <button class="btn sub-tab-btn ${activeSubTab === 'builder' ? 'btn-primary' : 'btn-secondary'}" data-subtab="builder" style="border-radius: var(--radius-sm); display: flex; align-items: center; gap: 0.25rem;">🛠️ Department Assistant Builder</button>
-            </div>
-
-            <div id="module4-tab-content"></div>
-        `;
-        
-        renderSubTabContent(activeSubTab);
-        bindSubTabListeners();
-    }
-    
-    function renderSubTabContent(tab) {
-        const contentDiv = document.getElementById('module4-tab-content');
-        if (!contentDiv) return;
-        
-        if (tab === 'guide') {
-            contentDiv.innerHTML = `
-                <div class="card mb-8">
-                    <div class="card-header"><h3 class="card-title">How to Build a Claude Project (Step-by-Step Help Guide)</h3></div>
-                    <div class="card-body">
-                        <p class="text-muted mb-6">Claude Projects are dedicated workspaces in Claude.ai that allow you to combine files (knowledge base) and custom system instructions. Follow this stepwise guide to build yours:</p>
-                        
-                        <div class="dashboard-grid mb-6">
-                            <div class="p-4 border rounded" style="background:var(--bg-main); border-left: 4px solid var(--info); border-radius: 8px;">
-                                <div class="badge badge-info mb-2" style="font-size:0.7rem; color: #1E40AF; background-color: var(--info-bg);">Step 1</div>
-                                <h4 class="mb-2">Create a Claude Project</h4>
-                                <p class="text-sm text-muted">Go to <a href="https://claude.ai" target="_blank" style="text-decoration: underline; font-weight: 500;">Claude.ai</a>, log in to your Pro/Team account, and click on <b>"Projects"</b> in the left sidebar menu. Click <b>"Create Project"</b> and name it after your role (e.g., <i>DEC Metro Quote Analyst</i>).</p>
-                            </div>
-                            
-                            <div class="p-4 border rounded" style="background:var(--bg-main); border-left: 4px solid var(--warning); border-radius: 8px;">
-                                <div class="badge badge-warning" style="color:#92400E; background-color: var(--warning-bg); font-size:0.7rem; margin-bottom:0.5rem;">Step 2</div>
-                                <h4 class="mb-2">Upload Project Knowledge</h4>
-                                <p class="text-sm text-muted">Upload your department templates, policy manuals, site safety checklists, or reference CSV files. Click <b>"Add Content"</b> inside the project and upload files like <i>Site_Safety_SOP_v2.pdf</i> so Claude can refer to them.</p>
-                            </div>
-                            
-                            <div class="p-4 border rounded" style="background:var(--bg-main); border-left: 4px solid var(--success); border-radius: 8px;">
-                                <div class="badge badge-success" style="color:#065F46; background-color: var(--success-bg); font-size:0.7rem; margin-bottom:0.5rem;">Step 3</div>
-                                <h4 class="mb-2">Set Custom Instructions</h4>
-                                <p class="text-sm text-muted">Click on <b>"Set Custom Instructions"</b> in the project settings panel. Copy and paste the compiled System Prompt from our <b>Assistant Builder</b> tab. This forces Claude to always follow your role instructions and output standards.</p>
-                            </div>
-                        </div>
-
-                        <div class="p-4 border rounded" style="background:rgba(255, 222, 89, 0.1); border: 1px dashed var(--accent); border-radius: 8px;">
-                            <h4 style="color:var(--accent);" class="mb-2">💡 Why build a Claude Project?</h4>
-                            <p class="text-sm text-muted" style="line-height: 1.6; margin-bottom: 0;">
-                                In contrast to public chats, Claude Projects remember all your templates, instructions, and rules in every new chat session. It acts as a dedicated departmental AI colleague that doesn't hallucinate metrics outside your uploaded files.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            `;
-        } else if (tab === 'builder') {
-            contentDiv.innerHTML = `
-                <div class="dashboard-grid">
-                    <div class="card mb-8" style="align-self: start;">
-                        <div class="card-header"><h3 class="card-title">Assistant Builder Wizard</h3></div>
-                        <div class="card-body flex-col gap-4" style="padding: 0;">
-                            <div class="form-group">
-                                <label class="form-label">Department</label>
-                                <select id="cap-dept" class="form-control">
-                                    <option ${formData.department.includes('HR') ? 'selected' : ''}>HR (Recruitment)</option>
-                                    <option ${formData.department.includes('Accounts') ? 'selected' : ''}>Accounts (Reconciliation)</option>
-                                    <option ${formData.department.includes('Sales') ? 'selected' : ''}>Sales (Proposal)</option>
-                                    <option ${formData.department.includes('Procurement') ? 'selected' : ''}>Procurement (Quotes)</option>
-                                    <option ${formData.department.includes('Planning') ? 'selected' : ''}>Planning/Sites (Reporting)</option>
-                                    <option ${formData.department.includes('Admin') ? 'selected' : ''}>Admin/IT (SOP)</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label">Assistant Role</label>
-                                <input type="text" id="cap-role" class="form-control" value="${formData.role}">
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label">Core Task / Context</label>
-                                <textarea id="cap-context" class="form-control" rows="2">${formData.context}</textarea>
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label">Allowed Inputs</label>
-                                <input type="text" id="cap-inputs" class="form-control" value="${formData.inputs}">
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label">Output Standard</label>
-                                <input type="text" id="cap-outputs" class="form-control" value="${formData.outputs}">
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label">Custom Safety Rules</label>
-                                <input type="text" id="cap-rules" class="form-control" value="${formData.rules}">
-                            </div>
-                            
-                            <hr style="border: 0; border-top: 1px solid var(--border-color); margin: 1rem 0;">
-                            
-                            <h4 class="mb-4 text-sm" style="color: var(--info);">ROI & Time Saved Parameter Analysis</h4>
-                            <div class="form-group">
-                                <label class="form-label">Manual execution time before AI (Hours/Task)</label>
-                                <input type="number" id="cap-manual-time" class="form-control" value="${formData.manualTime}" min="1" max="100">
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label">AI-Assisted execution time (Minutes/Task)</label>
-                                <input type="number" id="cap-ai-time" class="form-control" value="${formData.aiTime}" min="1" max="120">
-                            </div>
-                            
-                            <button class="btn btn-primary w-full" id="btn-build-capstone">Generate System Prompt & Build</button>
-                        </div>
-                    </div>
-                    
-                    <div class="card mb-8 ${!compiledPrompt ? 'hidden' : ''}" id="capstone-result">
-                        <div class="card-header"><h3 class="card-title">Your Custom AI Assistant</h3></div>
-                        <div class="card-body" style="padding: 0;">
-                            <h4 class="mb-2">1. System Prompt Compiled</h4>
-                            <pre id="cap-sys-prompt" style="background: var(--bg-main); padding: 1rem; border-radius: var(--radius-sm); white-space: pre-wrap; font-size: 0.85rem;" class="mb-4">${compiledPrompt}</pre>
-                            
-                            <h4 class="mb-2">2. Rubric Evaluation scorecard</h4>
-                            <div class="ai-result-box mb-4" style="margin-top: 0.5rem; border-left: 4px solid var(--success);">
-                                <div id="cap-scorecard"></div>
-                            </div>
-
-                            <h4 class="mb-2">3. Time Saved & ROI Metrics</h4>
-                            <div class="ai-result-box mb-4" style="margin-top: 0.5rem; border-left: 4px solid var(--info); background: var(--info-bg); color: #1E40AF;">
-                                <div id="cap-roi-metrics"></div>
-                            </div>
-                            
-                            <h4 class="mb-2">4. Test Drive Assistant</h4>
-                            <div class="p-3 border rounded mb-4" style="background:var(--bg-card); border:1px solid #cbd5e1; height: 180px; display:flex; flex-direction:column; border-radius: 6px;">
-                                <div id="cap-chat-log" style="flex-grow:1; overflow-y:auto; font-size:0.875rem; margin-bottom:0.5rem; padding-right:0.25rem;">
-                                    <div class="text-muted italic mb-2">Assistant is ready. Ask it a question...</div>
-                                </div>
-                                <div class="flex gap-2" style="display:flex; gap:0.5rem;">
-                                    <input type="text" id="cap-chat-input" class="form-control" placeholder="Test your prompt..." style="margin-bottom:0; flex-grow:1;">
-                                    <button class="btn btn-secondary btn-small" id="btn-cap-send">Send</button>
-                                </div>
-                            </div>
-                            
-                            <h4 class="mb-2">5. Deployment Strategy Plan</h4>
-                            <div class="p-3 border rounded mb-4" style="background:#fff; border:1px solid #cbd5e1; border-radius: 6px;">
-                                <p class="text-xs text-muted mb-3">Outline how you will roll this AI assistant out to your department team.</p>
-                                <div class="form-group mb-2">
-                                    <label class="form-label text-xs">Target Audience</label>
-                                    <input type="text" id="deploy-audience" class="form-control" placeholder="e.g., 10 Junior Site Engineers" style="padding: 0.5rem; font-size: 0.8rem;">
-                                </div>
-                                <div class="form-group mb-2">
-                                    <label class="form-label text-xs">Success Metric</label>
-                                    <input type="text" id="deploy-metric" class="form-control" placeholder="e.g., Reporting delay reduced from 2 days to 1 hour" style="padding: 0.5rem; font-size: 0.8rem;">
-                                </div>
-                                <div class="form-group mb-3">
-                                    <label class="form-label text-xs">Human-in-the-Loop Safeguard</label>
-                                    <input type="text" id="deploy-loop" class="form-control" placeholder="e.g., Senior Manager must verify final CSV output" style="padding: 0.5rem; font-size: 0.8rem;">
-                                </div>
-                                <button class="btn btn-secondary btn-small w-full" id="btn-save-deploy">Save Deployment Plan</button>
-                            </div>
-                            
-                            <button class="btn btn-accent w-full" id="btn-capstone-report">Generate Capstone Report & Completion Certificate (PDF)</button>
-                            <div class="mt-4 p-3 rounded" style="background: linear-gradient(135deg, #0A192F, #233554); color: white; text-align: center; border-radius: 8px;">
-                                <p style="font-size: 0.9rem; margin-bottom: 0.75rem; color: #94a3b8;">✅ Prompt saved! Ready to go live?</p>
-                                <button class="btn w-full" id="btn-go-deploy" style="background: linear-gradient(135deg, #3B82F6, #0EA5E9); color: white; font-size: 1rem; padding: 0.85rem; border-radius: 6px;">
-                                    🚀 Deploy My AI Assistant to Vercel →
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            `;
-            bindBuilderListeners();
-        }
-    }
-    
-    function bindSubTabListeners() {
-        document.querySelectorAll('.sub-tab-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                activeSubTab = e.target.getAttribute('data-subtab');
-                drawModule4View();
-            });
-        });
-    }
-    
-    function bindBuilderListeners() {
-        const checkValues = () => {
-            formData.department = document.getElementById('cap-dept').value;
-            formData.role = document.getElementById('cap-role').value;
-            formData.context = document.getElementById('cap-context').value;
-            formData.inputs = document.getElementById('cap-inputs').value;
-            formData.outputs = document.getElementById('cap-outputs').value;
-            formData.rules = document.getElementById('cap-rules').value;
-            formData.manualTime = parseInt(document.getElementById('cap-manual-time').value) || 4;
-            formData.aiTime = parseInt(document.getElementById('cap-ai-time').value) || 15;
-        };
-        
-        document.getElementById('btn-build-capstone')?.addEventListener('click', () => {
-            checkValues();
-            
-            compiledPrompt = CapstoneEngine.generateSystemPrompt(formData);
-            evalRes = CapstoneEngine.evaluateAssistant(formData);
-            
-            // Save prompt to State so Vercel Lab can access it
-            State.set('capstoneSystemPrompt', compiledPrompt);
-            
-            // Re-render subtab content to show results panel
-            renderSubTabContent('builder');
-            
-            // Fill outputs
-            document.getElementById('cap-sys-prompt').innerText = compiledPrompt;
-            
-            // Fill Scorecard
-            document.getElementById('cap-scorecard').innerHTML = `
-                <div class="flex justify-between mb-2" style="display:flex; justify-content:space-between;">
-                    <span><b>Total Evaluation Score:</b></span>
-                    <strong style="color:var(--success); font-size:1.1rem;">${evalRes.score}/${evalRes.total} Marks</strong>
-                </div>
-                <div class="flex justify-between mb-4" style="display:flex; justify-content:space-between;">
-                    <span>Readiness Category:</span>
-                    <span class="badge badge-success">${evalRes.label}</span>
-                </div>
-                
-                <hr style="border:0; border-top:1px solid #E2E8F0; margin:0.75rem 0;">
-                <div style="font-size: 0.85rem; color: var(--text-main);">
-                    <div style="margin-bottom: 0.25rem;">🎭 <b>Role Definition:</b> ${evalRes.breakdown.role}/5 Marks</div>
-                    <div style="margin-bottom: 0.25rem;">🎯 <b>Task Context:</b> ${evalRes.breakdown.context}/5 Marks</div>
-                    <div style="margin-bottom: 0.25rem;">📄 <b>Inputs & Scope:</b> ${evalRes.breakdown.inputs}/5 Marks</div>
-                    <div style="margin-bottom: 0.25rem;">📊 <b>Output Formatting:</b> ${evalRes.breakdown.outputs}/5 Marks</div>
-                    <div>🛡️ <b>Safety Guardrails:</b> ${evalRes.breakdown.safety}/5 Marks</div>
-                </div>
-            `;
-            
-            // Fill ROI Metrics
-            const hoursPerRun = formData.manualTime;
-            const minutesPerRun = formData.aiTime;
-            const hoursPerRunAI = minutesPerRun / 60;
-            const savedPerRun = Math.max(0, hoursPerRun - hoursPerRunAI).toFixed(2);
-            const savedPct = Math.round((savedPerRun / hoursPerRun) * 100);
-            const annualSaved = Math.round(savedPerRun * 52);
-            
-            document.getElementById('cap-roi-metrics').innerHTML = `
-                <div style="margin-bottom: 0.25rem;"><b>Manual execution before:</b> ${hoursPerRun} hours per task</div>
-                <div style="margin-bottom: 0.25rem;"><b>AI-Assisted execution now:</b> ${minutesPerRun} minutes per task</div>
-                <div style="margin-bottom: 0.25rem; font-weight: bold;"><b>Net Time Saved per run:</b> ${savedPerRun} hours (${savedPct}% reduction)</div>
-                <div style="font-weight: bold;"><b>Annualized Efficiency Gain:</b> ${annualSaved} hours / participant</div>
-            `;
-            
-            document.getElementById('capstone-result').classList.remove('hidden');
-            showToast('Custom Assistant compiled successfully!', 'success');
-            State.markExerciseComplete('m4', 'module4');
-        });
-        
-        document.getElementById('btn-save-deploy')?.addEventListener('click', () => {
-            showToast('Deployment plan saved!', 'success');
-        });
-        
-        document.getElementById('btn-cap-send')?.addEventListener('click', () => {
-            const inputEl = document.getElementById('cap-chat-input');
-            const logEl = document.getElementById('cap-chat-log');
-            const msg = inputEl.value;
-            if(!msg) return;
-            
-            logEl.innerHTML += `<div class="mb-2 text-right"><span style="background:var(--accent); color:white; padding:6px 12px; border-radius:6px; display:inline-block; font-size:0.85rem;">${msg}</span></div>`;
-            inputEl.value = '';
-            
-            setTimeout(() => {
-                const response = `As your custom ${formData.role} Assistant, I have reviewed your input data using my configured knowledge templates. No anomalies detected under my custom rules.`;
-                logEl.innerHTML += `<div class="mb-2"><span style="background:#e2e8f0; padding:6px 12px; border-radius:6px; display:inline-block; font-size:0.85rem;">🤖 ${response}</span></div>`;
-                logEl.scrollTop = logEl.scrollHeight;
-            }, 600);
-        });
-        
-        document.getElementById('btn-capstone-report')?.addEventListener('click', () => {
-            const audience = document.getElementById('deploy-audience')?.value || 'Not specified';
-            const metric = document.getElementById('deploy-metric')?.value || 'Not specified';
-            const loop = document.getElementById('deploy-loop')?.value || 'Not specified';
-            
-            const hoursPerRun = formData.manualTime;
-            const minutesPerRun = formData.aiTime;
-            const hoursPerRunAI = minutesPerRun / 60;
-            const savedPerRun = Math.max(0, hoursPerRun - hoursPerRunAI).toFixed(2);
-            const savedPct = Math.round((savedPerRun / hoursPerRun) * 100);
-            const annualSaved = Math.round(savedPerRun * 52);
-            
-            const html = `
-                <div style="text-align: center; border: 4px double #0A192F; padding: 2.5rem; margin-bottom: 2rem; border-radius: 8px;">
-                    <h1 style="color:#0A192F; margin:0 0 0.5rem 0; font-family:sans-serif; font-size:2.25rem;">DEC AI FOUNDATIONS</h1>
-                    <h2 style="color:#F59E0B; margin:0 0 1.5rem 0; font-family:sans-serif; font-weight:normal; font-size:1.25rem;">Capstone Completion Certificate</h2>
-                    <p style="font-family:sans-serif; color:#475569; font-size:0.95rem;">This certifies that the participant has successfully designed, evaluated, and test-driven a custom departmental assistant using the 25-marks rubric guidelines.</p>
-                </div>
-                
-                <h2 style="font-family:sans-serif; color:#0A192F; border-bottom:2px solid #E2E8F0; padding-bottom:0.5rem; margin-top:2rem;">Assistant Specifications</h2>
-                <ul style="font-family:sans-serif; font-size:0.95rem; line-height:1.8;">
-                    <li><b>Department:</b> ${formData.department}</li>
-                    <li><b>Assistant Role:</b> ${formData.role}</li>
-                    <li><b>Core Task/Context:</b> ${formData.context}</li>
-                    <li><b>Allowed Inputs:</b> ${formData.inputs}</li>
-                    <li><b>Output Standards:</b> ${formData.outputs}</li>
-                </ul>
-                
-                <h2 style="font-family:sans-serif; color:#0A192F; border-bottom:2px solid #E2E8F0; padding-bottom:0.5rem; margin-top:2rem;">Rubric Scoring & Assessment Breakdown</h2>
-                <table style="width: 100%; border-collapse: collapse; margin-top: 1rem; font-family:sans-serif; font-size:0.95rem;">
-                    <thead>
-                        <tr style="background:#0A192F; color:white;">
-                            <th style="padding:10px; text-align:left; border:1px solid #CBD5E1;">Evaluation Parameter</th>
-                            <th style="padding:10px; text-align:center; border:1px solid #CBD5E1;">Grade</th>
-                            <th style="padding:10px; border:1px solid #CBD5E1; text-align:left;">Criteria Standard</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td style="padding:10px; border:1px solid #CBD5E1; font-weight:bold;">Role & Persona Definition</td>
-                            <td style="padding:10px; text-align:center; border:1px solid #CBD5E1; font-weight:bold;">${evalRes.breakdown.role} / 5 Marks</td>
-                            <td style="padding:10px; border:1px solid #CBD5E1;">AI assistant role must be explicitly declared.</td>
-                        </tr>
-                        <tr>
-                            <td style="padding:10px; border:1px solid #CBD5E1; font-weight:bold;">Task Context & Specificity</td>
-                            <td style="padding:10px; text-align:center; border:1px solid #CBD5E1; font-weight:bold;">${evalRes.breakdown.context} / 5 Marks</td>
-                            <td style="padding:10px; border:1px solid #CBD5E1;">Task scope and background information clearly mapped.</td>
-                        </tr>
-                        <tr>
-                            <td style="padding:10px; border:1px solid #CBD5E1; font-weight:bold;">Inputs & Scope Boundaries</td>
-                            <td style="padding:10px; text-align:center; border:1px solid #CBD5E1; font-weight:bold;">${evalRes.breakdown.inputs} / 5 Marks</td>
-                            <td style="padding:10px; border:1px solid #CBD5E1;">Permitted datasets, SOP files, and source materials.</td>
-                        </tr>
-                        <tr>
-                            <td style="padding:10px; border:1px solid #CBD5E1; font-weight:bold;">Output Formatting & Standards</td>
-                            <td style="padding:10px; text-align:center; border:1px solid #CBD5E1; font-weight:bold;">${evalRes.breakdown.outputs} / 5 Marks</td>
-                            <td style="padding:10px; border:1px solid #CBD5E1;">Target formatting, layout, structure, and style rules.</td>
-                        </tr>
-                        <tr>
-                            <td style="padding:10px; border:1px solid #CBD5E1; font-weight:bold;">Safety & Human Verification</td>
-                            <td style="padding:10px; text-align:center; border:1px solid #CBD5E1; font-weight:bold;">${evalRes.breakdown.safety} / 5 Marks</td>
-                            <td style="padding:10px; border:1px solid #CBD5E1;">Precautionary instructions to prevent hallucination.</td>
-                        </tr>
-                        <tr style="background:var(--bg-card); font-weight:bold;">
-                            <td style="padding:10px; border:1px solid #CBD5E1;">Total Score</td>
-                            <td style="padding:10px; text-align:center; border:1px solid #CBD5E1; font-size:1.1rem; color:#10B981;">${evalRes.score} / 25 Marks</td>
-                            <td style="padding:10px; border:1px solid #CBD5E1;">Status: ${evalRes.label}</td>
-                        </tr>
-                    </tbody>
-                </table>
-                
-                <h2 style="font-family:sans-serif; color:#0A192F; border-bottom:2px solid #E2E8F0; padding-bottom:0.5rem; margin-top:2rem;">Calculated Time Saved & ROI</h2>
-                <ul style="font-family:sans-serif; font-size:0.95rem; line-height:1.8;">
-                    <li><b>Before Seminar Manual time:</b> ${hoursPerRun} Hours</li>
-                    <li><b>AI-Assisted execution time:</b> ${minutesPerRun} Minutes</li>
-                    <li><b>Net time saved per task run:</b> ${savedPerRun} Hours (${savedPct}% reduction)</li>
-                    <li><b>Annual efficiency gains:</b> ${annualSaved} Hours saved per user</li>
-                </ul>
-
-                <h2 style="font-family:sans-serif; color:#0A192F; border-bottom:2px solid #E2E8F0; padding-bottom:0.5rem; margin-top:2rem;">Deployment Strategy Plan</h2>
-                <ul style="font-family:sans-serif; font-size:0.95rem; line-height:1.8;">
-                    <li><b>Target Audience:</b> ${audience}</li>
-                    <li><b>Success Metric:</b> ${metric}</li>
-                    <li><b>Human Safeguard:</b> ${loop}</li>
-                </ul>
-
-                <h2 style="font-family:sans-serif; color:#0A192F; border-bottom:2px solid #E2E8F0; padding-bottom:0.5rem; margin-top:2rem;">Compiled System instructions</h2>
-                <div style="background:var(--bg-card); border:1px solid #CBD5E1; padding:1rem; border-radius:4px; font-family:monospace; font-size:0.85rem; white-space:pre-wrap;">
-${compiledPrompt}
-                </div>
-            `;
-            window.downloadPDF('DEC AI Foundations - Capstone Report', html);
-        });
-
-        document.getElementById('btn-go-deploy')?.addEventListener('click', () => {
-            showToast('🚀 Opening Vercel Deployment Lab!', 'success');
-            setTimeout(() => { window.location.hash = '/vercel-lab'; }, 500);
-        });
-    }
-    
-    // Initial draw
-    drawModule4View();
-}
-
-function renderTrainerDashboard(container) {
-    if (!State.get('trainerMode')) {
-        container.innerHTML = `
-            <div class="card mb-8">
-                <div class="card-body text-center">
-                    <h3 class="mb-4">Trainer Mode Required</h3>
-                    <p class="text-muted">You must enable trainer mode in the sidebar to view this dashboard.</p>
-                </div>
-            </div>`;
-        return;
-    }
-
-    const currentWebhook = State.get('surveyWebhookUrl') || '';
-    const subs = State.get('localSubmissions') || [];
-
-    // Helper to generate the table rows
-    let tableRows = '';
-    if (subs.length === 0) {
-        tableRows = `<tr><td colspan="5" class="text-center text-muted" style="padding: 1.5rem;">No participant survey submissions collected yet.</td></tr>`;
-    } else {
-        subs.forEach(s => {
-            const before = s.before || {};
-            const after = s.after || {};
-            
-            const beforeUsage = before.aiUsagePct ? before.aiUsagePct + '%' : 'N/A';
-            const afterUsage = after.aiUsagePct ? after.aiUsagePct + '%' : 'N/A';
-            const usageShift = before.aiUsagePct && after.aiUsagePct ? `${beforeUsage} ➔ ${afterUsage}` : `${beforeUsage} / ${afterUsage}`;
-            
-            const beforeRating = before.chatgptRating ? before.chatgptRating + '/10' : 'N/A';
-            const afterRating = after.chatgptRating ? after.chatgptRating + '/10' : 'N/A';
-            const ratingShift = before.chatgptRating && after.chatgptRating ? `${beforeRating} ➔ ${afterRating}` : `${beforeRating} / ${afterRating}`;
-            
-            const manualHrsBefore = before.manualTime || 0;
-            const manualHrsAfter = after.manualTime || 0;
-            const timeSaved = before.manualTime && after.manualTime ? (manualHrsBefore - manualHrsAfter) + ' hrs' : 'N/A';
-            
-            const feedbackText = after.feedbackPointers || (before.blocker ? 'Blocker: ' + before.blocker : 'N/A');
-
-            tableRows += `
-                <tr>
-                    <td><b>${s.name}</b></td>
-                    <td>${usageShift}</td>
-                    <td>${ratingShift}</td>
-                    <td style="color:var(--success); font-weight:bold;">${timeSaved}</td>
-                    <td class="text-xs text-muted" style="max-width: 250px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" title="${feedbackText}">${feedbackText}</td>
-                </tr>
-            `;
-        });
-    }
-
-    container.innerHTML = `
-        <div class="mb-4">
-            <span class="badge badge-warning">Trainer Tools</span>
-            <h2 class="mt-4">Trainer Dashboard</h2>
-            <p class="text-muted">Manage participant submissions, setup Google Sheets database collector, and view notes.</p>
-        </div>
-
-        <!-- NEW: Google Sheets Webhook Database Setup -->
-        <div class="card mb-8">
-            <div class="card-header"><h3 class="card-title">🔗 Google Sheets Survey Database Collector</h3></div>
-            <div class="card-body">
-                <p class="text-sm text-muted mb-4">You can log all participants' survey submissions directly into a Google Sheet in real-time. Follow the steps below to set it up:</p>
-                
-                <div class="dashboard-grid mb-4">
-                    <div>
-                        <h4 class="text-sm mb-2">1. Configure Webhook URL</h4>
-                        <div class="form-group flex gap-2" style="display:flex; gap:0.5rem; margin-bottom: 1rem;">
-                            <input type="text" id="webhook-url-input" class="form-control" placeholder="Paste Google Web App URL here..." value="${currentWebhook}" style="margin-bottom:0; flex-grow:1;">
-                            <button class="btn btn-primary" id="btn-save-webhook">Save Link</button>
-                        </div>
-                        <p class="text-xs text-muted">When a URL is saved, all new participant survey submissions will automatically push to this Google Sheet.</p>
-                    </div>
-                    
-                    <div>
-                        <h4 class="text-sm mb-2">2. Google Apps Script Code</h4>
-                        <p class="text-xs text-muted mb-2">Open your Google Sheet, go to <b>Extensions > Apps Script</b>, paste the code below, and **Deploy as a Web App** (execute as: Me, access: Anyone):</p>
-                        <pre style="background:var(--bg-main); padding: 0.75rem; border-radius: 6px; font-size: 0.7rem; max-height: 150px; overflow-y: auto; border: 1px solid #CBD5E1;" id="script-code-block">
-function doPost(e) {
-  try {
-    // Opens the active sheet of the bound spreadsheet
-    var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
-    var json = JSON.parse(e.postData.contents);
-    
-    // Deduplication check: ignore double-clicks (same name, same type, submitted within 4 seconds)
-    var lastRow = sheet.getLastRow();
-    if (lastRow >= 2) {
-      var lastRowValues = sheet.getRange(lastRow, 1, 1, 3).getValues()[0];
-      
-      var lastDateVal = lastRowValues[0];
-      if (typeof lastDateVal === 'string') {
-        var parts = lastDateVal.split(/[/\s:]/);
-        if (parts.length >= 6) {
-          lastDateVal = new Date(parts[2], parts[1] - 1, parts[0], parts[3], parts[4], parts[5]);
-        } else {
-          lastDateVal = new Date(lastDateVal);
-        }
-      }
-      
-      var sheetZone = SpreadsheetApp.getActiveSpreadsheet().getSpreadsheetTimeZone();
-      var lastStr = Utilities.formatDate(new Date(lastDateVal), sheetZone, "yyyy-MM-dd HH:mm:ss");
-      var nowStr = Utilities.formatDate(new Date(), sheetZone, "yyyy-MM-dd HH:mm:ss");
-      
-      var lastDate = new Date(lastStr.replace(/-/g, '/'));
-      var nowDate = new Date(nowStr.replace(/-/g, '/'));
-      var timeDiff = Math.abs(nowDate - lastDate);
-      
-      var lastName = lastRowValues[1].toString().trim().toLowerCase();
-      var lastType = lastRowValues[2].toString().trim().toLowerCase();
-      var newName = json.participantName.toString().trim().toLowerCase();
-      var newType = json.type.toString().trim().toLowerCase();
-      
-      var isSameType = (lastType === newType) || 
-                       (newType === "before" && lastType === "pre-session survey") || 
-                       (newType === "after" && lastType === "post-session feedback");
-                       
-      if (lastName === newName && isSameType && timeDiff < 4000) {
-        return ContentService.createTextOutput("Duplicate submission skipped");
-      }
-    }
-    
-    // Append the new row data
-    var rowData = [
-      new Date(),
-      json.participantName,
-      json.type,
-      json.data.aiUsagePct + "%",
-      json.data.chatgptRating + "/10",
-      json.data.manualTime + " hrs",
-      json.data.feedbackPointers || json.data.blocker || ""
-    ];
-    sheet.appendRow(rowData);
-    
-    // Format the entire sheet (styles, badges, column widths for both old and new rows)
-    formatEntireSheet(sheet);
-    
-    return ContentService.createTextOutput("Success");
-  } catch (error) {
-    return ContentService.createTextOutput("Error: " + error.toString());
-  }
-}
-
-function formatEntireSheet(sheet) {
-  var headers = ["Timestamp", "Participant Name", "Survey Type", "AI Usage Level", "Tool Performance", "Weekly Manual Hours", "Key Takeaway / Blocker / Feedback"];
-  
-  // 1. Ensure header is present and styled
-  var firstCell = sheet.getRange(1, 1).getValue();
-  if (firstCell !== "Timestamp") {
-    sheet.insertRowBefore(1);
-  }
-  var headerRange = sheet.getRange(1, 1, 1, headers.length);
-  headerRange.setValues([headers]);
-  headerRange.setBackground("#0A192F"); // Premium Navy Blue
-  headerRange.setFontColor("#FFFFFF"); // White text
-  headerRange.setFontWeight("bold");
-  headerRange.setHorizontalAlignment("center");
-  headerRange.setFontSize(11);
-  
-  var lastRow = sheet.getLastRow();
-  if (lastRow < 2) return;
-  
-  var numRows = lastRow - 1;
-  
-  // 2. Format all data rows (font size and alignment)
-  var dataRange = sheet.getRange(2, 1, numRows, headers.length);
-  dataRange.setFontSize(10);
-  dataRange.setVerticalAlignment("middle");
-  
-  // Center-align specific structured data columns
-  sheet.getRange(2, 1, numRows, 1).setHorizontalAlignment("center"); // Column 1: Timestamp
-  sheet.getRange(2, 4, numRows, 1).setHorizontalAlignment("center"); // Column 4: AI Usage Level
-  sheet.getRange(2, 5, numRows, 1).setHorizontalAlignment("center"); // Column 5: Tool Performance
-  sheet.getRange(2, 6, numRows, 1).setHorizontalAlignment("center"); // Column 6: Weekly Manual Hours
-  
-  // 3. Clean and convert Survey Type values into styled badges (Pre-Session vs Post-Session) in BATCH
-  var typeRange = sheet.getRange(2, 3, numRows, 1);
-  var typeValues = typeRange.getValues();
-  
-  // Prepare batch arrays for updating values and styles
-  var newValues = [];
-  var backgrounds = [];
-  var fontColors = [];
-  var fontWeights = [];
-  var alignments = [];
-  
-  for (var i = 0; i < typeValues.length; i++) {
-    var rawVal = typeValues[i][0].toString().trim().toLowerCase();
-    
-    if (rawVal === "before" || rawVal === "pre-session survey") {
-      newValues.push(["Pre-Session Survey"]);
-      backgrounds.push(["#FFF3CD"]); // Warm Yellow badge
-      fontColors.push(["#856404"]);
-      fontWeights.push(["bold"]);
-      alignments.push(["center"]);
-    } else if (rawVal === "after" || rawVal === "post-session feedback") {
-      newValues.push(["Post-Session Feedback"]);
-      backgrounds.push(["#D4EDDA"]); // Light Green badge
-      fontColors.push(["#155724"]);
-      fontWeights.push(["bold"]);
-      alignments.push(["center"]);
-    } else {
-      newValues.push([typeValues[i][0]]);
-      backgrounds.push(["#FFFFFF"]);
-      fontColors.push(["#000000"]);
-      fontWeights.push(["normal"]);
-      alignments.push(["left"]);
-    }
-  }
-  
-  // Apply batch updates
-  typeRange.setValues(newValues);
-  typeRange.setBackgrounds(backgrounds);
-  typeRange.setFontColors(fontColors);
-  typeRange.setFontWeights(fontWeights);
-  typeRange.setHorizontalAlignments(alignments);
-  
-  // 4. Auto-fit columns with a professional minimum width to prevent header overlapping
-  var minWidths = [140, 160, 160, 130, 130, 150, 300];
-  for (var col = 1; col <= headers.length; col++) {
-    sheet.autoResizeColumn(col);
-    var currentWidth = sheet.getColumnWidth(col);
-    if (currentWidth < minWidths[col - 1]) {
-      sheet.setColumnWidth(col, minWidths[col - 1]);
-    }
-  }
-}
-                        </pre>
-                        <button class="btn btn-secondary btn-small w-full mt-2" id="btn-copy-script">Copy Apps Script Code</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- NEW: Collected Submissions Table -->
-        <div class="card mb-8">
-            <div class="card-header flex justify-between items-center" style="display:flex; justify-content:space-between;">
-                <h3 class="card-title">📊 Collected Participant Submissions</h3>
-                <div class="flex gap-2">
-                    <button class="btn btn-secondary btn-small" id="btn-export-subs-json">Download JSON</button>
-                    <button class="btn btn-danger btn-small" id="btn-clear-subs">Reset Database</button>
-                </div>
-            </div>
-            <div class="card-body table-responsive" style="padding: 0; max-height: 350px; overflow-y: auto;">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Participant Name</th>
-                            <th>AI Usage Shift (Before ➔ After)</th>
-                            <th>ChatGPT Rating (Before ➔ After)</th>
-                            <th>Weekly Time Saved</th>
-                            <th>Feedback / Blockers</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        ${tableRows}
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <div class="dashboard-grid">
-            <div class="card mb-8">
-                <div class="card-header"><h3 class="card-title">Module 1 Notes</h3></div>
-                <div class="card-body">
-                    <ul class="text-muted">
-                        ${TrainerEngine.getNotes('module1').map(n => `<li class="mb-2">${n}</li>`).join('')}
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="card mb-8">
-                <div class="card-header"><h3 class="card-title">Module 2 Notes</h3></div>
-                <div class="card-body">
-                    <ul class="text-muted">
-                        ${TrainerEngine.getNotes('module2').map(n => `<li class="mb-2">${n}</li>`).join('')}
-                    </ul>
-                </div>
-            </div>
-        </div>
-    `;
-
-    setTimeout(() => {
-        // Save Webhook URL
-        document.getElementById('btn-save-webhook')?.addEventListener('click', () => {
-            const url = document.getElementById('webhook-url-input').value.trim();
-            State.set('surveyWebhookUrl', url);
-            showToast('Google Sheet Webhook URL saved successfully!', 'success');
-        });
-
-        // Copy Script Code
-        document.getElementById('btn-copy-script')?.addEventListener('click', () => {
-            const pre = document.getElementById('script-code-block');
-            navigator.clipboard.writeText(pre.innerText);
-            showToast('Apps Script code copied to clipboard!', 'success');
-        });
-
-        // Export submissions JSON
-        document.getElementById('btn-export-subs-json')?.addEventListener('click', () => {
-            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(subs, null, 2));
-            const downloadAnchor = document.createElement('a');
-            downloadAnchor.setAttribute("href", dataStr);
-            downloadAnchor.setAttribute("download", "participant_submissions.json");
-            document.body.appendChild(downloadAnchor);
-            downloadAnchor.click();
-            downloadAnchor.remove();
-            showToast('JSON export downloaded!', 'success');
-        });
-
-        // Clear submissions
-        document.getElementById('btn-clear-subs')?.addEventListener('click', () => {
-            if (confirm('Are you sure you want to clear all collected submissions from local browser memory?')) {
-                State.set('localSubmissions', []);
-                showToast('Local database cleared!', 'info');
-                renderTrainerDashboard(container); // Re-draw
-            }
-        });
-    }, 100);
-}
-
-function renderFlagshipDemo(container) {
-    container.innerHTML = `
-        <div class="mb-4 text-center">
-            <h2 class="mt-4" style="color: var(--accent);">DEC AI WORKFLOW SIMULATOR</h2>
-            <p class="text-muted">End-to-End Executive Demonstration</p>
-        </div>
-
-        <div class="card mb-8 mx-auto" style="max-width: 700px;">
-            <div class="card-header text-center" style="display: block;">
-                <button class="btn btn-primary" id="btn-run-demo" style="font-size: 1.1rem; padding: 1rem 3rem;">RUN EXECUTIVE DEMO</button>
-            </div>
-            <div class="card-body" id="demo-log" style="min-height: 300px; background: #0F172A; color: #38BDF8; padding: 2rem; border-radius: var(--radius-sm); font-family: monospace; font-size: 0.9rem;">
-                > Ready to initialize DEC Corporate Demo Sequence...
-            </div>
-        </div>
-    `;
-
-    setTimeout(() => {
-        document.getElementById('btn-run-demo')?.addEventListener('click', async () => {
-            const btn = document.getElementById('btn-run-demo');
-            const log = document.getElementById('demo-log');
-            btn.disabled = true;
-            btn.innerText = "DEMO RUNNING...";
-            
-            const stages = TrainerEngine.startFlagshipDemo();
-            log.innerHTML = "> Demo Sequence Started...<br><br>";
-            
-            for(let i = 0; i < stages.length; i++) {
-                await new Promise(r => setTimeout(r, 1200));
-                log.innerHTML += `\n[STEP ${stages[i].id}] ${stages[i].text}<br>`;
-                
-                if (i === 3) {
-                    // Show chart generation simulate
-                    log.innerHTML += `&nbsp;&nbsp;&nbsp;&nbsp;-> Chart Rendered: Procurement vs Finance matches.<br>`;
-                }
-            }
-            
-            await new Promise(r => setTimeout(r, 1500));
-            log.innerHTML += `<br>> <span style="color: #10B981;">DEMO SEQUENCE COMPLETED SUCCESSFULLY.</span><br>`;
-            log.innerHTML += `> Ready for Client Q&A.`;
-            
-            btn.disabled = false;
-            btn.innerText = "RUN AGAIN";
-            showToast('Flagship Demo execution finished.', 'success');
-        });
-    }, 100);
-}
-
-
-function renderPromptLibrary(container) {
     container.innerHTML = `
         <div class="mb-4" style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap;">
             <div>
-                <span class="badge badge-primary">Resources</span>
-                <h2 class="mt-4" style="background: -webkit-linear-gradient(45deg, #F8FAFC, #FFDE59); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Prompt Library</h2>
-                <p class="text-muted">A collection of ready-to-use prompts for DEC workflows.</p>
+                <span class="badge badge-danger">Session 4</span>
+                <h2 class="mt-4" style="background: -webkit-linear-gradient(45deg, #F8FAFC, #EF4444); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Module 4: Capstone — Build Your Copilot Agent</h2>
+                <p class="text-muted">Create a custom Microsoft Copilot Agent for DEC Infra.</p>
             </div>
             <div style="width:130px; height:130px; flex-shrink:0; position:relative; display:flex; align-items:center; justify-content:center;">
-                <div style="width:100px; height:100px; background:linear-gradient(135deg,rgba(255,222,89,0.15),rgba(124,58,237,0.08)); border:2px solid rgba(255,222,89,0.5); border-radius:22px; display:flex; align-items:center; justify-content:center; box-shadow:0 0 30px rgba(255,222,89,0.3),0 0 60px rgba(124,58,237,0.15); animation:modFloat 3s ease-in-out 1.2s infinite; font-size:2.8rem; position:relative;">🤖
-                    <div style="position:absolute; top:-4px; right:-4px; width:10px; height:10px; background:#10B981; border-radius:50%; box-shadow:0 0 6px #10B981; animation:blinkDot 1s ease-in-out infinite;"></div>
-                </div>
-                <div style="position:absolute; inset:-8px; border:1px solid rgba(255,222,89,0.2); border-radius:30px; animation:modSpin 6s linear infinite;"></div>
-                <div style="position:absolute; inset:-18px; border:1px dashed rgba(124,58,237,0.15); border-radius:40px; animation:modSpinRev 9s linear infinite;"></div>
-                <style>@keyframes blinkDot{0%,100%{opacity:1}50%{opacity:0.2}}</style>
+                <div style="width:100px; height:100px; background:linear-gradient(135deg,rgba(239,68,68,0.15),rgba(239,68,68,0.03)); border:2px solid rgba(239,68,68,0.5); border-radius:22px; display:flex; align-items:center; justify-content:center; box-shadow:0 0 30px rgba(239,68,68,0.25); font-size:2.8rem; position:relative;">🚀</div>
             </div>
         </div>
         
-        <div class="dashboard-grid">
-            <div class="card mb-4">
-                <div class="card-header"><h3 class="card-title">Accounts: Reconciliation Copilot</h3></div>
-                <div class="card-body">
-                    <pre class="p-4 rounded text-sm mb-4" style="background: var(--bg-main); white-space:pre-wrap;">Act as a Senior Accountant at DEC. I will provide two ledger extracts. Identify all mismatches in amounts and dates. Output a clear table showing: 1) Transaction ID, 2) Focus ERP Amount, 3) Vendor Statement Amount, 4) Variance.</pre>
-                    <button class="btn btn-secondary btn-small w-full" onclick="showToast('Prompt copied to clipboard!', 'success')">Copy Prompt</button>
-                </div>
-            </div>
-            <div class="card mb-4">
-                <div class="card-header"><h3 class="card-title">Procurement: Quote Analyst</h3></div>
-                <div class="card-body">
-                    <pre class="p-4 rounded text-sm mb-4" style="background: var(--bg-main); white-space:pre-wrap;">Act as a Procurement Manager. Review the attached vendor quotes for Metro Line A. Create a side-by-side comparison table of items, unit rates, and totals. Flag any missing items from Vendor B that Vendor A included.</pre>
-                    <button class="btn btn-secondary btn-small w-full" onclick="showToast('Prompt copied to clipboard!', 'success')">Copy Prompt</button>
-                </div>
-            </div>
-            <div class="card mb-4">
-                <div class="card-header"><h3 class="card-title">Planning: Progress Reporter</h3></div>
-                <div class="card-body">
-                    <pre class="p-4 rounded text-sm mb-4" style="background: var(--bg-main); white-space:pre-wrap;">Act as a Project Planner. Convert these raw daily site notes into a formal Weekly Progress Report for the management team. Highlight blockers in red and summarize achievements in bullet points.</pre>
-                    <button class="btn btn-secondary btn-small w-full" onclick="showToast('Prompt copied to clipboard!', 'success')">Copy Prompt</button>
-                </div>
-            </div>
-            <div class="card mb-4">
-                <div class="card-header"><h3 class="card-title">HR: Screening Assistant</h3></div>
-                <div class="card-body">
-                    <pre class="p-4 rounded text-sm mb-4" style="background: var(--bg-main); white-space:pre-wrap;">Act as a Technical Recruiter for DEC. I will provide a JD and a candidate resume. Score the candidate out of 10 based on the required skills. List 3 technical screening questions I should ask them.</pre>
-                    <button class="btn btn-secondary btn-small w-full" onclick="showToast('Prompt copied to clipboard!', 'success')">Copy Prompt</button>
-                </div>
-            </div>
-        </div>
-    `;
-}
+        <div class="m4-content-wrapper mt-8">
 
-function renderResourceCenter(container) {
-    container.innerHTML = `
-        <div class="mb-4">
-            <span class="badge badge-primary">Downloads</span>
-            <h2 class="mt-4">Resource Center</h2>
-            <p class="text-muted">Cheat sheets and policy documents for Safe AI usage at DEC.</p>
-        </div>
-        
-        <div class="dashboard-grid">
-            <div class="card mb-8">
-                <div class="card-header"><h3 class="card-title">The Traffic-Light Rule</h3></div>
-                <div class="card-body">
-                    <ul style="list-style: none; padding: 0;">
-                        <li class="mb-4 p-4 rounded" style="background: rgba(16, 185, 129, 0.1); border-left: 4px solid var(--success);">
-                            <strong>GREEN:</strong> Public information, generic drafting, formula help.<br>
-                            <span class="text-sm">Safe to use with public AI tools.</span>
-                        </li>
-                        <li class="mb-4 p-4 rounded" style="background: rgba(245, 158, 11, 0.1); border-left: 4px solid var(--warning);">
-                            <strong>AMBER:</strong> Internal but non-sensitive material.<br>
-                            <span class="text-sm">Anonymize first, or use Enterprise Copilot.</span>
-                        </li>
-                        <li class="p-4 rounded" style="background: rgba(239, 68, 68, 0.1); border-left: 4px solid var(--danger);">
-                            <strong>RED:</strong> Financials, salaries, client contracts, personal data.<br>
-                            <span class="text-sm">NEVER enter into public AI tools.</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="card mb-8">
-                <div class="card-header"><h3 class="card-title">Checklists</h3></div>
-                <div class="card-body flex-col gap-4">
-                    <div class="ai-result-box flex justify-between items-center" style="display:flex;">
-                        <div>
-                            <strong>Human Verification Checklist</strong>
-                            <div class="text-sm text-muted">What to check before sending AI output.</div>
-                        </div>
-                        <button class="btn btn-secondary btn-small" id="btn-dl-verify">Download PDF</button>
-                    </div>
-                    <div class="ai-result-box flex justify-between items-center" style="display:flex;">
-                        <div>
-                            <strong>Enterprise Copilot vs ChatGPT</strong>
-                            <div class="text-sm text-muted">When to use which tool at DEC.</div>
-                        </div>
-                        <button class="btn btn-secondary btn-small" id="btn-dl-compare">Download PDF</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    `;
 
+<!-- OBJECTIVES -->
+<div class="section open">
+<div class="section-head" onclick="toggle(this)"><h2>🎯 What You'll Build</h2><span class="arrow">▼</span></div>
+<div class="section-body">
+<div class="stats">
+<div class="stat"><span class="n">120</span><span class="l">Minutes</span></div>
+<div class="stat"><span class="n">3</span><span class="l">Agents Built</span></div>
+<div class="stat"><span class="n">0</span><span class="l">Code Required</span></div>
+<div class="stat"><span class="n">Teams</span><span class="l">Deployed To</span></div>
+</div>
+<div class="card"><p>By the end of this module, you will:</p><ul>
+<li>Understand the difference between Copilot Chat, Agent Builder, and Copilot Studio</li>
+<li>Create a custom Copilot Agent using natural language — no code</li>
+<li>Ground your agent on DEC Infra documents (SharePoint, Excel, PDFs)</li>
+<li>Write effective agent instructions that control tone, scope, and output format</li>
+<li>Add knowledge sources (budget data, safety standards, vendor lists)</li>
+<li>Test your agent in the preview panel</li>
+<li>Publish your agent to Microsoft Teams for your team to use</li>
+<li>Design 3 construction-specific agents for DEC Infra</li>
+</ul></div>
+
+<div class="info-box"><strong>Prerequisites:</strong> Microsoft 365 Copilot license active. Access to copilotstudio.microsoft.com or Copilot Chat agent builder. Completion of Modules 1-3 (prompting, data analysis, safe AI).</div>
+</div>
+</div>
+
+<!-- PART 1: THEORY -->
+<div class="section open">
+<div class="section-head" onclick="toggle(this)"><h2>🧠 Part 1: What is a Copilot Agent?</h2><span class="arrow">▼</span></div>
+<div class="section-body">
+
+<div class="card">
+<h3>From Copilot Chat to Custom Agent — The Evolution</h3>
+<p>In Modules 1-3, you used Copilot Chat — typing prompts one at a time and getting responses. That's powerful, but it requires you to remember the right prompt every time. A <strong>Copilot Agent</strong> is the next level: a custom AI assistant that already knows its job, has access to your company data, and follows your rules — without you needing to write a prompt each time.</p>
+<div class="diagram">
+<p style="font-size:13px;opacity:0.7;margin-bottom:10px">The evolution of AI at DEC Infra:</p>
+<div class="flow">
+<div class="node">Module 1-3<br/><span style="font-size:11px;opacity:0.7">Manual prompting</span></div>
+<div class="arr">→</div>
+<div class="node">Module 4<br/><span style="font-size:11px;opacity:0.7">Custom agents</span></div>
+<div class="arr">→</div>
+<div class="node">Future<br/><span style="font-size:11px;opacity:0.7">Automated workflows</span></div>
+</div>
+</div>
+</div>
+
+<div class="card">
+<h3>Three Ways to Build Agents at DEC Infra</h3>
+<table>
+<tr><th>Method</th><th>What It Is</th><th>Best For</th><th>Skill Level</th></tr>
+<tr><td style="color:var(--ms-blue);font-weight:600">Copilot Agent Builder<br/>(M365 Chat)</td><td>Lightweight builder inside Microsoft 365 Copilot Chat. Create simple agents grounded on a document or SharePoint site.</td><td>Quick personal agents, document Q&A, simple assistants</td><td>Beginner — describe in natural language</td></tr>
+<tr><td style="color:var(--ms-blue);font-weight:600">Copilot Studio<br/>(copilotstudio.microsoft.com)</td><td>Full-featured platform for production agents. Topics, generative AI, Power Automate flows, multi-channel publishing.</td><td>Department-wide agents, workflow automation, enterprise deployment</td><td>Intermediate — visual builder, no code</td></tr>
+<tr><td style="color:var(--ms-blue);font-weight:600">Copilot Studio + Code<br/>(Pro developers)</td><td>Custom engine agents with APIs, Azure AI, custom connectors. Full control over every aspect.</td><td>Complex integrations, ERP connections, custom UIs</td><td>Advanced — requires development team</td></tr>
+</table>
+<div class="tip"><strong>💡 Today's Focus:</strong> We'll use <strong>Copilot Agent Builder</strong> (quick wins) and <strong>Copilot Studio</strong> (production agents). No coding required.</div>
+</div>
+
+<div class="card">
+<h3>Anatomy of a Copilot Agent</h3>
+<p>Every agent has 3 core components:</p>
+<div class="grid-3">
+<div style="background:rgba(0,120,212,0.08);padding:15px;border-radius:8px;border-top:3px solid var(--ms-blue)">
+<h4 style="color:var(--ms-blue)">📝 Instructions</h4>
+<p>Who the agent is, how it behaves, what tone it uses, what it should and shouldn't do. Like writing a job description for an AI employee.</p>
+</div>
+<div style="background:rgba(255,214,0,0.06);padding:15px;border-radius:8px;border-top:3px solid var(--accent)">
+<h4 style="color:var(--accent)">📚 Knowledge</h4>
+<p>Documents, SharePoint sites, Excel files, PDFs the agent can reference. This is what makes it "know" about DEC Infra — grounded on YOUR data.</p>
+</div>
+<div style="background:rgba(76,175,80,0.08);padding:15px;border-radius:8px;border-top:3px solid var(--green)">
+<h4 style="color:var(--green)">⚡ Actions</h4>
+<p>Things the agent can DO — run Power Automate flows, query databases, create tasks, send emails. Turns the agent from answering questions to completing work.</p>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<!-- PART 2: AGENT 1 — BUDGET ANALYST -->
+<div class="section">
+<div class="section-head" onclick="toggle(this)"><h2>🏗️ Part 2: Build Agent #1 — DEC Infra Budget Analyst</h2><span class="arrow">▼</span></div>
+<div class="section-body">
+
+<div class="card">
+<h3>Agent Profile: "DEC Budget Analyst"</h3>
+<p>An agent that any DEC Infra PM can ask about project budgets, overruns, vendor rates, and contingency status — getting instant answers grounded on your actual project data.</p>
+<table>
+<tr><td><strong>Name</strong></td><td>DEC Budget Analyst</td></tr>
+<tr><td><strong>Purpose</strong></td><td>Answer budget questions across all DEC Infra projects</td></tr>
+<tr><td><strong>Knowledge</strong></td><td>242-row project dataset (SharePoint), vendor rate cards, contingency tracker</td></tr>
+<tr><td><strong>Users</strong></td><td>Project Managers, Finance Team, CEO</td></tr>
+<tr><td><strong>Channel</strong></td><td>Microsoft Teams</td></tr>
+</table>
+</div>
+
+<div class="step-box"><div class="step-num">1</div>
+<h3>Open Copilot Agent Builder</h3>
+<p>Go to <strong>microsoft365.com/chat</strong> → Click <strong>"Create an agent"</strong> in the left sidebar. Or go to <strong>copilotstudio.microsoft.com</strong> → Click <strong>"Create"</strong> → <strong>"New agent"</strong>.</p>
+</div>
+
+<div class="step-box"><div class="step-num">2</div>
+<h3>Write the Agent Instructions</h3>
+<p>This is the most important step. The instructions define WHO the agent is and HOW it behaves. Paste this into the Instructions field:</p>
+<span class="prompt-label">AGENT INSTRUCTIONS — COPY-PASTE</span>
+<div class="prompt"><button class="copy-btn" onclick="cp(this)">📋 Copy</button>You are DEC Budget Analyst, an AI assistant for DEC Infra Projects Pvt Ltd, a construction company based in Hyderabad.
+
+YOUR ROLE:
+- Answer budget and cost questions about DEC Infra's construction projects
+- Analyze budget data, identify overruns, flag risks, and compare vendor rates
+- Help Project Managers and Finance teams make data-driven decisions
+
+BEHAVIOR RULES:
+- Always base answers on the uploaded project data — never make up numbers
+- If you don't have data to answer a question, say "I don't have that data in my knowledge base"
+- Present numbers in Indian Lacs (₹ Lac) format
+- Use 🔴🟡🟢 traffic lights for status indicators
+- Be concise — executives want answers in 2-3 sentences, not paragraphs
+- When showing comparisons, use tables
+- Always mention which project and line item you're referring to
+
+WHAT YOU CAN DO:
+- Portfolio risk scan (flag items >100% spent)
+- Cross-project vendor rate comparison
+- Contingency health check per project
+- Budget vs actual variance analysis
+- Invoice and payment gap analysis
+- Generate board-level dashboards
+
+WHAT YOU CANNOT DO:
+- Make procurement decisions (you recommend, humans decide)
+- Access real-time ERP data (you work from uploaded snapshots)
+- Share data with people outside DEC Infra
+- Provide legal or contractual advice
+
+TONE: Professional, direct, data-driven. Like a senior finance analyst presenting to the CEO.</div>
+</div>
+
+<div class="step-box"><div class="step-num">3</div>
+<h3>Add Knowledge Sources</h3>
+<p>Upload or connect these files so the agent can reference them:</p>
+<div class="card">
+<ul>
+<li><strong>DEC_Infra_Master_Dataset_180rows.csv</strong> — Upload to SharePoint, then add as knowledge source</li>
+<li><strong>Vendor rate cards</strong> (if available) — PDF or Excel on SharePoint</li>
+<li><strong>Project schedule summaries</strong> — any Excel/PDF on SharePoint</li>
+<li><strong>Company policies</strong> (optional) — procurement policy, approval matrix</li>
+</ul>
+</div>
+<div class="info-box"><strong>How to add knowledge:</strong> In Copilot Studio → Agent → Knowledge → Add → SharePoint site or Upload files. In Agent Builder → click "Add knowledge" → select files or paste SharePoint URL.</div>
+</div>
+
+<div class="step-box"><div class="step-num">4</div>
+<h3>Test the Agent</h3>
+<p>Use the preview panel to ask test questions. The agent should answer from your data:</p>
+<div class="card">
+<h4>Test Questions to Try:</h4>
+<ul>
+<li>"Which projects have items over 100% budget?"</li>
+<li>"Compare rebar rates across all projects"</li>
+<li>"What's the contingency status for Kamareddy Auditorium?"</li>
+<li>"Give me a portfolio risk summary for the CEO"</li>
+<li>"How much are we overspending on HVAC across projects?"</li>
+<li>"What's the total pending invoice amount?"</li>
+</ul>
+</div>
+</div>
+
+<div class="step-box"><div class="step-num">5</div>
+<h3>Publish to Teams</h3>
+<p>Once tested, publish the agent so your team can access it in Microsoft Teams:</p>
+<p><strong>Copilot Studio:</strong> Publish → Channels → Microsoft Teams → Turn on → Share with team/org.<br/>
+<strong>Agent Builder:</strong> Click "Share" → Select users or groups → Done.</p>
+</div>
+
+<div class="success"><strong>✅ Result:</strong> Any DEC Infra PM can now open Teams, type "Hey DEC Budget Analyst, which projects are over budget?" and get an instant, data-backed answer — no prompt engineering needed.</div>
+
+</div>
+</div>
+
+<!-- PART 3: AGENT 2 — SAFETY ADVISOR -->
+<div class="section">
+<div class="section-head" onclick="toggle(this)"><h2>🦺 Part 3: Build Agent #2 — DEC Safety Advisor</h2><span class="arrow">▼</span></div>
+<div class="section-body">
+
+<div class="card">
+<h3>Agent Profile: "DEC Safety Advisor"</h3>
+<table>
+<tr><td><strong>Name</strong></td><td>DEC Safety Advisor</td></tr>
+<tr><td><strong>Purpose</strong></td><td>Generate safety checklists, toolbox talk content, incident investigation guidance, and compliance checks</td></tr>
+<tr><td><strong>Knowledge</strong></td><td>IS safety standards (IS 3696, IS 4130), OSHA guidelines, DEC Infra safety policy, past incident reports</td></tr>
+<tr><td><strong>Users</strong></td><td>Safety Officers, Site Engineers, Site Supervisors</td></tr>
+<tr><td><strong>Channel</strong></td><td>Microsoft Teams (accessible from site via mobile)</td></tr>
+</table>
+</div>
+
+<span class="prompt-label">AGENT INSTRUCTIONS — COPY-PASTE</span>
+<div class="prompt"><button class="copy-btn" onclick="cp(this)">📋 Copy</button>You are DEC Safety Advisor, the AI safety assistant for DEC Infra Projects Pvt Ltd, a construction company managing 12+ active sites across India.
+
+YOUR ROLE:
+- Generate project-specific safety checklists based on work type
+- Create toolbox talk content for daily safety briefings
+- Guide incident investigation using the 5-Why method
+- Check compliance against IS standards and OSHA guidelines
+- Help prepare safety audit documentation
+
+BEHAVIOR RULES:
+- ALWAYS err on the side of caution — if unsure, recommend the stricter safety measure
+- Reference specific IS codes (IS 3696 for scaffolding, IS 4130 for safety nets, etc.) but ALWAYS add: "Verify this clause number against the actual standard before official use"
+- Never state "this is compliant" — instead say "based on the information provided, this appears to meet the requirements of [standard], but a certified safety officer should verify"
+- Use checklists with ☐ checkboxes for actionable items
+- Include PPE requirements for every activity
+- Flag weather-related risks (monsoon, extreme heat, wind)
+- All checklists should include emergency contact section
+
+WHAT YOU CAN DO:
+- Generate safety checklists (height work, excavation, hot work, confined space, electrical, crane)
+- Create daily toolbox talk scripts (5-minute format)
+- Guide 5-Why root cause analysis for incidents
+- Compare site practices against IS/OSHA standards
+- Draft safety method statements
+- Create emergency response plans
+
+WHAT YOU CANNOT DO:
+- Certify compliance (only qualified safety officers can)
+- Replace safety training programs
+- Provide medical advice for injuries
+- Make structural safety assessments
+
+CRITICAL RULE: If someone asks about an active emergency or injury, respond: "This requires immediate human attention. Call your site safety officer and emergency services. I can help with documentation after the situation is resolved."
+
+TONE: Firm but supportive. Safety is non-negotiable. Like a senior safety consultant who cares about every worker going home safe.</div>
+
+<div class="card">
+<h4>Knowledge Sources to Add:</h4>
+<ul>
+<li><strong>DEC Infra Safety Policy</strong> (PDF) — company safety rules and procedures</li>
+<li><strong>IS Safety Standards summaries</strong> — IS 3696, IS 4130, IS 875 key extracts</li>
+<li><strong>Past Incident Reports</strong> (anonymized) — learn from previous events</li>
+<li><strong>Safety Checklist Templates</strong> — existing DEC Infra formats</li>
+<li><strong>PPE Matrix</strong> — which PPE for which activity</li>
+</ul>
+</div>
+
+<div class="card">
+<h4>Test Questions:</h4>
+<ul>
+<li>"Generate a safety checklist for height work above 3 meters at IISER Library"</li>
+<li>"Create a 5-minute toolbox talk on scaffold safety for tomorrow morning"</li>
+<li>"A worker slipped on a wet surface and injured his wrist. Guide me through the incident investigation"</li>
+<li>"What PPE is required for hot work near existing electrical systems?"</li>
+<li>"Help me prepare for next week's safety audit — what documents do I need?"</li>
+</ul>
+</div>
+</div>
+</div>
+
+<!-- PART 4: AGENT 3 — PROJECT REPORTER -->
+<div class="section">
+<div class="section-head" onclick="toggle(this)"><h2>📊 Part 4: Build Agent #3 — DEC Project Reporter</h2><span class="arrow">▼</span></div>
+<div class="section-body">
+
+<div class="card">
+<h3>Agent Profile: "DEC Project Reporter"</h3>
+<table>
+<tr><td><strong>Name</strong></td><td>DEC Project Reporter</td></tr>
+<tr><td><strong>Purpose</strong></td><td>Generate weekly reports, client status updates, meeting minutes, and board dashboards from raw project data</td></tr>
+<tr><td><strong>Knowledge</strong></td><td>Project schedules, budget data, progress photos, meeting notes (SharePoint)</td></tr>
+<tr><td><strong>Users</strong></td><td>Project Managers, Admin Staff, CEO</td></tr>
+<tr><td><strong>Channel</strong></td><td>Microsoft Teams</td></tr>
+</table>
+</div>
+
+<span class="prompt-label">AGENT INSTRUCTIONS — COPY-PASTE</span>
+<div class="prompt"><button class="copy-btn" onclick="cp(this)">📋 Copy</button>You are DEC Project Reporter, the AI reporting assistant for DEC Infra Projects Pvt Ltd.
+
+YOUR ROLE:
+- Generate weekly project status reports from raw data
+- Create client-ready status update emails
+- Produce board-level dashboards with traffic light indicators
+- Summarize meeting notes into structured minutes with action items
+- Track action items and flag overdue tasks
+
+BEHAVIOR RULES:
+- Format all reports professionally — use headers, tables, and bullet points
+- Always include: Date, Project Name, Report Period, Prepared By
+- Use 🟢🟡🔴 traffic lights for: Budget, Schedule, Quality, Safety
+- Present budget figures in ₹ Lac format
+- Keep client communications professional and optimistic but honest
+- Never hide bad news — present it with context and a corrective action plan
+- Meeting minutes must include: Attendees, Date, Key Decisions, Action Items (with Owner + Deadline)
+- Reports should be under 1 page unless requested otherwise
+
+REPORT TYPES YOU CAN GENERATE:
+1. Weekly Status Report (for internal team)
+2. Client Status Update (professional email format)
+3. Board Dashboard (traffic light summary, all projects)
+4. Meeting Minutes (from raw notes)
+5. Daily Site Report (from supervisor notes)
+6. Monthly Progress Report (comprehensive)
+
+TONE: Professional and structured. Like a senior PMO analyst who produces reports the CEO reads without asking questions.
+
+FORMATTING:
+- Use tables for data comparisons
+- Use 🟢🟡🔴 for status indicators
+- Bold key numbers and findings
+- Include "Key Risks" and "Next Week Priorities" sections in every report</div>
+
+<div class="card">
+<h4>Knowledge Sources to Add:</h4>
+<ul>
+<li><strong>DEC Infra report templates</strong> — existing weekly/monthly formats</li>
+<li><strong>Project schedules</strong> — MS Project or Primavera exports on SharePoint</li>
+<li><strong>Budget dataset</strong> — the 242-row CSV on SharePoint</li>
+<li><strong>Meeting notes folder</strong> — SharePoint library where PMs store notes</li>
+<li><strong>Client communication templates</strong> — approved email formats</li>
+</ul>
+</div>
+
+<div class="card">
+<h4>Test Questions:</h4>
+<ul>
+<li>"Generate a weekly status report for IISER Library project — budget is 78% spent, 4 overruns, schedule slightly behind"</li>
+<li>"Write a client status update email for the NSDL Data Center — we're behind on MEP by 2 weeks"</li>
+<li>"Create a board dashboard for all 12 projects using the budget dataset"</li>
+<li>"Here are my raw meeting notes: [paste notes]. Convert to structured minutes with action items."</li>
+<li>"Generate a daily site report from these supervisor notes: 35 workers, concrete pour Block C complete, rain delay 2 hours"</li>
+</ul>
+</div>
+</div>
+</div>
+
+<!-- PART 5: TEAM EXERCISE -->
+<div class="section">
+<div class="section-head" onclick="toggle(this)"><h2>👨‍💻 Part 5: Team Exercise — Build Your Department's Agent (30 mins)</h2><span class="arrow">▼</span></div>
+<div class="section-body">
+
+<div class="exercise">
+<h3>🏋️ Team Challenge: Design & Build a Custom Agent</h3>
+<p>Each team designs and builds a Copilot Agent for their department. You have 20 minutes to build + 5 minutes to demo.</p>
+</div>
+
+<div class="grid-2">
+<div class="card">
+<h3>Team 1: Procurement Agent</h3>
+<p>Build an agent that helps procurement compare vendors, check rate histories, and generate purchase order summaries.</p>
+<h4>Requirements:</h4>
+<ul>
+<li>Ground on vendor rate dataset</li>
+<li>Answer "who is cheapest for rebar?"</li>
+<li>Generate PO comparison tables</li>
+<li>Flag when a vendor is charging above average</li>
+</ul>
+</div>
+<div class="card">
+<h3>Team 2: Quality Inspector Agent</h3>
+<p>Build an agent that generates QA checklists, reviews test reports, and drafts NCR documents.</p>
+<h4>Requirements:</h4>
+<ul>
+<li>Ground on IS 456, IS 1786 standard summaries</li>
+<li>Generate inspection checklists by trade</li>
+<li>Review concrete cube test results</li>
+<li>Draft Non-Conformance Reports</li>
+</ul>
+</div>
+<div class="card">
+<h3>Team 3: HR Onboarding Agent</h3>
+<p>Build an agent that answers new employee questions about DEC Infra policies, leave, safety training, and benefits.</p>
+<h4>Requirements:</h4>
+<ul>
+<li>Ground on company handbook / HR policy PDF</li>
+<li>Answer "What's the leave policy?"</li>
+<li>Guide new joiners through safety training steps</li>
+<li>Explain benefits and contact HR procedures</li>
+</ul>
+</div>
+<div class="card">
+<h3>Team 4: Client Communication Agent</h3>
+<p>Build an agent that drafts client emails, progress updates, and delay notifications in DEC Infra's professional tone.</p>
+<h4>Requirements:</h4>
+<ul>
+<li>Ground on past client email templates</li>
+<li>Draft progress update emails</li>
+<li>Draft delay notification with mitigation plan</li>
+<li>Maintain professional, honest, solution-focused tone</li>
+</ul>
+</div>
+</div>
+
+<div class="card">
+<h3>Demo Judging Criteria</h3>
+<table>
+<tr><th>Criteria</th><th>Points</th><th>What Judges Look For</th></tr>
+<tr><td>Agent Instructions Quality</td><td>25</td><td>Clear role, rules, tone, scope boundaries</td></tr>
+<tr><td>Knowledge Relevance</td><td>25</td><td>Right documents connected, agent answers from data</td></tr>
+<tr><td>Test Response Quality</td><td>25</td><td>Does the agent give useful, accurate answers?</td></tr>
+<tr><td>Business Value</td><td>15</td><td>Would DEC Infra actually use this agent daily?</td></tr>
+<tr><td>Presentation</td><td>10</td><td>Clear demo, good explanation of what it does</td></tr>
+</table>
+</div>
+</div>
+</div>
+
+<!-- PART 6: BEST PRACTICES -->
+<div class="section">
+<div class="section-head" onclick="toggle(this)"><h2>🎯 Part 6: Agent Building Best Practices</h2><span class="arrow">▼</span></div>
+<div class="section-body">
+
+<div class="card">
+<h3>✅ Do's and Don'ts for Agent Instructions</h3>
+<div class="grid-2">
+<div style="border-left:3px solid var(--green);padding-left:12px">
+<h4 style="color:var(--green)">✅ DO</h4>
+<ul>
+<li>Define a clear role: "You are a budget analyst for..."</li>
+<li>Set explicit boundaries: "You can/cannot..."</li>
+<li>Specify output format: "Use tables, ₹ Lac format..."</li>
+<li>Include safety catches: "If unsure, say so"</li>
+<li>Define tone: "Professional, concise, data-driven"</li>
+<li>Add examples of good responses</li>
+</ul>
+</div>
+<div style="border-left:3px solid var(--red);padding-left:12px">
+<h4 style="color:var(--red)">❌ DON'T</h4>
+<ul>
+<li>Write vague instructions: "Be helpful" (too generic)</li>
+<li>Skip scope boundaries (agent will hallucinate)</li>
+<li>Let agent access data it shouldn't see</li>
+<li>Forget to say "verify before official use"</li>
+<li>Deploy without testing at least 10 questions</li>
+<li>Share agents externally without IT approval</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div class="card">
+<h3>Knowledge Source Best Practices</h3>
+<table>
+<tr><th>Source Type</th><th>Best Practice</th><th>DEC Infra Example</th></tr>
+<tr><td>SharePoint Site</td><td>Point to a dedicated folder, not entire site</td><td>/Projects/BudgetData/ (not entire SharePoint)</td></tr>
+<tr><td>Excel / CSV</td><td>Clean headers, no merged cells, under 10MB</td><td>242-row dataset with clear column names</td></tr>
+<tr><td>PDFs</td><td>Use text-based PDFs, not scanned images</td><td>Safety standards, policy documents</td></tr>
+<tr><td>Word Docs</td><td>Use headings and structure for better parsing</td><td>Company handbook with H1/H2/H3 headings</td></tr>
+</table>
+</div>
+
+<div class="card">
+<h3>Security & Data Protection for Agents</h3>
+<div class="warning"><strong>⚠️ Agents inherit access permissions.</strong> If the agent is grounded on a SharePoint folder, users can only see data they already have access to. But verify this before deploying.</div>
+<ul>
+<li><strong>Turn off "Search all websites"</strong> — enabled by default in Copilot Studio. Disable it for internal agents to prevent data leakage</li>
+<li><strong>Restrict sharing</strong> — share agents only with the team that needs them, not the entire organization</li>
+<li><strong>Review knowledge scope</strong> — make sure the agent can't access HR data, salary sheets, or Tier 3 confidential data unless specifically intended</li>
+<li><strong>Test with a non-admin account</strong> — verify the agent shows the right data to regular users</li>
+<li><strong>Audit regularly</strong> — check agent usage logs monthly for unexpected queries</li>
+</ul>
+</div>
+</div>
+</div>
+
+<!-- PART 7: DEC INFRA AGENT ROADMAP -->
+<div class="section">
+<div class="section-head" onclick="toggle(this)"><h2>🚀 Part 7: DEC Infra Agent Roadmap — 10 Agents to Build</h2><span class="arrow">▼</span></div>
+<div class="section-body">
+<div class="card">
+<h3>Recommended Agent Rollout — Phase-by-Phase</h3>
+<table>
+<tr><th>Phase</th><th>Agent</th><th>Department</th><th>Timeline</th><th>Impact</th></tr>
+<tr><td rowspan="3" style="color:var(--green);font-weight:700">Phase 1<br/>Month 1-2</td><td>DEC Budget Analyst</td><td>Finance</td><td>Week 1-2</td><td>₹12-24L/year savings</td></tr>
+<tr><td>DEC Safety Advisor</td><td>Quality & Safety</td><td>Week 2-3</td><td>₹5-15L risk avoidance</td></tr>
+<tr><td>DEC Project Reporter</td><td>PMO</td><td>Week 3-4</td><td>15-20 hrs/month saved</td></tr>
+<tr><td rowspan="3" style="color:var(--accent);font-weight:700">Phase 2<br/>Month 3-4</td><td>DEC Procurement Advisor</td><td>Procurement</td><td>Week 5-6</td><td>₹20-40L better procurement</td></tr>
+<tr><td>DEC Quality Inspector</td><td>QA/QC</td><td>Week 6-7</td><td>₹5-10L rework prevention</td></tr>
+<tr><td>DEC HR Assistant</td><td>HR</td><td>Week 7-8</td><td>50% reduction in HR queries</td></tr>
+<tr><td rowspan="4" style="color:var(--ms-blue);font-weight:700">Phase 3<br/>Month 5-6</td><td>DEC Contract Reviewer</td><td>Legal / Contracts</td><td>Week 9-10</td><td>₹10-30L dispute avoidance</td></tr>
+<tr><td>DEC Estimation Assistant</td><td>Estimation</td><td>Week 10-11</td><td>5-10% better accuracy</td></tr>
+<tr><td>DEC Client Communicator</td><td>Business Dev</td><td>Week 11-12</td><td>Consistent, fast responses</td></tr>
+<tr><td>DEC Knowledge Base</td><td>All</td><td>Week 12</td><td>Institutional memory preserved</td></tr>
+</table>
+</div>
+
+<div class="success"><strong>💰 Total Value of 10 Agents:</strong> Conservative estimate ₹60-120L annual savings + risk avoidance across the organization. Investment: ₹6-10L (M365 Copilot licenses + Copilot Studio). <strong>ROI: 600-1200%.</strong></div>
+</div>
+</div>
+
+<!-- PART 8: PROGRAM WRAP-UP -->
+<div class="section">
+<div class="section-head" onclick="toggle(this)"><h2>🎓 Part 8: Program Wrap-Up & 30-Day Action Plan</h2><span class="arrow">▼</span></div>
+<div class="section-body">
+
+<div class="card">
+<h3>What You Accomplished Across 4 Modules</h3>
+<table>
+<tr><th>Module</th><th>Skill</th><th>Impact</th></tr>
+<tr><td>M1: Prompting & Docs</td><td>Write effective prompts, compare documents, analyze photos</td><td>₹20-40L better decisions</td></tr>
+<tr><td>M2: Data Analysis</td><td>Upload Excel/CSV for instant budget & vendor analysis</td><td>₹12-24L labor savings/year</td></tr>
+<tr><td>M3: Safe AI</td><td>Data classification, anonymization, hallucination detection</td><td>₹5-250 Cr risk avoidance</td></tr>
+<tr><td style="color:var(--ms-blue);font-weight:600">M4: Copilot Agents</td><td style="color:var(--ms-blue)">Build custom AI assistants deployed in Teams</td><td style="color:var(--ms-blue)">₹60-120L/year (10 agents)</td></tr>
+<tr><td colspan="2" style="font-weight:700;color:var(--accent)">TOTAL PROGRAM VALUE</td><td style="font-weight:700;color:var(--accent)">₹1 Cr+ annual benefit</td></tr>
+</table>
+</div>
+
+<div class="card">
+<h3>Your 30-Day Action Plan</h3>
+<div class="grid-2">
+<div>
+<h4>Week 1: Quick Wins</h4>
+<ul>
+<li>Build 1 simple agent using Agent Builder in M365 Chat</li>
+<li>Ground it on 1 document (your team's most-used file)</li>
+<li>Share with 2-3 colleagues, collect feedback</li>
+</ul>
+<h4>Week 2: Expand</h4>
+<ul>
+<li>Refine instructions based on feedback</li>
+<li>Add 2-3 more knowledge sources</li>
+<li>Build a second agent for a different use case</li>
+</ul>
+</div>
+<div>
+<h4>Week 3: Go Production</h4>
+<ul>
+<li>Recreate your best agent in Copilot Studio (full features)</li>
+<li>Test with 10+ questions before publishing</li>
+<li>Publish to Teams for your department</li>
+</ul>
+<h4>Week 4: Measure & Scale</h4>
+<ul>
+<li>Track agent usage (queries/week, user satisfaction)</li>
+<li>Calculate time saved vs manual process</li>
+<li>Present ROI to management, plan Phase 2 agents</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div class="card">
+<h3>Commitment Card</h3>
+<div style="padding:20px;background:rgba(0,120,212,0.05);border-radius:8px;border:1px dashed rgba(0,120,212,0.3);text-align:center;font-size:16px">
+<p>"I commit to building <strong>at least ONE Copilot Agent</strong> within 2 weeks,<br/>
+grounded on my department's data, and sharing it with my team in Microsoft Teams.<br/>
+I will follow the data protection rules from Module 3 and verify all agent outputs."</p>
+<p style="margin-top:15px"><strong>Name: _________________ &nbsp;&nbsp; Date: _________________ &nbsp;&nbsp; Department: _________________</strong></p>
+<p style="margin-top:5px"><strong>My First Agent Will Be: _________________________________________________</strong></p>
+</div>
+</div>
+
+<div class="stats">
+<div class="stat"><span class="n">🎓</span><span class="l">Training Complete!</span></div>
+<div class="stat"><span class="n">₹1 Cr+</span><span class="l">Annual Value Unlocked</span></div>
+<div class="stat"><span class="n">10</span><span class="l">Agents to Build</span></div>
+<div class="stat"><span class="n">600%+</span><span class="l">Expected ROI</span></div>
+</div>
+</div>
+</div>
+
+
+        </div>
+`;
+    
+    // Auto-scroll to top
     setTimeout(() => {
-        document.getElementById('btn-dl-verify')?.addEventListener('click', () => {
-            const html = `
-                <h2>Pre-Flight Checks</h2>
-                <ul>
-                    <li><b>Source Checked:</b> Have you verified the numbers against the original ERP/CRM data?</li>
-                    <li><b>Math Verified:</b> Did you manually spot-check any calculations? AI struggles with arithmetic.</li>
-                    <li><b>Confidentiality:</b> Have you stripped out PII, salaries, and non-public financials?</li>
-                    <li><b>Tone Check:</b> Does this sound like a DEC employee wrote it?</li>
-                </ul>
-                <div class="alert alert-amber"><b>Rule of Thumb:</b> If you wouldn't send it to the CEO without checking it, don't send the AI's output without checking it.</div>
-            `;
-            window.downloadPDF('Human Verification Checklist', html);
-        });
-
-        document.getElementById('btn-dl-compare')?.addEventListener('click', () => {
-            const html = `
-                <h2>Which AI Should I Use?</h2>
-                <div class="alert alert-green">
-                    <h3>Public ChatGPT / Claude</h3>
-                    <p>Great for general brainstorming, generic coding, public summaries, and drafting emails that do not contain client specifics.</p>
-                </div>
-                <div class="alert alert-amber">
-                    <h3>Enterprise Copilot (DEC Secure)</h3>
-                    <p>Required for analyzing internal project reports, reading vendor quotes, generating meeting minutes, and summarizing internal policies.</p>
-                </div>
-                <div class="alert alert-red">
-                    <h3>No AI Allowed</h3>
-                    <p>Never use AI for generating payroll, highly confidential HR matters, or sharing unreleased proprietary algorithms.</p>
-                </div>
-            `;
-            window.downloadPDF('Enterprise Copilot vs ChatGPT', html);
-        });
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     }, 100);
 }
 

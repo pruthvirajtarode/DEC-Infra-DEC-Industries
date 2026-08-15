@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>M2: Data Analysis — DEC AI Foundations</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0f0f1a;--card:#1a1a2e;--card2:#16213e;--border:rgba(255,255,255,0.08);--text:#e0e0e0;--accent:#FFD600;--blue:#2196F3;--green:#4CAF50;--red:#FF5252;--orange:#FF9800}
+body{font-family:'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;padding-bottom:60px}
+.module-header{background:linear-gradient(135deg,#1B5E20 0%,#2E7D32 60%,#43A047 100%);padding:40px 30px;text-align:center;border-bottom:3px solid var(--accent)}
+.module-header .tag{display:inline-block;background:rgba(0,0,0,0.3);padding:4px 14px;border-radius:15px;font-size:12px;font-weight:600;margin-bottom:10px;letter-spacing:1px}
+.module-header h1{font-size:36px;font-weight:800;margin-bottom:8px}
+.module-header p{font-size:18px;opacity:0.85;max-width:750px;margin:0 auto}
+.container{max-width:1000px;margin:0 auto;padding:20px}
+.section{background:var(--card);border:1px solid var(--border);border-radius:12px;margin:20px 0;overflow:hidden}
+.section-head{padding:18px 24px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;transition:background 0.2s}
+.section-head:hover{background:rgba(255,255,255,0.03)}
+.section-head h2{font-size:20px;font-weight:700;display:flex;align-items:center;gap:10px}
+.section-head .arrow{font-size:18px;opacity:0.5;transition:transform 0.3s}
+.section-body{padding:0 24px 24px;display:none}
+.section.open .section-body{display:block}
+.section.open .arrow{transform:rotate(180deg)}
+.card{background:var(--card2);border:1px solid var(--border);border-radius:8px;padding:18px;margin:12px 0}
+.card h3{font-size:17px;font-weight:600;color:var(--accent);margin-bottom:8px}
+.card h4{font-size:15px;font-weight:600;color:var(--blue);margin-bottom:6px;margin-top:10px}
+.card p,.card li{font-size:14px;opacity:0.85;line-height:1.7}
+.card ul{list-style:none;margin:8px 0}
+.card ul li{padding:4px 0 4px 22px;position:relative}
+.card ul li:before{content:"▸";position:absolute;left:0;color:var(--accent);font-weight:bold}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:15px}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:15px}
+@media(max-width:768px){.grid-2,.grid-3{grid-template-columns:1fr}}
+.stats{display:flex;gap:15px;flex-wrap:wrap;margin:15px 0}
+.stat{background:var(--card2);border:1px solid var(--border);border-radius:8px;padding:15px;text-align:center;flex:1;min-width:120px}
+.stat .n{font-size:28px;font-weight:800;color:var(--accent);display:block}
+.stat .l{font-size:12px;opacity:0.7}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:13px}
+th{background:rgba(255,255,255,0.08);padding:10px 12px;text-align:left;font-weight:600;border-bottom:2px solid var(--border)}
+td{padding:8px 12px;border-bottom:1px solid var(--border)}
+tr:hover{background:rgba(255,255,255,0.02)}
+.tip{background:rgba(255,214,0,0.08);border-left:3px solid var(--accent);padding:12px 16px;margin:12px 0;border-radius:0 8px 8px 0;font-size:14px}
+.warning{background:rgba(255,82,82,0.08);border-left:3px solid var(--red);padding:12px 16px;margin:12px 0;border-radius:0 8px 8px 0;font-size:14px}
+.success{background:rgba(76,175,80,0.08);border-left:3px solid var(--green);padding:12px 16px;margin:12px 0;border-radius:0 8px 8px 0;font-size:14px}
+.info-box{background:rgba(33,150,243,0.08);border-left:3px solid var(--blue);padding:12px 16px;margin:12px 0;border-radius:0 8px 8px 0;font-size:14px}
+.prompt{background:#1e1e2e;border:2px solid #69F0AE;border-radius:8px;padding:16px;margin:12px 0;font-family:'Courier New',monospace;font-size:13px;color:#a6e3a1;line-height:1.5;white-space:pre-wrap;position:relative;max-height:400px;overflow-y:auto}
+.prompt-label{display:inline-block;background:#69F0AE;color:#1e1e2e;padding:3px 12px;border-radius:15px;font-size:11px;font-weight:700;margin-bottom:8px;font-family:'Segoe UI',sans-serif}
+.copy-btn{position:absolute;top:10px;right:10px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);color:#69F0AE;padding:4px 12px;border-radius:5px;cursor:pointer;font-size:11px;font-family:'Segoe UI',sans-serif}
+.output{background:#0d1117;border:1px solid #30363d;border-radius:8px;padding:16px;margin:12px 0;font-family:'Courier New',monospace;font-size:12px;color:#c9d1d9;line-height:1.5;white-space:pre-wrap;max-height:400px;overflow-y:auto}
+.output-label{display:inline-block;background:var(--blue);color:white;padding:3px 12px;border-radius:15px;font-size:11px;font-weight:700;margin-bottom:8px;font-family:'Segoe UI',sans-serif}
+.exercise{background:rgba(156,39,176,0.08);border:2px solid rgba(156,39,176,0.2);border-radius:8px;padding:18px;margin:12px 0}
+.exercise h3{color:#CE93D8;font-size:16px;margin-bottom:8px}
+.badge{display:inline-block;padding:3px 10px;border-radius:12px;font-size:11px;font-weight:700}
+.badge-time{background:rgba(33,150,243,0.15);color:var(--blue);border:1px solid rgba(33,150,243,0.3)}
+.badge-impact{background:rgba(255,214,0,0.15);color:var(--accent);border:1px solid rgba(255,214,0,0.3)}
+.badge-risk{background:rgba(255,82,82,0.15);color:var(--red);border:1px solid rgba(255,82,82,0.3)}
+.diagram{background:rgba(0,0,0,0.3);border-radius:10px;padding:20px;margin:15px 0;text-align:center}
+.diagram .flow{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;margin:10px 0}
+.diagram .node{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:8px;padding:10px 16px;font-size:13px;font-weight:600}
+.diagram .arr{color:var(--accent);font-size:20px;font-weight:bold}
+.cs{background:var(--card2);border:1px solid var(--border);border-radius:10px;margin:16px 0;overflow:hidden}
+.cs-head{padding:14px 18px;cursor:pointer;display:flex;align-items:center;justify-content:space-between}
+.cs-head:hover{background:rgba(255,255,255,0.03)}
+.cs-head h3{font-size:16px;font-weight:600;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.cs-head .csa{font-size:14px;opacity:0.4;transition:transform 0.3s}
+.cs-body{padding:0 18px 18px;display:none}
+.cs.cso .cs-body{display:block}
+.cs.cso .csa{transform:rotate(180deg)}
+.cst{font-size:11px;padding:2px 8px;border-radius:10px;font-weight:600}
+.cst-d{background:rgba(33,150,243,0.15);color:#64B5F6}
+.cst-e{background:rgba(156,39,176,0.15);color:#CE93D8}
+.cst-c{background:rgba(76,175,80,0.15);color:#4CAF50}
+.cst-w{background:rgba(255,152,0,0.15);color:#FF9800}
+.cb{background:rgba(0,0,0,0.2);border-radius:6px;padding:14px;margin:10px 0;font-size:14px}
+.cb h4{font-size:14px;margin-bottom:6px}
+</style>
+</head>
+<body>
+
+<div class="module-header">
+<div class="tag">SESSION 2</div>
+<h1>M2: Data Analysis with AI</h1>
+<p>Upload the 242-row DEC Infra dataset to AI for instant budget analysis, risk scanning, vendor benchmarking & executive dashboards — in minutes, not hours</p>
+</div>
+
+<div class="container">
+
+<!-- OBJECTIVES -->
+<div class="section open">
+<div class="section-head" onclick="toggle(this)"><h2>🎯 Learning Objectives</h2><span class="arrow">▼</span></div>
+<div class="section-body">
+<div class="stats">
+<div class="stat"><span class="n">120</span><span class="l">Minutes</span></div>
+<div class="stat"><span class="n">7</span><span class="l">Prompts</span></div>
+<div class="stat"><span class="n">242</span><span class="l">Row Dataset</span></div>
+<div class="stat"><span class="n">₹28.8 Cr</span><span class="l">Portfolio Budget</span></div>
+</div>
+<div class="card"><p>By the end of this module, you will:</p><ul>
+<li>Upload any Excel/CSV to ChatGPT or Claude for instant analysis</li>
+<li>Scan a ₹28.8 Cr portfolio across 12 concurrent projects in 2 minutes</li>
+<li>Detect 28 budget overruns, 19 contingency burns, and rate anomalies</li>
+<li>Compare vendor rates across projects and find ₹4-12L in savings</li>
+<li>Generate board-level dashboards with 🟢🟡🔴 traffic lights automatically</li>
+<li>Anonymize data before uploading (data protection from Module 3)</li>
+<li>Build a personal prompt library for recurring analysis tasks</li>
+</ul></div>
+</div>
+</div>
+
+<!-- PART 1: THEORY -->
+<div class="section open">
+<div class="section-head" onclick="toggle(this)"><h2>🧠 Part 1: Why AI Changes Data Analysis in Construction</h2><span class="arrow">▼</span></div>
+<div class="section-body">
+<div class="card">
+<h3>The Problem: Data Overload at DEC Infra</h3>
+<p>DEC Infra manages 12 concurrent projects generating 242+ budget line items, hundreds of vendor invoices, and weekly schedule updates. A finance manager doing this manually faces:</p>
+<div class="grid-2">
+<div>
+<h4>📋 Manual Process</h4>
+<ul>
+<li>Open 12 separate Excel sheets</li>
+<li>Cross-reference budget vs actual per item</li>
+<li>Calculate variance for 242 rows</li>
+<li>Identify which items are over budget</li>
+<li>Check contingency across all projects</li>
+<li>Write an executive summary</li>
+<li>Create charts and dashboards</li>
+</ul>
+<p style="margin-top:10px;color:#FF5252;font-weight:600">⏱ Time: 4-6 hours per weekly review</p>
+</div>
+<div>
+<h4>🤖 With AI Analysis</h4>
+<ul>
+<li>Upload combined CSV to ChatGPT/Claude</li>
+<li>Paste one analysis prompt</li>
+<li>AI scans ALL 242 rows simultaneously</li>
+<li>AI flags every overrun, risk, anomaly</li>
+<li>AI generates executive summary</li>
+<li>AI provides recommendations & forecasts</li>
+<li>Ask follow-up for deeper analysis</li>
+</ul>
+<p style="margin-top:10px;color:#4CAF50;font-weight:600">⏱ Time: 2-5 minutes per analysis</p>
+</div>
+</div>
+</div>
+
+<div class="card">
+<h3>Three Levels of AI Data Analysis</h3>
+<div class="grid-3">
+<div style="background:rgba(33,150,243,0.06);padding:12px;border-radius:6px">
+<h4 style="color:#64B5F6">📊 Descriptive</h4>
+<p>"What happened?"</p>
+<ul><li>Totals & summaries</li><li>Top/bottom performers</li><li>Trend identification</li></ul>
+</div>
+<div style="background:rgba(255,214,0,0.06);padding:12px;border-radius:6px">
+<h4 style="color:#FFD600">🔍 Diagnostic</h4>
+<p>"Why did it happen?"</p>
+<ul><li>Root cause analysis</li><li>Correlation detection</li><li>Anomaly explanation</li></ul>
+</div>
+<div style="background:rgba(76,175,80,0.06);padding:12px;border-radius:6px">
+<h4 style="color:#4CAF50">🔮 Predictive</h4>
+<p>"What will happen?"</p>
+<ul><li>Cost forecasting</li><li>Contingency burnout date</li><li>Schedule completion</li></ul>
+</div>
+</div>
+</div>
+
+<div class="card">
+<h3>How to Upload Data — Step by Step</h3>
+<div class="diagram">
+<div class="flow">
+<div class="node">1. Export Excel<br/><span style="font-size:11px;opacity:0.7">Save as .csv</span></div>
+<div class="arr">→</div>
+<div class="node">2. Anonymize<br/><span style="font-size:11px;opacity:0.7">Replace names</span></div>
+<div class="arr">→</div>
+<div class="node">3. Upload to AI<br/><span style="font-size:11px;opacity:0.7">Click 📎</span></div>
+<div class="arr">→</div>
+<div class="node">4. Paste Prompt<br/><span style="font-size:11px;opacity:0.7">Be specific</span></div>
+<div class="arr">→</div>
+<div class="node">5. Get Analysis<br/><span style="font-size:11px;opacity:0.7">30-60 seconds</span></div>
+</div>
+</div>
+</div>
+
+<div class="card">
+<h3>Good vs Bad Prompts for Data Analysis</h3>
+<div class="grid-2">
+<div style="background:rgba(255,82,82,0.06);padding:12px;border-radius:6px;border-left:3px solid #FF5252">
+<h4 style="color:#FF5252">❌ Bad Prompt</h4>
+<p>"Analyze this data"</p>
+<p style="font-size:13px;opacity:0.7;margin-top:6px">Result: Generic summary, misses key overruns, no actionable insight</p>
+</div>
+<div style="background:rgba(76,175,80,0.06);padding:12px;border-radius:6px;border-left:3px solid #4CAF50">
+<h4 style="color:#4CAF50">✓ Good Prompt</h4>
+<p>"Flag every item where spent >100%. Rank 12 projects by risk score 1-10. For top 3 riskiest, give root cause and corrective action. CEO summary, 1 page."</p>
+<p style="font-size:13px;opacity:0.7;margin-top:6px">Result: 28 overruns found, ranked list, actionable plan</p>
+</div>
+</div>
+<div class="info-box"><strong>ABCD Framework from Module 1:</strong> <strong>A</strong>udience (CEO/PM/Board) → <strong>B</strong>ackground (12 projects, ₹28.8 Cr) → <strong>C</strong>ontent (flag overruns, rank risks) → <strong>D</strong>elivery (table, 1-page, risk scores)</div>
+</div>
+</div>
+</div>
+
+<!-- PART 2: THE DATASET -->
+<div class="section">
+<div class="section-head" onclick="toggle(this)"><h2>📊 Part 2: The DEC Infra Dataset — 242 Rows, 12 Projects</h2><span class="arrow">▼</span></div>
+<div class="section-body">
+<div class="card">
+<h3>Dataset Overview</h3>
+<p>A synthetic but realistic dataset modeled on DEC Infra's actual project portfolio. This is the file participants will upload to AI.</p>
+<h4>12 Projects:</h4>
+<div class="grid-3">
+<div><ul><li>IISER Library, Tirupati</li><li>Medical College, Suryapet</li><li>IT Park Tower, Mangalgiri</li><li>NSDL Data Center, Bangalore</li></ul></div>
+<div><ul><li>JNTU Campus, Anantapur</li><li>Urdu University, Hyderabad</li><li>APIIC Industrial Park</li><li>SWC Warehouse, Jaipur</li></ul></div>
+<div><ul><li>Kamareddy Auditorium</li><li>Gajwel Auditorium</li><li>Kollur Township</li><li>Nizamabad Water Plant</li></ul></div>
+</div>
+<h4>26 Columns Across 5 Categories:</h4>
+<table>
+<tr><th>Category</th><th>Columns</th></tr>
+<tr><td>Identity</td><td>Project_Name, Location, Project_Type</td></tr>
+<tr><td>Budget</td><td>Budget_Line_Item, Sub_Category, Main_Category, Phase</td></tr>
+<tr><td>Financial</td><td>Budgeted_Amount_Lacs, Spent_Amount_Lacs, Percentage_Spent, Remaining_Amount_Lacs</td></tr>
+<tr><td>Contingency</td><td>Contingency_Allocated_Lacs, Contingency_Used_Lacs</td></tr>
+<tr><td>Vendor</td><td>Vendor_Name, Unit_Rate_Rupees, Quantity_Units, Unit_Type</td></tr>
+<tr><td>Progress</td><td>Work_Status, Completion_Target_Percent, Actual_Completion_Percent, Timeline_Status</td></tr>
+<tr><td>Risk</td><td>Risk_Level, Risk_Description, Approval_Status, Invoice_Pending_Lacs, Notes</td></tr>
+</table>
+</div>
+
+<div class="grid-2">
+<div class="card">
+<h3>Portfolio at a Glance</h3>
+<table>
+<tr><td>Total Budget</td><td style="text-align:right;font-weight:700;color:#FFD600">₹2,883.2 Lac</td></tr>
+<tr><td>Total Spent</td><td style="text-align:right">₹1,913.0 Lac (66.4%)</td></tr>
+<tr><td>Remaining</td><td style="text-align:right">₹970.2 Lac</td></tr>
+<tr><td>Contingency Allocated</td><td style="text-align:right">₹203.2 Lac</td></tr>
+<tr><td>Contingency Used</td><td style="text-align:right;color:#FF9800">₹34.0 Lac (16.7%)</td></tr>
+<tr><td>Pending Invoices</td><td style="text-align:right;color:#FF5252">₹201.2 Lac</td></tr>
+<tr><td>Items Over Budget</td><td style="text-align:right;color:#FF5252">28 of 242</td></tr>
+<tr><td>High/Critical Risk Items</td><td style="text-align:right;color:#FF5252">84 items</td></tr>
+</table>
+</div>
+<div class="card">
+<h3>🚩 Red Flags (Don't Reveal Before Demo!)</h3>
+<ul>
+<li>Gajwel HVAC: <span style="color:#FF5252">115% spent</span> — ₹1.8L over</li>
+<li>Nizamabad RCC Columns: <span style="color:#FF5252">114.9%</span> — ₹2.9L over</li>
+<li>Kollur Slab Casting: <span style="color:#FF5252">110.3%</span> — ₹2.5L over</li>
+<li>Kamareddy HVAC contingency: <span style="color:#FF9800">91% burned</span></li>
+<li>Medical College Piling contingency: <span style="color:#FF9800">88% burned</span></li>
+<li>Rebar rate gap: IT Park ₹51/kg vs Medical College ₹65/kg (<span style="color:#FF5252">27% spread</span>)</li>
+<li>JNTU pending invoice: <span style="color:#FF9800">₹9.87L stuck</span></li>
+<li>Healthiest: <span style="color:#4CAF50">IT Park & JNTU — zero overruns, zero contingency burn</span></li>
+</ul>
+</div>
+</div>
+
+<div class="card">
+<h3>Project Risk Heatmap</h3>
+<table>
+<tr><th>Project</th><th>Rows</th><th>Budget</th><th>% Spent</th><th>Overruns</th><th>High Risk</th><th>Status</th></tr>
+<tr><td>Medical College</td><td>21</td><td>₹292.4L</td><td>70.6%</td><td style="color:#FF5252">3</td><td style="color:#FF5252">8</td><td>🔴 Stressed</td></tr>
+<tr><td>Kollur Township</td><td>21</td><td>₹239.8L</td><td>77.7%</td><td style="color:#FF5252">3</td><td style="color:#FF5252">10</td><td>🔴 Stressed</td></tr>
+<tr><td>Kamareddy Auditorium</td><td>22</td><td>₹203.3L</td><td>73.4%</td><td style="color:#FF9800">4</td><td style="color:#FF5252">11</td><td>🟠 Watch</td></tr>
+<tr><td>Nizamabad Water Plant</td><td>23</td><td>₹250.8L</td><td>74.1%</td><td style="color:#FF9800">3</td><td style="color:#FF5252">11</td><td>🟠 Watch</td></tr>
+<tr><td>IISER Library</td><td>16</td><td>₹221.7L</td><td>78.0%</td><td style="color:#FF9800">4</td><td>8</td><td>🟠 Watch</td></tr>
+<tr><td>Gajwel Auditorium</td><td>23</td><td>₹239.7L</td><td>62.3%</td><td style="color:#FF9800">4</td><td>7</td><td>🟠 Watch</td></tr>
+<tr><td>NSDL Data Center</td><td>18</td><td>₹253.4L</td><td>64.8%</td><td>3</td><td>7</td><td>🟡 Caution</td></tr>
+<tr><td>SWC Warehouse</td><td>21</td><td>₹249.6L</td><td>62.0%</td><td>3</td><td>11</td><td>🟡 Caution</td></tr>
+<tr><td>APIIC Industrial Park</td><td>22</td><td>₹230.7L</td><td>63.6%</td><td>1</td><td>4</td><td>🟡 Caution</td></tr>
+<tr><td>Urdu University</td><td>17</td><td>₹185.2L</td><td>60.2%</td><td style="color:#4CAF50">0</td><td>7</td><td>🟢 Healthy</td></tr>
+<tr><td style="color:#4CAF50">IT Park Tower</td><td>18</td><td>₹261.8L</td><td style="color:#4CAF50">56.9%</td><td style="color:#4CAF50">0</td><td style="color:#4CAF50">0</td><td>🟢 Best</td></tr>
+<tr><td style="color:#4CAF50">JNTU Campus Block</td><td>20</td><td>₹254.8L</td><td style="color:#4CAF50">53.7%</td><td style="color:#4CAF50">0</td><td style="color:#4CAF50">0</td><td>🟢 Best</td></tr>
+</table>
+<div class="tip"><strong>💡 Facilitator:</strong> Don't show this table before the demo. Let participants see AI discover these patterns live — that's the "wow" moment.</div>
+</div>
+</div>
+</div>
+
+<!-- PART 3: 7 PROMPTS -->
+<div class="section">
+<div class="section-head" onclick="toggle(this)"><h2>🎬 Part 3: Live Demo — 7 Analysis Prompts with Expected Outputs</h2><span class="arrow">▼</span></div>
+<div class="section-body">
+<p style="margin-bottom:15px">Upload the 242-row CSV first, then paste any prompt. Click each to expand and see expected AI output.</p>
+
+<!-- P1 -->
+<div class="cs" onclick="tcs(this)"><div class="cs-head"><h3><span class="cst cst-d">LIVE DEMO</span> Prompt 1: Portfolio Risk Scan</h3><span class="csa">▼</span></div><div class="cs-body">
+<p><span class="badge badge-time">⏱ 2 min</span> <span class="badge badge-risk">⚠ Most critical — run this first</span></p>
+<span class="prompt-label">COPY-PASTE PROMPT</span>
+<div class="prompt"><button class="copy-btn" onclick="cp(this)">📋 Copy</button>I've uploaded a CSV with 242 rows of construction project budget data across 12 concurrent projects, total portfolio budget ₹2,883 Lac.
+
+Run a PORTFOLIO RISK SCAN:
+
+1. FLAG every line item where Percentage_Spent exceeds 100%
+2. FLAG every item where Contingency_Used exceeds 50% of Contingency_Allocated
+3. FLAG every project where Actual_Completion < Completion_Target by more than 10%
+4. RANK all 12 projects from highest risk to lowest risk
+5. For the TOP 3 riskiest projects, provide:
+   - Specific overrun line items with amounts
+   - Root cause analysis
+   - Recommended corrective action
+   - Forecast: Will this project finish over budget? By how much?
+
+Format as a 1-page executive summary for the CEO.
+Include a risk score (1-10) for each project.
+Use 🔴🟡🟢 indicators.</div>
+
+<span class="output-label">EXPECTED AI OUTPUT</span>
+<div class="output">🚨 PORTFOLIO RISK SCAN — EXECUTIVE SUMMARY
+Portfolio: ₹2,883.2L across 12 projects | 66.4% spent | 28 overruns detected
+
+CRITICAL PROJECTS:
+━━━━━━━━━━━━━━━━━━
+
+🔴 Kamareddy Auditorium — Risk: 8.2/10
+├─ HVAC Units: 108.2% (₹2.2L over) + contingency 91% burned
+├─ Fire Fighting: 109.7% (₹0.8L over)
+├─ Lighting Fixtures: 110.3% (₹0.3L over)
+├─ Root cause: MEP scope underestimated, vendor rates escalated
+├─ Forecast: ₹4-6L final overrun if uncorrected
+└─ ACTION: Freeze MEP additions, renegotiate HVAC contract
+
+🔴 Kollur Township — Risk: 7.8/10
+├─ Slab Casting: 110.3% (₹2.5L over) + contingency 57% burned
+├─ Elevator: contingency 58% burned (₹1.8L of ₹3.1L)
+├─ Floor Tiling: contingency 80% burned (₹2.7L of ₹3.3L)
+├─ Root cause: Residential finishing costs exceeded estimates
+├─ Forecast: ₹3-5L additional contingency needed
+└─ ACTION: Value-engineering on remaining finishes
+
+🟠 Nizamabad Water Plant — Risk: 7.0/10
+├─ RCC Columns: 114.9% (₹2.9L over) + contingency 73% burned
+├─ Rebar contingency: 64% burned
+├─ Root cause: Foundation conditions required heavier RCC
+├─ Forecast: ₹3-4L overrun if current pace continues
+└─ ACTION: Design review for remaining structural scope
+
+HEALTHY PROJECTS:
+├─ 🟢 IT Park Tower: Risk 1.5/10 — Zero overruns, zero contingency burn
+├─ 🟢 JNTU Campus: Risk 1.8/10 — Under budget, ahead of schedule
+└─ 🟢 Urdu University: Risk 3.0/10 — On track, no overruns
+
+PORTFOLIO SUMMARY:
+├─ Total overrun items: 28 of 242 (11.6%)
+├─ Total contingency at risk: ₹34L used of ₹203L (16.7%)
+├─ Pending invoices: ₹201.2L (potential cash flow impact)
+└─ Forecast: Portfolio will finish within budget IF top 3 projects are corrected</div>
+</div></div>
+
+<!-- P2 -->
+<div class="cs" onclick="tcs(this)"><div class="cs-head"><h3><span class="cst cst-d">LIVE DEMO</span> Prompt 2: Cross-Project Variance Analysis</h3><span class="csa">▼</span></div><div class="cs-body">
+<span class="prompt-label">COPY-PASTE PROMPT</span>
+<div class="prompt"><button class="copy-btn" onclick="cp(this)">📋 Copy</button>Using the same 242-row dataset, perform a CROSS-PROJECT VARIANCE ANALYSIS:
+
+1. Compare budget utilization (% spent) across all 12 projects — rank most to least efficient
+2. Which project has BEST cost control? What are they doing right?
+3. Which has WORST cost control? What went wrong?
+4. Compare SAME materials across projects:
+   - Rebar/TMT Steel rate per kg across all projects
+   - Concrete rate per cum across all projects
+   - HVAC rate per unit across all projects
+5. Which vendors appear in multiple projects? Are their rates consistent?
+6. Calculate: If every project used the lowest rate for each material, total savings?
+
+Create a comparison table + key insights.
+Highlight: Top 5 procurement optimization opportunities.</div>
+</div></div>
+
+<!-- P3 -->
+<div class="cs" onclick="tcs(this)"><div class="cs-head"><h3><span class="cst cst-d">LIVE DEMO</span> Prompt 3: Phase-by-Phase Trend Analysis</h3><span class="csa">▼</span></div><div class="cs-body">
+<span class="prompt-label">COPY-PASTE PROMPT</span>
+<div class="prompt"><button class="copy-btn" onclick="cp(this)">📋 Copy</button>Analyze the 242-row dataset by CONSTRUCTION PHASE:
+
+1. Group all items by Main_Category (Civil, MEP, Finishing)
+2. For EACH phase across all 12 projects:
+   - Total budget vs total spent
+   - Average budget utilization (%)
+   - Number of overrun items
+   - Average contingency burn rate
+3. Which phase consistently runs over budget? By how much?
+4. Which phase is most predictable (lowest variance)?
+5. Civil vs MEP vs Finishing — which is the riskiest phase for DEC Infra?
+6. Recommend contingency allocation % per phase for future projects
+
+Create a phase benchmarking report with a summary table.</div>
+</div></div>
+
+<!-- P4 -->
+<div class="cs" onclick="tcs(this)"><div class="cs-head"><h3><span class="cst cst-d">LIVE DEMO</span> Prompt 4: Contingency Health Check</h3><span class="csa">▼</span></div><div class="cs-body">
+<span class="prompt-label">COPY-PASTE PROMPT</span>
+<div class="prompt"><button class="copy-btn" onclick="cp(this)">📋 Copy</button>Run a CONTINGENCY HEALTH CHECK on all 12 projects:
+
+1. Portfolio level: ₹203.2L allocated, ₹34.0L used — is this sustainable?
+2. Per project: contingency allocated, used, remaining, burn rate (%)
+3. Flag every item where contingency burn exceeds 50%
+4. At current burn rates, which projects exhaust contingency before completion?
+5. Which projects have barely touched contingency? Can we reallocate?
+6. Total additional contingency needed across portfolio to finish safely
+
+Create a RAG dashboard:
+🔴 RED: >60% contingency burned
+🟡 AMBER: 30-60% burned
+🟢 GREEN: <30% burned
+
+Recommend: Specific contingency reallocation from healthy to stressed projects.</div>
+</div></div>
+
+<!-- P5 -->
+<div class="cs" onclick="tcs(this)"><div class="cs-head"><h3><span class="cst cst-d">LIVE DEMO</span> Prompt 5: Vendor Rate Deep-Dive</h3><span class="csa">▼</span></div><div class="cs-body">
+<p><span class="badge badge-impact">💰 This prompt typically finds ₹4-12L in savings</span></p>
+<span class="prompt-label">COPY-PASTE PROMPT</span>
+<div class="prompt"><button class="copy-btn" onclick="cp(this)">📋 Copy</button>Perform a VENDOR RATE DEEP-DIVE across all 12 projects:
+
+1. Extract all unit rates from Unit_Rate_Rupees column
+2. Compare the SAME material/service across different projects:
+   - Rebar/TMT Steel per kg (I can see rates from ₹51-65/kg — why the spread?)
+   - Concrete per cum
+   - HVAC per unit
+   - Electrical wiring per Rmt
+   - Plumbing per Rmt
+3. For each material: Best rate, worst rate, % difference, which project pays most
+4. Flag any item where a project pays >20% above portfolio average
+5. Calculate total savings if all projects used the best available rate
+6. Are any vendors charging different rates for same work at different projects?
+
+Format as a procurement optimization report.
+Top 5 items where renegotiating saves the most money.
+Include a "Quick Win" section: savings achievable within 30 days.</div>
+
+<span class="output-label">EXPECTED FINDING: REBAR RATE ANOMALY</span>
+<div class="output">📊 REBAR / TMT STEEL — RATE COMPARISON ACROSS PROJECTS
+
+Project                Rate (₹/kg)    Vendor                    vs Best
+──────────────────────────────────────────────────────────────────────
+IT Park Tower          ₹51/kg         AP Infra Services         BEST ✓
+APIIC Industrial       ₹53/kg         Sri Balaji Infra          +3.9%
+Nizamabad Water        ₹53/kg         Hyderabad Civil Corp      +3.9%
+Gajwel Auditorium      ₹55/kg         Srinivasa Constructions   +7.8%
+SWC Warehouse          ₹63/kg         Ravi Foundations          +23.5% ⚠️
+Kamareddy Auditorium   ₹63/kg         Srinivasa Constructions   +23.5% ⚠️
+Medical College        ₹65/kg         SVS Contractors           +27.5% 🔴
+
+⚠️ FINDING: Medical College pays 27.5% MORE than IT Park for identical TMT steel.
+   If Medical College had 15,000 kg remaining at ₹65 → switch to ₹51 vendor:
+   Savings: 15,000 × ₹14 = ₹2.1L on ONE material at ONE project.
+
+💰 PORTFOLIO-WIDE: Standardizing rebar at ₹54/kg (volume discount) across
+   all projects with remaining quantities = estimated ₹4.8-6.2L annual savings.</div>
+</div></div>
+
+<!-- P6 -->
+<div class="cs" onclick="tcs(this)"><div class="cs-head"><h3><span class="cst cst-d">NEW</span> Prompt 6: Invoice & Payment Gap Analysis</h3><span class="csa">▼</span></div><div class="cs-body">
+<p><span class="badge badge-impact">💰 ₹201.2L in pending invoices — who gets paid first?</span></p>
+<span class="prompt-label">COPY-PASTE PROMPT</span>
+<div class="prompt"><button class="copy-btn" onclick="cp(this)">📋 Copy</button>Analyze INVOICE & PAYMENT GAPS across all 12 projects:
+
+1. Total pending invoices: ₹201.2L — break down by project
+2. List TOP 10 highest pending invoices (amount, project, item, vendor)
+3. Are any pending invoices linked to items that are OVER BUDGET?
+   (This could mean disputed billing or inflated charges)
+4. Are any pending invoices stuck at "Pending" or "Under Review" approval?
+5. Which vendors have the most pending invoices across multiple projects?
+6. Calculate: If we clear all undisputed invoices this month, what's the cash outflow?
+
+Create an invoice priority list:
+- CLEAR NOW: Approved, undisputed, vendor relationship at risk
+- INVESTIGATE: Linked to overruns or disputed items
+- HOLD: Under review, need more information
+
+Recommend: Top 5 invoices to clear this week and why.</div>
+</div></div>
+
+<!-- P7 -->
+<div class="cs" onclick="tcs(this)"><div class="cs-head"><h3><span class="cst cst-d">NEW</span> Prompt 7: Board-Level Dashboard</h3><span class="csa">▼</span></div><div class="cs-body">
+<p><span class="badge badge-time">⏱ 3 min</span> <span class="badge badge-impact">💰 Replaces 2 days of manual board prep</span></p>
+<span class="prompt-label">COPY-PASTE PROMPT</span>
+<div class="prompt"><button class="copy-btn" onclick="cp(this)">📋 Copy</button>Create a BOARD-LEVEL PROJECT HEALTH DASHBOARD from this 242-row dataset:
+
+For EACH of the 12 projects, create a status row:
+- Project Name & Location
+- Budget (₹L) | Spent (%) | Remaining
+- 🟢🟡🔴 Budget Status (Under/At/Over)
+- 🟢🟡🔴 Schedule Status (Ahead/On Track/Behind)
+- 🟢🟡🔴 Contingency Status (Safe/<50% used/>50% used)
+- Top Risk (1-line)
+- Risk Score (1-10)
+
+Then provide:
+1. PORTFOLIO OVERVIEW (3 sentences max — total budget, health, key concern)
+2. TOP 3 CONCERNS requiring board attention (with ₹ impact)
+3. TOP 3 ACHIEVEMENTS worth highlighting
+4. FORECAST: Will the ₹2,883L portfolio finish within budget?
+5. DECISION QUEUE: Items requiring board approval this month
+
+Format as professional board report. Max 2 pages. Traffic lights throughout.</div>
+</div></div>
+
+</div>
+</div>
+
+<!-- PART 4: CASE STUDIES -->
+<div class="section">
+<div class="section-head" onclick="toggle(this)"><h2>📂 Part 4: Case Studies — AI Catches What Humans Miss</h2><span class="arrow">▼</span></div>
+<div class="section-body">
+
+<div class="cs" onclick="tcs(this)"><div class="cs-head"><h3><span class="cst cst-c">CASE STUDY</span> CS-1: The ₹2.9L RCC Overrun Hidden in 242 Rows</h3><span class="csa">▼</span></div><div class="cs-body">
+<div class="cb" style="border-left:3px solid #FF5252"><h4 style="color:#FF5252">📍 Situation</h4><p>Nizamabad Water Plant monthly report shows "on track" — overall 74.1% spent vs 75% planned. Looks fine at project level. But nobody drills into the 23 individual line items.</p></div>
+<div class="cb" style="border-left:3px solid #2196F3"><h4 style="color:#2196F3">🤖 What AI Found</h4><p>Portfolio Risk Scan prompt flagged RCC Columns & Beams at <strong>114.9% spent — ₹2.9L over budget</strong>, the single largest overrun in the entire 242-row dataset. The overrun was masked because earthwork and plastering were under budget, averaging out the total. AI also found contingency for this item was already 73% burned with 30% of work remaining.</p></div>
+<div class="cb" style="border-left:3px solid #4CAF50"><h4 style="color:#4CAF50">💰 Impact</h4><p>Manual discovery: at project end (too late). AI discovery: at 74% completion (time to act). PM froze scope additions, renegotiated remaining rebar quantities. <strong>Saved ₹1.8L vs doing nothing.</strong> Time to find it manually: 3-4 hours scanning 242 rows. Time with AI: 90 seconds.</p></div>
+</div></div>
+
+<div class="cs" onclick="tcs(this)"><div class="cs-head"><h3><span class="cst cst-c">CASE STUDY</span> CS-2: ₹4.8L Saved by Comparing Rebar Rates</h3><span class="csa">▼</span></div><div class="cs-body">
+<div class="cb" style="border-left:3px solid #FF5252"><h4 style="color:#FF5252">📍 Situation</h4><p>Each of DEC Infra's 12 projects negotiates rebar independently. Nobody compares rates across sites because data lives in separate spreadsheets managed by different PMs.</p></div>
+<div class="cb" style="border-left:3px solid #2196F3"><h4 style="color:#2196F3">🤖 What AI Found</h4><p>Vendor Rate Deep-Dive revealed: IT Park pays ₹51/kg, Medical College pays ₹65/kg — a <strong>27.5% gap</strong> for identical-grade TMT steel. SWC and Kamareddy also overpaying at ₹63/kg. AI calculated: standardizing at ₹54/kg (volume discount across portfolio) would save <strong>₹4.8-6.2L annually</strong>.</p></div>
+<div class="cb" style="border-left:3px solid #4CAF50"><h4 style="color:#4CAF50">🎯 Action</h4><p>DEC Infra centralized rebar procurement. Single vendor negotiation across all sites. Result: ₹54/kg rate locked for 12 months. <strong>Annual savings: ₹8-12L.</strong> This one AI prompt paid for the entire training program.</p></div>
+</div></div>
+
+<div class="cs" onclick="tcs(this)"><div class="cs-head"><h3><span class="cst cst-c">CASE STUDY</span> CS-3: Kamareddy Contingency — 6 Weeks from Disaster</h3><span class="csa">▼</span></div><div class="cs-body">
+<div class="cb" style="border-left:3px solid #FF5252"><h4 style="color:#FF5252">📍 Situation</h4><p>Kamareddy Auditorium has 4 overrun items and its HVAC contingency is 91% burned. Medical College piling contingency is 88% burned. Meanwhile, IT Park and JNTU have healthy untouched contingency reserves.</p></div>
+<div class="cb" style="border-left:3px solid #2196F3"><h4 style="color:#2196F3">🤖 What AI Found</h4><p>Contingency Health Check revealed: At current burn rate, Kamareddy would exhaust ALL contingency in 6 weeks. Medical College in 8 weeks. But IT Park had ₹0.4L barely touched, JNTU had ₹0.4L untouched — both projects under budget and won't need it.</p></div>
+<div class="cb" style="border-left:3px solid #4CAF50"><h4 style="color:#4CAF50">💰 Impact</h4><p>CFO approved reallocating ₹5L from healthy projects to stressed projects. Without this: Kamareddy would pause work (₹3-5L in idle labor costs) or request emergency board approval (3-week delay). AI analysis done in 2 minutes. Manual: Would require a full-day cross-portfolio review that nobody had time for.</p></div>
+</div></div>
+
+<div class="cs" onclick="tcs(this)"><div class="cs-head"><h3><span class="cst cst-c">CASE STUDY</span> CS-4: ₹9.87L Invoice Stuck for 45 Days</h3><span class="csa">▼</span></div><div class="cs-body">
+<div class="cb" style="border-left:3px solid #FF5252"><h4 style="color:#FF5252">📍 Situation</h4><p>JNTU Campus has a ₹9.87L pending invoice for piling work — the largest pending invoice in the entire portfolio. The vendor is threatening to stop work on another DEC Infra project.</p></div>
+<div class="cb" style="border-left:3px solid #2196F3"><h4 style="color:#2196F3">🤖 What AI Found</h4><p>Invoice Gap Analysis revealed: 10 invoices totaling ₹54L are pending across the portfolio. The JNTU ₹9.87L invoice was approved but stuck in payment processing. Meanwhile, 3 invoices totaling ₹8.5L were linked to over-budget items — flagged for investigation before payment.</p></div>
+<div class="cb" style="border-left:3px solid #4CAF50"><h4 style="color:#4CAF50">🎯 Action</h4><p>Clear the 7 undisputed invoices (₹45.5L) immediately. Investigate 3 disputed invoices (₹8.5L) before payment. JNTU piling invoice cleared same day — vendor relationship preserved. <strong>One prompt prevented a vendor walkout that would have delayed JNTU by 3 weeks (₹8-10L impact).</strong></p></div>
+</div></div>
+
+<div class="cs" onclick="tcs(this)"><div class="cs-head"><h3><span class="cst cst-w">CAUTIONARY</span> CS-5: When AI Got the Recommendation Wrong</h3><span class="csa">▼</span></div><div class="cs-body">
+<div class="cb" style="border-left:3px solid #FF5252"><h4 style="color:#FF5252">📍 What Went Wrong</h4><p>AI recommended dropping Srinivasa Constructions (₹63/kg rebar at Kamareddy) in favor of a cheaper vendor. Srinivasa also appears at Gajwel at ₹55/kg — so they can clearly supply at lower rates.</p></div>
+<div class="cb" style="border-left:3px solid #FF9800"><h4 style="color:#FF9800">💥 What AI Didn't Know</h4><p>Srinivasa has a 12-year relationship with DEC Infra. They provide 24-hour emergency deliveries, 90-day credit terms, and have never missed a deadline. The ₹63/kg rate at Kamareddy included trucking to a remote location (2 hours from Hyderabad). The cheaper vendor would charge ₹12/kg extra for delivery — making them MORE expensive. AI analyzed data, not relationships.</p></div>
+<div class="cb" style="border-left:3px solid #4CAF50"><h4 style="color:#4CAF50">✅ Lesson</h4><p><strong>AI analyzes what's IN the data. It doesn't know what's NOT in the data.</strong> Vendor relationships, delivery reliability, credit terms, site accessibility — these don't appear in spreadsheets. Always layer human judgment on AI analysis. AI is the starting point, never the final answer.</p></div>
+</div></div>
+
+</div>
+</div>
+
+<!-- PART 5: DATA PROTECTION -->
+<div class="section">
+<div class="section-head" onclick="toggle(this)"><h2>🔒 Part 5: Data Protection — Anonymize Before Uploading</h2><span class="arrow">▼</span></div>
+<div class="section-body">
+<div class="warning"><strong>⚠️ Free ChatGPT may train on your data.</strong> Use the anonymized version of the dataset for practice. See Module 3 for full data classification.</div>
+<div class="card">
+<h3>Quick Anonymization (2 minutes in Excel)</h3>
+<table>
+<tr><th>Step</th><th>Find</th><th>Replace With</th><th>Shortcut</th></tr>
+<tr><td>1</td><td>IISER Library</td><td>Project Alpha</td><td>Ctrl+H</td></tr>
+<tr><td>2</td><td>Medical College</td><td>Project Beta</td><td>Ctrl+H</td></tr>
+<tr><td>3</td><td>Tirupati, AP</td><td>Location 1</td><td>Ctrl+H</td></tr>
+<tr><td>4</td><td>SVS Contractors</td><td>Civil Vendor A</td><td>Ctrl+H</td></tr>
+<tr><td>5</td><td><em>...repeat for all vendors...</em></td><td></td><td></td></tr>
+<tr><td>6</td><td colspan="3">Keep ALL numbers intact — amounts, rates, percentages stay as-is</td></tr>
+</table>
+<p style="margin-top:10px"><strong>Pre-built anonymized file available:</strong> <code>DEC_Infra_Dataset_ANONYMIZED.csv</code> — ready to upload to free AI tools immediately.</p>
+</div>
+<div class="success"><strong>✓ Two files provided:</strong> (1) Master dataset with real names (facilitator reference only), (2) Anonymized dataset (safe for participant hands-on with any AI tool).</div>
+</div>
+</div>
+
+<!-- PART 6: EXERCISE -->
+<div class="section">
+<div class="section-head" onclick="toggle(this)"><h2>👨‍💻 Part 6: Hands-On Team Challenge (25 minutes)</h2><span class="arrow">▼</span></div>
+<div class="section-body">
+<div class="exercise"><h3>🏋️ Team Challenge: Analyze the ₹28.8 Cr Portfolio</h3><p>4 teams, each uploads the anonymized CSV and runs ONE assigned prompt. Present top 3 findings in 2 minutes. Judged on: insight quality, actionability, and clarity.</p></div>
+<div class="grid-2">
+<div class="card"><h3>Team 1: Budget Detectives 🔍</h3><p>Prompt #1 (Risk Scan). Find the 3 most dangerous overruns. What should the CEO know TODAY?</p><p style="font-size:13px;opacity:0.7;margin-top:8px">Judge asks: "If you fix only ONE item, which and why?"</p></div>
+<div class="card"><h3>Team 2: Cost Optimizers 💰</h3><p>Prompt #5 (Rate Deep-Dive). Find 3 materials where DEC Infra overpays. Total savings?</p><p style="font-size:13px;opacity:0.7;margin-top:8px">Judge asks: "How much can we save this quarter?"</p></div>
+<div class="card"><h3>Team 3: Contingency Watchers ⚠️</h3><p>Prompt #4 (Contingency Check). Which projects run out first? What do we do?</p><p style="font-size:13px;opacity:0.7;margin-top:8px">Judge asks: "Should we reallocate? From where to where?"</p></div>
+<div class="card"><h3>Team 4: Board Briefers 📋</h3><p>Prompt #7 (Board Dashboard). Create the board report. Present as if the board is listening NOW.</p><p style="font-size:13px;opacity:0.7;margin-top:8px">Judge asks: "What decision does the board make today?"</p></div>
+</div>
+<div class="tip"><strong>💡 Tips:</strong> Upload CSV first, then paste prompt. If ChatGPT is slow, try Claude. Focus on INSIGHTS not descriptions — tell us what you FOUND, not what you DID.</div>
+</div>
+</div>
+
+<!-- PART 7: ADVANCED -->
+<div class="section">
+<div class="section-head" onclick="toggle(this)"><h2>🚀 Part 7: Advanced — Follow-Up Questions & Prompt Library</h2><span class="arrow">▼</span></div>
+<div class="section-body">
+<div class="card">
+<h3>5 Powerful Follow-Up Patterns</h3>
+<p>After the first analysis, dig deeper. AI remembers your uploaded data within the conversation.</p>
+<table>
+<tr><th>Pattern</th><th>Example</th><th>Reveals</th></tr>
+<tr><td><strong>Drill Down</strong></td><td>"Zoom into Kamareddy only. Show every overrun sorted by severity."</td><td>Granular single-project view</td></tr>
+<tr><td><strong>What-If</strong></td><td>"If we renegotiate rebar to ₹54/kg everywhere, total savings?"</td><td>Scenario modeling for procurement</td></tr>
+<tr><td><strong>Compare</strong></td><td>"Why does IT Park have zero overruns but Kamareddy has 4? Compare."</td><td>Root cause by project comparison</td></tr>
+<tr><td><strong>Forecast</strong></td><td>"At current burn rates, forecast final cost for each project."</td><td>Early warning for budget requests</td></tr>
+<tr><td><strong>Action Plan</strong></td><td>"For the 5 worst overruns, create a 30-day corrective plan with owners."</td><td>Converts analysis into execution</td></tr>
+</table>
+</div>
+<div class="card">
+<h3>Build Your Prompt Library</h3>
+<div class="grid-2">
+<div><h4>For Project Managers</h4><ul><li>Weekly budget variance scan</li><li>Monthly board dashboard</li><li>Vendor performance ranking</li><li>Schedule risk assessment</li></ul></div>
+<div><h4>For Finance Teams</h4><ul><li>Invoice aging analysis</li><li>Cash flow forecasting</li><li>Cross-project benchmarking</li><li>Contingency utilization</li></ul></div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- TAKEAWAYS -->
+<div class="section">
+<div class="section-head" onclick="toggle(this)"><h2>🎯 Key Takeaways</h2><span class="arrow">▼</span></div>
+<div class="section-body">
+<div class="card">
+<table>
+<tr><th>#</th><th>Takeaway</th><th>Proof</th></tr>
+<tr><td style="font-size:20px;font-weight:800;color:#FFD600">1</td><td><strong>242 rows analyzed in 90 seconds</strong></td><td>28 overruns, 19 contingency burns found instantly</td></tr>
+<tr><td style="font-size:20px;font-weight:800;color:#FFD600">2</td><td><strong>AI catches what manual reviews miss</strong></td><td>₹2.9L RCC overrun hidden inside project-level totals</td></tr>
+<tr><td style="font-size:20px;font-weight:800;color:#FFD600">3</td><td><strong>Cross-project comparison reveals savings</strong></td><td>₹4.8-6.2L saved on rebar alone by standardizing rates</td></tr>
+<tr><td style="font-size:20px;font-weight:800;color:#FFD600">4</td><td><strong>Contingency reallocation prevents crises</strong></td><td>₹5L moved from healthy to stressed projects — avoided work stoppage</td></tr>
+<tr><td style="font-size:20px;font-weight:800;color:#FFD600">5</td><td><strong>Invoice analysis protects vendor relationships</strong></td><td>₹9.87L stuck invoice cleared — prevented vendor walkout</td></tr>
+<tr><td style="font-size:20px;font-weight:800;color:#FFD600">6</td><td><strong>Always anonymize before uploading</strong></td><td>2 min anonymization protects ₹crores of data</td></tr>
+<tr><td style="font-size:20px;font-weight:800;color:#FFD600">7</td><td><strong>AI assists, humans decide</strong></td><td>CS-5: AI recommended dropping best vendor — human judgment saved ₹8L</td></tr>
+</table>
+</div>
+<div class="stats">
+<div class="stat"><span class="n">90 sec</span><span class="l">vs 4-6 hrs manual</span></div>
+<div class="stat"><span class="n">₹28.8 Cr</span><span class="l">Portfolio analyzed</span></div>
+<div class="stat"><span class="n">7</span><span class="l">Ready prompts</span></div>
+<div class="stat"><span class="n">₹12-24L</span><span class="l">Annual savings</span></div>
+</div>
+<div class="card"><h3>Your 1-Week Action Plan</h3><ul>
+<li><strong>Today:</strong> Download both CSV files and try Prompt #1 yourself</li>
+<li><strong>Tomorrow:</strong> Export YOUR project's budget as CSV, anonymize it, run Risk Scan</li>
+<li><strong>This week:</strong> Try 3 different prompts on your actual data</li>
+<li><strong>Next week:</strong> Start building your personal prompt library</li>
+<li><strong>This month:</strong> Replace one manual reporting task with AI analysis</li>
+</ul></div>
+</div>
+</div>
+
+</div>
+
+<script>
+function toggle(el){el.parentElement.classList.toggle('open')}
+function tcs(el){if(el.classList.contains('cs'))el.classList.toggle('cso')}
+function cp(btn){const t=btn.parentElement.textContent.replace('📋 Copy','').trim();navigator.clipboard.writeText(t).then(()=>{btn.textContent='✓ Copied!';setTimeout(()=>btn.textContent='📋 Copy',2000)});event.stopPropagation()}
+</script>
+</body>
+</html>

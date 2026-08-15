@@ -426,6 +426,13 @@ input[type=number] { -moz-appearance: textfield; }
 .no-spinner::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
 .no-spinner { -moz-appearance: textfield; }
 
+/* Global pre-wrap to prevent text overflow */
+pre {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
 /* ── Mobile responsive fixes for Productivity Tracker ── */
 @media (max-width: 600px) {
 

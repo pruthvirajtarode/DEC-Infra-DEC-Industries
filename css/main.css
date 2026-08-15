@@ -5,17 +5,17 @@
 
 :root, [data-theme="dark"] {
     /* Color Palette - Deep Space & Indigo Gamified SaaS Theme */
-    --primary: #05050A; /* Ultra deep space */
-    --primary-light: #0D0E15; /* Sidebar / Deep elements */
-    --primary-lighter: #1E1F2E; /* Borders/Hover */
+    --primary: #0A0A0A; /* FutureTech Black */
+    --primary-light: #121212; /* FutureTech Sidebar */
+    --primary-lighter: #222222; /* Hover */
     
-    --secondary: #0A0A0F; /* Secondary background */
-    --bg-main: #020617; /* App background (slate-950) */
-    --bg-card: rgba(15, 23, 42, 0.5); /* Glassmorphic card */
-    --border-color: rgba(255, 255, 255, 0.08); /* Subtle crisp borders */
+    --secondary: #000000; /* Secondary */
+    --bg-main: #141414; /* FutureTech Main */
+    --bg-card: #1C1C1C; /* FutureTech Card */
+    --border-color: rgba(255, 255, 255, 0.05); /* Subtle crisp borders */
     
-    --accent: #8B5CF6; /* Cyber Purple / Indigo for gamified accent */
-    --accent-hover: #A78BFA; /* Lighter hover */
+    --accent: #FFDE59; /* FutureTech Yellow */
+    --accent-hover: #FFC107; /* Lighter hover */
     
     --text-main: #F8FAFC; /* Crisp white text */
     --text-muted: #94A3B8; /* Subtle text */
@@ -28,8 +28,8 @@
     --warning-bg: rgba(245, 158, 11, 0.15);
     --danger: #EF4444; /* Rose/Red */
     --danger-bg: rgba(239, 68, 68, 0.15);
-    --info: #06B6D4; /* Cyan */
-    --info-bg: rgba(6, 182, 212, 0.15);
+    --info: #FFDE59; /* FutureTech Info (Yellow) */
+    --info-bg: rgba(255, 222, 89, 0.1);
     
     /* Typography */
     --font-heading: 'Outfit', sans-serif;
@@ -44,7 +44,7 @@
     --shadow-md: 0 8px 30px rgba(0, 0, 0, 0.4);
     --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.5);
     
-    --shadow-glow-accent: 0 0 25px rgba(139, 92, 246, 0.3);
+    --shadow-glow-accent: 0 0 25px rgba(255, 222, 89, 0.2);
     --shadow-glow-success: 0 0 25px rgba(16, 185, 129, 0.3);
     
     --radius-sm: 8px;

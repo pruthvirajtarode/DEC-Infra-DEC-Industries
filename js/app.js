@@ -287,7 +287,7 @@ function renderModule1(container) {
         let contentHtml = '';
         if (activeSubTab === 'agenda') {
             contentHtml = `<div class="card mb-8" style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-sm);">
-            <div style="background: linear-gradient(135deg, #0f172a 0%, #3b82f6 100%); padding: 2rem; color: white;">
+            <div style="background: linear-gradient(135deg, #141414 0%, #333333 100%); padding: 2rem; color: white;">
                 <h3 style="margin-bottom: 0.5rem; font-size: 1.5rem; color: white; display: flex; align-items: center; gap: 0.75rem;">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
                     Module 1 Agenda
@@ -296,7 +296,7 @@ function renderModule1(container) {
             </div>
             <div style="padding: 2rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; background: var(--bg-main);">
                 <div style="display: flex; gap: 1rem; align-items: flex-start; background: var(--bg-card); padding: 1.5rem; border-radius: 12px; border: 1px solid var(--border-color); box-shadow: var(--shadow-sm);">
-                    <div style="background: rgba(59, 130, 246, 0.1); color: #3b82f6; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0; font-size: 1.2rem;">1</div>
+                    <div style="background: rgba(255, 222, 89, 0.1); color: #FFDE59; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0; font-size: 1.2rem;">1</div>
                     <div>
                         <h4 style="margin-bottom: 0.5rem; color: var(--text-main);">Role-Specific AI</h4>
                         <p class="text-sm text-muted">Discover how AI transforms your specific workflow at DEC.</p>
@@ -329,7 +329,7 @@ function renderModule1(container) {
             </div>
             
             <div style="display: flex; gap: 1rem; margin-bottom: 2rem; overflow-x: auto; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border-color); scrollbar-width: none;">
-                <button class="role-tab-btn active" onclick="window.switchRoleTab('project-exec')" id="btn-project-exec" style="background: transparent; border: none; padding: 0.5rem 1rem; font-weight: 600; color: #3b82f6; border-bottom: 2px solid #3b82f6; cursor: pointer; white-space: nowrap; transition: all 0.2s;">Project Execution</button>
+                <button class="role-tab-btn active" onclick="window.switchRoleTab('project-exec')" id="btn-project-exec" style="background: transparent; border: none; padding: 0.5rem 1rem; font-weight: 600; color: #FFDE59; border-bottom: 2px solid #FFDE59; cursor: pointer; white-space: nowrap; transition: all 0.2s;">Project Execution</button>
                 <button class="role-tab-btn" onclick="window.switchRoleTab('quality')" id="btn-quality" style="background: transparent; border: none; padding: 0.5rem 1rem; font-weight: 500; color: var(--text-muted); border-bottom: 2px solid transparent; cursor: pointer; white-space: nowrap; transition: all 0.2s;">Quality & Safety</button>
                 <button class="role-tab-btn" onclick="window.switchRoleTab('infra-it')" id="btn-infra-it" style="background: transparent; border: none; padding: 0.5rem 1rem; font-weight: 500; color: var(--text-muted); border-bottom: 2px solid transparent; cursor: pointer; white-space: nowrap; transition: all 0.2s;">Infrastructure & IT</button>
             </div>
@@ -339,11 +339,11 @@ function renderModule1(container) {
                 <div class="dashboard-grid">
                     <div style="background: var(--bg-main); border: 1px solid var(--border-color); border-radius: 12px; overflow: hidden;">
                         <div style="padding: 1.5rem; border-bottom: 1px solid rgba(0,0,0,0.5); display: flex; align-items: center; gap: 1rem; background: var(--bg-card);">
-                            <div style="background: rgba(59, 130, 246, 0.1); color: #3b82f6; width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">👷</div>
+                            <div style="background: rgba(255, 222, 89, 0.1); color: #FFDE59; width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">👷</div>
                             <h4 style="margin: 0; font-size: 1.1rem; color: var(--text-main);">Project Managers</h4>
                         </div>
                         <div style="padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem;">
-                            <div style="background: var(--bg-card); padding: 1rem; border-radius: 8px; border-left: 3px solid #3b82f6; box-shadow: 0 1px 3px rgba(0,0,0,0.5);">
+                            <div style="background: var(--bg-card); padding: 1rem; border-radius: 8px; border-left: 3px solid #FFDE59; box-shadow: 0 1px 3px rgba(0,0,0,0.5);">
                                 <strong style="display: block; font-size: 0.875rem; color: var(--text-main); margin-bottom: 0.25rem;">ChatGPT / Claude</strong>
                                 <span class="text-xs text-muted">Draft proposals, summarize minutes, create communication templates</span>
                             </div>
@@ -364,7 +364,7 @@ function renderModule1(container) {
                             <h4 style="margin: 0; font-size: 1.1rem; color: var(--text-main);">Site Supervisors</h4>
                         </div>
                         <div style="padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem;">
-                            <div style="background: var(--bg-card); padding: 1rem; border-radius: 8px; border-left: 3px solid #3b82f6; box-shadow: 0 1px 3px rgba(0,0,0,0.5);">
+                            <div style="background: var(--bg-card); padding: 1rem; border-radius: 8px; border-left: 3px solid #FFDE59; box-shadow: 0 1px 3px rgba(0,0,0,0.5);">
                                 <strong style="display: block; font-size: 0.875rem; color: var(--text-main); margin-bottom: 0.25rem;">ChatGPT Vision (Mobile)</strong>
                                 <span class="text-xs text-muted">Assess site conditions, document progress visually</span>
                             </div>
@@ -377,11 +377,11 @@ function renderModule1(container) {
 
                     <div style="background: var(--bg-main); border: 1px solid var(--border-color); border-radius: 12px; overflow: hidden;">
                         <div style="padding: 1.5rem; border-bottom: 1px solid rgba(0,0,0,0.5); display: flex; align-items: center; gap: 1rem; background: var(--bg-card);">
-                            <div style="background: rgba(139, 92, 246, 0.1); color: #8b5cf6; width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">⚙️</div>
+                            <div style="background: rgba(255, 222, 89, 0.1); color: #FFDE59; width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">⚙️</div>
                             <h4 style="margin: 0; font-size: 1.1rem; color: var(--text-main);">Technical Staff</h4>
                         </div>
                         <div style="padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem;">
-                            <div style="background: var(--bg-card); padding: 1rem; border-radius: 8px; border-left: 3px solid #8b5cf6; box-shadow: 0 1px 3px rgba(0,0,0,0.5);">
+                            <div style="background: var(--bg-card); padding: 1rem; border-radius: 8px; border-left: 3px solid #FFDE59; box-shadow: 0 1px 3px rgba(0,0,0,0.5);">
                                 <strong style="display: block; font-size: 0.875rem; color: var(--text-main); margin-bottom: 0.25rem;">Engineering Mode Prompting</strong>
                                 <span class="text-xs text-muted">Verify specs, research standards, generate documentation</span>
                             </div>
@@ -403,7 +403,7 @@ function renderModule1(container) {
                             <h4 style="margin: 0; font-size: 1.1rem; color: var(--text-main);">Quality Controllers</h4>
                         </div>
                         <div style="padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem;">
-                            <div style="background: var(--bg-card); padding: 1rem; border-radius: 8px; border-left: 3px solid #3b82f6; box-shadow: 0 1px 3px rgba(0,0,0,0.5);">
+                            <div style="background: var(--bg-card); padding: 1rem; border-radius: 8px; border-left: 3px solid #FFDE59; box-shadow: 0 1px 3px rgba(0,0,0,0.5);">
                                 <strong style="display: block; font-size: 0.875rem; color: var(--text-main); margin-bottom: 0.25rem;">ChatGPT Vision</strong>
                                 <span class="text-xs text-muted">Analyze defects from site photos, classify severity</span>
                             </div>
@@ -433,11 +433,11 @@ function renderModule1(container) {
                     
                     <div style="background: var(--bg-main); border: 1px solid var(--border-color); border-radius: 12px; overflow: hidden;">
                         <div style="padding: 1.5rem; border-bottom: 1px solid rgba(0,0,0,0.5); display: flex; align-items: center; gap: 1rem; background: var(--bg-card);">
-                            <div style="background: rgba(99, 102, 241, 0.1); color: #6366f1; width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">📋</div>
+                            <div style="background: rgba(255, 222, 89, 0.1); color: #FFDE59; width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">📋</div>
                             <h4 style="margin: 0; font-size: 1.1rem; color: var(--text-main);">Compliance Team</h4>
                         </div>
                         <div style="padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem;">
-                            <div style="background: var(--bg-card); padding: 1rem; border-radius: 8px; border-left: 3px solid #6366f1; box-shadow: 0 1px 3px rgba(0,0,0,0.5);">
+                            <div style="background: var(--bg-card); padding: 1rem; border-radius: 8px; border-left: 3px solid #FFDE59; box-shadow: 0 1px 3px rgba(0,0,0,0.5);">
                                 <strong style="display: block; font-size: 0.875rem; color: var(--text-main); margin-bottom: 0.25rem;">Claude / GPT</strong>
                                 <span class="text-xs text-muted">Audit documents, create compliance matrices</span>
                             </div>
@@ -451,11 +451,11 @@ function renderModule1(container) {
                 <div class="dashboard-grid">
                     <div style="background: var(--bg-main); border: 1px solid var(--border-color); border-radius: 12px; overflow: hidden;">
                         <div style="padding: 1.5rem; border-bottom: 1px solid rgba(0,0,0,0.5); display: flex; align-items: center; gap: 1rem; background: var(--bg-card);">
-                            <div style="background: rgba(59, 130, 246, 0.1); color: #3b82f6; width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">🏗️</div>
+                            <div style="background: rgba(255, 222, 89, 0.1); color: #FFDE59; width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">🏗️</div>
                             <h4 style="margin: 0; font-size: 1.1rem; color: var(--text-main);">Technical Planning</h4>
                         </div>
                         <div style="padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem;">
-                            <div style="background: var(--bg-card); padding: 1rem; border-radius: 8px; border-left: 3px solid #3b82f6; box-shadow: 0 1px 3px rgba(0,0,0,0.5);">
+                            <div style="background: var(--bg-card); padding: 1rem; border-radius: 8px; border-left: 3px solid #FFDE59; box-shadow: 0 1px 3px rgba(0,0,0,0.5);">
                                 <strong style="display: block; font-size: 0.875rem; color: var(--text-main); margin-bottom: 0.25rem;">ChatGPT Code Interpreter</strong>
                                 <span class="text-xs text-muted">Analyze site surveys, model logistics, calculate resources</span>
                             </div>
@@ -464,11 +464,11 @@ function renderModule1(container) {
                     
                     <div style="background: var(--bg-main); border: 1px solid var(--border-color); border-radius: 12px; overflow: hidden;">
                         <div style="padding: 1.5rem; border-bottom: 1px solid rgba(0,0,0,0.5); display: flex; align-items: center; gap: 1rem; background: var(--bg-card);">
-                            <div style="background: rgba(139, 92, 246, 0.1); color: #8b5cf6; width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">💻</div>
+                            <div style="background: rgba(255, 222, 89, 0.1); color: #FFDE59; width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">💻</div>
                             <h4 style="margin: 0; font-size: 1.1rem; color: var(--text-main);">System Management</h4>
                         </div>
                         <div style="padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem;">
-                            <div style="background: var(--bg-card); padding: 1rem; border-radius: 8px; border-left: 3px solid #8b5cf6; box-shadow: 0 1px 3px rgba(0,0,0,0.5);">
+                            <div style="background: var(--bg-card); padding: 1rem; border-radius: 8px; border-left: 3px solid #FFDE59; box-shadow: 0 1px 3px rgba(0,0,0,0.5);">
                                 <strong style="display: block; font-size: 0.875rem; color: var(--text-main); margin-bottom: 0.25rem;">GitHub Copilot</strong>
                                 <span class="text-xs text-muted">Auto-generate scripts, debug infrastructure code</span>
                             </div>
@@ -480,13 +480,13 @@ function renderModule1(container) {
 
         
         <!-- NEW: Anatomy of a Good Prompt -->
-        <div class="card mb-8" style="border-left: 4px solid var(--info); box-shadow: 0 4px 20px rgba(6, 182, 212, 0.1);">
+        <div class="card mb-8" style="border-left: 4px solid var(--info); box-shadow: 0 4px 20px rgba(255, 222, 89, 0.05);">
             <div class="card-header"><h3 class="card-title">Anatomy of a Good Prompt (Theoretical Framework)</h3></div>
             <div class="card-body">
                 <p class="text-muted mb-4">A structured prompt acts as a clear set of instructions for the AI, reducing ambiguity and hallucination.</p>
                 <div class="dashboard-grid">
-                    <div class="p-3 border rounded" style="background:var(--bg-card); border-top: 3px solid #38BDF8;">
-                        <strong style="color:#38BDF8; font-size: 1.1rem; display: block; margin-bottom: 0.25rem;">1. Role</strong>
+                    <div class="p-3 border rounded" style="background:var(--bg-card); border-top: 3px solid #FFDE59;">
+                        <strong style="color:#FFDE59; font-size: 1.1rem; display: block; margin-bottom: 0.25rem;">1. Role</strong>
                         <span class="text-sm" style="color: #F8FAFC;">Who is the AI? (e.g., "Act as a Senior Procurement Manager")</span>
                     </div>
                     <div class="p-3 border rounded" style="background:var(--bg-card); border-top: 3px solid var(--accent);">
@@ -505,8 +505,8 @@ function renderModule1(container) {
                         <strong style="color:var(--danger); font-size: 1.1rem; display: block; margin-bottom: 0.25rem;">5. Constraints</strong>
                         <span class="text-sm" style="color: #F8FAFC;">What should it NOT do? (e.g., "Do not invent prices if missing.")</span>
                     </div>
-                    <div class="p-3 border rounded" style="background:var(--bg-card); border-top: 3px solid #E879F9;">
-                        <strong style="color:#E879F9; font-size: 1.1rem; display: block; margin-bottom: 0.25rem;">6. Output Format</strong>
+                    <div class="p-3 border rounded" style="background:var(--bg-card); border-top: 3px solid #FFFFFF;">
+                        <strong style="color:#FFFFFF; font-size: 1.1rem; display: block; margin-bottom: 0.25rem;">6. Output Format</strong>
                         <span class="text-sm" style="color: #F8FAFC;">How should it look? (e.g., "Format as Markdown table with a summary.")</span>
                     </div>
                 </div>
@@ -1348,7 +1348,7 @@ function showTab(event, tabName) {
         <div class="mb-4" style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap;">
             <div>
                 <span class="badge badge-warning">Session 1</span>
-                <h2 class="mt-4" style="background: -webkit-linear-gradient(45deg, #F8FAFC, #A78BFA); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Module 1: Prompting & Document Intelligence</h2>
+                <h2 class="mt-4" style="background: -webkit-linear-gradient(45deg, #F8FAFC, #FFDE59); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Module 1: Prompting & Document Intelligence</h2>
                 <p class="text-muted">Turn AI from a simple question-answering tool into a structured work assistant.</p>
             </div>
             <img src="3d-doc.png" class="float-3d" style="width: 140px; height: auto;" alt="3D Document">
@@ -1943,7 +1943,7 @@ function renderModule3(container) {
         <div class="mb-4" style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap;">
             <div>
                 <span class="badge badge-success">Session 3</span>
-                <h2 class="mt-4" style="background: -webkit-linear-gradient(45deg, #F8FAFC, #10B981); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Module 3: Safe AI Usage & Responsible Adoption</h2>
+                <h2 class="mt-4" style="background: -webkit-linear-gradient(45deg, #F8FAFC, #FFDE59); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Module 3: Safe AI Usage & Responsible Adoption</h2>
                 <p class="text-muted">Data classification, identifying hallucinations, and human-in-the-loop verification.</p>
             </div>
             <img src="3d-shield.png" class="float-3d" style="width: 140px; height: auto;" alt="3D Shield">
@@ -2564,7 +2564,7 @@ function renderModule4(container) {
             <div class="mb-4" style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap;">
                 <div>
                     <span class="badge badge-danger" style="margin-bottom:0.5rem;">Session 3 / Final Capstone</span>
-                    <h2 class="mt-2" style="background: -webkit-linear-gradient(45deg, #F8FAFC, #EF4444); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Module 4: Capstone - Build Your Department Assistant</h2>
+                    <h2 class="mt-2" style="background: -webkit-linear-gradient(45deg, #F8FAFC, #FFDE59); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Module 4: Capstone - Build Your Department Assistant</h2>
                     <p class="text-muted">Combine structured prompting, data intelligence, and safe policies into a working Claude Project.</p>
                 </div>
                 <img src="3d-rocket.png" class="float-3d" style="width: 140px; height: auto;" alt="3D Rocket">
@@ -3309,7 +3309,7 @@ function renderPromptLibrary(container) {
         <div class="mb-4" style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap;">
             <div>
                 <span class="badge badge-primary">Resources</span>
-                <h2 class="mt-4" style="background: -webkit-linear-gradient(45deg, #F8FAFC, #A78BFA); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Prompt Library</h2>
+                <h2 class="mt-4" style="background: -webkit-linear-gradient(45deg, #F8FAFC, #FFDE59); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Prompt Library</h2>
                 <p class="text-muted">A collection of ready-to-use prompts for DEC workflows.</p>
             </div>
             <img src="bot-3d.png" class="float-3d" style="width: 140px; height: auto;" alt="3D AI Bot">

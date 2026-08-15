@@ -281,10 +281,13 @@ window.downloadPDF = function(title, contentHTML) {
 
 function renderModule1(container) {
     container.innerHTML = `
-        <div class="mb-4">
-            <span class="badge badge-warning">Session 1</span>
-            <h2 class="mt-4">Module 1: Prompting & Document Intelligence</h2>
-            <p class="text-muted">Turn AI from a simple question-answering tool into a structured work assistant.</p>
+        <div class="mb-4" style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap;">
+            <div>
+                <span class="badge badge-warning">Session 1</span>
+                <h2 class="mt-4" style="background: -webkit-linear-gradient(45deg, #F8FAFC, #A78BFA); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Module 1: Prompting & Document Intelligence</h2>
+                <p class="text-muted">Turn AI from a simple question-answering tool into a structured work assistant.</p>
+            </div>
+            <img src="3d-doc.png" class="float-3d" style="width: 140px; height: auto;" alt="3D Document">
         </div>
         
         <!-- NEW: Agenda Section -->
@@ -924,10 +927,13 @@ function renderModule1(container) {
 
 function renderModule2(container) {
     container.innerHTML = `
-        <div class="mb-4">
-            <span class="badge badge-info">Session 2</span>
-            <h2 class="mt-4">Module 2: AI-Powered Data Analysis</h2>
-            <p class="text-muted">From manual Excel to AI analysis. Work with DEC synthetic data.</p>
+        <div class="mb-4" style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap;">
+            <div>
+                <span class="badge badge-info">Session 2</span>
+                <h2 class="mt-4" style="background: -webkit-linear-gradient(45deg, #F8FAFC, #06B6D4); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Module 2: AI-Powered Data Analysis</h2>
+                <p class="text-muted">From manual Excel to AI analysis. Work with DEC synthetic data.</p>
+            </div>
+            <img src="3d-data.png" class="float-3d" style="width: 140px; height: auto;" alt="3D Data">
         </div>
         
         <!-- NEW: Visual AI Data Pipeline -->
@@ -1282,10 +1288,13 @@ function renderModule2(container) {
 
 function renderModule3(container) {
     container.innerHTML = `
-        <div class="mb-4">
-            <span class="badge badge-success">Session 3</span>
-            <h2 class="mt-4">Module 3: Safe AI Usage & Responsible Adoption</h2>
-            <p class="text-muted">Data classification, identifying hallucinations, and human-in-the-loop verification.</p>
+        <div class="mb-4" style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap;">
+            <div>
+                <span class="badge badge-success">Session 3</span>
+                <h2 class="mt-4" style="background: -webkit-linear-gradient(45deg, #F8FAFC, #10B981); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Module 3: Safe AI Usage & Responsible Adoption</h2>
+                <p class="text-muted">Data classification, identifying hallucinations, and human-in-the-loop verification.</p>
+            </div>
+            <img src="3d-shield.png" class="float-3d" style="width: 140px; height: auto;" alt="3D Shield">
         </div>
         
         <div class="card mb-8">
@@ -1568,10 +1577,13 @@ function renderModule4(container) {
 
     function drawModule4View() {
         container.innerHTML = `
-            <div class="mb-4">
-                <span class="badge badge-danger" style="margin-bottom:0.5rem;">Session 3 / Final Capstone</span>
-                <h2 class="mt-2">Module 4: Capstone - Build Your Department Assistant</h2>
-                <p class="text-muted">Combine structured prompting, data intelligence, and safe policies into a working Claude Project.</p>
+            <div class="mb-4" style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap;">
+                <div>
+                    <span class="badge badge-danger" style="margin-bottom:0.5rem;">Session 3 / Final Capstone</span>
+                    <h2 class="mt-2" style="background: -webkit-linear-gradient(45deg, #F8FAFC, #EF4444); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Module 4: Capstone - Build Your Department Assistant</h2>
+                    <p class="text-muted">Combine structured prompting, data intelligence, and safe policies into a working Claude Project.</p>
+                </div>
+                <img src="3d-rocket.png" class="float-3d" style="width: 140px; height: auto;" alt="3D Rocket">
             </div>
             
             <div class="flex gap-2 mb-6" style="display: flex; flex-wrap: wrap; gap: 0.5rem; border-bottom: 2px solid var(--border-color); padding-bottom: 0.5rem; margin-bottom: 2rem;">
@@ -2310,10 +2322,13 @@ function renderFlagshipDemo(container) {
 
 function renderPromptLibrary(container) {
     container.innerHTML = `
-        <div class="mb-4">
-            <span class="badge badge-primary">Resources</span>
-            <h2 class="mt-4">Prompt Library</h2>
-            <p class="text-muted">A collection of ready-to-use prompts for DEC workflows.</p>
+        <div class="mb-4" style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap;">
+            <div>
+                <span class="badge badge-primary">Resources</span>
+                <h2 class="mt-4" style="background: -webkit-linear-gradient(45deg, #F8FAFC, #A78BFA); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Prompt Library</h2>
+                <p class="text-muted">A collection of ready-to-use prompts for DEC workflows.</p>
+            </div>
+            <img src="bot-3d.png" class="float-3d" style="width: 140px; height: auto;" alt="3D AI Bot">
         </div>
         
         <div class="dashboard-grid">

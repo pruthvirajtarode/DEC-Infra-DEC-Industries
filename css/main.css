@@ -4,32 +4,32 @@
 */
 
 :root, [data-theme="dark"] {
-    /* Color Palette - Premium Gamified Dark Theme */
-    --primary: #000000; /* Deepest black */
-    --primary-light: #111111; /* Sidebar / Deep elements */
-    --primary-lighter: #232323; /* Borders/Hover */
+    /* Color Palette - Deep Space & Indigo Gamified SaaS Theme */
+    --primary: #05050A; /* Ultra deep space */
+    --primary-light: #0D0E15; /* Sidebar / Deep elements */
+    --primary-lighter: #1E1F2E; /* Borders/Hover */
     
-    --secondary: #0A0A0A; /* Secondary background */
-    --bg-main: #060606; /* App background (near black) */
-    --bg-card: rgba(22, 22, 22, 0.6); /* Glassmorphic card */
+    --secondary: #0A0A0F; /* Secondary background */
+    --bg-main: #020617; /* App background (slate-950) */
+    --bg-card: rgba(15, 23, 42, 0.5); /* Glassmorphic card */
     --border-color: rgba(255, 255, 255, 0.08); /* Subtle crisp borders */
     
-    --accent: #F3C623; /* Neon Yellow/Orange for gamified accent */
-    --accent-hover: #FFE66D; /* Lighter hover */
+    --accent: #8B5CF6; /* Cyber Purple / Indigo for gamified accent */
+    --accent-hover: #A78BFA; /* Lighter hover */
     
     --text-main: #F8FAFC; /* Crisp white text */
     --text-muted: #94A3B8; /* Subtle text */
     --text-light: #FFFFFF;
     
     /* Gamified Status Colors */
-    --success: #00FF66; /* Neon Green */
-    --success-bg: rgba(0, 255, 102, 0.15);
-    --warning: #FF9F1C; /* Neon Orange */
-    --warning-bg: rgba(255, 159, 28, 0.15);
-    --danger: #FF3366; /* Neon Pink/Red */
-    --danger-bg: rgba(255, 51, 102, 0.15);
-    --info: #00E5FF; /* Cyan */
-    --info-bg: rgba(0, 229, 255, 0.15);
+    --success: #10B981; /* Emerald Green */
+    --success-bg: rgba(16, 185, 129, 0.15);
+    --warning: #F59E0B; /* Amber/Orange */
+    --warning-bg: rgba(245, 158, 11, 0.15);
+    --danger: #EF4444; /* Rose/Red */
+    --danger-bg: rgba(239, 68, 68, 0.15);
+    --info: #06B6D4; /* Cyan */
+    --info-bg: rgba(6, 182, 212, 0.15);
     
     /* Typography */
     --font-heading: 'Outfit', sans-serif;
@@ -40,16 +40,16 @@
     --header-height: 75px;
     
     /* Gamified Shadows & Glass */
-    --shadow-sm: 0 4px 15px rgba(0, 0, 0, 0.2);
-    --shadow-md: 0 8px 30px rgba(0, 0, 0, 0.3);
-    --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.4);
+    --shadow-sm: 0 4px 15px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 8px 30px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.5);
     
-    --shadow-glow-accent: 0 0 20px rgba(243, 198, 35, 0.25);
-    --shadow-glow-success: 0 0 20px rgba(0, 255, 102, 0.25);
+    --shadow-glow-accent: 0 0 25px rgba(139, 92, 246, 0.3);
+    --shadow-glow-success: 0 0 25px rgba(16, 185, 129, 0.3);
     
     --radius-sm: 8px;
     --radius-md: 14px;
-    --radius-lg: 24px; /* Pill shaped cards */
+    --radius-lg: 20px; /* Pill shaped cards */
     
     --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -64,7 +64,7 @@
 body {
     font-family: var(--font-body);
     color: var(--text-main);
-    background: radial-gradient(circle at top right, #1a1a2e 0%, var(--bg-main) 40%, var(--bg-main) 100%);
+    background: radial-gradient(circle at top right, rgba(139, 92, 246, 0.1) 0%, var(--bg-main) 40%, var(--bg-main) 100%);
     background-color: var(--bg-main);
     line-height: 1.5;
     -webkit-font-smoothing: antialiased;

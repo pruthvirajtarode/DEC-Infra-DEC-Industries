@@ -349,7 +349,7 @@ textarea.form-control {
 /* --- 3D Animations --- */
 .float-3d {
     animation: float-3d 6s ease-in-out infinite;
-    filter: drop-shadow(0 15px 25px rgba(243, 198, 35, 0.2));
+    filter: drop-shadow(0 15px 30px rgba(139, 92, 246, 0.35));
 }
 
 @keyframes float-3d {

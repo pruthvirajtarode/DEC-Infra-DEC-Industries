@@ -4634,6 +4634,511 @@ I will follow the data protection rules from Module 3 and verify all agent outpu
     }, 100);
 }
 
+function renderTrainerDashboard(container) {
+    if (!State.get('trainerMode')) {
+        container.innerHTML = `
+            <div class="card mb-8">
+                <div class="card-body text-center">
+                    <h3 class="mb-4">Trainer Mode Required</h3>
+                    <p class="text-muted">You must enable trainer mode in the sidebar to view this dashboard.</p>
+                </div>
+            </div>`;
+        return;
+    }
+
+    const currentWebhook = State.get('surveyWebhookUrl') || '';
+    const subs = State.get('localSubmissions') || [];
+
+    // Helper to generate the table rows
+    let tableRows = '';
+    if (subs.length === 0) {
+        tableRows = `<tr><td colspan="5" class="text-center text-muted" style="padding: 1.5rem;">No participant survey submissions collected yet.</td></tr>`;
+    } else {
+        subs.forEach(s => {
+            const before = s.before || {};
+            const after = s.after || {};
+            
+            const beforeUsage = before.aiUsagePct ? before.aiUsagePct + '%' : 'N/A';
+            const afterUsage = after.aiUsagePct ? after.aiUsagePct + '%' : 'N/A';
+            const usageShift = before.aiUsagePct && after.aiUsagePct ? `${beforeUsage} Γ₧ö ${afterUsage}` : `${beforeUsage} / ${afterUsage}`;
+            
+            const beforeRating = before.chatgptRating ? before.chatgptRating + '/10' : 'N/A';
+            const afterRating = after.chatgptRating ? after.chatgptRating + '/10' : 'N/A';
+            const ratingShift = before.chatgptRating && after.chatgptRating ? `${beforeRating} Γ₧ö ${afterRating}` : `${beforeRating} / ${afterRating}`;
+            
+            const manualHrsBefore = before.manualTime || 0;
+            const manualHrsAfter = after.manualTime || 0;
+            const timeSaved = before.manualTime && after.manualTime ? (manualHrsBefore - manualHrsAfter) + ' hrs' : 'N/A';
+            
+            const feedbackText = after.feedbackPointers || (before.blocker ? 'Blocker: ' + before.blocker : 'N/A');
+
+            tableRows += `
+                <tr>
+                    <td><b>${s.name}</b></td>
+                    <td>${usageShift}</td>
+                    <td>${ratingShift}</td>
+                    <td style="color:var(--success); font-weight:bold;">${timeSaved}</td>
+                    <td class="text-xs text-muted" style="max-width: 250px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" title="${feedbackText}">${feedbackText}</td>
+                </tr>
+            `;
+        });
+    }
+
+    container.innerHTML = `
+        <div class="mb-4">
+            <span class="badge badge-warning">Trainer Tools</span>
+            <h2 class="mt-4">Trainer Dashboard</h2>
+            <p class="text-muted">Manage participant submissions, setup Google Sheets database collector, and view notes.</p>
+        </div>
+
+        <!-- NEW: Google Sheets Webhook Database Setup -->
+        <div class="card mb-8">
+            <div class="card-header"><h3 class="card-title">≡ƒöù Google Sheets Survey Database Collector</h3></div>
+            <div class="card-body">
+                <p class="text-sm text-muted mb-4">You can log all participants' survey submissions directly into a Google Sheet in real-time. Follow the steps below to set it up:</p>
+                
+                <div class="dashboard-grid mb-4">
+                    <div>
+                        <h4 class="text-sm mb-2">1. Configure Webhook URL</h4>
+                        <div class="form-group flex gap-2" style="display:flex; gap:0.5rem; margin-bottom: 1rem;">
+                            <input type="text" id="webhook-url-input" class="form-control" placeholder="Paste Google Web App URL here..." value="${currentWebhook}" style="margin-bottom:0; flex-grow:1;">
+                            <button class="btn btn-primary" id="btn-save-webhook">Save Link</button>
+                        </div>
+                        <p class="text-xs text-muted">When a URL is saved, all new participant survey submissions will automatically push to this Google Sheet.</p>
+                    </div>
+                    
+                    <div>
+                        <h4 class="text-sm mb-2">2. Google Apps Script Code</h4>
+                        <p class="text-xs text-muted mb-2">Open your Google Sheet, go to <b>Extensions > Apps Script</b>, paste the code below, and **Deploy as a Web App** (execute as: Me, access: Anyone):</p>
+                        <pre style="background:var(--bg-main); padding: 0.75rem; border-radius: 6px; font-size: 0.7rem; max-height: 150px; overflow-y: auto; border: 1px solid #CBD5E1;" id="script-code-block">
+function doPost(e) {
+  try {
+    // Opens the active sheet of the bound spreadsheet
+    var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+    var json = JSON.parse(e.postData.contents);
+    
+    // Deduplication check: ignore double-clicks (same name, same type, submitted within 4 seconds)
+    var lastRow = sheet.getLastRow();
+    if (lastRow >= 2) {
+      var lastRowValues = sheet.getRange(lastRow, 1, 1, 3).getValues()[0];
+      
+      var lastDateVal = lastRowValues[0];
+      if (typeof lastDateVal === 'string') {
+        var parts = lastDateVal.split(/[/\s:]/);
+        if (parts.length >= 6) {
+          lastDateVal = new Date(parts[2], parts[1] - 1, parts[0], parts[3], parts[4], parts[5]);
+        } else {
+          lastDateVal = new Date(lastDateVal);
+        }
+      }
+      
+      var sheetZone = SpreadsheetApp.getActiveSpreadsheet().getSpreadsheetTimeZone();
+      var lastStr = Utilities.formatDate(new Date(lastDateVal), sheetZone, "yyyy-MM-dd HH:mm:ss");
+      var nowStr = Utilities.formatDate(new Date(), sheetZone, "yyyy-MM-dd HH:mm:ss");
+      
+      var lastDate = new Date(lastStr.replace(/-/g, '/'));
+      var nowDate = new Date(nowStr.replace(/-/g, '/'));
+      var timeDiff = Math.abs(nowDate - lastDate);
+      
+      var lastName = lastRowValues[1].toString().trim().toLowerCase();
+      var lastType = lastRowValues[2].toString().trim().toLowerCase();
+      var newName = json.participantName.toString().trim().toLowerCase();
+      var newType = json.type.toString().trim().toLowerCase();
+      
+      var isSameType = (lastType === newType) || 
+                       (newType === "before" && lastType === "pre-session survey") || 
+                       (newType === "after" && lastType === "post-session feedback");
+                       
+      if (lastName === newName && isSameType && timeDiff < 4000) {
+        return ContentService.createTextOutput("Duplicate submission skipped");
+      }
+    }
+    
+    // Append the new row data
+    var rowData = [
+      new Date(),
+      json.participantName,
+      json.type,
+      json.data.aiUsagePct + "%",
+      json.data.chatgptRating + "/10",
+      json.data.manualTime + " hrs",
+      json.data.feedbackPointers || json.data.blocker || ""
+    ];
+    sheet.appendRow(rowData);
+    
+    // Format the entire sheet (styles, badges, column widths for both old and new rows)
+    formatEntireSheet(sheet);
+    
+    return ContentService.createTextOutput("Success");
+  } catch (error) {
+    return ContentService.createTextOutput("Error: " + error.toString());
+  }
+}
+
+function formatEntireSheet(sheet) {
+  var headers = ["Timestamp", "Participant Name", "Survey Type", "AI Usage Level", "Tool Performance", "Weekly Manual Hours", "Key Takeaway / Blocker / Feedback"];
+  
+  // 1. Ensure header is present and styled
+  var firstCell = sheet.getRange(1, 1).getValue();
+  if (firstCell !== "Timestamp") {
+    sheet.insertRowBefore(1);
+  }
+  var headerRange = sheet.getRange(1, 1, 1, headers.length);
+  headerRange.setValues([headers]);
+  headerRange.setBackground("#0A192F"); // Premium Navy Blue
+  headerRange.setFontColor("#FFFFFF"); // White text
+  headerRange.setFontWeight("bold");
+  headerRange.setHorizontalAlignment("center");
+  headerRange.setFontSize(11);
+  
+  var lastRow = sheet.getLastRow();
+  if (lastRow < 2) return;
+  
+  var numRows = lastRow - 1;
+  
+  // 2. Format all data rows (font size and alignment)
+  var dataRange = sheet.getRange(2, 1, numRows, headers.length);
+  dataRange.setFontSize(10);
+  dataRange.setVerticalAlignment("middle");
+  
+  // Center-align specific structured data columns
+  sheet.getRange(2, 1, numRows, 1).setHorizontalAlignment("center"); // Column 1: Timestamp
+  sheet.getRange(2, 4, numRows, 1).setHorizontalAlignment("center"); // Column 4: AI Usage Level
+  sheet.getRange(2, 5, numRows, 1).setHorizontalAlignment("center"); // Column 5: Tool Performance
+  sheet.getRange(2, 6, numRows, 1).setHorizontalAlignment("center"); // Column 6: Weekly Manual Hours
+  
+  // 3. Clean and convert Survey Type values into styled badges (Pre-Session vs Post-Session) in BATCH
+  var typeRange = sheet.getRange(2, 3, numRows, 1);
+  var typeValues = typeRange.getValues();
+  
+  // Prepare batch arrays for updating values and styles
+  var newValues = [];
+  var backgrounds = [];
+  var fontColors = [];
+  var fontWeights = [];
+  var alignments = [];
+  
+  for (var i = 0; i < typeValues.length; i++) {
+    var rawVal = typeValues[i][0].toString().trim().toLowerCase();
+    
+    if (rawVal === "before" || rawVal === "pre-session survey") {
+      newValues.push(["Pre-Session Survey"]);
+      backgrounds.push(["#FFF3CD"]); // Warm Yellow badge
+      fontColors.push(["#856404"]);
+      fontWeights.push(["bold"]);
+      alignments.push(["center"]);
+    } else if (rawVal === "after" || rawVal === "post-session feedback") {
+      newValues.push(["Post-Session Feedback"]);
+      backgrounds.push(["#D4EDDA"]); // Light Green badge
+      fontColors.push(["#155724"]);
+      fontWeights.push(["bold"]);
+      alignments.push(["center"]);
+    } else {
+      newValues.push([typeValues[i][0]]);
+      backgrounds.push(["#FFFFFF"]);
+      fontColors.push(["#000000"]);
+      fontWeights.push(["normal"]);
+      alignments.push(["left"]);
+    }
+  }
+  
+  // Apply batch updates
+  typeRange.setValues(newValues);
+  typeRange.setBackgrounds(backgrounds);
+  typeRange.setFontColors(fontColors);
+  typeRange.setFontWeights(fontWeights);
+  typeRange.setHorizontalAlignments(alignments);
+  
+  // 4. Auto-fit columns with a professional minimum width to prevent header overlapping
+  var minWidths = [140, 160, 160, 130, 130, 150, 300];
+  for (var col = 1; col <= headers.length; col++) {
+    sheet.autoResizeColumn(col);
+    var currentWidth = sheet.getColumnWidth(col);
+    if (currentWidth < minWidths[col - 1]) {
+      sheet.setColumnWidth(col, minWidths[col - 1]);
+    }
+  }
+}
+                        </pre>
+                        <button class="btn btn-secondary btn-small w-full mt-2" id="btn-copy-script">Copy Apps Script Code</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- NEW: Collected Submissions Table -->
+        <div class="card mb-8">
+            <div class="card-header flex justify-between items-center" style="display:flex; justify-content:space-between;">
+                <h3 class="card-title">≡ƒôè Collected Participant Submissions</h3>
+                <div class="flex gap-2">
+                    <button class="btn btn-secondary btn-small" id="btn-export-subs-json">Download JSON</button>
+                    <button class="btn btn-danger btn-small" id="btn-clear-subs">Reset Database</button>
+                </div>
+            </div>
+            <div class="card-body table-responsive" style="padding: 0; max-height: 350px; overflow-y: auto;">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Participant Name</th>
+                            <th>AI Usage Shift (Before Γ₧ö After)</th>
+                            <th>ChatGPT Rating (Before Γ₧ö After)</th>
+                            <th>Weekly Time Saved</th>
+                            <th>Feedback / Blockers</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${tableRows}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="dashboard-grid">
+            <div class="card mb-8">
+                <div class="card-header"><h3 class="card-title">Module 1 Notes</h3></div>
+                <div class="card-body">
+                    <ul class="text-muted">
+                        ${TrainerEngine.getNotes('module1').map(n => `<li class="mb-2">${n}</li>`).join('')}
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="card mb-8">
+                <div class="card-header"><h3 class="card-title">Module 2 Notes</h3></div>
+                <div class="card-body">
+                    <ul class="text-muted">
+                        ${TrainerEngine.getNotes('module2').map(n => `<li class="mb-2">${n}</li>`).join('')}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    `;
+
+    setTimeout(() => {
+        // Save Webhook URL
+        document.getElementById('btn-save-webhook')?.addEventListener('click', () => {
+            const url = document.getElementById('webhook-url-input').value.trim();
+            State.set('surveyWebhookUrl', url);
+            showToast('Google Sheet Webhook URL saved successfully!', 'success');
+        });
+
+        // Copy Script Code
+        document.getElementById('btn-copy-script')?.addEventListener('click', () => {
+            const pre = document.getElementById('script-code-block');
+            navigator.clipboard.writeText(pre.innerText);
+            showToast('Apps Script code copied to clipboard!', 'success');
+        });
+
+        // Export submissions JSON
+        document.getElementById('btn-export-subs-json')?.addEventListener('click', () => {
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(subs, null, 2));
+            const downloadAnchor = document.createElement('a');
+            downloadAnchor.setAttribute("href", dataStr);
+            downloadAnchor.setAttribute("download", "participant_submissions.json");
+            document.body.appendChild(downloadAnchor);
+            downloadAnchor.click();
+            downloadAnchor.remove();
+            showToast('JSON export downloaded!', 'success');
+        });
+
+        // Clear submissions
+        document.getElementById('btn-clear-subs')?.addEventListener('click', () => {
+            if (confirm('Are you sure you want to clear all collected submissions from local browser memory?')) {
+                State.set('localSubmissions', []);
+                showToast('Local database cleared!', 'info');
+                renderTrainerDashboard(container); // Re-draw
+            }
+        });
+    }, 100);
+}
+
+function renderFlagshipDemo(container) {
+    container.innerHTML = `
+        <div class="mb-4 text-center">
+            <h2 class="mt-4" style="color: var(--accent);">DEC AI WORKFLOW SIMULATOR</h2>
+            <p class="text-muted">End-to-End Executive Demonstration</p>
+        </div>
+
+        <div class="card mb-8 mx-auto" style="max-width: 700px;">
+            <div class="card-header text-center" style="display: block;">
+                <button class="btn btn-primary" id="btn-run-demo" style="font-size: 1.1rem; padding: 1rem 3rem;">RUN EXECUTIVE DEMO</button>
+            </div>
+            <div class="card-body" id="demo-log" style="min-height: 300px; background: #0F172A; color: #38BDF8; padding: 2rem; border-radius: var(--radius-sm); font-family: monospace; font-size: 0.9rem;">
+                > Ready to initialize DEC Corporate Demo Sequence...
+            </div>
+        </div>
+    `;
+
+    setTimeout(() => {
+        document.getElementById('btn-run-demo')?.addEventListener('click', async () => {
+            const btn = document.getElementById('btn-run-demo');
+            const log = document.getElementById('demo-log');
+            btn.disabled = true;
+            btn.innerText = "DEMO RUNNING...";
+            
+            const stages = TrainerEngine.startFlagshipDemo();
+            log.innerHTML = "> Demo Sequence Started...<br><br>";
+            
+            for(let i = 0; i < stages.length; i++) {
+                await new Promise(r => setTimeout(r, 1200));
+                log.innerHTML += `\n[STEP ${stages[i].id}] ${stages[i].text}<br>`;
+                
+                if (i === 3) {
+                    // Show chart generation simulate
+                    log.innerHTML += `&nbsp;&nbsp;&nbsp;&nbsp;-> Chart Rendered: Procurement vs Finance matches.<br>`;
+                }
+            }
+            
+            await new Promise(r => setTimeout(r, 1500));
+            log.innerHTML += `<br>> <span style="color: #10B981;">DEMO SEQUENCE COMPLETED SUCCESSFULLY.</span><br>`;
+            log.innerHTML += `> Ready for Client Q&A.`;
+            
+            btn.disabled = false;
+            btn.innerText = "RUN AGAIN";
+            showToast('Flagship Demo execution finished.', 'success');
+        });
+    }, 100);
+}
+
+
+function renderPromptLibrary(container) {
+    container.innerHTML = `
+        <div class="mb-4" style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap;">
+            <div>
+                <span class="badge badge-primary">Resources</span>
+                <h2 class="mt-4" style="background: -webkit-linear-gradient(45deg, #F8FAFC, #FFDE59); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Prompt Library</h2>
+                <p class="text-muted">A collection of ready-to-use prompts for DEC workflows.</p>
+            </div>
+            <div style="width:130px; height:130px; flex-shrink:0; position:relative; display:flex; align-items:center; justify-content:center;">
+                <div style="width:100px; height:100px; background:linear-gradient(135deg,rgba(255,222,89,0.15),rgba(124,58,237,0.08)); border:2px solid rgba(255,222,89,0.5); border-radius:22px; display:flex; align-items:center; justify-content:center; box-shadow:0 0 30px rgba(255,222,89,0.3),0 0 60px rgba(124,58,237,0.15); animation:modFloat 3s ease-in-out 1.2s infinite; font-size:2.8rem; position:relative;">≡ƒñû
+                    <div style="position:absolute; top:-4px; right:-4px; width:10px; height:10px; background:#10B981; border-radius:50%; box-shadow:0 0 6px #10B981; animation:blinkDot 1s ease-in-out infinite;"></div>
+                </div>
+                <div style="position:absolute; inset:-8px; border:1px solid rgba(255,222,89,0.2); border-radius:30px; animation:modSpin 6s linear infinite;"></div>
+                <div style="position:absolute; inset:-18px; border:1px dashed rgba(124,58,237,0.15); border-radius:40px; animation:modSpinRev 9s linear infinite;"></div>
+                <style>@keyframes blinkDot{0%,100%{opacity:1}50%{opacity:0.2}}</style>
+            </div>
+        </div>
+        
+        <div class="dashboard-grid">
+            <div class="card mb-4">
+                <div class="card-header"><h3 class="card-title">Accounts: Reconciliation Copilot</h3></div>
+                <div class="card-body">
+                    <pre class="p-4 rounded text-sm mb-4" style="background: var(--bg-main); white-space:pre-wrap;">Act as a Senior Accountant at DEC. I will provide two ledger extracts. Identify all mismatches in amounts and dates. Output a clear table showing: 1) Transaction ID, 2) Focus ERP Amount, 3) Vendor Statement Amount, 4) Variance.</pre>
+                    <button class="btn btn-secondary btn-small w-full" onclick="showToast('Prompt copied to clipboard!', 'success')">Copy Prompt</button>
+                </div>
+            </div>
+            <div class="card mb-4">
+                <div class="card-header"><h3 class="card-title">Procurement: Quote Analyst</h3></div>
+                <div class="card-body">
+                    <pre class="p-4 rounded text-sm mb-4" style="background: var(--bg-main); white-space:pre-wrap;">Act as a Procurement Manager. Review the attached vendor quotes for Metro Line A. Create a side-by-side comparison table of items, unit rates, and totals. Flag any missing items from Vendor B that Vendor A included.</pre>
+                    <button class="btn btn-secondary btn-small w-full" onclick="showToast('Prompt copied to clipboard!', 'success')">Copy Prompt</button>
+                </div>
+            </div>
+            <div class="card mb-4">
+                <div class="card-header"><h3 class="card-title">Planning: Progress Reporter</h3></div>
+                <div class="card-body">
+                    <pre class="p-4 rounded text-sm mb-4" style="background: var(--bg-main); white-space:pre-wrap;">Act as a Project Planner. Convert these raw daily site notes into a formal Weekly Progress Report for the management team. Highlight blockers in red and summarize achievements in bullet points.</pre>
+                    <button class="btn btn-secondary btn-small w-full" onclick="showToast('Prompt copied to clipboard!', 'success')">Copy Prompt</button>
+                </div>
+            </div>
+            <div class="card mb-4">
+                <div class="card-header"><h3 class="card-title">HR: Screening Assistant</h3></div>
+                <div class="card-body">
+                    <pre class="p-4 rounded text-sm mb-4" style="background: var(--bg-main); white-space:pre-wrap;">Act as a Technical Recruiter for DEC. I will provide a JD and a candidate resume. Score the candidate out of 10 based on the required skills. List 3 technical screening questions I should ask them.</pre>
+                    <button class="btn btn-secondary btn-small w-full" onclick="showToast('Prompt copied to clipboard!', 'success')">Copy Prompt</button>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+function renderResourceCenter(container) {
+    container.innerHTML = `
+        <div class="mb-4">
+            <span class="badge badge-primary">Downloads</span>
+            <h2 class="mt-4">Resource Center</h2>
+            <p class="text-muted">Cheat sheets and policy documents for Safe AI usage at DEC.</p>
+        </div>
+        
+        <div class="dashboard-grid">
+            <div class="card mb-8">
+                <div class="card-header"><h3 class="card-title">The Traffic-Light Rule</h3></div>
+                <div class="card-body">
+                    <ul style="list-style: none; padding: 0;">
+                        <li class="mb-4 p-4 rounded" style="background: rgba(16, 185, 129, 0.1); border-left: 4px solid var(--success);">
+                            <strong>GREEN:</strong> Public information, generic drafting, formula help.<br>
+                            <span class="text-sm">Safe to use with public AI tools.</span>
+                        </li>
+                        <li class="mb-4 p-4 rounded" style="background: rgba(245, 158, 11, 0.1); border-left: 4px solid var(--warning);">
+                            <strong>AMBER:</strong> Internal but non-sensitive material.<br>
+                            <span class="text-sm">Anonymize first, or use Enterprise Copilot.</span>
+                        </li>
+                        <li class="p-4 rounded" style="background: rgba(239, 68, 68, 0.1); border-left: 4px solid var(--danger);">
+                            <strong>RED:</strong> Financials, salaries, client contracts, personal data.<br>
+                            <span class="text-sm">NEVER enter into public AI tools.</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="card mb-8">
+                <div class="card-header"><h3 class="card-title">Checklists</h3></div>
+                <div class="card-body flex-col gap-4">
+                    <div class="ai-result-box flex justify-between items-center" style="display:flex;">
+                        <div>
+                            <strong>Human Verification Checklist</strong>
+                            <div class="text-sm text-muted">What to check before sending AI output.</div>
+                        </div>
+                        <button class="btn btn-secondary btn-small" id="btn-dl-verify">Download PDF</button>
+                    </div>
+                    <div class="ai-result-box flex justify-between items-center" style="display:flex;">
+                        <div>
+                            <strong>Enterprise Copilot vs ChatGPT</strong>
+                            <div class="text-sm text-muted">When to use which tool at DEC.</div>
+                        </div>
+                        <button class="btn btn-secondary btn-small" id="btn-dl-compare">Download PDF</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+
+    setTimeout(() => {
+        document.getElementById('btn-dl-verify')?.addEventListener('click', () => {
+            const html = `
+                <h2>Pre-Flight Checks</h2>
+                <ul>
+                    <li><b>Source Checked:</b> Have you verified the numbers against the original ERP/CRM data?</li>
+                    <li><b>Math Verified:</b> Did you manually spot-check any calculations? AI struggles with arithmetic.</li>
+                    <li><b>Confidentiality:</b> Have you stripped out PII, salaries, and non-public financials?</li>
+                    <li><b>Tone Check:</b> Does this sound like a DEC employee wrote it?</li>
+                </ul>
+                <div class="alert alert-amber"><b>Rule of Thumb:</b> If you wouldn't send it to the CEO without checking it, don't send the AI's output without checking it.</div>
+            `;
+            window.downloadPDF('Human Verification Checklist', html);
+        });
+
+        document.getElementById('btn-dl-compare')?.addEventListener('click', () => {
+            const html = `
+                <h2>Which AI Should I Use?</h2>
+                <div class="alert alert-green">
+                    <h3>Public ChatGPT / Claude</h3>
+                    <p>Great for general brainstorming, generic coding, public summaries, and drafting emails that do not contain client specifics.</p>
+                </div>
+                <div class="alert alert-amber">
+                    <h3>Enterprise Copilot (DEC Secure)</h3>
+                    <p>Required for analyzing internal project reports, reading vendor quotes, generating meeting minutes, and summarizing internal policies.</p>
+                </div>
+                <div class="alert alert-red">
+                    <h3>No AI Allowed</h3>
+                    <p>Never use AI for generating payroll, highly confidential HR matters, or sharing unreleased proprietary algorithms.</p>
+                </div>
+            `;
+            window.downloadPDF('Enterprise Copilot vs ChatGPT', html);
+        });
+    }, 100);
+}
+
 function renderModule1Docs(container) {
     const docs = DocumentEngine.getAllDocuments();
     let optionsHtml = docs.map(d => `<option value="${d.id}">${d.title} (${d.type})</option>`).join('');

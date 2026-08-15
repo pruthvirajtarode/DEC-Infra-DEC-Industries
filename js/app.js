@@ -186,17 +186,43 @@ function renderDashboard(container) {
                     </div>
                 </div>
                 <div style="flex: 1; min-width: 300px; display: flex; justify-content: center; z-index: 2; position: relative;">
-                    <div style="position: relative; display: inline-block;">
-                        <div style="position: absolute; inset: -3px; background: linear-gradient(135deg, var(--accent), #00d4ff, #7c3aed, var(--accent)); border-radius: 24px; animation: gradientBorder 3s linear infinite; background-size: 200% 200%; z-index: 0;"></div>
-                        <img src="https://github.com/abhisheknaiidu/abhisheknaiidu/blob/master/code.gif?raw=true" style="width: 100%; max-width: 420px; border-radius: 20px; display: block; position: relative; z-index: 1; border: 3px solid transparent;" alt="Realistic Coding Animation">
+                    <div style="width: 100%; max-width: 420px; height: 320px; position: relative; display: flex; align-items: center; justify-content: center;">
+                        <!-- Orbiting rings + central AI sphere -->
+                        <div style="position: relative; display: flex; align-items: center; justify-content: center; width: 160px; height: 160px; animation: heroFloat 3s ease-in-out infinite;">
+                            <div style="position: absolute; width: 140px; height: 140px; border: 2px solid rgba(255,222,89,0.7); border-radius: 50%; animation: heroSpin 3s linear infinite; border-top-color: transparent; box-shadow: 0 0 20px rgba(255,222,89,0.4);"></div>
+                            <div style="position: absolute; width: 175px; height: 175px; border: 2px solid rgba(0,212,255,0.6); border-radius: 50%; animation: heroSpinRev 5s linear infinite; border-right-color: transparent; box-shadow: 0 0 20px rgba(0,212,255,0.3);"></div>
+                            <div style="position: absolute; width: 210px; height: 210px; border: 1px solid rgba(124,58,237,0.5); border-radius: 50%; animation: heroSpin 8s linear infinite; border-bottom-color: transparent;"></div>
+                            <div style="width: 90px; height: 90px; background: radial-gradient(circle at 35% 35%, #7c3aed, #1a0a2e); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 50px rgba(124,58,237,0.8), 0 0 100px rgba(255,222,89,0.25); font-size: 2.5rem; animation: heroPulse 2s ease-in-out infinite;">🤖</div>
+                        </div>
+                        <!-- Floating data cards -->
+                        <div style="position: absolute; top: 8px; left: 0; background: rgba(28,28,28,0.95); border: 1px solid rgba(255,222,89,0.4); border-radius: 12px; padding: 10px 14px; animation: heroFloat 3s ease-in-out 0.3s infinite; box-shadow: 0 8px 24px rgba(0,0,0,0.6), 0 0 12px rgba(255,222,89,0.1);">
+                            <div style="font-size: 9px; color: #64748B; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px;">AI Tasks Today</div>
+                            <div style="font-size: 1.5rem; font-weight: 800; color: #FFDE59; line-height: 1;">142 ✓</div>
+                        </div>
+                        <div style="position: absolute; top: 8px; right: 0; background: rgba(28,28,28,0.95); border: 1px solid rgba(16,185,129,0.4); border-radius: 12px; padding: 10px 14px; animation: heroFloat 3s ease-in-out 0.7s infinite; box-shadow: 0 8px 24px rgba(0,0,0,0.6), 0 0 12px rgba(16,185,129,0.15);">
+                            <div style="font-size: 9px; color: #64748B; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px;">Time Saved</div>
+                            <div style="font-size: 1.5rem; font-weight: 800; color: #10B981; line-height: 1;">18h/mo</div>
+                        </div>
+                        <div style="position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%); background: rgba(28,28,28,0.95); border: 1px solid rgba(0,212,255,0.4); border-radius: 12px; padding: 12px 20px; animation: heroFloat 3s ease-in-out 1.1s infinite; box-shadow: 0 8px 24px rgba(0,0,0,0.6), 0 0 12px rgba(0,212,255,0.1); white-space: nowrap;">
+                            <div style="font-size: 9px; color: #64748B; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px;">Productivity Boost</div>
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <div style="height: 6px; width: 120px; background: rgba(255,255,255,0.08); border-radius: 3px; overflow: hidden;"><div style="height: 100%; width: 78%; background: linear-gradient(90deg, #00d4ff, #7c3aed); border-radius: 3px; animation: heroBarGrow 2.5s ease-out;"></div></div>
+                                <span style="font-size: 0.9rem; font-weight: 800; color: #00d4ff;">78%</span>
+                            </div>
+                        </div>
+                        <!-- Particle dots -->
+                        <div style="position: absolute; width: 6px; height: 6px; background: #FFDE59; border-radius: 50%; top: 30%; left: 10%; animation: heroParticle 4s ease-in-out infinite; box-shadow: 0 0 8px #FFDE59;"></div>
+                        <div style="position: absolute; width: 4px; height: 4px; background: #00d4ff; border-radius: 50%; bottom: 35%; right: 8%; animation: heroParticle 4s ease-in-out 1.5s infinite; box-shadow: 0 0 8px #00d4ff;"></div>
+                        <div style="position: absolute; width: 5px; height: 5px; background: #7c3aed; border-radius: 50%; top: 60%; left: 5%; animation: heroParticle 4s ease-in-out 2s infinite; box-shadow: 0 0 8px #7c3aed;"></div>
+                        <style>
+                            @keyframes heroSpin { to { transform: rotate(360deg); } }
+                            @keyframes heroSpinRev { to { transform: rotate(-360deg); } }
+                            @keyframes heroFloat { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-12px); } }
+                            @keyframes heroPulse { 0%, 100% { box-shadow: 0 0 50px rgba(124,58,237,0.8), 0 0 100px rgba(255,222,89,0.25); } 50% { box-shadow: 0 0 70px rgba(124,58,237,1), 0 0 130px rgba(255,222,89,0.5); } }
+                            @keyframes heroBarGrow { from { width: 0; } }
+                            @keyframes heroParticle { 0%, 100% { transform: translateY(0) scale(1); opacity: 0.8; } 50% { transform: translateY(-15px) scale(1.3); opacity: 1; } }
+                        </style>
                     </div>
-                    <style>
-                        @keyframes gradientBorder {
-                            0% { background-position: 0% 50%; }
-                            50% { background-position: 100% 50%; }
-                            100% { background-position: 0% 50%; }
-                        }
-                    </style>
                 </div>
             </div>
             <div style="position: absolute; top: -50%; right: -10%; width: 500px; height: 500px; background: radial-gradient(circle, rgba(243,198,35,0.15) 0%, transparent 70%); border-radius: 50%; z-index: 1;"></div>
@@ -2591,7 +2617,17 @@ If any test FAILS, recommend: Reject batch OR Request retesting OR Accept with w
                 <h2 class="mt-4" style="background: -webkit-linear-gradient(45deg, #F8FAFC, #FFDE59); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Module 1: Prompting & Document Intelligence</h2>
                 <p class="text-muted">Turn AI from a simple question-answering tool into a structured work assistant.</p>
             </div>
-            <img src="https://media.giphy.com/media/qgQUggAC3Pfv687qPC/giphy.gif" class="float-3d" style="width: 140px; height: auto; border-radius: 12px; border: 2px solid var(--accent); box-shadow: 0 0 18px rgba(255,222,89,0.35);" alt="AI Doc Animation">
+            <div style="width:130px; height:130px; flex-shrink:0; position:relative; display:flex; align-items:center; justify-content:center;">
+                <div style="width:100px; height:100px; background:linear-gradient(135deg,rgba(255,222,89,0.15),rgba(255,222,89,0.03)); border:2px solid rgba(255,222,89,0.5); border-radius:22px; display:flex; align-items:center; justify-content:center; box-shadow:0 0 30px rgba(255,222,89,0.25),0 0 60px rgba(255,222,89,0.1); animation:modFloat 3s ease-in-out infinite; font-size:2.8rem; position:relative;">📝
+                    <div style="position:absolute; bottom:-2px; left:50%; transform:translateX(-50%); display:flex; gap:3px;">
+                        <div style="width:5px; height:3px; background:var(--accent); border-radius:1px; animation:typeDot 1.2s ease infinite 0s;"></div>
+                        <div style="width:5px; height:3px; background:var(--accent); border-radius:1px; animation:typeDot 1.2s ease infinite 0.2s;"></div>
+                        <div style="width:5px; height:3px; background:var(--accent); border-radius:1px; animation:typeDot 1.2s ease infinite 0.4s;"></div>
+                    </div>
+                </div>
+                <div style="position:absolute; inset:-8px; border:1px solid rgba(255,222,89,0.2); border-radius:30px; animation:modSpin 6s linear infinite;"></div>
+                <style>@keyframes modFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}} @keyframes typeDot{0%,100%{opacity:0.2;transform:scaleX(1)}50%{opacity:1;transform:scaleX(1.4)}} @keyframes modSpin{to{transform:rotate(360deg)}}</style>
+            </div>
         </div>
 
         <div class="flex gap-2 mb-6" style="display: flex; flex-wrap: wrap; gap: 0.5rem; border-bottom: 2px solid var(--border-color); padding-bottom: 0.5rem; margin-bottom: 2rem;">
@@ -2825,7 +2861,19 @@ function renderModule2(container) {
                 <h2 class="mt-4" style="background: -webkit-linear-gradient(45deg, #F8FAFC, #06B6D4); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Module 2: AI-Powered Data Analysis</h2>
                 <p class="text-muted">From manual Excel to AI analysis. Work with DEC synthetic data.</p>
             </div>
-            <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExcDlqMXk4Y2oyZjhuaHNsMjFkeHJhMjdmcjhob2Z5ZXkxN2ZqcGJqcyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/l0HlHFRbmaZtBKhJG/giphy.gif" class="float-3d" style="width: 140px; height: auto; border-radius: 12px; border: 2px solid var(--accent); box-shadow: 0 0 18px rgba(255,222,89,0.35);" alt="AI Data Animation">
+            <div style="width:130px; height:130px; flex-shrink:0; position:relative; display:flex; align-items:center; justify-content:center;">
+                <div style="width:100px; height:100px; background:linear-gradient(135deg,rgba(6,182,212,0.15),rgba(6,182,212,0.03)); border:2px solid rgba(6,182,212,0.5); border-radius:22px; display:flex; align-items:center; justify-content:center; box-shadow:0 0 30px rgba(6,182,212,0.25); animation:modFloat 3s ease-in-out 0.4s infinite; font-size:2.8rem; position:relative;">📊
+                    <div style="position:absolute; bottom:8px; left:8px; right:8px; display:flex; align-items:flex-end; gap:2px; height:14px;">
+                        <div style="flex:1; background:rgba(6,182,212,0.7); border-radius:1px; animation:barAnim 1.5s ease-in-out 0s infinite; height:60%;"></div>
+                        <div style="flex:1; background:rgba(6,182,212,0.7); border-radius:1px; animation:barAnim 1.5s ease-in-out 0.2s infinite; height:90%;"></div>
+                        <div style="flex:1; background:rgba(6,182,212,0.7); border-radius:1px; animation:barAnim 1.5s ease-in-out 0.4s infinite; height:40%;"></div>
+                        <div style="flex:1; background:rgba(6,182,212,0.7); border-radius:1px; animation:barAnim 1.5s ease-in-out 0.6s infinite; height:75%;"></div>
+                        <div style="flex:1; background:rgba(6,182,212,0.7); border-radius:1px; animation:barAnim 1.5s ease-in-out 0.8s infinite; height:55%;"></div>
+                    </div>
+                </div>
+                <div style="position:absolute; inset:-8px; border:1px solid rgba(6,182,212,0.2); border-radius:30px; animation:modSpinRev 8s linear infinite;"></div>
+                <style>@keyframes barAnim{0%,100%{transform:scaleY(1)}50%{transform:scaleY(0.4)}} @keyframes modSpinRev{to{transform:rotate(-360deg)}}</style>
+            </div>
         </div>
         
         <!-- NEW: Visual AI Data Pipeline -->
@@ -3186,7 +3234,13 @@ function renderModule3(container) {
                 <h2 class="mt-4" style="background: -webkit-linear-gradient(45deg, #F8FAFC, #FFDE59); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Module 3: Safe AI Usage & Responsible Adoption</h2>
                 <p class="text-muted">Data classification, identifying hallucinations, and human-in-the-loop verification.</p>
             </div>
-            <img src="https://media.giphy.com/media/3o7aCWDyW0PJCsxHna/giphy.gif" class="float-3d" style="width: 140px; height: auto; border-radius: 12px; border: 2px solid #10B981; box-shadow: 0 0 18px rgba(16,185,129,0.35);" alt="AI Shield Animation">
+            <div style="width:130px; height:130px; flex-shrink:0; position:relative; display:flex; align-items:center; justify-content:center;">
+                <div style="width:100px; height:100px; background:linear-gradient(135deg,rgba(16,185,129,0.15),rgba(16,185,129,0.03)); border:2px solid rgba(16,185,129,0.5); border-radius:22px; display:flex; align-items:center; justify-content:center; box-shadow:0 0 30px rgba(16,185,129,0.25); animation:modFloat 3s ease-in-out 0.8s infinite; font-size:2.8rem; position:relative;">🛡️</div>
+                <div style="position:absolute; inset:-8px; border:1px solid rgba(16,185,129,0.25); border-radius:30px; animation:modSpin 7s linear infinite;"></div>
+                <div style="position:absolute; inset:-18px; border:1px dashed rgba(16,185,129,0.12); border-radius:40px; animation:modSpinRev 10s linear infinite;"></div>
+                <div style="position:absolute; width:110px; height:110px; border-radius:50%; box-shadow:0 0 0 0 rgba(16,185,129,0.4); animation:shieldPulse 2s ease-out infinite;"></div>
+                <style>@keyframes shieldPulse{0%{box-shadow:0 0 0 0 rgba(16,185,129,0.4)}70%{box-shadow:0 0 0 20px rgba(16,185,129,0)}100%{box-shadow:0 0 0 0 rgba(16,185,129,0)}}</style>
+            </div>
         </div>
         
         <div class="m3-content-wrapper mt-8">
@@ -3807,7 +3861,12 @@ function renderModule4(container) {
                     <h2 class="mt-2" style="background: -webkit-linear-gradient(45deg, #F8FAFC, #FFDE59); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Module 4: Capstone - Build Your Department Assistant</h2>
                     <p class="text-muted">Combine structured prompting, data intelligence, and safe policies into a working Claude Project.</p>
                 </div>
-                <img src="https://media.giphy.com/media/3oKIPnAiaMCws8nOsE/giphy.gif" class="float-3d" style="width: 140px; height: auto; border-radius: 12px; border: 2px solid var(--accent); box-shadow: 0 0 18px rgba(255,222,89,0.35);" alt="AI Rocket Animation">
+                <div style="width:130px; height:130px; flex-shrink:0; position:relative; display:flex; align-items:center; justify-content:center;">
+                    <div style="width:100px; height:100px; background:linear-gradient(135deg,rgba(255,222,89,0.15),rgba(255,222,89,0.03)); border:2px solid rgba(255,222,89,0.5); border-radius:22px; display:flex; align-items:center; justify-content:center; box-shadow:0 0 30px rgba(255,222,89,0.25); animation:rocketLaunch 2s ease-in-out infinite; font-size:2.8rem;">🚀</div>
+                    <div style="position:absolute; inset:-8px; border:1px solid rgba(255,222,89,0.2); border-radius:30px; animation:modSpin 5s linear infinite;"></div>
+                    <div style="position:absolute; bottom:-4px; left:50%; transform:translateX(-50%); width:3px; height:30px; background:linear-gradient(180deg, rgba(255,100,0,0.8), transparent); border-radius:2px; animation:thruster 0.3s ease-in-out infinite;"></div>
+                    <style>@keyframes rocketLaunch{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}} @keyframes thruster{0%,100%{height:30px;opacity:0.8}50%{height:15px;opacity:0.4}}</style>
+                </div>
             </div>
             
             <div class="flex gap-2 mb-6" style="display: flex; flex-wrap: wrap; gap: 0.5rem; border-bottom: 2px solid var(--border-color); padding-bottom: 0.5rem; margin-bottom: 2rem;">
@@ -4552,7 +4611,14 @@ function renderPromptLibrary(container) {
                 <h2 class="mt-4" style="background: -webkit-linear-gradient(45deg, #F8FAFC, #FFDE59); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Prompt Library</h2>
                 <p class="text-muted">A collection of ready-to-use prompts for DEC workflows.</p>
             </div>
-            <img src="https://media.giphy.com/media/RbDKaczqWovIugyJmW/giphy.gif" class="float-3d" style="width: 140px; height: auto; border-radius: 12px; border: 2px solid var(--accent); box-shadow: 0 0 20px rgba(255,222,89,0.4);" alt="AI Bot Animation">
+            <div style="width:130px; height:130px; flex-shrink:0; position:relative; display:flex; align-items:center; justify-content:center;">
+                <div style="width:100px; height:100px; background:linear-gradient(135deg,rgba(255,222,89,0.15),rgba(124,58,237,0.08)); border:2px solid rgba(255,222,89,0.5); border-radius:22px; display:flex; align-items:center; justify-content:center; box-shadow:0 0 30px rgba(255,222,89,0.3),0 0 60px rgba(124,58,237,0.15); animation:modFloat 3s ease-in-out 1.2s infinite; font-size:2.8rem; position:relative;">🤖
+                    <div style="position:absolute; top:-4px; right:-4px; width:10px; height:10px; background:#10B981; border-radius:50%; box-shadow:0 0 6px #10B981; animation:blinkDot 1s ease-in-out infinite;"></div>
+                </div>
+                <div style="position:absolute; inset:-8px; border:1px solid rgba(255,222,89,0.2); border-radius:30px; animation:modSpin 6s linear infinite;"></div>
+                <div style="position:absolute; inset:-18px; border:1px dashed rgba(124,58,237,0.15); border-radius:40px; animation:modSpinRev 9s linear infinite;"></div>
+                <style>@keyframes blinkDot{0%,100%{opacity:1}50%{opacity:0.2}}</style>
+            </div>
         </div>
         
         <div class="dashboard-grid">
@@ -5590,7 +5656,12 @@ function renderProductivityForms(container) {
                         <h2 class="mt-2">AI Productivity &amp; ROI Tracker</h2>
                         <p class="text-muted">Analyze your productivity gains, AI utilization shift, and satisfaction delta before and after the sessions.</p>
                     </div>
-                    <img src="https://media.giphy.com/media/RbDKaczqWovIugyJmW/giphy.gif" class="float-3d" style="width: 120px; height: auto; filter: drop-shadow(0 10px 20px rgba(0,0,0,0.4)); margin-top: -20px; border-radius: 12px; border: 2px solid var(--accent); box-shadow: 0 0 18px rgba(255,222,89,0.35);" alt="3D AI Bot">
+                    <div style="width:100px; height:100px; flex-shrink:0; position:relative; display:flex; align-items:center; justify-content:center; margin-top:-20px;">
+                        <div style="width:80px; height:80px; background:linear-gradient(135deg,rgba(255,222,89,0.15),rgba(124,58,237,0.08)); border:2px solid rgba(255,222,89,0.5); border-radius:18px; display:flex; align-items:center; justify-content:center; box-shadow:0 10px 30px rgba(0,0,0,0.4),0 0 20px rgba(255,222,89,0.2); animation:modFloat 3s ease-in-out 1.5s infinite; font-size:2.2rem; position:relative;">🤖
+                            <div style="position:absolute; top:-3px; right:-3px; width:8px; height:8px; background:#10B981; border-radius:50%; box-shadow:0 0 6px #10B981; animation:blinkDot 1s ease-in-out infinite;"></div>
+                        </div>
+                        <div style="position:absolute; inset:-6px; border:1px solid rgba(255,222,89,0.15); border-radius:24px; animation:modSpin 6s linear infinite;"></div>
+                    </div>
                 </div>
                 <button id="btn-show-qr" class="btn btn-secondary" style="display:inline-flex; align-items:center; gap:0.5rem; white-space:nowrap; font-weight:600; padding: 0.6rem 1.2rem; border-radius: 8px; flex-shrink:0;" title="Show QR code for employees to scan">
                     <span style="font-size:1.25rem;">📱</span><span class="qr-btn-text"> Show QR Code for Employees</span>

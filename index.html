@@ -19,19 +19,12 @@
     <div id="app" class="app-container">
         <!-- Sidebar Navigation -->
         <nav class="sidebar" id="sidebar">
-            <div class="sidebar-header" style="flex-direction: column; align-items: stretch; padding: 1.5rem 1rem 1rem; height: auto;">
-                <div style="display: flex; justify-content: space-between; align-items: center; width: 100%; margin-bottom: 1rem;">
-                    <div style="display: flex; align-items: center; gap: 0.75rem; background: rgba(255, 255, 255, 0.05); padding: 0.5rem; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.1);">
-                        <img src="dec infra logo.png" alt="DEC Infra" style="height: 24px; width: auto; object-fit: contain;">
-                        <span style="color: var(--text-muted); font-size: 10px; font-weight: bold; letter-spacing: 1px;">X</span>
-                        <img src="be 10 x logo.jpg" alt="be10x" style="height: 20px; width: auto; border-radius: 4px; object-fit: contain;">
-                    </div>
-                    <button id="toggle-sidebar" class="icon-btn" aria-label="Toggle Sidebar" style="margin-left: 0.5rem;">☰</button>
-                </div>
+            <div class="sidebar-header">
                 <div class="logo">
                     <span class="logo-dec">DEC</span>
                     <span class="logo-ai">AI Foundations</span>
                 </div>
+                <button id="toggle-sidebar" class="icon-btn" aria-label="Toggle Sidebar">☰</button>
             </div>
             
             <div class="sidebar-progress">
@@ -69,9 +62,14 @@
         <main class="main-content" id="main-content">
             <!-- Topbar (Mobile mainly) -->
             <header class="topbar">
-                <div class="topbar-left">
+                <div class="topbar-left" style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;">
                     <button id="mobile-menu-btn" class="icon-btn mobile-only">☰</button>
-                    <h2 class="page-title" id="topbar-title">Dashboard</h2>
+                    <h2 class="page-title" id="topbar-title" style="margin-right: 1rem;">Dashboard</h2>
+                    <div style="display: flex; align-items: center; gap: 0.75rem; background: var(--bg-main); padding: 0.4rem 1rem; border-radius: 20px; border: 1px solid var(--border-color); box-shadow: var(--shadow-sm);">
+                        <img src="dec infra logo.png" alt="DEC Infra" style="height: 22px; width: auto; object-fit: contain;">
+                        <span style="color: var(--text-muted); font-size: 11px; font-weight: bold;">x</span>
+                        <img src="be 10 x logo.jpg" alt="be10x" style="height: 18px; width: auto; border-radius: 2px; object-fit: contain;">
+                    </div>
                 </div>
                 <div class="topbar-right" style="display: flex; gap: 1rem; align-items: center;">
                     <button id="theme-toggle" class="icon-btn" aria-label="Toggle Dark Mode">🌙</button>

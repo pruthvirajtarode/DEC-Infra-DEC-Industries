@@ -4,50 +4,42 @@
 
 
 window.switchTab = function(e, tabName) {
-    const tabs = document.querySelectorAll('.tab-content');
-    tabs.forEach(t => t.classList.remove('active'));
-    const btns = document.querySelectorAll('.tab-btn');
-    btns.forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(t => {
+        t.classList.remove('active');
+        t.style.display = 'none';
+    });
+    document.querySelectorAll('.tab-btn').forEach(b => {
+        b.classList.remove('active');
+    });
     
     const targetTab = document.getElementById(tabName);
-    if(targetTab) targetTab.classList.add('active');
+    if(targetTab) {
+        targetTab.classList.add('active');
+        targetTab.style.display = 'block';
+    }
     
-    if (e && e.target) {
-        e.target.classList.add('active');
+    if (e && e.currentTarget) {
+        e.currentTarget.classList.add('active');
+    } else if (e && e.target) {
+        const btn = e.target.closest('button') || e.target;
+        btn.classList.add('active');
     }
 };
 
-window.showTab = function(event, tabName) {
-    const contents = document.querySelectorAll('.tab-content');
-    contents.forEach(c => c.classList.remove('active'));
-    
-    const buttons = document.querySelectorAll('.tab-button');
-    buttons.forEach(b => b.classList.remove('active'));
-    
-    const targetTab = document.getElementById(tabName);
-    if(targetTab) targetTab.classList.add('active');
-    
-    if (event && event.target) {
-        event.target.classList.add('active');
-    }
-};
+window.showTab = window.switchTab;
+window.openTab = window.switchTab;
 
-window.openTab = function(evt, tabName) {
-    const tabContents = document.querySelectorAll('.tab-content');
-    tabContents.forEach(tab => tab.classList.remove('active'));
-    
-    const tabBtns = document.querySelectorAll('.tab-btn');
-    tabBtns.forEach(btn => btn.classList.remove('active'));
-    
-    const targetTab = document.getElementById(tabName);
-    if(targetTab) targetTab.classList.add('active');
-    
-    if(evt && evt.currentTarget) {
-        evt.currentTarget.classList.add('active');
-    } else if(evt && evt.target) {
-        evt.target.classList.add('active');
+// Fallback Event Delegation just in case inline handlers fail
+document.addEventListener('click', function(e) {
+    const btn = e.target.closest('.tab-btn, .tab-button');
+    if (!btn) return;
+    const onclickStr = btn.getAttribute('onclick');
+    if (!onclickStr) return;
+    const match = onclickStr.match(/['"]([^'"]+)['"]/);
+    if (match) {
+        window.switchTab(e, match[1]);
     }
-};
+});
 
 window.selectOption = function(option) {
     const options = {

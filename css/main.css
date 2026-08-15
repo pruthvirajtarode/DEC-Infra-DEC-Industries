@@ -72,7 +72,7 @@ body {
 
 h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-heading);
-    color: var(--primary);
+    color: var(--text-main);
     font-weight: 600;
     margin-bottom: 0.5rem;
 }
@@ -235,7 +235,7 @@ a:hover {
 .page-title {
     margin-bottom: 0;
     font-size: 1.25rem;
-    color: var(--primary);
+    color: var(--text-main);
 }
 
 .view-container {

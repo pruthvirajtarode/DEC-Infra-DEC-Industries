@@ -292,21 +292,21 @@ function renderModule1(container) {
                 <div style="display: flex; gap: 1rem; align-items: flex-start; background: var(--bg-card); padding: 1.5rem; border-radius: 12px; border: 1px solid var(--border-color); box-shadow: var(--shadow-sm);">
                     <div style="background: rgba(59, 130, 246, 0.1); color: #3b82f6; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0; font-size: 1.2rem;">1</div>
                     <div>
-                        <h4 style="margin-bottom: 0.5rem; color: var(--primary);">Role-Specific AI</h4>
+                        <h4 style="margin-bottom: 0.5rem; color: var(--text-main);">Role-Specific AI</h4>
                         <p class="text-sm text-muted">Discover how AI transforms your specific workflow at DEC.</p>
                     </div>
                 </div>
                 <div style="display: flex; gap: 1rem; align-items: flex-start; background: var(--bg-card); padding: 1.5rem; border-radius: 12px; border: 1px solid var(--border-color); box-shadow: var(--shadow-sm);">
                     <div style="background: rgba(16, 185, 129, 0.1); color: #10b981; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0; font-size: 1.2rem;">2</div>
                     <div>
-                        <h4 style="margin-bottom: 0.5rem; color: var(--primary);">Prompt Frameworks</h4>
+                        <h4 style="margin-bottom: 0.5rem; color: var(--text-main);">Prompt Frameworks</h4>
                         <p class="text-sm text-muted">Learn the anatomy of a good prompt and enterprise best practices.</p>
                     </div>
                 </div>
                 <div style="display: flex; gap: 1rem; align-items: flex-start; background: var(--bg-card); padding: 1.5rem; border-radius: 12px; border: 1px solid var(--border-color); box-shadow: var(--shadow-sm);">
                     <div style="background: rgba(245, 158, 11, 0.1); color: #f59e0b; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0; font-size: 1.2rem;">3</div>
                     <div>
-                        <h4 style="margin-bottom: 0.5rem; color: var(--primary);">Hands-on Labs</h4>
+                        <h4 style="margin-bottom: 0.5rem; color: var(--text-main);">Hands-on Labs</h4>
                         <p class="text-sm text-muted">Apply your skills in real-world scenarios with our custom prompt builder.</p>
                     </div>
                 </div>
@@ -317,7 +317,7 @@ function renderModule1(container) {
         <div class="mb-8" style="background: var(--bg-card); padding: 2rem; border-radius: var(--radius-lg); border: 1px solid var(--border-color); box-shadow: var(--shadow-sm);">
             <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
                 <div>
-                    <h3 style="font-size: 1.5rem; font-weight: 700; color: var(--primary); margin-bottom: 0.5rem;">How Can Your Role Leverage AI?</h3>
+                    <h3 style="font-size: 1.5rem; font-weight: 700; color: var(--text-main); margin-bottom: 0.5rem;">How Can Your Role Leverage AI?</h3>
                     <p class="text-muted" style="margin: 0;">Select your department domain below to see tailored AI tools and use cases.</p>
                 </div>
             </div>
@@ -332,55 +332,55 @@ function renderModule1(container) {
             <div id="tab-project-exec" class="role-tab-content">
                 <div class="dashboard-grid">
                     <div style="background: var(--bg-main); border: 1px solid var(--border-color); border-radius: 12px; overflow: hidden;">
-                        <div style="padding: 1.5rem; border-bottom: 1px solid rgba(0,0,0,0.05); display: flex; align-items: center; gap: 1rem; background: white;">
+                        <div style="padding: 1.5rem; border-bottom: 1px solid rgba(0,0,0,0.5); display: flex; align-items: center; gap: 1rem; background: var(--bg-card);">
                             <div style="background: rgba(59, 130, 246, 0.1); color: #3b82f6; width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">👷</div>
-                            <h4 style="margin: 0; font-size: 1.1rem; color: var(--primary);">Project Managers</h4>
+                            <h4 style="margin: 0; font-size: 1.1rem; color: var(--text-main);">Project Managers</h4>
                         </div>
                         <div style="padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem;">
-                            <div style="background: white; padding: 1rem; border-radius: 8px; border-left: 3px solid #3b82f6; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
-                                <strong style="display: block; font-size: 0.875rem; color: var(--primary); margin-bottom: 0.25rem;">ChatGPT / Claude</strong>
+                            <div style="background: var(--bg-card); padding: 1rem; border-radius: 8px; border-left: 3px solid #3b82f6; box-shadow: 0 1px 3px rgba(0,0,0,0.5);">
+                                <strong style="display: block; font-size: 0.875rem; color: var(--text-main); margin-bottom: 0.25rem;">ChatGPT / Claude</strong>
                                 <span class="text-xs text-muted">Draft proposals, summarize minutes, create communication templates</span>
                             </div>
-                            <div style="background: white; padding: 1rem; border-radius: 8px; border-left: 3px solid #10b981; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
-                                <strong style="display: block; font-size: 0.875rem; color: var(--primary); margin-bottom: 0.25rem;">Copilot (Excel)</strong>
+                            <div style="background: var(--bg-card); padding: 1rem; border-radius: 8px; border-left: 3px solid #10b981; box-shadow: 0 1px 3px rgba(0,0,0,0.5);">
+                                <strong style="display: block; font-size: 0.875rem; color: var(--text-main); margin-bottom: 0.25rem;">Copilot (Excel)</strong>
                                 <span class="text-xs text-muted">Auto-generate dashboards, analyze timeline & budget variances</span>
                             </div>
-                            <div style="background: white; padding: 1rem; border-radius: 8px; border-left: 3px solid #f59e0b; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
-                                <strong style="display: block; font-size: 0.875rem; color: var(--primary); margin-bottom: 0.25rem;">Google Gemini</strong>
+                            <div style="background: var(--bg-card); padding: 1rem; border-radius: 8px; border-left: 3px solid #f59e0b; box-shadow: 0 1px 3px rgba(0,0,0,0.5);">
+                                <strong style="display: block; font-size: 0.875rem; color: var(--text-main); margin-bottom: 0.25rem;">Google Gemini</strong>
                                 <span class="text-xs text-muted">Analyze contracts, extract milestones, organize project info</span>
                             </div>
                         </div>
                     </div>
 
                     <div style="background: var(--bg-main); border: 1px solid var(--border-color); border-radius: 12px; overflow: hidden;">
-                        <div style="padding: 1.5rem; border-bottom: 1px solid rgba(0,0,0,0.05); display: flex; align-items: center; gap: 1rem; background: white;">
+                        <div style="padding: 1.5rem; border-bottom: 1px solid rgba(0,0,0,0.5); display: flex; align-items: center; gap: 1rem; background: var(--bg-card);">
                             <div style="background: rgba(245, 158, 11, 0.1); color: #f59e0b; width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">🏗️</div>
-                            <h4 style="margin: 0; font-size: 1.1rem; color: var(--primary);">Site Supervisors</h4>
+                            <h4 style="margin: 0; font-size: 1.1rem; color: var(--text-main);">Site Supervisors</h4>
                         </div>
                         <div style="padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem;">
-                            <div style="background: white; padding: 1rem; border-radius: 8px; border-left: 3px solid #3b82f6; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
-                                <strong style="display: block; font-size: 0.875rem; color: var(--primary); margin-bottom: 0.25rem;">ChatGPT Vision (Mobile)</strong>
+                            <div style="background: var(--bg-card); padding: 1rem; border-radius: 8px; border-left: 3px solid #3b82f6; box-shadow: 0 1px 3px rgba(0,0,0,0.5);">
+                                <strong style="display: block; font-size: 0.875rem; color: var(--text-main); margin-bottom: 0.25rem;">ChatGPT Vision (Mobile)</strong>
                                 <span class="text-xs text-muted">Assess site conditions, document progress visually</span>
                             </div>
-                            <div style="background: white; padding: 1rem; border-radius: 8px; border-left: 3px solid #10b981; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
-                                <strong style="display: block; font-size: 0.875rem; color: var(--primary); margin-bottom: 0.25rem;">Google Sheets + AI</strong>
+                            <div style="background: var(--bg-card); padding: 1rem; border-radius: 8px; border-left: 3px solid #10b981; box-shadow: 0 1px 3px rgba(0,0,0,0.5);">
+                                <strong style="display: block; font-size: 0.875rem; color: var(--text-main); margin-bottom: 0.25rem;">Google Sheets + AI</strong>
                                 <span class="text-xs text-muted">Auto-populate daily reports, track labor & material usage</span>
                             </div>
                         </div>
                     </div>
 
                     <div style="background: var(--bg-main); border: 1px solid var(--border-color); border-radius: 12px; overflow: hidden;">
-                        <div style="padding: 1.5rem; border-bottom: 1px solid rgba(0,0,0,0.05); display: flex; align-items: center; gap: 1rem; background: white;">
+                        <div style="padding: 1.5rem; border-bottom: 1px solid rgba(0,0,0,0.5); display: flex; align-items: center; gap: 1rem; background: var(--bg-card);">
                             <div style="background: rgba(139, 92, 246, 0.1); color: #8b5cf6; width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">⚙️</div>
-                            <h4 style="margin: 0; font-size: 1.1rem; color: var(--primary);">Technical Staff</h4>
+                            <h4 style="margin: 0; font-size: 1.1rem; color: var(--text-main);">Technical Staff</h4>
                         </div>
                         <div style="padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem;">
-                            <div style="background: white; padding: 1rem; border-radius: 8px; border-left: 3px solid #8b5cf6; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
-                                <strong style="display: block; font-size: 0.875rem; color: var(--primary); margin-bottom: 0.25rem;">Engineering Mode Prompting</strong>
+                            <div style="background: var(--bg-card); padding: 1rem; border-radius: 8px; border-left: 3px solid #8b5cf6; box-shadow: 0 1px 3px rgba(0,0,0,0.5);">
+                                <strong style="display: block; font-size: 0.875rem; color: var(--text-main); margin-bottom: 0.25rem;">Engineering Mode Prompting</strong>
                                 <span class="text-xs text-muted">Verify specs, research standards, generate documentation</span>
                             </div>
-                            <div style="background: white; padding: 1rem; border-radius: 8px; border-left: 3px solid #ec4899; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
-                                <strong style="display: block; font-size: 0.875rem; color: var(--primary); margin-bottom: 0.25rem;">Architecture Copilot</strong>
+                            <div style="background: var(--bg-card); padding: 1rem; border-radius: 8px; border-left: 3px solid #ec4899; box-shadow: 0 1px 3px rgba(0,0,0,0.5);">
+                                <strong style="display: block; font-size: 0.875rem; color: var(--text-main); margin-bottom: 0.25rem;">Architecture Copilot</strong>
                                 <span class="text-xs text-muted">Suggest design improvements, check design against codes</span>
                             </div>
                         </div>
@@ -392,47 +392,47 @@ function renderModule1(container) {
             <div id="tab-quality" class="role-tab-content hidden">
                 <div class="dashboard-grid">
                     <div style="background: var(--bg-main); border: 1px solid var(--border-color); border-radius: 12px; overflow: hidden;">
-                        <div style="padding: 1.5rem; border-bottom: 1px solid rgba(0,0,0,0.05); display: flex; align-items: center; gap: 1rem; background: white;">
+                        <div style="padding: 1.5rem; border-bottom: 1px solid rgba(0,0,0,0.5); display: flex; align-items: center; gap: 1rem; background: var(--bg-card);">
                             <div style="background: rgba(16, 185, 129, 0.1); color: #10b981; width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">✓</div>
-                            <h4 style="margin: 0; font-size: 1.1rem; color: var(--primary);">Quality Controllers</h4>
+                            <h4 style="margin: 0; font-size: 1.1rem; color: var(--text-main);">Quality Controllers</h4>
                         </div>
                         <div style="padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem;">
-                            <div style="background: white; padding: 1rem; border-radius: 8px; border-left: 3px solid #3b82f6; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
-                                <strong style="display: block; font-size: 0.875rem; color: var(--primary); margin-bottom: 0.25rem;">ChatGPT Vision</strong>
+                            <div style="background: var(--bg-card); padding: 1rem; border-radius: 8px; border-left: 3px solid #3b82f6; box-shadow: 0 1px 3px rgba(0,0,0,0.5);">
+                                <strong style="display: block; font-size: 0.875rem; color: var(--text-main); margin-bottom: 0.25rem;">ChatGPT Vision</strong>
                                 <span class="text-xs text-muted">Analyze defects from site photos, classify severity</span>
                             </div>
-                            <div style="background: white; padding: 1rem; border-radius: 8px; border-left: 3px solid #f59e0b; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
-                                <strong style="display: block; font-size: 0.875rem; color: var(--primary); margin-bottom: 0.25rem;">Power BI + AI</strong>
+                            <div style="background: var(--bg-card); padding: 1rem; border-radius: 8px; border-left: 3px solid #f59e0b; box-shadow: 0 1px 3px rgba(0,0,0,0.5);">
+                                <strong style="display: block; font-size: 0.875rem; color: var(--text-main); margin-bottom: 0.25rem;">Power BI + AI</strong>
                                 <span class="text-xs text-muted">Generate QC dashboards, trend analysis of defect types</span>
                             </div>
                         </div>
                     </div>
                     
                     <div style="background: var(--bg-main); border: 1px solid var(--border-color); border-radius: 12px; overflow: hidden;">
-                        <div style="padding: 1.5rem; border-bottom: 1px solid rgba(0,0,0,0.05); display: flex; align-items: center; gap: 1rem; background: white;">
+                        <div style="padding: 1.5rem; border-bottom: 1px solid rgba(0,0,0,0.5); display: flex; align-items: center; gap: 1rem; background: var(--bg-card);">
                             <div style="background: rgba(239, 68, 68, 0.1); color: #ef4444; width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">🛡️</div>
-                            <h4 style="margin: 0; font-size: 1.1rem; color: var(--primary);">Safety Officers</h4>
+                            <h4 style="margin: 0; font-size: 1.1rem; color: var(--text-main);">Safety Officers</h4>
                         </div>
                         <div style="padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem;">
-                            <div style="background: white; padding: 1rem; border-radius: 8px; border-left: 3px solid #ef4444; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
-                                <strong style="display: block; font-size: 0.875rem; color: var(--primary); margin-bottom: 0.25rem;">Claude</strong>
+                            <div style="background: var(--bg-card); padding: 1rem; border-radius: 8px; border-left: 3px solid #ef4444; box-shadow: 0 1px 3px rgba(0,0,0,0.5);">
+                                <strong style="display: block; font-size: 0.875rem; color: var(--text-main); margin-bottom: 0.25rem;">Claude</strong>
                                 <span class="text-xs text-muted">Draft safety policies, generate incident reports</span>
                             </div>
-                            <div style="background: white; padding: 1rem; border-radius: 8px; border-left: 3px solid #10b981; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
-                                <strong style="display: block; font-size: 0.875rem; color: var(--primary); margin-bottom: 0.25rem;">Copilot for Word/Excel</strong>
+                            <div style="background: var(--bg-card); padding: 1rem; border-radius: 8px; border-left: 3px solid #10b981; box-shadow: 0 1px 3px rgba(0,0,0,0.5);">
+                                <strong style="display: block; font-size: 0.875rem; color: var(--text-main); margin-bottom: 0.25rem;">Copilot for Word/Excel</strong>
                                 <span class="text-xs text-muted">Auto-create safety training docs, analyze KPIs</span>
                             </div>
                         </div>
                     </div>
                     
                     <div style="background: var(--bg-main); border: 1px solid var(--border-color); border-radius: 12px; overflow: hidden;">
-                        <div style="padding: 1.5rem; border-bottom: 1px solid rgba(0,0,0,0.05); display: flex; align-items: center; gap: 1rem; background: white;">
+                        <div style="padding: 1.5rem; border-bottom: 1px solid rgba(0,0,0,0.5); display: flex; align-items: center; gap: 1rem; background: var(--bg-card);">
                             <div style="background: rgba(99, 102, 241, 0.1); color: #6366f1; width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">📋</div>
-                            <h4 style="margin: 0; font-size: 1.1rem; color: var(--primary);">Compliance Team</h4>
+                            <h4 style="margin: 0; font-size: 1.1rem; color: var(--text-main);">Compliance Team</h4>
                         </div>
                         <div style="padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem;">
-                            <div style="background: white; padding: 1rem; border-radius: 8px; border-left: 3px solid #6366f1; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
-                                <strong style="display: block; font-size: 0.875rem; color: var(--primary); margin-bottom: 0.25rem;">Claude / GPT</strong>
+                            <div style="background: var(--bg-card); padding: 1rem; border-radius: 8px; border-left: 3px solid #6366f1; box-shadow: 0 1px 3px rgba(0,0,0,0.5);">
+                                <strong style="display: block; font-size: 0.875rem; color: var(--text-main); margin-bottom: 0.25rem;">Claude / GPT</strong>
                                 <span class="text-xs text-muted">Audit documents, create compliance matrices</span>
                             </div>
                         </div>
@@ -444,26 +444,26 @@ function renderModule1(container) {
             <div id="tab-infra-it" class="role-tab-content hidden">
                 <div class="dashboard-grid">
                     <div style="background: var(--bg-main); border: 1px solid var(--border-color); border-radius: 12px; overflow: hidden;">
-                        <div style="padding: 1.5rem; border-bottom: 1px solid rgba(0,0,0,0.05); display: flex; align-items: center; gap: 1rem; background: white;">
+                        <div style="padding: 1.5rem; border-bottom: 1px solid rgba(0,0,0,0.5); display: flex; align-items: center; gap: 1rem; background: var(--bg-card);">
                             <div style="background: rgba(59, 130, 246, 0.1); color: #3b82f6; width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">🏗️</div>
-                            <h4 style="margin: 0; font-size: 1.1rem; color: var(--primary);">Technical Planning</h4>
+                            <h4 style="margin: 0; font-size: 1.1rem; color: var(--text-main);">Technical Planning</h4>
                         </div>
                         <div style="padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem;">
-                            <div style="background: white; padding: 1rem; border-radius: 8px; border-left: 3px solid #3b82f6; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
-                                <strong style="display: block; font-size: 0.875rem; color: var(--primary); margin-bottom: 0.25rem;">ChatGPT Code Interpreter</strong>
+                            <div style="background: var(--bg-card); padding: 1rem; border-radius: 8px; border-left: 3px solid #3b82f6; box-shadow: 0 1px 3px rgba(0,0,0,0.5);">
+                                <strong style="display: block; font-size: 0.875rem; color: var(--text-main); margin-bottom: 0.25rem;">ChatGPT Code Interpreter</strong>
                                 <span class="text-xs text-muted">Analyze site surveys, model logistics, calculate resources</span>
                             </div>
                         </div>
                     </div>
                     
                     <div style="background: var(--bg-main); border: 1px solid var(--border-color); border-radius: 12px; overflow: hidden;">
-                        <div style="padding: 1.5rem; border-bottom: 1px solid rgba(0,0,0,0.05); display: flex; align-items: center; gap: 1rem; background: white;">
+                        <div style="padding: 1.5rem; border-bottom: 1px solid rgba(0,0,0,0.5); display: flex; align-items: center; gap: 1rem; background: var(--bg-card);">
                             <div style="background: rgba(139, 92, 246, 0.1); color: #8b5cf6; width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">💻</div>
-                            <h4 style="margin: 0; font-size: 1.1rem; color: var(--primary);">System Management</h4>
+                            <h4 style="margin: 0; font-size: 1.1rem; color: var(--text-main);">System Management</h4>
                         </div>
                         <div style="padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem;">
-                            <div style="background: white; padding: 1rem; border-radius: 8px; border-left: 3px solid #8b5cf6; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
-                                <strong style="display: block; font-size: 0.875rem; color: var(--primary); margin-bottom: 0.25rem;">GitHub Copilot</strong>
+                            <div style="background: var(--bg-card); padding: 1rem; border-radius: 8px; border-left: 3px solid #8b5cf6; box-shadow: 0 1px 3px rgba(0,0,0,0.5);">
+                                <strong style="display: block; font-size: 0.875rem; color: var(--text-main); margin-bottom: 0.25rem;">GitHub Copilot</strong>
                                 <span class="text-xs text-muted">Auto-generate scripts, debug infrastructure code</span>
                             </div>
                         </div>
@@ -2483,7 +2483,7 @@ function renderModule1Docs(container) {
                     <select id="doc-select" class="form-control mb-4">
                         ${optionsHtml}
                     </select>
-                    <div id="doc-viewer" style="background: white; padding: 1.5rem; border: 1px solid #E2E8F0; border-radius: var(--radius-sm); max-height: 500px; overflow-y: auto; white-space: pre-wrap; font-family: var(--font-body); font-size: 0.875rem; box-shadow: inset 0 2px 4px rgba(0,0,0,0.02); flex-grow: 1;"></div>
+                    <div id="doc-viewer" style="background: var(--bg-card); padding: 1.5rem; border: 1px solid #E2E8F0; border-radius: var(--radius-sm); max-height: 500px; overflow-y: auto; white-space: pre-wrap; font-family: var(--font-body); font-size: 0.875rem; box-shadow: inset 0 2px 4px rgba(0,0,0,0.02); flex-grow: 1;"></div>
                 </div>
             </div>
             
@@ -2815,7 +2815,7 @@ function renderCaseStudies(container) {
                     <button class="btn btn-primary w-full mb-4" id="btn-run-fin-cs">Start Automated Invoice Processing</button>
 
                     <div id="fin-cs-results" class="hidden">
-                        <div class="ai-result-box mb-4" style="border-color: var(--primary);">
+                        <div class="ai-result-box mb-4" style="border-color: var(--text-main);">
                             <span class="ai-badge">Processing Complete</span>
                             <div class="mt-2 text-sm">
                                 <strong>Data Extraction Successful</strong><br>
@@ -3706,7 +3706,7 @@ function renderProductivityForms(container) {
                         <style>
                             @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Outfit:wght@700;800&display=swap');
                             * { box-sizing: border-box; }
-                            body { font-family: 'Inter', sans-serif; background: white; color: #1E293B; margin: 0; padding: 0; }
+                            body { font-family: 'Inter', sans-serif; background: var(--bg-card); color: var(--text-main); margin: 0; padding: 0; }
                         </style>
 
                         <!-- HEADER BANNER -->
@@ -4046,9 +4046,9 @@ function renderDatasetHub(container) {
                     </div>
 
                     <!-- Instruction Card for uploading to Claude -->
-                    <div style="background: #F8FAFC; border-left: 4px solid var(--primary); padding: 1rem; border-radius: 4px; margin-top: 1.5rem; font-size: 0.85rem;">
-                        <h4 style="margin: 0 0 0.25rem 0; color: var(--primary); font-weight: 600;">💡 Training Exercise Tip for Claude Projects:</h4>
-                        <p style="margin: 0; color: #475569; line-height: 1.5;">Click <b>Download CSV</b> to save this file to your computer. Then, open your Claude Project, upload this CSV under the "Project Knowledge" section, and prompt your assistant to audit the file or analyze the records for potential anomalies!</p>
+                    <div style="background: rgba(0, 0, 0, 0.3); border-left: 4px solid var(--primary); padding: 1rem; border-radius: 4px; margin-top: 1.5rem; font-size: 0.85rem;">
+                        <h4 style="margin: 0 0 0.25rem 0; color: var(--text-main); font-weight: 600;">💡 Training Exercise Tip for Claude Projects:</h4>
+                        <p style="margin: 0; color: var(--text-muted); line-height: 1.5;">Click <b>Download CSV</b> to save this file to your computer. Then, open your Claude Project, upload this CSV under the "Project Knowledge" section, and prompt your assistant to audit the file or analyze the records for potential anomalies!</p>
                     </div>
                 </div>
             </div>

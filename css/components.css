@@ -1233,3 +1233,80 @@ tr:hover{background:rgba(255,255,255,0.02)}
 .diagram .node-safe{border-color:rgba(76,175,80,0.4);color:#4CAF50}
 .diagram .arr{color:var(--accent);font-size:20px;font-weight:bold}
 
+
+
+/* --- Injected Tools CSS --- */
+
+  .role-card {
+    background: var(--bg-card);
+    border: 0.5px solid var(--border-color);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 16px;
+  }
+  .role-title {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--text-main);
+    margin: 0 0 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .role-icon {
+    font-size: 20px;
+    width: 24px;
+    text-align: center;
+  }
+  .ai-tools {
+    display: grid;
+    gap: 12px;
+  }
+  .tool-item {
+    background: var(--bg-card);
+    padding: 12px;
+    border-radius: 8px;
+    border-left: 3px solid var(--info);
+    font-size: 14px;
+  }
+  .tool-name {
+    font-weight: 500;
+    color: var(--text-main);
+    margin-bottom: 4px;
+  }
+  .tool-use {
+    color: var(--text-muted);
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  .tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+    border-bottom: 0.5px solid var(--border-color);
+  }
+  .tab-button {
+    padding: 12px 16px;
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid transparent;
+    color: var(--text-muted);
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+  .tab-button.active {
+    color: var(--text-main);
+    border-bottom-color: var(--info);
+  }
+  .tab-button:hover {
+    color: var(--text-main);
+  }
+  .tab-content {
+    display: none;
+  }
+  .tab-content.active {
+    display: block;
+  }
+

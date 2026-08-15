@@ -2092,6 +2092,241 @@ function switchTab(e, tabName) {
   e.target.classList.add('active');
 }
 </script>`;
+        } else if (activeSubTab === 'tools') {
+            contentHtml = `<div style="padding: 0 0 20px;">
+  <div class="tabs">
+    <button class="tab-button active" onclick="showTab(event, 'project-exec')">Project Execution</button>
+    <button class="tab-button" onclick="showTab(event, 'quality')">Quality & Safety</button>
+    <button class="tab-button" onclick="showTab(event, 'infra-it')">Infrastructure & IT</button>
+  </div>
+
+  <!-- PROJECT EXECUTION TAB -->
+  <div id="project-exec" class="tab-content active">
+    <div class="role-card">
+      <h3 class="role-title">
+        <span class="role-icon">👷</span>
+        Project Managers
+      </h3>
+      <div class="ai-tools">
+        <div class="tool-item">
+          <div class="tool-name">ChatGPT / Claude</div>
+          <div class="tool-use">• Draft project proposals & reports<br>• Summarize meeting minutes<br>• Create communication templates</div>
+        </div>
+        <div class="tool-item">
+          <div class="tool-name">Microsoft Copilot (Excel)</div>
+          <div class="tool-use">• Auto-generate project dashboards<br>• Analyze timeline & budget variances<br>• Create pivot tables from raw data</div>
+        </div>
+        <div class="tool-item">
+          <div class="tool-name">Google Gemini</div>
+          <div class="tool-use">• Analyze project documents & contracts<br>• Extract key milestones & deadlines<br>• Organize scattered project info</div>
+        </div>
+        <div class="tool-item">
+          <div class="tool-name">ChatGPT Vision</div>
+          <div class="tool-use">• Extract data from site photos/blueprints<br>• Analyze construction progress visually<br>• Review design documents</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="role-card">
+      <h3 class="role-title">
+        <span class="role-icon">👷</span>
+        Site Supervisors
+      </h3>
+      <div class="ai-tools">
+        <div class="tool-item">
+          <div class="tool-name">ChatGPT (Mobile)</div>
+          <div class="tool-use">• Quick problem-solving on site<br>• Voice-based daily logs & reports<br>• Safety procedure clarification</div>
+        </div>
+        <div class="tool-item">
+          <div class="tool-name">ChatGPT Vision (Photo Analysis)</div>
+          <div class="tool-use">• Assess site conditions from photos<br>• Identify structural/quality issues<br>• Document work progress visually</div>
+        </div>
+        <div class="tool-item">
+          <div class="tool-name">Google Sheets + AI</div>
+          <div class="tool-use">• Auto-populate daily site reports<br>• Track labor & material usage<br>• Generate graphs from field data</div>
+        </div>
+        <div class="tool-item">
+          <div class="tool-name">Microsoft Teams AI</div>
+          <div class="tool-use">• Quick message summarization<br>• Notify team of urgent updates<br>• Transcribe voice memos</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="role-card">
+      <h3 class="role-title">
+        <span class="role-icon">⚙️</span>
+        Technical Staff
+      </h3>
+      <div class="ai-tools">
+        <div class="tool-item">
+          <div class="tool-name">ChatGPT (Engineering Mode)</div>
+          <div class="tool-use">• Verify calculations & design specs<br>• Research construction standards<br>• Generate technical documentation</div>
+        </div>
+        <div class="tool-item">
+          <div class="tool-name">Copilot for Architecture Software</div>
+          <div class="tool-use">• Suggest design improvements<br>• Generate CAD scripts/automation<br>• Check design against codes</div>
+        </div>
+        <div class="tool-item">
+          <div class="tool-name">ChatGPT Vision</div>
+          <div class="tool-use">• Analyze blueprint photos<br>• Spot inconsistencies in drawings<br>• Extract dimensions & specs</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- QUALITY & SAFETY TAB -->
+  <div id="quality" class="tab-content">
+    <div class="role-card">
+      <h3 class="role-title">
+        <span class="role-icon">✓</span>
+        Quality Controllers
+      </h3>
+      <div class="ai-tools">
+        <div class="tool-item">
+          <div class="tool-name">ChatGPT Vision</div>
+          <div class="tool-use">• Analyze defects from site photos<br>• Compare to quality standards<br>• Flag issues automatically<br>• Classify defect severity</div>
+        </div>
+        <div class="tool-item">
+          <div class="tool-name">Power BI + AI</div>
+          <div class="tool-use">• Generate QC dashboards automatically<br>• Trend analysis of defect types<br>• Predict high-risk areas</div>
+        </div>
+        <div class="tool-item">
+          <div class="tool-name">Claude / ChatGPT</div>
+          <div class="tool-use">• Draft QC inspection checklists<br>• Create non-conformance reports<br>• Generate corrective action plans</div>
+        </div>
+        <div class="tool-item">
+          <div class="tool-name">Google Docs AI (Duet)</div>
+          <div class="tool-use">• Auto-generate inspection reports<br>• Create testing documentation<br>• Organize test results data</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="role-card">
+      <h3 class="role-title">
+        <span class="role-icon">🛡️</span>
+        Safety Officers
+      </h3>
+      <div class="ai-tools">
+        <div class="tool-item">
+          <div class="tool-name">ChatGPT</div>
+          <div class="tool-use">• Draft safety policies & procedures<br>• Create hazard assessment documents<br>• Generate incident reports<br>• Write corrective action plans</div>
+        </div>
+        <div class="tool-item">
+          <div class="tool-name">ChatGPT Vision</div>
+          <div class="tool-use">• Analyze site photos for hazards<br>• Spot improper safety practices<br>• Document unsafe conditions<br>• Create visual safety guidelines</div>
+        </div>
+        <div class="tool-item">
+          <div class="tool-name">Copilot for Word/Excel</div>
+          <div class="tool-use">• Auto-create safety training docs<br>• Analyze safety KPI trends<br>• Generate near-miss reports<br>• Create compliance calendars</div>
+        </div>
+        <div class="tool-item">
+          <div class="tool-name">Claude</div>
+          <div class="tool-use">• Research OSHA/Indian labor codes<br>• Create toolbox talks<br>• Write emergency procedures<br>• Summarize safety regulations</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="role-card">
+      <h3 class="role-title">
+        <span class="role-icon">📋</span>
+        Compliance Team
+      </h3>
+      <div class="ai-tools">
+        <div class="tool-item">
+          <div class="tool-name">Claude / GPT</div>
+          <div class="tool-use">• Audit documents against standards<br>• Create compliance matrices<br>• Generate audit reports<br>• Research regulatory requirements</div>
+        </div>
+        <div class="tool-item">
+          <div class="tool-name">Copilot for Excel</div>
+          <div class="tool-use">• Track compliance requirements<br>• Create regulatory calendars<br>• Analyze compliance gaps<br>• Auto-generate compliance logs</div>
+        </div>
+        <div class="tool-item">
+          <div class="tool-name">Power BI AI</div>
+          <div class="tool-use">• Monitor compliance metrics in real-time<br>• Flag overdue certifications<br>• Trend analysis of issues</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- INFRASTRUCTURE & IT TAB -->
+  <div id="infra-it" class="tab-content">
+    <div class="role-card">
+      <h3 class="role-title">
+        <span class="role-icon">🏗️</span>
+        Technical Planning
+      </h3>
+      <div class="ai-tools">
+        <div class="tool-item">
+          <div class="tool-name">ChatGPT + Code Interpreter</div>
+          <div class="tool-use">• Analyze site surveys & terrain data<br>• Model construction logistics<br>• Optimize equipment placement<br>• Calculate resource requirements</div>
+        </div>
+        <div class="tool-item">
+          <div class="tool-name">Claude Code</div>
+          <div class="tool-use">• Script project scheduling automation<br>• Build cost estimation models<br>• Create technical simulations</div>
+        </div>
+        <div class="tool-item">
+          <div class="tool-name">ChatGPT Vision</div>
+          <div class="tool-use">• Review aerial/satellite site images<br>• Analyze site constraints visually<br>• Plan access routes & staging areas</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="role-card">
+      <h3 class="role-title">
+        <span class="role-icon">💻</span>
+        System Management
+      </h3>
+      <div class="ai-tools">
+        <div class="tool-item">
+          <div class="tool-name">ChatGPT</div>
+          <div class="tool-use">• Write system documentation<br>• Troubleshoot IT issues<br>• Create user guides<br>• Plan infrastructure upgrades</div>
+        </div>
+        <div class="tool-item">
+          <div class="tool-name">GitHub Copilot</div>
+          <div class="tool-use">• Auto-generate code scripts<br>• Debug infrastructure code<br>• Create automation scripts<br>• Review technical code</div>
+        </div>
+        <div class="tool-item">
+          <div class="tool-name">Claude + Code</div>
+          <div class="tool-use">• Build custom project management tools<br>• Create data pipeline automation<br>• Debug complex queries</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="role-card">
+      <h3 class="role-title">
+        <span class="role-icon">💡</span>
+        Process Innovation
+      </h3>
+      <div class="ai-tools">
+        <div class="tool-item">
+          <div class="tool-name">ChatGPT</div>
+          <div class="tool-use">• Brainstorm process improvements<br>• Research industry best practices<br>• Draft SOP documentation<br>• Analyze workflow bottlenecks</div>
+        </div>
+        <div class="tool-item">
+          <div class="tool-name">Claude</div>
+          <div class="tool-use">• Map as-is vs. to-be processes<br>• Create change management plans<br>• Write implementation guides<br>• Summarize stakeholder feedback</div>
+        </div>
+        <div class="tool-item">
+          <div class="tool-name">Power BI + AI</div>
+          <div class="tool-use">• Visualize process metrics<br>• Identify efficiency gains<br>• Predict ROI of improvements</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function showTab(event, tabName) {
+  const contents = document.querySelectorAll('.tab-content');
+  contents.forEach(c => c.classList.remove('active'));
+  
+  const buttons = document.querySelectorAll('.tab-button');
+  buttons.forEach(b => b.classList.remove('active'));
+  
+  document.getElementById(tabName).classList.add('active');
+  event.target.classList.add('active');
+}
+</script>`;
         } else if (activeSubTab === '1d') {
             contentHtml = `<div class="container">
         <header>
@@ -2491,6 +2726,7 @@ function switchTab(e, tabName) {
             <button class="btn sub-tab-btn ${activeSubTab === '1b' ? 'btn-primary' : 'btn-secondary'}" data-subtab="1b" style="border-radius: var(--radius-sm);">📊 1B: Excel</button>
             <button class="btn sub-tab-btn ${activeSubTab === '1c' ? 'btn-primary' : 'btn-secondary'}" data-subtab="1c" style="border-radius: var(--radius-sm);">📄 1C: PDF</button>
             <button class="btn sub-tab-btn ${activeSubTab === '1d' ? 'btn-primary' : 'btn-secondary'}" data-subtab="1d" style="border-radius: var(--radius-sm);">🎮 1D: Interactive</button>
+            <button class="btn sub-tab-btn ${activeSubTab === 'tools' ? 'btn-primary' : 'btn-secondary'}" data-subtab="tools" style="border-radius: var(--radius-sm);">🛠️ AI Tools Guide</button>
         </div>
 
         <div class="module1-content-wrapper">

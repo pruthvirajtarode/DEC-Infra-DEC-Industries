@@ -1,0 +1,397 @@
+================================================================================
+MODULE 1B: EXCEL DATA ANALYSIS WITH AI - COMPLETE WORKSHOP GUIDE
+================================================================================
+
+Dataset: DEC_Infra_Complete_Dataset_150rows.csv
+Total Rows: 150+ (covering 10 concurrent projects)
+Duration: 60 minutes
+
+================================================================================
+PART 1: SETUP & CONTEXT (5 MINUTES)
+================================================================================
+
+OPENING STATEMENT:
+"In your hands is real DEC Infra budget data from 10 concurrent projects 
+worth ₹694.8 Lac. Every month, you spend 2-3 hours analyzing this in Excel 
+spreadsheets - VLOOKUP formulas, pivot tables, manual summaries. Today, I'm 
+going to show you how to do it in 90 seconds using AI."
+
+SHOW DATA LIVE:
+- Open the CSV file in Excel
+- Show the size: 150 rows x 25 columns
+- Ask: "How many items are over 100% spent? Which projects are healthiest? 
+  What's our contingency burn rate?" 
+- Answer: "Give me 2 minutes and I'll tell you all of this using AI."
+
+KEY STATISTICS TO HIGHLIGHT:
+✓ Total Portfolio Budget: ₹694.8 Lac
+✓ Total Spent to Date: ₹370.2 Lac (53.3%)
+✓ Total Remaining: ₹324.6 Lac
+✓ High-Risk Items: 4 (over 105% spent)
+✓ Contingency Allocated: ₹75.3 Lac
+✓ Contingency Used: ₹20.5 Lac (27.2% burn rate)
+
+================================================================================
+PART 2: LIVE DEMONSTRATION (15 MINUTES)
+================================================================================
+
+STEP 1: OPEN AI TOOL (2 minutes)
+- Open ChatGPT or Claude in web browser (projector view)
+- Have dataset open in Excel alongside (split screen)
+
+STEP 2: COPY & PASTE DATA (2 minutes)
+- Select all data in Excel (Ctrl+A)
+- Copy (Ctrl+C)
+- Paste into ChatGPT prompt
+- Show the data is now in AI tool
+
+STEP 3: RUN FIRST PROMPT - PORTFOLIO RISK SCAN (3 minutes)
+
+Copy this exact prompt:
+
+---BEGIN PROMPT---
+Analyze this multi-project budget dataset from DEC Infra (150+ line items, 
+10 projects). I'm pasting the complete CSV data below.
+
+[PASTE YOUR DATA HERE]
+
+Please provide:
+1. RED FLAGS: List any line items exceeding 105% spent (over budget)
+2. BUDGET HEALTH BY PROJECT: Which projects are healthiest? Which are at risk?
+3. CONTINGENCY ANALYSIS: Which projects are burning contingency fastest?
+4. FORECAST: If current spending continues, what will our final project costs be?
+5. TOP 3 COST-SAVING OPPORTUNITIES: Where can we control costs immediately?
+
+Format as executive summary (250 words max). Use actual project names and 
+rupee amounts. Be specific and actionable.
+
+---END PROMPT---
+
+EXPECTED OUTPUT (60-90 seconds):
+- AI identifies Medical College piling overage (109.4%)
+- IISER foundation pressure (107%)
+- NSDL Data Center power supply contingency burn (2.0L used)
+- Portfolio forecast: ₹694.8L → likely ₹710-715L if trends continue
+- Action items: Lock medical college pile scope, renegotiate finish rates at IISER
+
+PAUSE HERE & ASK AUDIENCE:
+"How long would this analysis take manually? 2-3 hours? AI did it in 90 seconds. 
+And notice - it didn't just give numbers. It gave you specific project names and 
+amounts to act on immediately. That's the power of AI + structured data."
+
+STEP 4: RUN SECOND PROMPT - PROJECT COMPARISON (3 minutes)
+
+Copy this prompt:
+
+---BEGIN PROMPT---
+Compare the health status of all 10 projects using the data I provided:
+
+[NO NEED TO PASTE AGAIN - AI REMEMBERS]
+
+Rank them 1-10 (1 = healthiest, 10 = most at risk). For each:
+• Project name
+• Current spend %
+• Risk level (High/Medium/Low)
+• Primary concern (if any)
+• What happens if this project gets delayed?
+
+Give me a quick table format.
+
+---END PROMPT---
+
+EXPECTED OUTPUT TABLE:
+1. IT Park (Mangalgiri) - 48.1% - Low Risk - Zero contingency burn = BEST
+2. JNTU Campus - 52.8% - Low Risk - Multi-block coordination OK
+3. Urdu University - 50.2% - Low Risk - Good progress
+4. SWC Facility - 50.4% - Low Risk - On-track
+5. IISER Library - 73.5% - Medium Risk - Foundation overages need watching
+6. Kamareddy Auditorium - 45.2% - Low Risk - Smaller project
+7. Gajwel Auditorium - 38.1% - Low Risk - Entertainment project
+8. APIIC Industrial - 47.6% - Medium Risk - Phase 2 starting
+9. Kollur Housing - 38.2% - Low Risk - Residential segments
+10. Medical College - 56.2% - HIGH RISK - Piling overage + deep soil issues
+11. NSDL Data Center - 52.1% - HIGH RISK - Specialized equipment risks
+
+LIVE MOMENT:
+"Notice something? Just 2 projects are truly high-risk, but if we don't monitor them, 
+they can spiral. AI flagged both instantly with specific reasons. In Excel, you'd 
+miss this correlation if you're just sorting by % spent."
+
+STEP 5: COST SAVINGS PROMPT (3 minutes)
+
+Copy this:
+
+---BEGIN PROMPT---
+Which cost categories have the most variance across projects? For example:
+- Are MEP costs higher on some projects than others?
+- Are finishes budgeted conservatively on some projects but aggressively on others?
+
+Help me identify 3 line items where we're over-budgeting or could negotiate better 
+rates. Show me the specific category, project, current amount, and savings potential.
+
+---END PROMPT---
+
+EXPECTED OUTPUT:
+• FLOORING COSTS: NSDL (₹4200/sqm) vs Kollur Housing (₹180/sqm) = Specification 
+  difference. Renegotiate marble supplier now = ₹2-3L savings
+• LABOR RATES: Some projects use ₹500/unit for steel, others ₹800 = standardize 
+  rates across portfolio = ₹8-12L savings
+• MEP CONTINGENCY: Data Center at 3.5L, IT Park at 1.5L = lock equipment prices 
+  before Q4 rate increases = ₹3-5L savings
+
+TOTAL: ₹13-20L in potential savings (1.9-2.9% of portfolio) identified in 3 prompts.
+
+================================================================================
+PART 3: HANDS-ON EXERCISE (20 MINUTES)
+================================================================================
+
+DIVIDE PARTICIPANTS INTO 5 GROUPS:
+- Group 1: Finance/PM (Risk Analysis)
+- Group 2: Finance (Variance Analysis)
+- Group 3: Cost Control (Benchmarking)
+- Group 4: Project Managers (Phase Analysis)
+- Group 5: Site Supervisors (Labor & Timeline Risk)
+
+ASSIGN EACH GROUP A TASK (provide pre-written prompts):
+
+---GROUP 1: RISK ANALYSIS---
+Task: Identify all line items at risk of overrun
+
+Prompt:
+"Using the data, find all line items where:
+1. Spent % is above 90%
+2. Remaining budget is less than 1 lac
+3. Contingency has been used
+
+What's the combined overrun risk? If all of these slip by 10%, how much will 
+it cost? Recommend 3 mitigation actions."
+
+Expected Time: 4 minutes
+Share Results: 2 minutes
+
+---GROUP 2: VARIANCE ANALYSIS---
+Task: Compare spending patterns by project phase
+
+Prompt:
+"Analyze civil works vs MEP vs finishes across all projects:
+1. What's the average % spent in each phase?
+2. Why is civil at 70% while finishes are at 15%?
+3. Which phase has most variance (cost overruns)?
+4. If finishes phase gets compressed (timeline pressure), what happens to costs?
+
+Give forecast: if we compress finishes by 2 months, how much extra will labor cost?"
+
+Expected Time: 4 minutes
+Share Results: 2 minutes
+
+---GROUP 3: BENCHMARKING---
+Task: Find cost optimization opportunities
+
+Prompt:
+"Line items across projects include different rates (₹/unit). For example:
+- Concrete rates vary
+- Labor rates vary
+- Material rates vary
+
+Identify 5 specific line items where we're paying premium rates. What should 
+we pay based on lowest price seen? How much can we save if we standardize rates?
+
+Show: Item | Current Rate | Benchmark Rate | Projects Affected | Savings Potential"
+
+Expected Time: 4 minutes
+Share Results: 2 minutes
+
+---GROUP 4: PHASE ANALYSIS---
+Task: Forecast project completion costs & timeline
+
+Prompt:
+"For IISER Library and Medical College (our 2 largest projects):
+1. What's the completion target % for each phase?
+2. How much budget remains?
+3. At current burn rate, when will each project reach completion?
+4. Which phase is at risk of budget overrun?
+
+Forecast final project cost vs original budget. Which project will exceed budget?"
+
+Expected Time: 4 minutes
+Share Results: 2 minutes
+
+---GROUP 5: LABOR & TIMELINE---
+Task: Identify labor cost risks
+
+Prompt:
+"Which phases are at 80%+ completion but still have high budget remaining? 
+This suggests either:
+- Efficient work (good)
+- Compressed timeline ahead (costly)
+- Labor rate inflation coming
+
+For each such item, what's the risk? How do we manage labor costs if timelines 
+compress and we need to fast-track work?"
+
+Expected Time: 4 minutes
+Share Results: 2 minutes
+
+RECORDING RESULTS:
+- Have 1 person from each group present (90 seconds each)
+- Record findings on flip chart or shared screen
+- Highlight: How quickly AI identified complex patterns
+
+================================================================================
+PART 4: DISCUSSION & WRAP-UP (20 MINUTES)
+================================================================================
+
+DISCUSSION QUESTIONS (10 minutes):
+
+1. "What surprised you about the AI analysis?"
+   - Expected: "We have a bigger problem than we thought" or "Hidden savings"
+
+2. "Which project would you prioritize for intervention?"
+   - Expected: Medical College (piling overage)
+
+3. "What data would you add to make AI analysis even better?"
+   - Expected: Timeline schedules, market rates, labor availability
+
+4. "How would this change your PM meetings?"
+   - Expected: More time on action, less time on spreadsheet creation
+
+5. "What's the biggest barrier to using this weekly?"
+   - Expected: Getting data in right format, learning prompts
+
+KEY TAKEAWAYS (5 minutes):
+
+1. AI + Structured Data = Instant Insights
+   "You have 150 rows of data. Manual analysis = 3 hours. AI = 90 seconds."
+
+2. Data Quality Matters
+   "Our dataset is clean. If your data is messy (missing values, inconsistent 
+   formats), AI struggles. Spend time cleaning data first."
+
+3. Prompts Are Repeatable
+   "Once you have a good prompt, use it monthly. Copy-paste same data, ask 
+   same questions, compare trends."
+
+4. AI Spots Patterns You Miss
+   "Humans are good at details. AI is good at cross-project patterns. Use both."
+
+5. Cost Savings = ₹13-20L per month
+   "In 60 minutes, we identified cost-saving opportunities that pay for AI 
+   subscriptions 100x over."
+
+CLOSING STATEMENT:
+"This is Module 1B of 3. Next week: Module 1C (Comparing Vendor PDFs with AI). 
+Today, you learned Excel. Next week, you'll learn how AI compares 20 vendor 
+quotes in 5 minutes instead of 2 hours."
+
+================================================================================
+PART 5: OPTIONAL DEEP-DIVE PROMPTS (FOR ADVANCED PARTICIPANTS)
+================================================================================
+
+These are "bonus" prompts you can run if time allows or share for participants 
+to try at their desk:
+
+---PROMPT: CONTINGENCY BURN RATE FORECAST---
+"Using contingency allocated and contingency used data, forecast:
+1. How many months until contingency is fully consumed (at current burn rate)?
+2. Which projects will run out of contingency first?
+3. What happens if we have a major delay (10% slip on all projects)?
+4. Should we reallocate contingency from low-risk to high-risk projects?
+
+Give me a month-by-month forecast."
+
+---PROMPT: VENDOR PERFORMANCE ANALYSIS---
+"The dataset includes vendor names. Analyze which vendors are delivering on budget:
+1. Which vendors have cost overruns?
+2. Which vendors are under budget (efficient)?
+3. For vendors with overruns, is it project-specific or across all projects?
+4. Should we renegotiate or switch vendors?
+
+Recommend top 3 vendors to use for future projects."
+
+---PROMPT: LABOR PRODUCTIVITY ANALYSIS---
+"Using unit rates and quantities, estimate labor costs:
+1. Which line items have highest labor cost per unit?
+2. Are these justified (complex work) or inflated?
+3. On which projects is labor most efficient?
+4. Can we apply efficient projects' practices to inefficient ones?
+
+Show: Project | Line Item | Labor Cost Per Unit | Benchmark | Variance"
+
+---PROMPT: TIMELINE COMPRESSION RISK---
+"Identify phases that are <30% spent but scheduled to complete within 3 months:
+1. Which projects have this risk?
+2. If we compress these phases, labor costs increase by 20-30%. How much?
+3. Which phases should we de-scope to avoid compression?
+4. Alternative: start finishes phase before structure is 100% done?
+
+Give me a risk-mitigation timeline."
+
+================================================================================
+APPENDIX: DATA FIELD DESCRIPTIONS
+================================================================================
+
+Column Name | Description | Example
+Row_ID | Unique identifier | 1, 2, 3...
+Project_Name | DEC Infra project | IISER Library, Medical College
+Project_Location | City & State | Tirupati AP, Suryapet TS
+Project_Type | Sector | Educational, Healthcare, Commercial
+Budget_Line_Item | Specific work item | Excavation, RCC Footing, HVAC
+Sub_Category | Grouping | Foundation Work, MEP System
+Main_Category | Phase category | Civil Works, MEP, Finishes, PM
+Phase | Which phase | Foundation, Structure, Infill, Execution
+Budgeted_Amount_Lacs | Original budget | 8.50, 12.30 (in Lacs)
+Spent_Amount_Lacs | Actual spend | 8.92, 13.20 (in Lacs)
+Percentage_Spent | % of budget used | 104.9%, 107.3%
+Remaining_Amount_Lacs | Budget available | 0.00, -0.90 (negative = overrun)
+Contingency_Allocated_Lacs | Contingency assigned | 1.20, 1.50
+Contingency_Used_Lacs | Contingency consumed | 0.50, 1.20
+Vendor_Name | Contractor/supplier | Soil Contractors Ltd, Concrete Suppliers Inc
+Unit_Rate_Rupees | Cost per unit | 1200, 2200 (per cum, sqm, etc.)
+Quantity_Units | Amount of work | 7420, 6000 (units)
+Unit_Type | What's being measured | cum, sqm, TR, unit, meter
+Work_Status | Progress | On-track, Complete, Planning, Execution
+Completion_Target_Percent | Target completion | 100%, 75%, 50%
+Actual_Completion_Percent | Actual completion | 104.9%, 75.7%
+Timeline_Status | On time? | On-track, Delayed, Ahead
+Risk_Level | 1-scale | Low, Medium, High
+Risk_Description | What's the risk | Soil harder than estimated, Deeper layers
+Approval_Status | Approved? | Approved, Pending
+Invoice_Pending_Lacs | Money owed | 0.42, 0.00
+Notes | Additional info | Extra excavation required, Ahead of schedule
+
+================================================================================
+SUPPLIES & PREPARATION CHECKLIST
+================================================================================
+
+BEFORE THE WORKSHOP:
+
+☐ Download DEC_Infra_Complete_Dataset_150rows.csv
+☐ Open in Excel to verify data integrity
+☐ Open ChatGPT/Claude in browser
+☐ Test copying & pasting data (takes 10-15 seconds)
+☐ Run FIRST PROMPT (Portfolio Risk Scan) to see expected output
+☐ Print this guide (20 pages) for yourself
+☐ Prepare laptop + projector setup
+☐ Have flip chart for recording group results
+☐ Prepare printed copies of 5 GROUP PROMPTS for handout
+
+DURING WORKSHOP:
+
+✓ Have 2 screens visible: Excel data + ChatGPT simultaneously
+✓ Read prompts aloud before pasting (so participants follow)
+✓ Pause after each AI output (let participants absorb)
+✓ Ask audience "Does this match your experience?" after each result
+✓ Record time for each prompt (show speed)
+✓ Take screenshots of AI outputs to share later
+
+AFTER WORKSHOP:
+
+✓ Send all prompts to participants via email
+✓ Provide copy of this guide
+✓ Provide CSV dataset (anonymized if needed)
+✓ Offer weekly "AI + Excel" office hours (30 mins)
+✓ Collect feedback (what worked, what to improve)
+
+================================================================================
+END OF WORKSHOP GUIDE
+================================================================================

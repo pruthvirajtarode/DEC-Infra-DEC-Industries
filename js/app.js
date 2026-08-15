@@ -1967,18 +1967,7 @@ If any test FAILS, recommend: Reject batch OR Request retesting OR Accept with w
     </div>
   </div>
 
-</div>
-
-<script>
-function switchTab(e, tabName) {
-  const tabs = document.querySelectorAll('.tab-content');
-  tabs.forEach(t => t.classList.remove('active'));
-  const btns = document.querySelectorAll('.tab-btn');
-  btns.forEach(b => b.classList.remove('active'));
-  document.getElementById(tabName).classList.add('active');
-  e.target.classList.add('active');
-}
-</script>`;
+</div>`;
         } else if (activeSubTab === 'tools') {
             contentHtml = `<div style="padding: 0 0 20px;">
   <div class="tabs">
@@ -2200,20 +2189,7 @@ function switchTab(e, tabName) {
       </div>
     </div>
   </div>
-</div>
-
-<script>
-function showTab(event, tabName) {
-  const contents = document.querySelectorAll('.tab-content');
-  contents.forEach(c => c.classList.remove('active'));
-  
-  const buttons = document.querySelectorAll('.tab-button');
-  buttons.forEach(b => b.classList.remove('active'));
-  
-  document.getElementById(tabName).classList.add('active');
-  event.target.classList.add('active');
-}
-</script>`;
+</div>`;
         } else if (activeSubTab === '1d') {
             contentHtml = `<div class="container">
         <header>

@@ -725,1373 +725,6 @@ function renderModule1(container) {
             </div>
         </div>
     `;
-
-    // Event Listeners for Module 1
-    setTimeout(() => {
-        // System Persona
-        document.getElementById('btn-run-persona')?.addEventListener('click', () => {
-            const btn = document.getElementById('btn-run-persona');
-            btn.disabled = true;
-            btn.innerText = "Running...";
-            
-            setTimeout(() => {
-                const persona = document.getElementById('sys-persona').value;
-                const promptVal = document.getElementById('sys-user-prompt').value.toLowerCase();
-                let out = "";
-                
-                const isEmail = promptVal.includes("email") || promptVal.includes("message");
-                const isReport = promptVal.includes("report") || promptVal.includes("progress") || promptVal.includes("update");
-                
-                if (persona === 'legal') {
-                    if (isEmail) out = "<b>DISCLAIMER:</b> Draft email subject to review.<br><br>To Whom It May Concern,<br>Please find the official correspondence regarding the recent developments. Ensure all actions comply with clause 4.a of our policy.";
-                    else if (isReport) out = "<b>CONFIDENTIAL REPORT</b><br><br>This document logs the activities on site. All incidents have been recorded in compliance with OSHA standards. No liabilities assumed without formal signature.";
-                    else out = "<b>DISCLAIMER:</b> This summary does not constitute legal advice.<br><br>The provided text outlines a standard vendor agreement. <b>Key Liabilities:</b> Section 4.2 stipulates a ₹5,000/day penalty for delays. <b>Termination:</b> Either party may terminate with 30 days written notice. It is recommended to have Compliance review Section 7.";
-                } else if (persona === 'marketing') {
-                    if (isEmail) out = "Hey team! 🚀<br><br>Just wanted to drop a quick note about our latest update. Let's keep the momentum going! ✨";
-                    else if (isReport) out = "🌟 <b>Awesome Site Update!</b> 🌟<br><br>Our team is crushing it this week! We're ahead of schedule on the main build and the client is loving the energy. Check out these wins!";
-                    else out = "Hey team! 🚀<br><br>Here's the quick scoop on the vendor contract:<br>- <b>They're locked in!</b> Great terms for us.<br>- Watch out for the delay penalty (we don't want to pay that!).<br>- Easy out: we can cancel anytime with a 30-day notice.<br><br>Let's get this signed and start creating! ✨";
-                } else { // concise
-                    if (isEmail) out = "<b>Email Draft:</b><br>Subject: Update<br>Body: Please review the latest details attached. Awaiting your approval.";
-                    else if (isReport) out = "<b>Status Report:</b><br>- Progress: 45%<br>- Issues: 0<br>- Next step: Foundation pour.";
-                    else out = "<b>Contract Summary:</b><br>- <b>Type:</b> Vendor Agreement<br>- <b>Penalty:</b> ₹5k/day delay<br>- <b>Termination:</b> 30 days notice<br><br><b>Action Required:</b> Awaiting signature.";
-                }
-                
-                document.getElementById('sys-persona-out').innerHTML = out;
-                btn.disabled = false;
-                btn.innerText = "Run with Persona";
-                State.markExerciseComplete('m1_persona', 'module1');
-            }, 600);
-        });
-
-        // Excel Formula Lab
-        document.getElementById('btn-generate-excel')?.addEventListener('click', () => {
-            const btn = document.getElementById('btn-generate-excel');
-            btn.disabled = true;
-            btn.innerText = "Generating...";
-            
-            setTimeout(() => {
-                const prompt = document.getElementById('excel-prompt').value.toLowerCase();
-                let formula = "=IFERROR(VLOOKUP(A2, Sheet2!A:B, 2, FALSE), \"Not Found\")";
-                
-                if (prompt.includes("if") && (prompt.includes("multiple") || prompt.includes("nested"))) {
-                    formula = "=IFS(A2>1000, \"High\", A2>500, \"Medium\", TRUE, \"Low\")";
-                } else if (prompt.includes("if") || prompt.includes("condition")) {
-                    formula = "=IF(A2>1000, \"Over Budget\", \"OK\")";
-                } else if (prompt.includes("sum") && prompt.includes("multiple")) {
-                    formula = "=SUMIFS(C:C, A:A, \">1000\", B:B, \"Approved\")";
-                } else if (prompt.includes("sum") || prompt.includes("total")) {
-                    formula = "=SUM(A2:A100)";
-                } else if (prompt.includes("count") && prompt.includes("blank")) {
-                    formula = "=COUNTBLANK(A2:A100)";
-                } else if (prompt.includes("count")) {
-                    formula = "=COUNTIF(B:B, \"Pending\")";
-                } else if (prompt.includes("index") || prompt.includes("match")) {
-                    formula = "=INDEX(Sheet2!B:B, MATCH(A2, Sheet2!A:A, 0))";
-                } else if (prompt.includes("date") || prompt.includes("days")) {
-                    formula = "=DATEDIF(A2, TODAY(), \"d\")";
-                } else if (prompt.includes("average") || prompt.includes("mean")) {
-                    formula = "=AVERAGE(B2:B100)";
-                } else if (!prompt.includes("lookup")) {
-                    // Generic fallback that echoes some of the prompt to show it's "dynamic"
-                    formula = `/* AI generated formula for: ${prompt.substring(0, 20)}... */\n=LET(data, A2:B100, "Requires more specific logic")`;
-                }
-                
-                document.getElementById('excel-out').innerText = formula;
-                btn.disabled = false;
-                btn.innerText = "Generate Formula ✨";
-                State.markExerciseComplete('m1_excel', 'module1');
-            }, 500);
-        });
-
-        // Optimizer
-        let optimizedData = {};
-
-        document.getElementById('btn-optimize-prompt')?.addEventListener('click', () => {
-            const bad = document.getElementById('bad-prompt-input').value.toLowerCase();
-            let role = "Assistant";
-            let context = "General task";
-            let task = "Provide information";
-            let constraints = "Be concise";
-            let format = "Paragraph";
-            
-            if (bad.includes("email")) {
-                role = "Project Manager";
-                context = "Project update communication";
-                task = "Write an email to the client or team.";
-                constraints = "Maintain a professional, reassuring tone. Do not mention financial penalties.";
-                format = "Subject line + 3 short paragraphs.";
-            } else if (bad.includes("report") || bad.includes("summary")) {
-                role = "Data Analyst";
-                context = "Weekly status reporting";
-                task = "Summarize the key metrics and activities.";
-                constraints = "Focus only on completed items. Do not include assumptions.";
-                format = "Markdown list with bold headers.";
-            } else if (bad.includes("vendor") || bad.includes("quote") || bad.includes("price")) {
-                role = "Procurement Executive";
-                context = "Vendor rate comparison";
-                task = "Analyze the provided vendor quotes.";
-                constraints = "Highlight the cheapest option. Flag missing items.";
-                format = "Comparison table + recommendation.";
-            } else {
-                role = "DEC AI Assistant";
-                context = "Executing a user request";
-                task = `Fulfill the request: "${document.getElementById('bad-prompt-input').value}"`;
-                constraints = "Ensure factual accuracy. Avoid hallucination.";
-                format = "Clear, structured format.";
-            }
-
-            optimizedData = { role, context, task, constraints, format };
-            
-            const good = `Act as a ${role} for DEC Infra.\nContext: ${context}.\nTask: ${task}\nConstraints: ${constraints}\nFormat: ${format}`;
-            document.getElementById('good-prompt-output').value = good;
-            document.getElementById('btn-use-optimized').disabled = false;
-        });
-
-        document.getElementById('btn-use-optimized')?.addEventListener('click', () => {
-            document.getElementById('prompt-role').value = optimizedData.role || "Project Manager";
-            document.getElementById('prompt-context').value = optimizedData.context || "Project update communication";
-            document.getElementById('prompt-task').value = optimizedData.task || "Write an email";
-            document.getElementById('prompt-constraints').value = optimizedData.constraints || "Be concise";
-            document.getElementById('prompt-format').value = optimizedData.format || "Paragraph";
-            showToast('Prompt Builder populated!', 'success');
-        });
-
-        document.getElementById('btn-generate-prompt')?.addEventListener('click', () => {
-            const role = document.getElementById('prompt-role').value;
-            const context = document.getElementById('prompt-context').value;
-            const task = document.getElementById('prompt-task').value;
-            const input = document.getElementById('prompt-input').value;
-            const constraints = document.getElementById('prompt-constraints').value;
-            const format = document.getElementById('prompt-format').value;
-            
-            const finalPrompt = PromptEngine.buildPrompt(role, context, task, input, constraints, format);
-            State.markExerciseComplete('m1_prompt', 'module1');
-            document.getElementById('final-prompt-text').innerText = finalPrompt;
-            
-            const evalResult = PromptEngine.evaluatePrompt(finalPrompt);
-            const feedbackContainer = document.getElementById('prompt-feedback');
-            feedbackContainer.innerHTML = evalResult.feedback.map(f => `<p class="mb-2">${f}</p>`).join('');
-            
-            document.getElementById('prompt-result-card').classList.remove('hidden');
-            document.getElementById('prompt-demo-output').classList.add('hidden');
-        });
-
-        document.getElementById('btn-copy-prompt')?.addEventListener('click', () => {
-            navigator.clipboard.writeText(document.getElementById('final-prompt-text').innerText);
-            showToast('Prompt copied to clipboard', 'success');
-        });
-
-        document.getElementById('btn-run-prompt-demo')?.addEventListener('click', async () => {
-            const btn = document.getElementById('btn-run-prompt-demo');
-            btn.innerText = 'Running...';
-            btn.disabled = true;
-            
-            const promptText = document.getElementById('final-prompt-text').innerText;
-            const response = await AIService.generate(promptText);
-            
-            document.getElementById('prompt-demo-text').innerText = response;
-            document.getElementById('prompt-demo-output').classList.remove('hidden');
-            
-            btn.innerText = 'Run Demo';
-            btn.disabled = false;
-        });
-
-        // Claude Projects Lab
-        document.getElementById('btn-claude-test')?.addEventListener('click', () => {
-            const btn = document.getElementById('btn-claude-test');
-            btn.disabled = true;
-            btn.innerText = "Testing...";
-            
-            setTimeout(() => {
-                const sopIncluded = document.getElementById('chk-sop').checked;
-                let out = "";
-                if (sopIncluded) {
-                    out = `<strong>WEEKLY PROGRESS REPORT</strong><br><br><strong>Incident Section:</strong><br>As per <em>Site_Safety_SOP_v2.pdf</em>, a minor injury was recorded. The worker was treated on-site. Form SS-1 has been filed within the required 12-hour window.`;
-                } else {
-                    out = `<strong>WEEKLY PROGRESS REPORT</strong><br><br><strong>Incident Section:</strong><br>A minor injury happened today. The worker is fine now. Please advise next steps. <br><br><span style="color:var(--danger); font-size:0.75rem;">(Note: Assistant didn't know the SOP rule to file Form SS-1 because it wasn't in its Knowledge Base!)</span>`;
-                }
-                document.getElementById('claude-out').innerHTML = out;
-                btn.disabled = false;
-                btn.innerText = "Test Assistant";
-                showToast('Claude Project simulated!', 'success');
-            }, 600);
-        });
-
-    }, 100);`;
-        } else if (activeSubTab === '1a') {
-            contentHtml = `<div class="prompt-module">
-  <h2 style="font-size: 18px; font-weight: 500; margin: 0 0 20px; color: var(--text-main);">Module 1A: Crafting Effective Prompts for Construction</h2>
-  
-  <div class="tabs-container">
-    <button class="tab-btn active" onclick="switchTab(event, 'scenario1')">Project Summary</button>
-    <button class="tab-btn" onclick="switchTab(event, 'scenario2')">Site Report</button>
-    <button class="tab-btn" onclick="switchTab(event, 'scenario3')">Safety Protocol</button>
-    <button class="tab-btn" onclick="switchTab(event, 'scenario4')">Vendor Communication</button>
-  </div>
-
-  <!-- SCENARIO 1: Project Summary -->
-  <div id="scenario1" class="tab-content active">
-    <div class="scenario-card">
-      <div class="role-badge">Project Manager</div>
-      <h3 class="scenario-title">
-        <span>📋</span>
-        Generate Weekly Project Summary from Raw Data
-      </h3>
-
-      <div class="prompt-section">
-        <div class="section-label">Context</div>
-        <p style="font-size: 14px; color: var(--text-muted); margin: 0;">You have scattered project updates from team members. You need a professional executive summary in 5 minutes instead of spending 1 hour compiling it.</p>
-      </div>
-
-      <div class="comparison">
-        <div class="comparison-col">
-          <div class="comparison-label" style="color: var(--danger);">❌ Vague Prompt</div>
-          <div class="bad-prompt">Summarize this week's work</div>
-        </div>
-        <div class="comparison-col">
-          <div class="comparison-label" style="color: var(--success);">✓ Better Prompt</div>
-          <div class="good-prompt">Create a weekly project summary for IISER Library project (Tirupati, AP). Include: 
-• Completed milestones this week
-• % progress vs. target
-• Budget spent vs. budget allocated
-• Top 3 risks/delays
-• Next week's priorities
-Keep it under 150 words, professional tone.</div>
-        </div>
-      </div>
-
-      <div class="key-tips">
-        <div class="tip-item">
-          <span class="tip-icon">🎯</span>
-          <span><strong>Be specific:</strong> Include project name, location, stakeholders involved</span>
-        </div>
-        <div class="tip-item">
-          <span class="tip-icon">📊</span>
-          <span><strong>Define structure:</strong> Tell AI exactly what sections you want (milestones, budget, risks)</span>
-        </div>
-        <div class="tip-item">
-          <span class="tip-icon">⏱️</span>
-          <span><strong>Set constraints:</strong> Word limits, tone (professional/casual), date formats</span>
-        </div>
-        <div class="tip-item">
-          <span class="tip-icon">📎</span>
-          <span><strong>Provide context:</strong> Paste raw meeting notes, emails, or status updates</span>
-        </div>
-      </div>
-
-      <div style="margin-top: 16px; background: var(--bg-card); padding: 12px; border-radius: 8px; border-left: 3px solid var(--info);">
-        <p style="font-size: 13px; color: var(--text-muted); margin: 0;"><strong>💡 Pro Tip:</strong> Use this prompt template: "Create a [type] for [project] including [specific sections]. Keep it [length] and use [tone]."</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- SCENARIO 2: Site Report -->
-  <div id="scenario2" class="tab-content">
-    <div class="scenario-card">
-      <div class="role-badge">Site Supervisor</div>
-      <h3 class="scenario-title">
-        <span>🏗️</span>
-        Convert Field Notes into Formal Daily Site Report
-      </h3>
-
-      <div class="prompt-section">
-        <div class="section-label">Context</div>
-        <p style="font-size: 14px; color: var(--text-muted); margin: 0;">You've taken quick notes on your phone all day. Need to turn them into a formal report that the PM and client can read.</p>
-      </div>
-
-      <div class="comparison">
-        <div class="comparison-col">
-          <div class="comparison-label" style="color: var(--danger);">❌ Weak Prompt</div>
-          <div class="bad-prompt">Turn this into a report:
-"Had 45 workers. Poured concrete north wing. Weather was hot. Some delays"</div>
-        </div>
-        <div class="comparison-col">
-          <div class="comparison-label" style="color: var(--success);">✓ Strong Prompt</div>
-          <div class="good-prompt">Format as daily site report (date: 15-Aug-2026). Raw notes: "45 workers on-site. Poured 80 cubic meters concrete north wing foundation (target: 100m³ - 20% below due to heat). Weather: 42°C, high humidity. 2-hour lunch break extended by safety order. Rebar inspection passed. No incidents."
-
-Include: Date | Weather | Workforce | Major Activities | % of Planned Work Completed | Issues & Delays | Safety Notes | Next Day Plan</div>
-        </div>
-      </div>
-
-      <div class="key-tips">
-        <div class="tip-item">
-          <span class="tip-icon">📍</span>
-          <span><strong>Include meta-data:</strong> Date, project name, weather, workforce count</span>
-        </div>
-        <div class="tip-item">
-          <span class="tip-icon">🔢</span>
-          <span><strong>Add numbers:</strong> Quantities (concrete poured, workers), percentages, times</span>
-        </div>
-        <div class="tip-item">
-          <span class="tip-icon">⚠️</span>
-          <span><strong>Highlight issues:</strong> Delays, weather impacts, safety incidents, deviations</span>
-        </div>
-        <div class="tip-item">
-          <span class="tip-icon">👥</span>
-          <span><strong>Mention context:</strong> Workforce, equipment used, inspections passed</span>
-        </div>
-      </div>
-
-      <div style="margin-top: 16px; background: var(--bg-card); padding: 12px; border-radius: 8px; border-left: 3px solid var(--info);">
-        <p style="font-size: 13px; color: var(--text-muted); margin: 0;"><strong>💡 Pro Tip:</strong> Voice-record your notes on phone, transcribe with Whisper/Google Docs, then paste to AI. Saves 30 mins daily!</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- SCENARIO 3: Safety Protocol -->
-  <div id="scenario3" class="tab-content">
-    <div class="scenario-card">
-      <div class="role-badge">Safety Officer</div>
-      <h3 class="scenario-title">
-        <span>🛡️</span>
-        Create Safety Protocol from Regulatory Requirements
-      </h3>
-
-      <div class="prompt-section">
-        <div class="section-label">Context</div>
-        <p style="font-size: 14px; color: var(--text-muted); margin: 0;">You have OSHA/Indian labor code requirements but need to turn them into an actionable site-specific procedure for DEC Infra teams.</p>
-      </div>
-
-      <div class="comparison">
-        <div class="comparison-col">
-          <div class="comparison-label" style="color: var(--danger);">❌ Generic Prompt</div>
-          <div class="bad-prompt">Write a safety protocol for height work</div>
-        </div>
-        <div class="comparison-col">
-          <div class="comparison-label" style="color: var(--success);">✓ Tailored Prompt</div>
-          <div class="good-prompt">Create a site safety protocol for DEC Infra - IISER Tirupati project (height work above 2 meters). Target audience: Site supervisors & workers (use simple language).
-
-Include:
-• Scope (applies to work >2m height)
-• Required PPE (with DEC company gear codes)
-• Pre-work checklist (3-5 items)
-• Responsibilities (supervisor, worker, safety officer)
-• Emergency procedures
-• Non-compliance consequences
-
-Comply with Indian Building Code + OSHA guidelines. Make it 1 page, printable.</div>
-        </div>
-      </div>
-
-      <div class="key-tips">
-        <div class="tip-item">
-          <span class="tip-icon">🏢</span>
-          <span><strong>Company-specific:</strong> Use DEC Infra name, actual project names, company standards</span>
-        </div>
-        <div class="tip-item">
-          <span class="tip-icon">👥</span>
-          <span><strong>Right audience:</strong> Write for site workers (simple language), not legal teams</span>
-        </div>
-        <div class="tip-item">
-          <span class="tip-icon">✅</span>
-          <span><strong>Compliance mention:</strong> Reference actual codes (Indian BC, OSHA, local regulations)</span>
-        </div>
-        <div class="tip-item">
-          <span class="tip-icon">📋</span>
-          <span><strong>Practical format:</strong> Checklists, bullet points, easy to print & post</span>
-        </div>
-      </div>
-
-      <div style="margin-top: 16px; background: var(--bg-card); padding: 12px; border-radius: 8px; border-left: 3px solid var(--info);">
-        <p style="font-size: 13px; color: var(--text-muted); margin: 0;"><strong>💡 Pro Tip:</strong> Ask AI to "summarize in 3 sentences" at the end so busy PMs get the gist instantly.</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- SCENARIO 4: Vendor Communication -->
-  <div id="scenario4" class="tab-content">
-    <div class="scenario-card">
-      <div class="role-badge">Project Manager</div>
-      <h3 class="scenario-title">
-        <span>✉️</span>
-        Draft Professional Vendor Communications
-      </h3>
-
-      <div class="prompt-section">
-        <div class="section-label">Context</div>
-        <p style="font-size: 14px; color: var(--text-muted); margin: 0;">Need to send a vendor a detailed RFQ (Request for Quote) but don't want to spend time on perfect wording.</p>
-      </div>
-
-      <div class="comparison">
-        <div class="comparison-col">
-          <div class="comparison-label" style="color: var(--danger);">❌ Unclear Prompt</div>
-          <div class="bad-prompt">Write an email asking for a quote on concrete</div>
-        </div>
-        <div class="comparison-col">
-          <div class="comparison-label" style="color: var(--success);">✓ Detailed Prompt</div>
-          <div class="good-prompt">Draft professional RFQ email to concrete supplier. Details:
-• Project: IISER Library, Tirupati
-• Requirement: 150 cubic meters M30 grade concrete
-• Delivery timeline: Week of 20-Aug
-• Delivery location: Site address [add address]
-• Required docs: COA (Certificate of Analysis), delivery slip
-• Payment terms: 30-day net
-• Compliance: Indian Standards IS 456
-
-Keep email tone: professional but friendly. Include subject line. Sign as [Your Name], DEC Infra.</div>
-        </div>
-      </div>
-
-      <div class="key-tips">
-        <div class="tip-item">
-          <span class="tip-icon">🏷️</span>
-          <span><strong>Exact specs:</strong> Grades, quantities, delivery dates, standards (IS 456, etc.)</span>
-        </div>
-        <div class="tip-item">
-          <span class="tip-icon">💼</span>
-          <span><strong>Business details:</strong> Payment terms, inspection requirements, penalties</span>
-        </div>
-        <div class="tip-item">
-          <span class="tip-icon">🎯</span>
-          <span><strong>Clear expectations:</strong> What docs they must provide (CoA, test reports)</span>
-        </div>
-        <div class="tip-item">
-          <span class="tip-icon">📧</span>
-          <span><strong>Tone setting:</strong> Request "professional but friendly," "formal," etc.</span>
-        </div>
-      </div>
-
-      <div style="margin-top: 16px; background: var(--bg-card); padding: 12px; border-radius: 8px; border-left: 3px solid var(--info);">
-        <p style="font-size: 13px; color: var(--text-muted); margin: 0;"><strong>💡 Pro Tip:</strong> Tell AI "Ensure all compliance points are covered" - it'll catch missing requirements you might forget!</p>
-      </div>
-    </div>
-  </div>
-
-</div>`;
-        } else if (activeSubTab === '1b') {
-            contentHtml = `<div class="excel-module">
-  <h2 style="font-size: 18px; font-weight: 500; margin: 0 0 20px; color: var(--text-main);">Module 1B: Protect & Analyze Excel Files with AI</h2>
-
-  <div class="tabs-container">
-    <button class="tab-btn active" onclick="switchTab(event, 'demo1')">Budget Analysis</button>
-    <button class="tab-btn" onclick="switchTab(event, 'demo2')">Variance Analysis</button>
-    <button class="tab-btn" onclick="switchTab(event, 'demo3')">Data Protection</button>
-    <button class="tab-btn" onclick="switchTab(event, 'demo4')">Cost Breakdown</button>
-  </div>
-
-  <!-- DEMO 1: Budget Analysis -->
-  <div id="demo1" class="tab-content active">
-    <div class="demo-card">
-      <div class="role-badge">Project Manager / Finance</div>
-      <h3 class="demo-title">
-        <span>💰</span>
-        AI Budget Variance Analysis (Live Demo)
-      </h3>
-
-      <div style="margin-bottom: 16px;">
-        <p style="font-size: 14px; color: var(--text-muted); margin: 0 0 12px; font-weight: 500;">Scenario: IISER Library Project - Monthly Budget Review</p>
-        <p style="font-size: 13px; color: var(--text-muted); margin: 0;">Raw Excel data (scraped values from your spreadsheet):</p>
-      </div>
-
-      <table class="data-table">
-        <thead>
-          <tr>
-            <th>Budget Line Item</th>
-            <th>Budgeted (₹ Lacs)</th>
-            <th>Spent to Date (₹ Lacs)</th>
-            <th>% Spent</th>
-            <th>Remaining (₹ Lacs)</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Civil Works - Foundation</td>
-            <td>45.00</td>
-            <td>48.50</td>
-            <td>107.8%</td>
-            <td>-3.50</td>
-          </tr>
-          <tr>
-            <td>Structural - RCC Frame</td>
-            <td>65.00</td>
-            <td>52.30</td>
-            <td>80.5%</td>
-            <td>12.70</td>
-          </tr>
-          <tr>
-            <td>MEP (Mechanical)</td>
-            <td>28.00</td>
-            <td>15.20</td>
-            <td>54.3%</td>
-            <td>12.80</td>
-          </tr>
-          <tr>
-            <td>Electrical Systems</td>
-            <td>22.00</td>
-            <td>18.90</td>
-            <td>85.9%</td>
-            <td>3.10</td>
-          </tr>
-          <tr>
-            <td>Finishes (Paint, Flooring)</td>
-            <td>35.00</td>
-            <td>8.50</td>
-            <td>24.3%</td>
-            <td>26.50</td>
-          </tr>
-          <tr style="background: var(--bg-card); font-weight: 500;">
-            <td>TOTAL</td>
-            <td>195.00</td>
-            <td>143.40</td>
-            <td>73.5%</td>
-            <td>51.60</td>
-          </tr>
-        </tbody>
-      </table>
-
-      <div class="step-section">
-        <strong>Step 1: Copy this data from Excel</strong>
-        <p style="margin: 8px 0 0; font-size: 12px;">Select the table → Copy → Paste into ChatGPT/Claude</p>
-      </div>
-
-      <div class="step-section">
-        <strong>Step 2: Use this prompt with AI</strong>
-      </div>
-
-      <div class="prompt-input">Analyze this project budget data from our IISER Library project:
-
-[PASTE YOUR EXCEL TABLE HERE]
-
-Provide:
-1. Key findings (which line items are over/under budget?)
-2. Red flags (items exceeding 100% - why?)
-3. Risk assessment (will remaining budget cover finish work?)
-4. Top 3 recommendations to stay on budget
-5. Forecast: If spending continues at current rate, what will final project cost be?
-
-Keep it 200 words max, use rupees, be specific with numbers.</div>
-
-      <div class="analysis-box">
-        <strong style="color: var(--success);">🤖 Example AI Output:</strong>
-        <p style="margin: 8px 0;">Foundation work is <strong>7.8% over budget</strong> (₹48.5L vs ₹45L budget) - likely due to soil conditions requiring extra reinforcement. RCC frame is on track at 80.5%. Biggest risk: Finishes phase only started (24.3% spent) but ₹26.5L remains - if finish costs inflate (common in India due to labor), project could exceed budget by ₹2-3L. <strong>Recommendation:</strong> Lock finish material rates NOW, negotiate labor contracts, and monitor daily rates on site.</p>
-      </div>
-
-      <div class="protection-tip">
-        <strong>🔒 Data Protection Tip:</strong> Don't paste sensitive vendor rates or client costs. Instead: "Our Foundation work exceeded budget by 8%. What could cause this?" → AI gives you generic troubleshooting without seeing real amounts.
-      </div>
-
-      <div class="key-section">
-        <strong style="color: var(--text-main);">🎯 What This Does:</strong>
-        <ul class="insights-list">
-          <li>Spot budget overruns in seconds (would take Excel formulas + manual review)</li>
-          <li>Flags risks automatically (foundation overage → soil issues → supply chain delays?)</li>
-          <li>Suggests corrective actions (negotiate, reallocate, fast-track)</li>
-          <li>Gives you talking points for client calls</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
-  <!-- DEMO 2: Variance Analysis -->
-  <div id="demo2" class="tab-content">
-    <div class="demo-card">
-      <div class="role-badge">Project Manager / Cost Controller</div>
-      <h3 class="demo-title">
-        <span>📊</span>
-        AI Detects Budget Variances You Might Miss
-      </h3>
-
-      <p style="font-size: 14px; color: var(--text-muted); margin: 0 0 12px;">Real scenario: Monthly spend by category across 3 concurrent DEC Infra projects:</p>
-
-      <table class="data-table">
-        <thead>
-          <tr>
-            <th>Project</th>
-            <th>Civil Works (₹L)</th>
-            <th>MEP (₹L)</th>
-            <th>Finishes (₹L)</th>
-            <th>Contingency Used (₹L)</th>
-            <th>Total Month (₹L)</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>IISER Library</td>
-            <td>18.5</td>
-            <td>6.2</td>
-            <td>3.1</td>
-            <td>2.0</td>
-            <td>29.8</td>
-          </tr>
-          <tr>
-            <td>Medical College</td>
-            <td>22.3</td>
-            <td>8.5</td>
-            <td>1.8</td>
-            <td>1.5</td>
-            <td>34.1</td>
-          </tr>
-          <tr>
-            <td>IT Park</td>
-            <td>12.1</td>
-            <td>9.8</td>
-            <td>5.6</td>
-            <td>3.2</td>
-            <td>30.7</td>
-          </tr>
-        </tbody>
-      </table>
-
-      <div class="prompt-input">Compare spending patterns across our 3 projects:
-
-[PASTE TABLE]
-
-Questions:
-1. Which project is spending contingency highest? Red flag?
-2. Why is IT Park spending more on MEP than others?
-3. Which project is most at risk if delays happen?
-4. Rank projects by budget health (1 = best, 3 = worst)
-5. What should we monitor closely next month?
-
-Give actionable insights, not just numbers.</div>
-
-      <div class="analysis-box">
-        <strong style="color: var(--success);">🤖 Sample AI Output:</strong>
-        <p style="margin: 8px 0;"><strong>At Risk: IT Park</strong> - Already using 32% of contingency (₹3.2L of ~₹10L total). MEP spend (₹9.8L) is higher than peers, suggesting complex systems or scope creep. <strong>Healthiest: Medical College</strong> - Spending contingency at 16% rate, linear civil progress. <strong>Monitor:</strong> IISER's finishing cost trajectory; current ₹3.1L/month suggests ₹9-12L total (may exceed budget if interior specs expand).</p>
-      </div>
-
-      <div class="warning-box">
-        <strong>⚠️ Why Manual Review Misses This:</strong> You'd scan numbers, see IT Park MEP at ₹9.8L and think "OK, engineering is complex." AI connects it to contingency burn + project timeline → "high risk of overrun if delays cascade."
-      </div>
-
-      <div class="key-section">
-        <strong style="color: var(--text-main);">Benefits of AI Variance Analysis:</strong>
-        <ul class="insights-list">
-          <li>Spots cross-project spending anomalies (which PM is over-spending?)</li>
-          <li>Flags contingency burn rate (how many months until reserves dry up?)</li>
-          <li>Predicts which projects will need cost intervention</li>
-          <li>Gives early warnings before problems blow up</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
-  <!-- DEMO 3: Data Protection -->
-  <div id="demo3" class="tab-content">
-    <div class="demo-card">
-      <div class="role-badge">All Roles</div>
-      <h3 class="demo-title">
-        <span>🔐</span>
-        Protecting Sensitive Data While Using AI
-      </h3>
-
-      <p style="font-size: 14px; color: var(--text-muted); margin: 0 0 16px; font-weight: 500;">Critical: What you paste into ChatGPT/Claude gets logged. Never paste client pricing, salaries, confidential costs.</p>
-
-      <div style="margin: 16px 0;">
-        <p style="font-size: 13px; font-weight: 500; color: var(--text-main); margin: 0 0 12px;">Method 1: Anonymize Before Sharing</p>
-        <table class="data-table">
-          <thead>
-            <tr>
-              <th style="width: 45%;">❌ DON'T Send This</th>
-              <th style="width: 45%;">✅ ANONYMIZE & Send This</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td style="font-family: var(--font-mono); font-size: 11px;">Project: IISER Tirupati
-Vendor A: ₹45L
-Vendor B: ₹52L
-[Real names & rates]</td>
-              <td style="font-family: var(--font-mono); font-size: 11px;">Project: Library Project
-Option 1: ₹45L
-Option 2: ₹52L
-[No vendor names]</td>
-            </tr>
-            <tr>
-              <td style="font-family: var(--font-mono); font-size: 11px;">Salary: Manager ₹8.5L
-Sr. Engineer: ₹6L
-Labor cost: ₹2.1L/day</td>
-              <td style="font-family: var(--font-mono); font-size: 11px;">Personnel Cost Budget: Line A (₹8.5L), Line B (₹6L)
-Productivity rate: ₹X/day
-[No names, masked amounts]</td>
-            </tr>
-            <tr>
-              <td style="font-family: var(--font-mono); font-size: 11px;">Client: IISER
-Budget: ₹195L
-Profit margin: 12%</td>
-              <td style="font-family: var(--font-mono); font-size: 11px;">Project Budget: ₹XYZ
-Cost: ₹ABC
-Margin analysis: compare %</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <div class="protection-tip">
-        <strong>✅ What's SAFE to share:</strong>
-        <ul style="margin: 8px 0; padding-left: 20px; font-size: 13px;">
-          <li>Budget line items without vendor names</li>
-          <li>Percentages instead of actual rupee amounts</li>
-          <li>Timeline/schedule data (no client names needed)</li>
-          <li>General problem ("We're 15% over on foundations") without specifics</li>
-          <li>Anonymized metrics (project size, duration, team size)</li>
-        </ul>
-      </div>
-
-      <div style="margin: 16px 0;">
-        <p style="font-size: 13px; font-weight: 500; color: var(--text-main); margin: 0 0 12px;">Method 2: Use ChatGPT Enterprise/Claude Teams (Paid, Private)</p>
-        <p style="font-size: 13px; color: var(--text-muted); margin: 0;">For sensitive data, use paid enterprise versions that don't log conversations. But even then, follow anonymization best practices.</p>
-      </div>
-
-      <div style="margin: 16px 0;">
-        <p style="font-size: 13px; font-weight: 500; color: var(--text-main); margin: 0 0 12px;">Method 3: Replace Sensitive Values</p>
-        <div class="code-block">BEFORE (Don't do this):
-Foundation cost: ₹48.5L (10% over ₹45L budget)
-
-AFTER (Do this):
-Foundation cost: ₹XXL (10% over ₹YYL budget)
-What causes 10% overruns in foundation work?</div>
-      </div>
-
-      <div class="warning-box">
-        <strong>⚠️ Real Risk:</strong> ChatGPT free version trains on your data. If you paste client budget ₹195L for IISER, someone else might ask "summarize IISER project budgets" and get generic learnings from YOUR data. Always anonymize.
-      </div>
-
-      <div class="key-section">
-        <strong style="color: var(--text-main);">Golden Rule for DEC Infra:</strong>
-        <p style="font-size: 13px; margin: 8px 0;">✓ Anonymize client names, vendor names, exact rupee amounts
-✓ Share: Project type, phase, duration, generic cost categories
-✓ Ask: Generic questions ("What causes cost overruns in X phase?")
-✗ Never share: Specific vendor quotes, salary info, client pricing, profit margins, confidential contracts</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- DEMO 4: Cost Breakdown -->
-  <div id="demo4" class="tab-content">
-    <div class="demo-card">
-      <div class="role-badge">Cost Controller / Finance</div>
-      <h3 class="demo-title">
-        <span>🔍</span>
-        Drill Down: AI Explains Cost Breakdowns
-      </h3>
-
-      <p style="font-size: 14px; color: var(--text-muted); margin: 0 0 12px;">Your CFO asks: "Why is our cost per sq.m. higher than industry average?"</p>
-
-      <table class="data-table">
-        <thead>
-          <tr>
-            <th>Category</th>
-            <th>Amount (₹L)</th>
-            <th>% of Total</th>
-            <th>Cost/Sq.M (₹)</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Civil Works</td>
-            <td>85.2</td>
-            <td>43.7%</td>
-            <td>3,408</td>
-          </tr>
-          <tr>
-            <td>MEP (Mech, Elec, Plumb)</td>
-            <td>45.3</td>
-            <td>23.2%</td>
-            <td>1,812</td>
-          </tr>
-          <tr>
-            <td>Finishes</td>
-            <td>38.5</td>
-            <td>19.8%</td>
-            <td>1,540</td>
-          </tr>
-          <tr>
-            <td>Project Management (PM)</td>
-            <td>12.8</td>
-            <td>6.6%</td>
-            <td>512</td>
-          </tr>
-          <tr>
-            <td>Contingency (Used)</td>
-            <td>12.2</td>
-            <td>6.3%</td>
-            <td>488</td>
-          </tr>
-          <tr style="background: var(--bg-card); font-weight: 500;">
-            <td>TOTAL</td>
-            <td>194.0</td>
-            <td>100%</td>
-            <td>7,760</td>
-          </tr>
-        </tbody>
-      </table>
-
-      <div class="prompt-input">Our library project cost breakdown:
-
-[PASTE TABLE]
-
-Industry benchmarks for similar projects:
-- Civil: ₹3,000/sq.m
-- MEP: ₹1,600/sq.m
-- Finishes: ₹1,200/sq.m
-- PM overhead: 5%
-
-Questions:
-1. Where are we above/below benchmark?
-2. Is our cost structure justified? (Any red flags?)
-3. Which categories have most variance from industry?
-4. For future projects, what should we tighten?</div>
-
-      <div class="analysis-box">
-        <strong style="color: var(--success);">🤖 Sample Output:</strong>
-        <p style="margin: 8px 0;"><strong>Variance Analysis:</strong></p>
-        <ul style="margin: 8px 0; padding-left: 20px; font-size: 13px;">
-          <li><strong>Civil (₹3,408 vs ₹3,000 bench):</strong> +13.6% → Likely due to complex foundation (IISER specs), soil conditions, or site logistics. <strong>Justified</strong>.</li>
-          <li><strong>MEP (₹1,812 vs ₹1,600 bench):</strong> +13.3% → Higher than peers. Is IISER library spec'd with premium HVAC/IT infrastructure? If yes, justified; if no, investigate vendor rates.</li>
-          <li><strong>Finishes (₹1,540 vs ₹1,200 bench):</strong> +28.3% → <strong>Biggest gap.</strong> Review material selections, labor rates. Potential to reduce ₹3-4L by negotiating finish suppliers.</li>
-          <li><strong>PM overhead (6.6% vs 5% bench):</strong> Slightly high but acceptable for educational project complexity.</li>
-        </ul>
-        <p style="margin: 8px 0;"><strong>Recommendation:</strong> Civil & MEP are defensible given project type. Focus cost recovery efforts on Finishes phase — negotiate now before work starts.</p>
-      </div>
-
-      <div class="key-section">
-        <strong style="color: var(--text-main);">Why This Matters:</strong>
-        <ul class="insights-list">
-          <li>Benchmarking costs manually = 2-3 hours research + spreadsheets</li>
-          <li>AI does it in 2 minutes, with industry context</li>
-          <li>Identifies where you have leverage (Finishes for negotiation)</li>
-          <li>Justifies cost differences to clients/stakeholders</li>
-        </ul>
-      </div>
-
-      <div style="margin-top: 16px; background: var(--bg-card); padding: 12px; border-radius: 8px; border-left: 3px solid var(--info);">
-        <p style="font-size: 13px; color: var(--text-muted); margin: 0;"><strong>💡 Pro Tip for Workshop:</strong> Use REAL DEC Infra budget data (anonymized) for this demo. Participants will see "this is OUR project" and engage 10x more.</p>
-      </div>
-    </div>
-  </div>
-
-</div>`;
-        } else if (activeSubTab === '1c') {
-            contentHtml = `<style>
-  .module-container {
-    font-family: var(--font-sans);
-  }
-  .section-header {
-    font-size: 16px;
-    font-weight: 500;
-    color: var(--text-main);
-    margin: 20px 0 12px;
-    padding-bottom: 8px;
-    border-bottom: 0.5px solid var(--border-color);
-  }
-  .scenario-card {
-    background: var(--bg-card);
-    border: 0.5px solid var(--border-color);
-    border-radius: 12px;
-    padding: 16px;
-    margin-bottom: 16px;
-  }
-  .scenario-title {
-    font-size: 15px;
-    font-weight: 500;
-    color: var(--text-main);
-    margin: 0 0 12px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .role-badge {
-    display: inline-block;
-    background: var(--info-bg);
-    color: var(--info);
-    font-size: 11px;
-    font-weight: 500;
-    padding: 4px 8px;
-    border-radius: var(--radius);
-    margin-bottom: 12px;
-  }
-  .prompt-box {
-    background: var(--bg-card);
-    border-left: 3px solid var(--info);
-    padding: 12px;
-    border-radius: 6px;
-    font-family: var(--font-mono);
-    font-size: 12px;
-    overflow-x: auto;
-    color: var(--text-main);
-    margin: 12px 0;
-    line-height: 1.5;
-    white-space: pre-wrap;
-    word-wrap: break-word;
-  }
-  .key-insight {
-    background: var(--success-bg);
-    border-left: 3px solid var(--success);
-    padding: 12px;
-    margin: 12px 0;
-    border-radius: 6px;
-    font-size: 13px;
-  }
-  .warning-box {
-    background: var(--danger-bg);
-    border-left: 3px solid var(--danger);
-    padding: 12px;
-    margin: 12px 0;
-    border-radius: 6px;
-    font-size: 13px;
-  }
-  .tip-box {
-    background: #faeeda;
-    border-left: 3px solid var(--text-warning);
-    padding: 12px;
-    margin: 12px 0;
-    border-radius: 6px;
-    font-size: 13px;
-  }
-  .comparison-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 12px;
-    margin: 12px 0;
-  }
-  .comparison-table th {
-    background: var(--bg-card);
-    padding: 8px;
-    text-align: left;
-    font-weight: 500;
-    border-bottom: 0.5px solid var(--border-color);
-    color: var(--text-main);
-  }
-  .comparison-table td {
-    padding: 8px;
-    border-bottom: 0.5px solid var(--border-color);
-    color: var(--text-main);
-  }
-  .tabs-container {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 16px;
-    border-bottom: 0.5px solid var(--border-color);
-    overflow-x: auto;
-  }
-  .tab-btn {
-    padding: 12px 14px;
-    background: transparent;
-    border: none;
-    border-bottom: 2px solid transparent;
-    color: var(--text-muted);
-    cursor: pointer;
-    font-size: 13px;
-    font-weight: 500;
-    white-space: nowrap;
-    transition: color 0.2s;
-  }
-  .tab-btn.active {
-    color: var(--text-main);
-    border-bottom-color: var(--info);
-  }
-  .tab-content {
-    display: none;
-  }
-  .tab-content.active {
-    display: block;
-  }
-  .workflow-box {
-    background: var(--bg-card);
-    border: 0.5px solid var(--border-color);
-    padding: 12px;
-    border-radius: 6px;
-    margin: 12px 0;
-    font-size: 13px;
-  }
-  .step-number {
-    display: inline-block;
-    background: var(--info);
-    color: white;
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    text-align: center;
-    line-height: 24px;
-    font-weight: 500;
-    margin-right: 6px;
-  }
-</style>
-
-<div class="module-container">
-  <h2 style="font-size: 18px; font-weight: 500; margin: 0 0 12px; color: var(--text-main);">Module 1C: Analyzing PDFs & Vendor Documents with AI</h2>
-  <p style="font-size: 13px; color: var(--text-muted); margin: 0 0 16px;">Extract data from vendor quotes, compare specifications, identify cost discrepancies in 5 minutes instead of 2 hours</p>
-
-  <div class="tabs-container">
-    <button class="tab-btn active" onclick="switchTab(event, 'tab1')">Vendor Quote Comparison</button>
-    <button class="tab-btn" onclick="switchTab(event, 'tab2')">Specification Analysis</button>
-    <button class="tab-btn" onclick="switchTab(event, 'tab3')">Contract Review</button>
-    <button class="tab-btn" onclick="switchTab(event, 'tab4')">Quality Standards Check</button>
-  </div>
-
-  <!-- TAB 1: Vendor Quote Comparison -->
-  <div id="tab1" class="tab-content active">
-    <div class="scenario-card">
-      <div class="role-badge">Procurement / Project Manager</div>
-      <h3 class="scenario-title">
-        <span>🏗️</span>
-        Compare Concrete Vendor Quotes (Real Scenario)
-      </h3>
-
-      <p style="font-size: 13px; color: var(--text-muted); margin: 0 0 12px;"><strong>Situation:</strong> You have 3 concrete vendor quotes for IISER Library foundation (150 cubic meters needed). All PDFs are different formats. Manual comparison = 45 minutes. AI comparison = 3 minutes.</p>
-
-      <div class="section-header">The 3 Vendor PDFs (What You'd Receive):</div>
-
-      <div style="margin: 12px 0;">
-        <p style="font-size: 13px; font-weight: 500; color: var(--text-main); margin: 0 0 8px;">Vendor A: Concrete Suppliers Inc (PDF with tables)</p>
-        <div style="background: var(--bg-card); padding: 12px; border-radius: 6px; font-size: 12px; border-left: 3px solid #378ADD;">
-          <strong>Product Offering:</strong><br/>
-          • M30 Grade Concrete (Strength 30 MPa)<br/>
-          • Unit Rate: ₹4,500 per cubic meter<br/>
-          • Minimum Order: 50 cum<br/>
-          • Delivery Time: 3-5 days<br/>
-          • Delivery Charges: ₹500 per load (10 cum per load)<br/>
-          • Payment Terms: 50% advance, 50% on delivery<br/>
-          • Quality Cert: IS 456 certified, lab test reports included<br/>
-          • Warranty: 10-year structural guarantee<br/>
-          • Total Cost for 150 cum: ₹4,500 × 150 = ₹6,75,000 + (15 × ₹500) = ₹6,82,500
-        </div>
-      </div>
-
-      <div style="margin: 12px 0;">
-        <p style="font-size: 13px; font-weight: 500; color: var(--text-main); margin: 0 0 8px;">Vendor B: Quality Concrete Ltd (Different format, embedded in text)</p>
-        <div style="background: var(--bg-card); padding: 12px; border-radius: 6px; font-size: 12px; border-left: 3px solid #1D9E75;">
-          <strong>Our Offer:</strong><br/>
-          We supply premium M30 grade at ₹4,200/cum for orders >100 cum (you get 5% volume discount).<br/>
-          Effective rate: ₹3,990/cum<br/>
-          Free delivery on orders >100 cum<br/>
-          Delivery: 5-7 days but can rush for ₹2,000 surcharge per load<br/>
-          Payment: 30% advance, 70% on completion (better terms)<br/>
-          Certifications: IS 456 + LEED compliant<br/>
-          Warranty: 15-year guarantee<br/>
-          Total Cost for 150 cum: ₹3,990 × 150 = ₹5,98,500 (no delivery charges)
-        </div>
-      </div>
-
-      <div style="margin: 12px 0;">
-        <p style="font-size: 13px; font-weight: 500; color: var(--text-main); margin: 0 0 8px;">Vendor C: Budget Concrete Co (Price-sensitive, minimal specs)</p>
-        <div style="background: var(--bg-card); padding: 12px; border-radius: 6px; font-size: 12px; border-left: 3px solid #993C1D;">
-          <strong>Rock Bottom Pricing:</strong><br/>
-          M30 Concrete @ ₹3,800/cum<br/>
-          Bulk Order (150+): ₹3,500/cum<br/>
-          Your order qualifies: ₹3,500/cum<br/>
-          Delivery: ₹1,000/load (extra)<br/>
-          Terms: COD only (100% upfront)<br/>
-          Test Reports: Available upon request (may be delayed)<br/>
-          No explicit warranty (standard 5 years, unwritten)<br/>
-          Total Cost for 150 cum: ₹3,500 × 150 + (15 × ₹1,000) = ₹525,000 + ₹15,000 = ₹540,000
-        </div>
-      </div>
-
-      <div class="section-header">Step 1: What Manual Comparison Looks Like (Tedious)</div>
-
-      <table class="comparison-table">
-        <tr>
-          <th>Criteria</th>
-          <th>Vendor A</th>
-          <th>Vendor B</th>
-          <th>Vendor C</th>
-        </tr>
-        <tr>
-          <td><strong>Rate/cum</strong></td>
-          <td>₹4,500</td>
-          <td>₹3,990</td>
-          <td>₹3,500</td>
-        </tr>
-        <tr>
-          <td><strong>Discount</strong></td>
-          <td>None</td>
-          <td>5% (₹225)</td>
-          <td>N/A (already bulk)</td>
-        </tr>
-        <tr>
-          <td><strong>Delivery</strong></td>
-          <td>₹500/load × 15 = ₹7,500</td>
-          <td>FREE</td>
-          <td>₹1,000/load × 15 = ₹15,000</td>
-        </tr>
-        <tr>
-          <td><strong>Payment Terms</strong></td>
-          <td>50/50</td>
-          <td>30/70 (better)</td>
-          <td>100% upfront (worst)</td>
-        </tr>
-        <tr>
-          <td><strong>Delivery Time</strong></td>
-          <td>3-5 days</td>
-          <td>5-7 days (rush: +₹2K/load)</td>
-          <td>Not specified</td>
-        </tr>
-        <tr>
-          <td><strong>Quality Cert</strong></td>
-          <td>IS 456 (standard)</td>
-          <td>IS 456 + LEED</td>
-          <td>Upon request (risky)</td>
-        </tr>
-        <tr>
-          <td><strong>Warranty</strong></td>
-          <td>10 years</td>
-          <td>15 years (best)</td>
-          <td>5 years (implied)</td>
-        </tr>
-        <tr>
-          <td><strong>TOTAL COST</strong></td>
-          <td><strong>₹6,82,500</strong></td>
-          <td><strong>₹5,98,500</strong></td>
-          <td><strong>₹5,40,000</strong></td>
-        </tr>
-      </table>
-
-      <p style="font-size: 13px; color: var(--text-muted); margin: 12px 0;"><strong>Manual time to create this table:</strong> 45 minutes (copy-pasting, formatting, math errors)</p>
-
-      <div class="section-header">Step 2: AI Does This Instantly</div>
-
-      <div class="prompt-box">Upload 3 PDF quotes for M30 concrete (150 cum needed) from:
-- Vendor A: Concrete Suppliers Inc
-- Vendor B: Quality Concrete Ltd  
-- Vendor C: Budget Concrete Co
-
-Compare them on:
-1. Unit rate (final rate after discounts)
-2. Total cost for 150 cum (including delivery)
-3. Payment terms (which is most flexible?)
-4. Quality certifications (which is most credible?)
-5. Warranty terms (what's the protection?)
-6. Timeline risk (any red flags on delivery?)
-7. Which vendor should we choose? Why?
-
-Create a comparison table + give final recommendation with risk assessment.</div>
-
-      <div class="key-insight">
-        <strong>Expected AI Output (instantly):</strong><br/>
-        <br/>
-        <strong>Cost Analysis:</strong><br/>
-        Vendor C = ₹5,40,000 (LOWEST but risky)<br/>
-        Vendor B = ₹5,98,500 (BEST VALUE - good warranty + free delivery)<br/>
-        Vendor A = ₹6,82,500 (HIGHEST + worst terms)<br/>
-        <br/>
-        <strong>Risk Assessment:</strong><br/>
-        Vendor C: Cheapest but no quality cert upfront + COD payment = cash flow strain + quality risk<br/>
-        Vendor B: Saves ₹84K vs A, better warranty, free delivery. Payment terms support project cash flow. RECOMMEND.<br/>
-        Vendor A: Premium pricing, standard terms, no advantage.<br/>
-        <br/>
-        <strong>Decision:</strong> Go with Vendor B. Savings: ₹84,500 + better payment flexibility + superior warranty.
-      </div>
-
-      <div class="tip-box">
-        <strong>💡 Why This Matters for DEC Infra:</strong><br/>
-        If you process 20 vendor quotes per month (realistic for construction):<br/>
-        • Manual: 20 × 45 min = 15 hours/month<br/>
-        • AI: 20 × 3 min = 1 hour/month<br/>
-        • Savings: 14 hours/month = ₹3-5L in labor annually
-      </div>
-
-    </div>
-  </div>
-
-  <!-- TAB 2: Specification Analysis -->
-  <div id="tab2" class="tab-content">
-    <div class="scenario-card">
-      <div class="role-badge">Quality Controller / Engineer</div>
-      <h3 class="scenario-title">
-        <span>✓</span>
-        Extract & Compare Specifications from Vendor Datasheets
-      </h3>
-
-      <p style="font-size: 13px; color: var(--text-muted); margin: 0 0 12px;"><strong>Scenario:</strong> NSDL Data Center needs UPS systems. Vendor A and Vendor B sent 20-page PDFs with technical specs scattered throughout. You need to verify both meet your requirements.</p>
-
-      <div class="section-header">What You Need to Check:</div>
-
-      <div style="background: var(--bg-card); padding: 12px; border-radius: 6px; margin: 12px 0; font-size: 13px;">
-        <p style="margin: 0 0 8px;"><strong>Your Requirements (from project spec):</strong></p>
-        ✓ Capacity: 500 KVA minimum<br/>
-        ✓ Battery Backup: 4 hours minimum<br/>
-        ✓ Efficiency: >95% (critical for data center)<br/>
-        ✓ Cooling: <40°C operating temperature<br/>
-        ✓ Certifications: CE marked + ISO 9001<br/>
-        ✓ Warranty: 5 years on-site support<br/>
-        ✓ Delivery: Within 8 weeks
-      </div>
-
-      <div class="prompt-box">I have 2 UPS system datasheets (PDFs) from vendors.
-
-Extract key specifications:
-1. Capacity (KVA)
-2. Battery backup time (hours)
-3. Efficiency rating (%)
-4. Operating temperature
-5. Certifications
-6. Warranty (years + type)
-7. Delivery timeline
-
-Then assess: Do both meet our project requirements?
-- Requirement 1: Capacity 500 KVA minimum
-- Requirement 2: Battery 4+ hours
-- Requirement 3: Efficiency >95%
-- Requirement 4: Operating temp <40°C
-- Requirement 5: CE marked + ISO 9001
-- Requirement 6: 5-year on-site warranty
-- Requirement 7: Delivery within 8 weeks
-
-Show: Vendor | Meets Req? | Gap | Risk | Recommendation</div>
-
-      <div class="key-insight">
-        <strong>Why This Works with AI:</strong><br/>
-        Vendor datasheets are chaos: specs on page 3, page 8, page 15. They use different units (kVA vs VA, Celsius vs Fahrenheit). AI reads all 40 pages, extracts the relevant specs, and compares to your requirements.<br/>
-        <br/>
-        Manual extraction: 1.5 hours per vendor<br/>
-        AI extraction: 2 minutes per vendor<br/>
-        <br/>
-        Plus: AI catches things you miss (e.g., "warranty valid only in North America" hidden in fine print on page 17).
-      </div>
-
-    </div>
-  </div>
-
-  <!-- TAB 3: Contract Review -->
-  <div id="tab3" class="tab-content">
-    <div class="scenario-card">
-      <div class="role-badge">Legal / Procurement Manager</div>
-      <h3 class="scenario-title">
-        <span>⚖️</span>
-        Review Contracts for Risk & Compliance
-      </h3>
-
-      <p style="font-size: 13px; color: var(--text-muted); margin: 0 0 12px;"><strong>Scenario:</strong> Medical College project needs a 15-page MEP contractor agreement. Before signing, you need to flag any risky clauses or missing protections.</p>
-
-      <div class="section-header">Common Risks in Construction Contracts:</div>
-
-      <table class="comparison-table">
-        <tr>
-          <th>Clause</th>
-          <th>Risk</th>
-          <th>What to Look For</th>
-        </tr>
-        <tr>
-          <td><strong>Payment Terms</strong></td>
-          <td>Cash flow strain if 100% upfront</td>
-          <td>Should be 30% advance, 70% completion</td>
-        </tr>
-        <tr>
-          <td><strong>Penalty Clauses</strong></td>
-          <td>Ambiguous = legal disputes</td>
-          <td>Should be specific (₹X per day delay, max ₹Y)</td>
-        </tr>
-        <tr>
-          <td><strong>Warranty</strong></td>
-          <td>Short warranty = risk to you</td>
-          <td>Should be 2+ years post-completion</td>
-        </tr>
-        <tr>
-          <td><strong>Liability Cap</strong></td>
-          <td>If capped too low, limits recovery</td>
-          <td>Should be at least 10% of contract value</td>
-        </tr>
-        <tr>
-          <td><strong>Dispute Resolution</strong></td>
-          <td>Litigation = expensive & slow</td>
-          <td>Should include arbitration clause</td>
-        </tr>
-        <tr>
-          <td><strong>Force Majeure</strong></td>
-          <td>Vague terms lead to disputes</td>
-          <td>Should define what qualifies (pandemic, war, etc.)</td>
-        </tr>
-      </table>
-
-      <div class="prompt-box">Review this MEP contractor agreement (PDF attached). 
-
-Flag any high-risk clauses related to:
-1. Payment Terms - Is payment structure favorable to us?
-2. Delay Penalties - Are penalties clearly defined?
-3. Warranty Period - Is 2+ years guaranteed?
-4. Liability Cap - Is it sufficient (≥10% contract value)?
-5. Insurance Requirements - Are they adequate?
-6. Dispute Resolution - Is arbitration included?
-7. Force Majeure - Is it clearly defined?
-8. Scope of Work - Is it unambiguous?
-
-For each risk found:
-- Quote the clause (exact text)
-- Explain the risk
-- Recommend change or approval
-
-Overall: Safe to sign or needs revision? Why?</div>
-
-      <div class="warning-box">
-        <strong>⚠️ Real Example from DEC Infra Projects:</strong><br/>
-        A contractor once included "Force Majeure includes project delays due to supplier delays." This meant if the steel supplier was late, contractor had no penalty. Cost DEC ₹8L in delay costs before this was caught and renegotiated.<br/>
-        <br/>
-        AI would flag this in 2 minutes. Manual legal review: ₹50K+ in legal fees.
-      </div>
-
-    </div>
-  </div>
-
-  <!-- TAB 4: Quality Standards Check -->
-  <div id="tab4" class="tab-content">
-    <div class="scenario-card">
-      <div class="role-badge">Quality Controller / Compliance</div>
-      <h3 class="scenario-title">
-        <span>📋</span>
-        Verify Vendor Compliance Against Project Standards
-      </h3>
-
-      <p style="font-size: 13px; color: var(--text-muted); margin: 0 0 12px;"><strong>Scenario:</strong> IISER Library has strict quality requirements (educational institution + research). Vendor submitted COA (Certificate of Analysis). You need to verify all test results meet IS 456 + IISER's specific requirements.</p>
-
-      <div class="section-header">What a COA Typically Contains:</div>
-
-      <div style="background: var(--bg-card); padding: 12px; border-radius: 6px; margin: 12px 0; font-size: 12px;">
-        <strong>Example COA Data (Concrete):</strong><br/>
-        Compressive Strength (7-day): 24.5 MPa (Required: ≥21 MPa) ✓<br/>
-        Compressive Strength (28-day): 32.1 MPa (Required: ≥30 MPa) ✓<br/>
-        Slump: 120mm (Required: 100-150mm) ✓<br/>
-        Water-Cement Ratio: 0.42 (Required: ≤0.45) ✓<br/>
-        Air Content: 4.2% (Required: 3-6%) ✓<br/>
-        Sulfate Content: 0.18% (Required: <0.3%) ✓<br/>
-        Chloride Content: 0.012% (Required: <0.05%) ✓<br/>
-      </div>
-
-      <div class="prompt-box">I have a Concrete COA (Certificate of Analysis) PDF from our vendor.
-
-Extract all test results and verify against standards:
-
-Standards to check:
-1. IS 456:2000 (Indian Standard)
-2. Project spec: IISER Library high-performance requirements
-3. Any special tests? (LEED, durability, sulfate resistance)
-
-Create a checklist:
-Test Name | Result | Specification | Pass/Fail | Notes
-
-Then assess:
-- All tests passed? (YES / NO - if NO, list failures)
-- Any borderline results (>90% but <100% of spec)?
-- Additional tests recommended? (e.g., durability)
-- Approve batch? (Yes/No/Conditional)
-
-If any test FAILS, recommend: Reject batch OR Request retesting OR Accept with written waiver (describe risk).</div>
-
-      <div class="tip-box">
-        <strong>🔍 Why AI Beats Manual Checking:</strong><br/>
-        A COA might have 15-20 test results in a table. You check manually: read each value, cross-reference spec sheet, mark pass/fail. Takes 20-30 minutes.<br/>
-        <br/>
-        AI: Reads table, cross-references specs, flags any failures instantly, 2 minutes.<br/>
-        <br/>
-        Plus: AI catches transposed numbers (e.g., 28-day should be 32 but says 23).
-      </div>
-
-    </div>
-  </div>
-
-</div>
-
-<script>
-function switchTab(e, tabName) {
-  const tabs = document.querySelectorAll('.tab-content');
-  tabs.forEach(t => t.classList.remove('active'));
-  const btns = document.querySelectorAll('.tab-btn');
-  btns.forEach(b => b.classList.remove('active'));
-  document.getElementById(tabName).classList.add('active');
-  e.target.classList.add('active');
-}
-</script>`;
         } else if (activeSubTab === 'tools') {
             contentHtml = `<div style="padding: 0 0 20px;">
   <div class="tabs">
@@ -2710,6 +1343,7 @@ function showTab(event, tabName) {
     </div>`;
         }
 
+        
         container.innerHTML = `
         <div class="mb-4" style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap;">
             <div>
@@ -2734,6 +1368,200 @@ function showTab(event, tabName) {
         </div>
         `;
 
+        
+        // Event Listeners for Module 1
+    setTimeout(() => {
+        // System Persona
+        document.getElementById('btn-run-persona')?.addEventListener('click', () => {
+            const btn = document.getElementById('btn-run-persona');
+            btn.disabled = true;
+            btn.innerText = "Running...";
+            
+            setTimeout(() => {
+                const persona = document.getElementById('sys-persona').value;
+                const promptVal = document.getElementById('sys-user-prompt').value.toLowerCase();
+                let out = "";
+                
+                const isEmail = promptVal.includes("email") || promptVal.includes("message");
+                const isReport = promptVal.includes("report") || promptVal.includes("progress") || promptVal.includes("update");
+                
+                if (persona === 'legal') {
+                    if (isEmail) out = "<b>DISCLAIMER:</b> Draft email subject to review.<br><br>To Whom It May Concern,<br>Please find the official correspondence regarding the recent developments. Ensure all actions comply with clause 4.a of our policy.";
+                    else if (isReport) out = "<b>CONFIDENTIAL REPORT</b><br><br>This document logs the activities on site. All incidents have been recorded in compliance with OSHA standards. No liabilities assumed without formal signature.";
+                    else out = "<b>DISCLAIMER:</b> This summary does not constitute legal advice.<br><br>The provided text outlines a standard vendor agreement. <b>Key Liabilities:</b> Section 4.2 stipulates a ₹5,000/day penalty for delays. <b>Termination:</b> Either party may terminate with 30 days written notice. It is recommended to have Compliance review Section 7.";
+                } else if (persona === 'marketing') {
+                    if (isEmail) out = "Hey team! 🚀<br><br>Just wanted to drop a quick note about our latest update. Let's keep the momentum going! ✨";
+                    else if (isReport) out = "🌟 <b>Awesome Site Update!</b> 🌟<br><br>Our team is crushing it this week! We're ahead of schedule on the main build and the client is loving the energy. Check out these wins!";
+                    else out = "Hey team! 🚀<br><br>Here's the quick scoop on the vendor contract:<br>- <b>They're locked in!</b> Great terms for us.<br>- Watch out for the delay penalty (we don't want to pay that!).<br>- Easy out: we can cancel anytime with a 30-day notice.<br><br>Let's get this signed and start creating! ✨";
+                } else { // concise
+                    if (isEmail) out = "<b>Email Draft:</b><br>Subject: Update<br>Body: Please review the latest details attached. Awaiting your approval.";
+                    else if (isReport) out = "<b>Status Report:</b><br>- Progress: 45%<br>- Issues: 0<br>- Next step: Foundation pour.";
+                    else out = "<b>Contract Summary:</b><br>- <b>Type:</b> Vendor Agreement<br>- <b>Penalty:</b> ₹5k/day delay<br>- <b>Termination:</b> 30 days notice<br><br><b>Action Required:</b> Awaiting signature.";
+                }
+                
+                document.getElementById('sys-persona-out').innerHTML = out;
+                btn.disabled = false;
+                btn.innerText = "Run with Persona";
+                State.markExerciseComplete('m1_persona', 'module1');
+            }, 600);
+        });
+
+        // Excel Formula Lab
+        document.getElementById('btn-generate-excel')?.addEventListener('click', () => {
+            const btn = document.getElementById('btn-generate-excel');
+            btn.disabled = true;
+            btn.innerText = "Generating...";
+            
+            setTimeout(() => {
+                const prompt = document.getElementById('excel-prompt').value.toLowerCase();
+                let formula = "=IFERROR(VLOOKUP(A2, Sheet2!A:B, 2, FALSE), \"Not Found\")";
+                
+                if (prompt.includes("if") && (prompt.includes("multiple") || prompt.includes("nested"))) {
+                    formula = "=IFS(A2>1000, \"High\", A2>500, \"Medium\", TRUE, \"Low\")";
+                } else if (prompt.includes("if") || prompt.includes("condition")) {
+                    formula = "=IF(A2>1000, \"Over Budget\", \"OK\")";
+                } else if (prompt.includes("sum") && prompt.includes("multiple")) {
+                    formula = "=SUMIFS(C:C, A:A, \">1000\", B:B, \"Approved\")";
+                } else if (prompt.includes("sum") || prompt.includes("total")) {
+                    formula = "=SUM(A2:A100)";
+                } else if (prompt.includes("count") && prompt.includes("blank")) {
+                    formula = "=COUNTBLANK(A2:A100)";
+                } else if (prompt.includes("count")) {
+                    formula = "=COUNTIF(B:B, \"Pending\")";
+                } else if (prompt.includes("index") || prompt.includes("match")) {
+                    formula = "=INDEX(Sheet2!B:B, MATCH(A2, Sheet2!A:A, 0))";
+                } else if (prompt.includes("date") || prompt.includes("days")) {
+                    formula = "=DATEDIF(A2, TODAY(), \"d\")";
+                } else if (prompt.includes("average") || prompt.includes("mean")) {
+                    formula = "=AVERAGE(B2:B100)";
+                } else if (!prompt.includes("lookup")) {
+                    // Generic fallback that echoes some of the prompt to show it's "dynamic"
+                    formula = `/* AI generated formula for: ${prompt.substring(0, 20)}... */\n=LET(data, A2:B100, "Requires more specific logic")`;
+                }
+                
+                document.getElementById('excel-out').innerText = formula;
+                btn.disabled = false;
+                btn.innerText = "Generate Formula ✨";
+                State.markExerciseComplete('m1_excel', 'module1');
+            }, 500);
+        });
+
+        // Optimizer
+        let optimizedData = {};
+
+        document.getElementById('btn-optimize-prompt')?.addEventListener('click', () => {
+            const bad = document.getElementById('bad-prompt-input').value.toLowerCase();
+            let role = "Assistant";
+            let context = "General task";
+            let task = "Provide information";
+            let constraints = "Be concise";
+            let format = "Paragraph";
+            
+            if (bad.includes("email")) {
+                role = "Project Manager";
+                context = "Project update communication";
+                task = "Write an email to the client or team.";
+                constraints = "Maintain a professional, reassuring tone. Do not mention financial penalties.";
+                format = "Subject line + 3 short paragraphs.";
+            } else if (bad.includes("report") || bad.includes("summary")) {
+                role = "Data Analyst";
+                context = "Weekly status reporting";
+                task = "Summarize the key metrics and activities.";
+                constraints = "Focus only on completed items. Do not include assumptions.";
+                format = "Markdown list with bold headers.";
+            } else if (bad.includes("vendor") || bad.includes("quote") || bad.includes("price")) {
+                role = "Procurement Executive";
+                context = "Vendor rate comparison";
+                task = "Analyze the provided vendor quotes.";
+                constraints = "Highlight the cheapest option. Flag missing items.";
+                format = "Comparison table + recommendation.";
+            } else {
+                role = "DEC AI Assistant";
+                context = "Executing a user request";
+                task = `Fulfill the request: "${document.getElementById('bad-prompt-input').value}"`;
+                constraints = "Ensure factual accuracy. Avoid hallucination.";
+                format = "Clear, structured format.";
+            }
+
+            optimizedData = { role, context, task, constraints, format };
+            
+            const good = `Act as a ${role} for DEC Infra.\nContext: ${context}.\nTask: ${task}\nConstraints: ${constraints}\nFormat: ${format}`;
+            document.getElementById('good-prompt-output').value = good;
+            document.getElementById('btn-use-optimized').disabled = false;
+        });
+
+        document.getElementById('btn-use-optimized')?.addEventListener('click', () => {
+            document.getElementById('prompt-role').value = optimizedData.role || "Project Manager";
+            document.getElementById('prompt-context').value = optimizedData.context || "Project update communication";
+            document.getElementById('prompt-task').value = optimizedData.task || "Write an email";
+            document.getElementById('prompt-constraints').value = optimizedData.constraints || "Be concise";
+            document.getElementById('prompt-format').value = optimizedData.format || "Paragraph";
+            showToast('Prompt Builder populated!', 'success');
+        });
+
+        document.getElementById('btn-generate-prompt')?.addEventListener('click', () => {
+            const role = document.getElementById('prompt-role').value;
+            const context = document.getElementById('prompt-context').value;
+            const task = document.getElementById('prompt-task').value;
+            const input = document.getElementById('prompt-input').value;
+            const constraints = document.getElementById('prompt-constraints').value;
+            const format = document.getElementById('prompt-format').value;
+            
+            const finalPrompt = PromptEngine.buildPrompt(role, context, task, input, constraints, format);
+            State.markExerciseComplete('m1_prompt', 'module1');
+            document.getElementById('final-prompt-text').innerText = finalPrompt;
+            
+            const evalResult = PromptEngine.evaluatePrompt(finalPrompt);
+            const feedbackContainer = document.getElementById('prompt-feedback');
+            feedbackContainer.innerHTML = evalResult.feedback.map(f => `<p class="mb-2">${f}</p>`).join('');
+            
+            document.getElementById('prompt-result-card').classList.remove('hidden');
+            document.getElementById('prompt-demo-output').classList.add('hidden');
+        });
+
+        document.getElementById('btn-copy-prompt')?.addEventListener('click', () => {
+            navigator.clipboard.writeText(document.getElementById('final-prompt-text').innerText);
+            showToast('Prompt copied to clipboard', 'success');
+        });
+
+        document.getElementById('btn-run-prompt-demo')?.addEventListener('click', async () => {
+            const btn = document.getElementById('btn-run-prompt-demo');
+            btn.innerText = 'Running...';
+            btn.disabled = true;
+            
+            const promptText = document.getElementById('final-prompt-text').innerText;
+            const response = await AIService.generate(promptText);
+            
+            document.getElementById('prompt-demo-text').innerText = response;
+            document.getElementById('prompt-demo-output').classList.remove('hidden');
+            
+            btn.innerText = 'Run Demo';
+            btn.disabled = false;
+        });
+
+        // Claude Projects Lab
+        document.getElementById('btn-claude-test')?.addEventListener('click', () => {
+            const btn = document.getElementById('btn-claude-test');
+            btn.disabled = true;
+            btn.innerText = "Testing...";
+            
+            setTimeout(() => {
+                const sopIncluded = document.getElementById('chk-sop').checked;
+                let out = "";
+                if (sopIncluded) {
+                    out = `<strong>WEEKLY PROGRESS REPORT</strong><br><br><strong>Incident Section:</strong><br>As per <em>Site_Safety_SOP_v2.pdf</em>, a minor injury was recorded. The worker was treated on-site. Form SS-1 has been filed within the required 12-hour window.`;
+                } else {
+                    out = `<strong>WEEKLY PROGRESS REPORT</strong><br><br><strong>Incident Section:</strong><br>A minor injury happened today. The worker is fine now. Please advise next steps. <br><br><span style="color:var(--danger); font-size:0.75rem;">(Note: Assistant didn't know the SOP rule to file Form SS-1 because it wasn't in its Knowledge Base!)</span>`;
+                }
+                document.getElementById('claude-out').innerHTML = out;
+                btn.disabled = false;
+                btn.innerText = "Test Assistant";
+                showToast('Claude Project simulated!', 'success');
+            }, 600);
+        });
+
+    }, 100);
+
         // Add event listeners for sub-tabs
         const tabBtns = container.querySelectorAll('.sub-tab-btn');
         tabBtns.forEach(btn => {
@@ -2746,6 +1574,7 @@ function showTab(event, tabName) {
 
     drawModule1View();
 }
+
 
 
 function renderModule2(container) {

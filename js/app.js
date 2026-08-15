@@ -168,6 +168,26 @@ function setupUI() {
             themeBtn.innerText = next === 'dark' ? '☀️' : '🌙';
         });
     }
+
+    // Scroll to Top Logic
+    const viewContainer = document.getElementById('view-container');
+    const scrollTopBtn = document.getElementById('btn-scroll-top');
+    if (viewContainer && scrollTopBtn) {
+        viewContainer.addEventListener('scroll', () => {
+            if (viewContainer.scrollTop > 300) {
+                scrollTopBtn.classList.add('visible');
+            } else {
+                scrollTopBtn.classList.remove('visible');
+            }
+        });
+
+        scrollTopBtn.addEventListener('click', () => {
+            viewContainer.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    }
 }
 
 function renderDashboard(container) {

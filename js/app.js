@@ -186,41 +186,48 @@ function renderDashboard(container) {
                     </div>
                 </div>
                 <div style="flex: 1; min-width: 300px; display: flex; justify-content: center; z-index: 2; position: relative;">
-                    <div style="width: 100%; max-width: 420px; height: 320px; position: relative; display: flex; align-items: center; justify-content: center;">
-                        <!-- Orbiting rings + central AI sphere -->
-                        <div style="position: relative; display: flex; align-items: center; justify-content: center; width: 160px; height: 160px; animation: heroFloat 3s ease-in-out infinite;">
-                            <div style="position: absolute; width: 140px; height: 140px; border: 2px solid rgba(255,222,89,0.7); border-radius: 50%; animation: heroSpin 3s linear infinite; border-top-color: transparent; box-shadow: 0 0 20px rgba(255,222,89,0.4);"></div>
-                            <div style="position: absolute; width: 175px; height: 175px; border: 2px solid rgba(0,212,255,0.6); border-radius: 50%; animation: heroSpinRev 5s linear infinite; border-right-color: transparent; box-shadow: 0 0 20px rgba(0,212,255,0.3);"></div>
-                            <div style="position: absolute; width: 210px; height: 210px; border: 1px solid rgba(124,58,237,0.5); border-radius: 50%; animation: heroSpin 8s linear infinite; border-bottom-color: transparent;"></div>
-                            <div style="width: 90px; height: 90px; background: radial-gradient(circle at 35% 35%, #7c3aed, #1a0a2e); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 50px rgba(124,58,237,0.8), 0 0 100px rgba(255,222,89,0.25); font-size: 2.5rem; animation: heroPulse 2s ease-in-out infinite;">🤖</div>
+                    <div style="width: 100%; max-width: 450px; height: 340px; position: relative; display: flex; align-items: center; justify-content: center;">
+                        <!-- Generated 3D Character with animated glow border -->
+                        <div style="position: relative; animation: heroFloat3D 4s ease-in-out infinite;">
+                            <!-- Outer animated glow ring -->
+                            <div style="position: absolute; inset: -4px; border-radius: 26px; background: conic-gradient(from 0deg, #FFDE59, #00d4ff, #7c3aed, #10B981, #FFDE59); animation: rotateBorder 4s linear infinite; z-index: 0; filter: blur(3px); opacity: 0.85;"></div>
+                            <!-- Inner white border -->
+                            <div style="position: absolute; inset: 2px; border-radius: 22px; background: #141414; z-index: 1;"></div>
+                            <!-- The 3D Character Image -->
+                            <img src="hero-3d.png" 
+                                 style="width: 100%; max-width: 390px; border-radius: 20px; display: block; position: relative; z-index: 2; border: 3px solid transparent; transition: transform 0.3s ease; cursor: pointer;"
+                                 alt="3D AI Character"
+                                 onmouseover="this.style.transform='scale(1.04) translateY(-4px)'"
+                                 onmouseout="this.style.transform='scale(1) translateY(0)'">
                         </div>
                         <!-- Floating data cards -->
-                        <div style="position: absolute; top: 8px; left: 0; background: rgba(28,28,28,0.95); border: 1px solid rgba(255,222,89,0.4); border-radius: 12px; padding: 10px 14px; animation: heroFloat 3s ease-in-out 0.3s infinite; box-shadow: 0 8px 24px rgba(0,0,0,0.6), 0 0 12px rgba(255,222,89,0.1);">
-                            <div style="font-size: 9px; color: #64748B; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px;">AI Tasks Today</div>
-                            <div style="font-size: 1.5rem; font-weight: 800; color: #FFDE59; line-height: 1;">142 ✓</div>
+                        <div style="position: absolute; top: 12px; left: -10px; background: rgba(20,20,20,0.95); border: 1px solid rgba(255,222,89,0.5); border-radius: 14px; padding: 10px 14px; animation: heroFloat3D 3s ease-in-out 0.3s infinite; box-shadow: 0 8px 24px rgba(0,0,0,0.7), 0 0 16px rgba(255,222,89,0.15); backdrop-filter: blur(8px); z-index: 10;">
+                            <div style="font-size: 9px; color: #64748B; text-transform: uppercase; letter-spacing: 1.2px; margin-bottom: 4px;">AI Tasks Today</div>
+                            <div style="font-size: 1.6rem; font-weight: 900; color: #FFDE59; line-height: 1;">142 ✓</div>
                         </div>
-                        <div style="position: absolute; top: 8px; right: 0; background: rgba(28,28,28,0.95); border: 1px solid rgba(16,185,129,0.4); border-radius: 12px; padding: 10px 14px; animation: heroFloat 3s ease-in-out 0.7s infinite; box-shadow: 0 8px 24px rgba(0,0,0,0.6), 0 0 12px rgba(16,185,129,0.15);">
-                            <div style="font-size: 9px; color: #64748B; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px;">Time Saved</div>
-                            <div style="font-size: 1.5rem; font-weight: 800; color: #10B981; line-height: 1;">18h/mo</div>
+                        <div style="position: absolute; top: 12px; right: -10px; background: rgba(20,20,20,0.95); border: 1px solid rgba(16,185,129,0.5); border-radius: 14px; padding: 10px 14px; animation: heroFloat3D 3s ease-in-out 0.7s infinite; box-shadow: 0 8px 24px rgba(0,0,0,0.7), 0 0 16px rgba(16,185,129,0.2); backdrop-filter: blur(8px); z-index: 10;">
+                            <div style="font-size: 9px; color: #64748B; text-transform: uppercase; letter-spacing: 1.2px; margin-bottom: 4px;">Time Saved</div>
+                            <div style="font-size: 1.6rem; font-weight: 900; color: #10B981; line-height: 1;">18h/mo</div>
                         </div>
-                        <div style="position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%); background: rgba(28,28,28,0.95); border: 1px solid rgba(0,212,255,0.4); border-radius: 12px; padding: 12px 20px; animation: heroFloat 3s ease-in-out 1.1s infinite; box-shadow: 0 8px 24px rgba(0,0,0,0.6), 0 0 12px rgba(0,212,255,0.1); white-space: nowrap;">
-                            <div style="font-size: 9px; color: #64748B; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px;">Productivity Boost</div>
+                        <div style="position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%); background: rgba(20,20,20,0.95); border: 1px solid rgba(0,212,255,0.5); border-radius: 14px; padding: 12px 20px; animation: heroFloat3D 3s ease-in-out 1.1s infinite; box-shadow: 0 8px 24px rgba(0,0,0,0.7), 0 0 16px rgba(0,212,255,0.15); backdrop-filter: blur(8px); z-index: 10; white-space: nowrap;">
+                            <div style="font-size: 9px; color: #64748B; text-transform: uppercase; letter-spacing: 1.2px; margin-bottom: 6px;">Productivity Boost</div>
                             <div style="display: flex; align-items: center; gap: 10px;">
-                                <div style="height: 6px; width: 120px; background: rgba(255,255,255,0.08); border-radius: 3px; overflow: hidden;"><div style="height: 100%; width: 78%; background: linear-gradient(90deg, #00d4ff, #7c3aed); border-radius: 3px; animation: heroBarGrow 2.5s ease-out;"></div></div>
-                                <span style="font-size: 0.9rem; font-weight: 800; color: #00d4ff;">78%</span>
+                                <div style="height: 6px; width: 130px; background: rgba(255,255,255,0.08); border-radius: 3px; overflow: hidden;">
+                                    <div style="height: 100%; width: 78%; background: linear-gradient(90deg, #00d4ff, #7c3aed); border-radius: 3px; animation: heroBarGrow 2.5s ease-out;"></div>
+                                </div>
+                                <span style="font-size: 0.9rem; font-weight: 900; color: #00d4ff;">78%</span>
                             </div>
                         </div>
-                        <!-- Particle dots -->
-                        <div style="position: absolute; width: 6px; height: 6px; background: #FFDE59; border-radius: 50%; top: 30%; left: 10%; animation: heroParticle 4s ease-in-out infinite; box-shadow: 0 0 8px #FFDE59;"></div>
-                        <div style="position: absolute; width: 4px; height: 4px; background: #00d4ff; border-radius: 50%; bottom: 35%; right: 8%; animation: heroParticle 4s ease-in-out 1.5s infinite; box-shadow: 0 0 8px #00d4ff;"></div>
-                        <div style="position: absolute; width: 5px; height: 5px; background: #7c3aed; border-radius: 50%; top: 60%; left: 5%; animation: heroParticle 4s ease-in-out 2s infinite; box-shadow: 0 0 8px #7c3aed;"></div>
+                        <!-- Sparkle particles -->
+                        <div style="position: absolute; width: 7px; height: 7px; background: #FFDE59; border-radius: 50%; top: 25%; left: 2%; animation: heroParticle 4s ease-in-out infinite; box-shadow: 0 0 10px #FFDE59; z-index: 10;"></div>
+                        <div style="position: absolute; width: 5px; height: 5px; background: #00d4ff; border-radius: 50%; bottom: 30%; right: 2%; animation: heroParticle 4s ease-in-out 1.5s infinite; box-shadow: 0 0 10px #00d4ff; z-index: 10;"></div>
+                        <div style="position: absolute; width: 6px; height: 6px; background: #7c3aed; border-radius: 50%; top: 55%; left: 3%; animation: heroParticle 4s ease-in-out 2.2s infinite; box-shadow: 0 0 10px #7c3aed; z-index: 10;"></div>
+                        <div style="position: absolute; width: 4px; height: 4px; background: #10B981; border-radius: 50%; top: 40%; right: 3%; animation: heroParticle 4s ease-in-out 0.8s infinite; box-shadow: 0 0 8px #10B981; z-index: 10;"></div>
                         <style>
-                            @keyframes heroSpin { to { transform: rotate(360deg); } }
-                            @keyframes heroSpinRev { to { transform: rotate(-360deg); } }
-                            @keyframes heroFloat { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-12px); } }
-                            @keyframes heroPulse { 0%, 100% { box-shadow: 0 0 50px rgba(124,58,237,0.8), 0 0 100px rgba(255,222,89,0.25); } 50% { box-shadow: 0 0 70px rgba(124,58,237,1), 0 0 130px rgba(255,222,89,0.5); } }
+                            @keyframes heroFloat3D { 0%, 100% { transform: translateY(0px) rotate(0deg); } 50% { transform: translateY(-10px) rotate(0.5deg); } }
+                            @keyframes rotateBorder { to { transform: rotate(360deg); } }
                             @keyframes heroBarGrow { from { width: 0; } }
-                            @keyframes heroParticle { 0%, 100% { transform: translateY(0) scale(1); opacity: 0.8; } 50% { transform: translateY(-15px) scale(1.3); opacity: 1; } }
+                            @keyframes heroParticle { 0%, 100% { transform: translateY(0) scale(1); opacity: 0.7; } 50% { transform: translateY(-18px) scale(1.4); opacity: 1; } }
                         </style>
                     </div>
                 </div>

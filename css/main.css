@@ -153,8 +153,15 @@ a:hover {
 
 .progress-bar-fill {
     height: 100%;
-    background-color: var(--success);
-    transition: width 0.3s ease;
+    background: linear-gradient(90deg, var(--info), var(--success), var(--accent));
+    background-size: 200% 100%;
+    animation: shimmer 3s infinite linear;
+    transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
 }
 
 .nav-links {
@@ -191,7 +198,10 @@ a:hover {
 
 .nav-link.active {
     border-left-color: var(--accent);
-    font-weight: 500;
+    background: linear-gradient(90deg, rgba(243, 198, 35, 0.15), transparent);
+    color: var(--accent);
+    font-weight: bold;
+    box-shadow: inset 2px 0 10px rgba(243, 198, 35, 0.2);
 }
 
 .demo-link {

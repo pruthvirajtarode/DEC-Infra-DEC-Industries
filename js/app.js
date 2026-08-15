@@ -3342,7 +3342,7 @@ function renderProductivityForms(container) {
                     <h2 class="mt-2">AI Productivity &amp; ROI Tracker</h2>
                     <p class="text-muted">Analyze your productivity gains, AI utilization shift, and satisfaction delta before and after the sessions.</p>
                 </div>
-                <button id="btn-show-qr" class="btn btn-secondary" style="display:inline-flex; align-items:center; gap:0.5rem; white-space:nowrap; border: 2px solid var(--primary); color: var(--primary); font-weight:600; padding: 0.6rem 1.2rem; border-radius: 8px; flex-shrink:0;" title="Show QR code for employees to scan">
+                <button id="btn-show-qr" class="btn btn-secondary" style="display:inline-flex; align-items:center; gap:0.5rem; white-space:nowrap; font-weight:600; padding: 0.6rem 1.2rem; border-radius: 8px; flex-shrink:0;" title="Show QR code for employees to scan">
                     <span style="font-size:1.25rem;">📱</span><span class="qr-btn-text"> Show QR Code for Employees</span>
                 </button>
             </div>

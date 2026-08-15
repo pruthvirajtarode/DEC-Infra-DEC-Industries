@@ -93,16 +93,24 @@ function setupUI() {
 
 function renderDashboard(container) {
     container.innerHTML = `
-        <div class="dashboard-hero card mb-8" style="background: linear-gradient(135deg, var(--primary) 0%, var(--primary-lighter) 100%); color: white;">
-            <h1 style="color: white; font-size: 2.5rem; margin-bottom: 1rem;">DEC AI FOUNDATIONS</h1>
-            <h3 style="color: var(--accent); font-family: var(--font-body); font-weight: 500; font-size: 1.25rem;">"From Everyday AI to a Working Department AI Assistant"</h3>
-            <p style="margin-top: 1.5rem; max-width: 800px; opacity: 0.9; font-size: 1.1rem;">
-                A hands-on AI learning environment designed around realistic construction, infrastructure, manufacturing, procurement, finance, project, HR, and operations workflows.
-            </p>
-            <div class="flex gap-4 mt-8">
-                <button class="btn btn-accent" onclick="window.location.hash='/module1'">START PROGRAM</button>
-                <button class="btn btn-secondary" style="border-color: rgba(255,255,255,0.5); color: white;" onclick="window.location.hash='/flagship-demo'">VIEW CAPSTONE</button>
+        <div class="dashboard-hero card mb-8" style="background: linear-gradient(135deg, var(--bg-card) 0%, rgba(243, 198, 35, 0.05) 100%); position: relative; overflow: hidden; padding: 3rem;">
+            <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 2rem;">
+                <div style="flex: 1; min-width: 300px; z-index: 2;">
+                    <h1 style="color: var(--text-main); font-size: 3rem; margin-bottom: 1rem; line-height: 1.2;">DEC AI <span style="color: var(--accent);">FOUNDATIONS</span></h1>
+                    <h3 style="color: var(--text-muted); font-family: var(--font-body); font-weight: 500; font-size: 1.25rem;">"From Everyday AI to a Working Department AI Assistant"</h3>
+                    <p style="margin-top: 1.5rem; max-width: 600px; opacity: 0.9; font-size: 1.1rem; color: var(--text-muted);">
+                        A hands-on AI learning environment designed around realistic construction, infrastructure, manufacturing, procurement, finance, project, HR, and operations workflows.
+                    </p>
+                    <div class="flex gap-4 mt-8">
+                        <button class="btn btn-accent" onclick="window.location.hash='/module1'">START PROGRAM</button>
+                        <button class="btn btn-secondary" onclick="window.location.hash='/flagship-demo'">VIEW CAPSTONE</button>
+                    </div>
+                </div>
+                <div style="flex: 1; min-width: 300px; display: flex; justify-content: center; z-index: 2;">
+                    <img src="hero-3d.png" class="float-3d" style="width: 100%; max-width: 450px; border-radius: 20px; filter: drop-shadow(0 20px 40px rgba(0,0,0,0.5));" alt="3D Gamified SaaS Hero">
+                </div>
             </div>
+            <div style="position: absolute; top: -50%; right: -10%; width: 500px; height: 500px; background: radial-gradient(circle, rgba(243,198,35,0.15) 0%, transparent 70%); border-radius: 50%; z-index: 1;"></div>
         </div>
 
         <div class="flex gap-4 mb-8">
@@ -3337,10 +3345,13 @@ function renderProductivityForms(container) {
     function drawView() {
         container.innerHTML = `
             <div class="mb-4" style="display:flex; align-items:flex-start; justify-content:space-between; flex-wrap:wrap; gap:1rem;">
-                <div>
-                    <span class="badge badge-info" style="margin-bottom: 0.5rem;">AI Performance Assessment</span>
-                    <h2 class="mt-2">AI Productivity &amp; ROI Tracker</h2>
-                    <p class="text-muted">Analyze your productivity gains, AI utilization shift, and satisfaction delta before and after the sessions.</p>
+                <div style="display:flex; align-items:center; gap: 1.5rem;">
+                    <div>
+                        <span class="badge badge-info" style="margin-bottom: 0.5rem;">AI Performance Assessment</span>
+                        <h2 class="mt-2">AI Productivity &amp; ROI Tracker</h2>
+                        <p class="text-muted">Analyze your productivity gains, AI utilization shift, and satisfaction delta before and after the sessions.</p>
+                    </div>
+                    <img src="bot-3d.png" class="float-3d" style="width: 120px; height: auto; filter: drop-shadow(0 10px 20px rgba(0,0,0,0.4)); margin-top: -20px;" alt="3D AI Bot">
                 </div>
                 <button id="btn-show-qr" class="btn btn-secondary" style="display:inline-flex; align-items:center; gap:0.5rem; white-space:nowrap; font-weight:600; padding: 0.6rem 1.2rem; border-radius: 8px; flex-shrink:0;" title="Show QR code for employees to scan">
                     <span style="font-size:1.25rem;">📱</span><span class="qr-btn-text"> Show QR Code for Employees</span>

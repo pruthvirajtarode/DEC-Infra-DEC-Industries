@@ -175,6 +175,15 @@ function renderDashboard(container) {
         <div class="dashboard-hero card mb-8" style="background: linear-gradient(135deg, var(--bg-card) 0%, rgba(243, 198, 35, 0.05) 100%); position: relative; overflow: hidden; padding: 3rem;">
             <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 2rem;">
                 <div style="flex: 1; min-width: 300px; z-index: 2;">
+                    <!-- Mobile QR Code -->
+                    <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; background: rgba(255,255,255,0.05); padding: 0.75rem 1rem; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); width: fit-content; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                        <div id="mobile-qr-code" style="background: white; padding: 4px; border-radius: 6px; width: 72px; height: 72px; display: flex; align-items: center; justify-content: center;"></div>
+                        <div>
+                            <div style="font-size: 0.75rem; color: #00d4ff; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 0.25rem;">📱 Mobile Access</div>
+                            <div style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.3;">Scan this QR to open the<br>project on your phone.</div>
+                        </div>
+                    </div>
+
                     <h1 style="color: var(--text-main); font-size: 3rem; margin-bottom: 1rem; line-height: 1.2;">DEC AI <span style="color: var(--accent);">FOUNDATIONS</span></h1>
                     <h3 style="color: var(--text-muted); font-family: var(--font-body); font-weight: 500; font-size: 1.25rem;">"From Everyday AI to a Working Department AI Assistant"</h3>
                     <p style="margin-top: 1.5rem; max-width: 600px; opacity: 0.9; font-size: 1.1rem; color: var(--text-muted);">
@@ -337,6 +346,22 @@ function renderDashboard(container) {
             </div>
         </div>
     `;
+
+    // Generate Mobile QR Code
+    setTimeout(() => {
+        const qrContainer = document.getElementById('mobile-qr-code');
+        if (qrContainer && typeof QRCode !== 'undefined') {
+            qrContainer.innerHTML = ''; // clear if re-rendering
+            new QRCode(qrContainer, {
+                text: "https://dec-infra-dec-industries.vercel.app/",
+                width: 64,
+                height: 64,
+                colorDark : "#000000",
+                colorLight : "#ffffff",
+                correctLevel : QRCode.CorrectLevel.L
+            });
+        }
+    }, 100);
 }
 
 // Global UI Utility: Toasts

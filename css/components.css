@@ -809,7 +809,7 @@ textarea.form-control {
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            background: white;
+            background: var(--bg-card);
             border-radius: 12px;
             box-shadow: 0 20px 60px rgba(0,0,0,0.3);
             overflow: hidden;
@@ -1103,7 +1103,7 @@ textarea.form-control {
         }
         
         .success-box {
-            background: #D4EDDA;
+            background: rgba(16, 185, 129, 0.15);
             padding: 15px;
             border-left: 4px solid #28A745;
             margin: 20px 0;

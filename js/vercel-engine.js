@@ -87,19 +87,19 @@ function renderVercelLab(container) {
             <div style="background:var(--bg-card); border-radius:10px; padding:1.25rem; margin-bottom:1.25rem; border:1px solid #CBD5E1;">
                 <h4 style="margin-bottom:0.75rem; display:flex; align-items:center; gap:0.5rem; color:var(--primary);">📦 What's inside your app file:</h4>
                 <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px,1fr)); gap:0.75rem;">
-                    <div style="background:white; border-radius:8px; padding:0.9rem; display:flex; align-items:flex-start; gap:0.75rem;">
+                    <div style="background:rgba(255, 255, 255, 0.05); border-radius:8px; padding:0.9rem; display:flex; align-items:flex-start; gap:0.75rem;">
                         <span style="font-size:1.5rem;">💬</span>
                         <div><div style="font-weight:600; font-size:0.875rem;">Chat Interface</div><div style="font-size:0.78rem; color:#64748B; margin-top:0.2rem;">A full chat UI where users can ask your AI questions</div></div>
                     </div>
-                    <div style="background:white; border-radius:8px; padding:0.9rem; display:flex; align-items:flex-start; gap:0.75rem;">
+                    <div style="background:rgba(255, 255, 255, 0.05); border-radius:8px; padding:0.9rem; display:flex; align-items:flex-start; gap:0.75rem;">
                         <span style="font-size:1.5rem;">🤖</span>
                         <div><div style="font-weight:600; font-size:0.875rem;">Your System Prompt</div><div style="font-size:0.78rem; color:#64748B; margin-top:0.2rem;">Your exact Capstone prompt is embedded inside</div></div>
                     </div>
-                    <div style="background:white; border-radius:8px; padding:0.9rem; display:flex; align-items:flex-start; gap:0.75rem;">
+                    <div style="background:rgba(255, 255, 255, 0.05); border-radius:8px; padding:0.9rem; display:flex; align-items:flex-start; gap:0.75rem;">
                         <span style="font-size:1.5rem;">🌐</span>
                         <div><div style="font-weight:600; font-size:0.875rem;">Single HTML File</div><div style="font-size:0.78rem; color:#64748B; margin-top:0.2rem;">Everything in one file — no server needed to run it</div></div>
                     </div>
-                    <div style="background:white; border-radius:8px; padding:0.9rem; display:flex; align-items:flex-start; gap:0.75rem;">
+                    <div style="background:rgba(255, 255, 255, 0.05); border-radius:8px; padding:0.9rem; display:flex; align-items:flex-start; gap:0.75rem;">
                         <span style="font-size:1.5rem;">📱</span>
                         <div><div style="font-weight:600; font-size:0.875rem;">Mobile Responsive</div><div style="font-size:0.78rem; color:#64748B; margin-top:0.2rem;">Works on phones, tablets, and computers</div></div>
                     </div>
@@ -152,7 +152,7 @@ function renderVercelLab(container) {
 
             <div style="display:flex; flex-direction:column; gap:1rem; margin-bottom:1.5rem;">
 
-                <div style="display:flex; gap:1rem; align-items:flex-start; background:white; border:1px solid #E2E8F0; border-radius:12px; padding:1.1rem 1.25rem;">
+                <div style="display:flex; gap:1rem; align-items:flex-start; background:rgba(255, 255, 255, 0.05); border:1px solid #E2E8F0; border-radius:12px; padding:1.1rem 1.25rem;">
                     <div style="background:#0A192F; color:white; border-radius:50%; width:32px; height:32px; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:0.9rem; flex-shrink:0;">1</div>
                     <div>
                         <div style="font-weight:700; color:var(--primary); margin-bottom:0.25rem;">Open Vercel.com</div>
@@ -160,7 +160,7 @@ function renderVercelLab(container) {
                     </div>
                 </div>
 
-                <div style="display:flex; gap:1rem; align-items:flex-start; background:white; border:1px solid #E2E8F0; border-radius:12px; padding:1.1rem 1.25rem;">
+                <div style="display:flex; gap:1rem; align-items:flex-start; background:rgba(255, 255, 255, 0.05); border:1px solid #E2E8F0; border-radius:12px; padding:1.1rem 1.25rem;">
                     <div style="background:#0A192F; color:white; border-radius:50%; width:32px; height:32px; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:0.9rem; flex-shrink:0;">2</div>
                     <div>
                         <div style="font-weight:700; color:var(--primary); margin-bottom:0.25rem;">Click "Add New Project"</div>
@@ -176,7 +176,7 @@ function renderVercelLab(container) {
                     </div>
                 </div>
 
-                <div style="display:flex; gap:1rem; align-items:flex-start; background:white; border:1px solid #E2E8F0; border-radius:12px; padding:1.1rem 1.25rem;">
+                <div style="display:flex; gap:1rem; align-items:flex-start; background:rgba(255, 255, 255, 0.05); border:1px solid #E2E8F0; border-radius:12px; padding:1.1rem 1.25rem;">
                     <div style="background:#0A192F; color:white; border-radius:50%; width:32px; height:32px; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:0.9rem; flex-shrink:0;">4</div>
                     <div>
                         <div style="font-weight:700; color:var(--primary); margin-bottom:0.25rem;">Click "Deploy" and Wait 30 Seconds</div>
@@ -206,7 +206,7 @@ function renderVercelLab(container) {
         ${makeStep(5, '🌐', 'Share Your Live App URL', 'You\'re officially a developer!', stepsCompleted['5'], `
             <p style="margin-bottom:1.25rem; line-height:1.7;">Congratulations! Paste your live Vercel URL below and share it with Sir and your colleagues. This is your proof that you built and deployed a real AI web application!</p>
 
-            <div style="background:white; border:2px solid #E2E8F0; border-radius:12px; padding:1.25rem; margin-bottom:1.25rem;">
+            <div style="background:rgba(255, 255, 255, 0.05); border:2px solid #E2E8F0; border-radius:12px; padding:1.25rem; margin-bottom:1.25rem;">
                 <label style="font-weight:700; font-size:0.9rem; color:var(--primary); display:block; margin-bottom:0.75rem;">🔗 Paste Your Live Vercel URL:</label>
                 <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
                     <input type="url" id="vl-live-url" class="form-control" placeholder="https://your-app-name.vercel.app" value="${savedLiveUrl}" style="flex:1; min-width:200px;">
@@ -397,7 +397,7 @@ function generateAndDownloadApp(systemPrompt) {
         .messages {
             flex-grow: 1; padding: 1.25rem; overflow-y: auto;
             display: flex; flex-direction: column; gap: 0.9rem;
-            background: white;
+            background:rgba(255, 255, 255, 0.05);
         }
         .message {
             max-width: 82%; padding: 0.85rem 1.1rem;
@@ -415,7 +415,7 @@ function generateAndDownloadApp(systemPrompt) {
         @keyframes bounce { 0%,80%,100% { transform:scale(0.6); } 40% { transform:scale(1); } }
 
         .input-area {
-            padding: 1rem 1.25rem; background: white;
+            padding: 1rem 1.25rem; background:rgba(255, 255, 255, 0.05);
             border-top: 1px solid #E2E8F0; display: flex; gap: 0.5rem;
         }
         input[type=text] {
@@ -435,7 +435,7 @@ function generateAndDownloadApp(systemPrompt) {
         .send-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
 
         /* Prompt Panel */
-        .prompt-panel { padding: 1.5rem; display: none; background: white; }
+        .prompt-panel { padding: 1.5rem; display: none; background:rgba(255, 255, 255, 0.05); }
         .prompt-panel.active { display: block; }
         .prompt-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.5rem; }
         .info-box {
@@ -461,7 +461,7 @@ function generateAndDownloadApp(systemPrompt) {
         /* Suggested Prompts */
         .suggestions { padding: 0.75rem 1.25rem; background:var(--bg-card); border-top: 1px solid #E2E8F0; display: flex; gap: 0.5rem; flex-wrap: wrap; }
         .suggest-btn {
-            background: white; border: 1px solid #CBD5E1; border-radius: 20px;
+            background:rgba(255, 255, 255, 0.05); border: 1px solid #CBD5E1; border-radius: 20px;
             padding: 0.4rem 0.9rem; font-size: 0.78rem; color: #475569;
             cursor: pointer; transition: all 0.15s; font-family: 'Inter', sans-serif;
         }

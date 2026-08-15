@@ -835,11 +835,11 @@ textarea.form-control {
         .intro-section {
             padding: 30px;
             background: var(--bg-card);
-            border-bottom: 2px solid #e0e0e0;
+            border-bottom: 2px solid var(--border-color);
         }
         
         .intro-section h2 {
-            color: #1F4788;
+            color: var(--primary);
             margin-bottom: 15px;
             font-size: 20px;
         }
@@ -858,8 +858,8 @@ textarea.form-control {
         }
         
         .option-card {
-            background: white;
-            border: 2px solid #e0e0e0;
+            background: var(--bg-card);
+            border: 2px solid var(--border-color);
             border-radius: 8px;
             overflow: hidden;
             cursor: pointer;
@@ -903,7 +903,7 @@ textarea.form-control {
         }
         
         .option-content h3 {
-            color: #1F4788;
+            color: var(--primary);
             font-size: 16px;
             margin-bottom: 10px;
         }
@@ -911,7 +911,7 @@ textarea.form-control {
         .duration {
             display: inline-block;
             background: rgba(255, 222, 89, 0.1);
-            color: #1976D2;
+            color: var(--info);
             padding: 4px 12px;
             border-radius: 20px;
             font-size: 12px;
@@ -925,7 +925,7 @@ textarea.form-control {
         }
         
         .benefit-list li {
-            color: #666;
+            color: var(--text-muted);
             padding: 8px 0;
             border-bottom: 1px solid #f0f0f0;
             font-size: 14px;
@@ -944,12 +944,12 @@ textarea.form-control {
         
         .financial-impact {
             background: var(--bg-card);
-            border-left: 4px solid #378ADD;
+            border-left: 4px solid var(--info);
             padding: 12px;
             margin-top: 15px;
             border-radius: 4px;
             font-size: 13px;
-            color: #1F4788;
+            color: var(--primary);
             font-weight: 500;
         }
         
@@ -963,7 +963,7 @@ textarea.form-control {
             gap: 0;
             background: var(--bg-card);
             padding: 0;
-            border-bottom: 2px solid #e0e0e0;
+            border-bottom: 2px solid var(--border-color);
             overflow-x: auto;
         }
         
@@ -974,7 +974,7 @@ textarea.form-control {
             cursor: pointer;
             font-size: 14px;
             font-weight: 500;
-            color: #666;
+            color: var(--text-muted);
             border-bottom: 3px solid transparent;
             transition: all 0.3s ease;
             white-space: nowrap;
@@ -1012,20 +1012,20 @@ textarea.form-control {
         
         .scenario-box {
             background: var(--bg-card);
-            border-left: 4px solid #378ADD;
+            border-left: 4px solid var(--info);
             padding: 15px;
             margin: 15px 0;
             border-radius: 4px;
         }
         
         .scenario-box h4 {
-            color: #1F4788;
+            color: var(--primary);
             margin-bottom: 8px;
             font-size: 14px;
         }
         
         .scenario-box p {
-            color: #666;
+            color: var(--text-muted);
             font-size: 13px;
             line-height: 1.5;
             margin: 5px 0;
@@ -1039,7 +1039,7 @@ textarea.form-control {
         }
         
         .comparison-table th {
-            background: #1F4788;
+            background: var(--primary);
             color: white;
             padding: 12px;
             text-align: left;
@@ -1048,7 +1048,7 @@ textarea.form-control {
         
         .comparison-table td {
             padding: 10px 12px;
-            border-bottom: 1px solid #e0e0e0;
+            border-bottom: 1px solid var(--border-color);
         }
         
         .comparison-table tr:nth-child(even) {
@@ -1063,11 +1063,11 @@ textarea.form-control {
             background: var(--bg-card);
             padding: 30px;
             text-align: center;
-            border-top: 2px solid #e0e0e0;
+            border-top: 2px solid var(--border-color);
         }
         
         .footer h3 {
-            color: #1F4788;
+            color: var(--primary);
             margin-bottom: 15px;
             font-size: 18px;
         }

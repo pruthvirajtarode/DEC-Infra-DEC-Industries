@@ -6122,8 +6122,11 @@ function renderProductivityForms(container) {
                     <h3 style="font-family:var(--font-heading); font-size:1.5rem; color:#0A192F; margin:0.75rem 0 0.4rem;">Employee Feedback QR Code</h3>
                     <p style="font-size:0.85rem; color:#64748B; margin-bottom:1.5rem;">Employees scan this code to directly open the feedback form. Responses are saved to Excel automatically.</p>
 
-                    <div style="display:inline-block; padding:1rem; border:3px solid #0A192F; border-radius:16px; background:white; box-shadow:0 8px 24px rgba(10,25,47,0.12); margin-bottom:1rem;">
-                        <div id="qr-modal-code"></div>
+                    <div style="position:relative; display:inline-block; margin-bottom:1.5rem;">
+                        <div class="qr-zoom-wrapper" title="Click to zoom in/out" onclick="this.classList.toggle('zoomed-qr')" style="display:inline-block; padding:1rem; border:3px solid #0A192F; border-radius:16px; background:white; box-shadow:0 8px 24px rgba(10,25,47,0.12); cursor:zoom-in; transition:all 0.3s ease;">
+                            <div id="qr-modal-code"></div>
+                        </div>
+                        <div style="position:absolute; bottom:-22px; left:0; right:0; text-align:center; font-size:0.85rem; color:#64748B; font-weight:600; pointer-events:none;">🔍 Click QR to Zoom</div>
                     </div>
 
                     <div style="background:#F1F5F9; border-radius:8px; padding:0.5rem 1rem; font-size:0.75rem; font-family:monospace; color:#64748B; margin-bottom:1.5rem; word-break:break-all;">
@@ -6144,6 +6147,7 @@ function renderProductivityForms(container) {
             <style>
                 @keyframes fadeInOverlay { from { opacity:0; } to { opacity:1; } }
                 @keyframes scaleInModal { from { opacity:0; transform:translate(-50%,-50%) scale(0.92); } to { opacity:1; transform:translate(-50%,-50%) scale(1); } }
+                .qr-zoom-wrapper.zoomed-qr { position: fixed !important; top: 50% !important; left: 50% !important; transform: translate(-50%, -50%) scale(2.2) !important; z-index: 100000 !important; cursor: zoom-out !important; box-shadow: 0 0 0 3000px rgba(10,25,47,0.95) !important; }
             </style>
             
             <div class="flex gap-2 mb-6" style="display: flex; flex-wrap: wrap; gap: 0.5rem; border-bottom: 2px solid var(--border-color); padding-bottom: 0.5rem; margin-bottom: 2rem;">

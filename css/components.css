@@ -571,7 +571,7 @@ textarea.form-control {
     font-size: 13px;
   }
   .protection-tip {
-    background: #faeeda;
+    background: rgba(255, 222, 89, 0.1);
     border-left: 3px solid var(--text-warning);
     padding: 12px;
     margin: 12px 0;
@@ -725,7 +725,7 @@ textarea.form-control {
     font-size: 13px;
   }
   .tip-box {
-    background: #faeeda;
+    background: rgba(255, 222, 89, 0.1);
     border-left: 3px solid var(--text-warning);
     padding: 12px;
     margin: 12px 0;
@@ -834,7 +834,7 @@ textarea.form-control {
         
         .intro-section {
             padding: 30px;
-            background: #f8f9fa;
+            background: var(--bg-card);
             border-bottom: 2px solid #e0e0e0;
         }
         
@@ -845,7 +845,7 @@ textarea.form-control {
         }
         
         .intro-section p {
-            color: #555;
+            color: var(--text-muted);
             line-height: 1.6;
             margin-bottom: 10px;
         }
@@ -910,7 +910,7 @@ textarea.form-control {
         
         .duration {
             display: inline-block;
-            background: #E3F2FD;
+            background: rgba(255, 222, 89, 0.1);
             color: #1976D2;
             padding: 4px 12px;
             border-radius: 20px;
@@ -943,7 +943,7 @@ textarea.form-control {
         }
         
         .financial-impact {
-            background: #F0F7FF;
+            background: var(--bg-card);
             border-left: 4px solid #378ADD;
             padding: 12px;
             margin-top: 15px;
@@ -961,7 +961,7 @@ textarea.form-control {
         .tabs {
             display: flex;
             gap: 0;
-            background: #f8f9fa;
+            background: var(--bg-card);
             padding: 0;
             border-bottom: 2px solid #e0e0e0;
             overflow-x: auto;
@@ -1011,7 +1011,7 @@ textarea.form-control {
         }
         
         .scenario-box {
-            background: #f8f9fa;
+            background: var(--bg-card);
             border-left: 4px solid #378ADD;
             padding: 15px;
             margin: 15px 0;
@@ -1052,15 +1052,15 @@ textarea.form-control {
         }
         
         .comparison-table tr:nth-child(even) {
-            background: #f8f9fa;
+            background: var(--bg-card);
         }
         
         .comparison-table tr:hover {
-            background: #E3F2FD;
+            background: rgba(255, 222, 89, 0.1);
         }
         
         .footer {
-            background: #f8f9fa;
+            background: var(--bg-card);
             padding: 30px;
             text-align: center;
             border-top: 2px solid #e0e0e0;
@@ -1093,7 +1093,7 @@ textarea.form-control {
         }
         
         .highlight {
-            background: #FFF3CD;
+            background: rgba(255, 222, 89, 0.15);
             padding: 15px;
             border-left: 4px solid #FFC107;
             margin: 20px 0;
@@ -1109,7 +1109,7 @@ textarea.form-control {
             margin: 20px 0;
             border-radius: 4px;
             font-size: 14px;
-            color: #155724;
+            color: var(--success);
         }
         
         @media (max-width: 768px) {

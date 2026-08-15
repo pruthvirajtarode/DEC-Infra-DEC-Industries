@@ -1,0 +1,60 @@
+Here is the complete prompt you can copy and paste into Gamma AI (using the "Paste in text" option) to generate a beautiful, creative, and professional presentation.
+
+---
+
+**Prompt for Gamma AI:**
+
+**Topic**: 2-Hour Interactive Training Engagement Plan: Module 2 
+
+**Target Audience**: Employees of DEC Infra, DEC Agro, and DEC Industries.
+
+**Visual & Branding Instructions (CRITICAL)**:
+- **Design Style**: Highly creative, modern, professional, and energetic. Use a corporate yet futuristic color palette.
+- **Logos & Branding**: 
+  - Include the **DEC** company logo prominently on **EVERY** slide. 
+  - On the Title slide and Wrap-up slide, clearly state "**In collaboration with be10x**" and include the **be10x logo**.
+- **Imagery**: Use dynamic, high-quality visuals of modern construction, agriculture, infrastructure, and futuristic data analytics.
+
+**Presentation Outline & Content**:
+
+**Slide 1: Title Slide**
+- Title: Data is the New Concrete: Module 2 Engagement Plan
+- Subtitle: A 2-Hour Interactive Masterclass on AI for Data Analysis
+- Footer: DEC Infra & DEC Industries | In collaboration with be10x
+- Visuals: DEC Logo, be10x Logo, High-tech infrastructure background.
+
+**Slide 2: Overview of the 120-Minute Masterclass**
+- Highlight: Active participation, competition, and hands-on AI usage (No boring lectures!).
+- Quick breakdown of the 6 phases of the masterclass.
+
+**Slide 3: Phase 1 - The Hook: "Data is the New Concrete" (15 Mins)**
+- **Activity**: Display a massive, messy synthetic dataset (e.g., thousands of rows of DPRs or Goods Receipt Notes).
+- **The Question**: "How long would it take you to manually find the 5 budget overruns here?"
+- **The Reveal**: Introduce the AI Data Analyst tool and demonstrate how it cleans and analyzes the data in just 3 seconds.
+
+**Slide 4: Phase 2 - Guided Walkthrough: The Data Lab (25 Mins)**
+- **Activity**: Participants open the 'Data Lab' on their devices.
+- **Task**: Upload a dataset (e.g., procurement_demo.csv) and execute their first AI cleaning prompt. 
+- **Outcome**: Witness the magic of AI instantly fixing inconsistent vendor names or messy dates.
+
+**Slide 5: Phase 3 - Gamified Challenge: The Great Reconciliation (30 Mins)**
+- **Activity**: A scenario where an Invoice doesn't match the Goods Received Note.
+- **The Game**: Use the AI Reconciliation Engine to find a missing discrepancy (e.g., ₹5 Lakhs).
+- **Engagement**: High-energy competition! The first 3 students to find the missing money win a prize or bragging rights.
+
+**Slide 6: Phase 4 - Visual Storytelling: MIS Generator (25 Mins)**
+- **Activity**: Transitioning from clean data to management-ready presentations.
+- **Task**: Participants use AI to generate visualizations, such as a pie chart for "Expenditure vs. Budgeted BOQ" or a bar chart for "Equipment Downtime".
+
+**Slide 7: Phase 5 - Department Breakouts (15 Mins)**
+- **Activity**: Divide participants by their specific divisions (DEC Infra, DEC Agro, DEC Industries).
+- **Task**: Run a final, customized AI analysis relevant to their daily jobs:
+  - *Agro*: Analyze cold chain temperatures.
+  - *Infra*: Analyze safety audits.
+  - *Industries*: Production metrics.
+
+**Slide 8: Phase 6 - Wrap-up & Q&A (10 Mins)**
+- **Discussion**: Share the biggest surprises and key takeaways from the session.
+- **Teaser**: A sneak peek into the next module: "Safe AI Usage".
+- **Call to Action**: Start using these AI tools in your daily workflows today!
+- **Footer**: DEC Infra | In collaboration with be10x

@@ -120,7 +120,7 @@
             color: #1976D2;
             padding: 4px 12px;
             border-radius: 20px;
-            font-size: 12px;
+            font-size: 16px;
             font-weight: 500;
             margin-bottom: 15px;
         }
@@ -134,7 +134,7 @@
             color: #666;
             padding: 8px 0;
             border-bottom: 1px solid #f0f0f0;
-            font-size: 14px;
+            font-size: 18px;
         }
         
         .benefit-list li:last-child {
@@ -154,7 +154,7 @@
             padding: 12px;
             margin-top: 15px;
             border-radius: 4px;
-            font-size: 13px;
+            font-size: 17px;
             color: #1F4788;
             font-weight: 500;
         }
@@ -178,7 +178,7 @@
             background: transparent;
             border: none;
             cursor: pointer;
-            font-size: 14px;
+            font-size: 18px;
             font-weight: 500;
             color: #666;
             border-bottom: 3px solid transparent;
@@ -227,12 +227,12 @@
         .scenario-box h4 {
             color: #1F4788;
             margin-bottom: 8px;
-            font-size: 14px;
+            font-size: 18px;
         }
         
         .scenario-box p {
             color: #666;
-            font-size: 13px;
+            font-size: 17px;
             line-height: 1.5;
             margin: 5px 0;
         }
@@ -241,7 +241,7 @@
             width: 100%;
             border-collapse: collapse;
             margin: 20px 0;
-            font-size: 13px;
+            font-size: 17px;
         }
         
         .comparison-table th {
@@ -289,7 +289,7 @@
             transition: all 0.3s ease;
             border: none;
             cursor: pointer;
-            font-size: 14px;
+            font-size: 18px;
             margin: 5px;
         }
         
@@ -304,7 +304,7 @@
             border-left: 4px solid #FFC107;
             margin: 20px 0;
             border-radius: 4px;
-            font-size: 14px;
+            font-size: 18px;
             color: #856404;
         }
         
@@ -314,7 +314,7 @@
             border-left: 4px solid #28A745;
             margin: 20px 0;
             border-radius: 4px;
-            font-size: 14px;
+            font-size: 18px;
             color: #155724;
         }
         

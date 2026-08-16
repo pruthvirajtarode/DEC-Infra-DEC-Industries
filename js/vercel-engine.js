@@ -14,13 +14,13 @@ function renderVercelLab(container) {
         <!-- PAGE HEADER -->
         <div style="background: linear-gradient(135deg, #0A192F 0%, #112240 100%); border-radius: 16px; padding: 2rem 2.5rem; margin-bottom: 2rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;">
             <div>
-                <span style="background:#F59E0B; color:#0A192F; padding:0.3rem 0.9rem; border-radius:50px; font-size:0.72rem; font-weight:800; letter-spacing:0.1em; text-transform:uppercase;">Final Capstone Step</span>
-                <h2 style="color:white; margin: 0.6rem 0 0.3rem; font-size:1.75rem; font-family:var(--font-heading);">🚀 Build & Deploy Your AI App</h2>
-                <p style="color:rgba(255,255,255,0.65); font-size:0.9rem; margin:0;">Follow the 5 steps below to take your AI assistant from idea → live web app on the internet.</p>
+                <span style="background:#F59E0B; color:#0A192F; padding:0.3rem 0.9rem; border-radius:50px; font-size: 0.97rem; font-weight:800; letter-spacing:0.1em; text-transform:uppercase;">Final Capstone Step</span>
+                <h2 style="color:white; margin: 0.6rem 0 0.3rem; font-size: 1.75rem; font-family:var(--font-heading);">🚀 Build & Deploy Your AI App</h2>
+                <p style="color:rgba(255,255,255,0.65); font-size: 1.15rem; margin:0;">Follow the 5 steps below to take your AI assistant from idea → live web app on the internet.</p>
             </div>
             <div style="text-align:center; background:rgba(255,255,255,0.07); border-radius:12px; padding:1rem 1.5rem; min-width:140px;">
-                <div id="vl-step-counter" style="font-size:2rem; font-weight:800; color:#F59E0B; font-family:var(--font-heading);">${Object.keys(stepsCompleted).length}/5</div>
-                <div style="font-size:0.72rem; color:rgba(255,255,255,0.55); text-transform:uppercase; font-weight:600; letter-spacing:0.08em;">Steps Done</div>
+                <div id="vl-step-counter" style="font-size: 2.0rem; font-weight:800; color:#F59E0B; font-family:var(--font-heading);">${Object.keys(stepsCompleted).length}/5</div>
+                <div style="font-size: 0.97rem; color:rgba(255,255,255,0.55); text-transform:uppercase; font-weight:600; letter-spacing:0.08em;">Steps Done</div>
                 <div style="margin-top:0.5rem; background:rgba(255,255,255,0.1); border-radius:4px; height:6px; overflow:hidden;">
                     <div style="height:100%; background:#F59E0B; width:${(Object.keys(stepsCompleted).length/5)*100}%; transition:width 0.4s;"></div>
                 </div>
@@ -53,29 +53,29 @@ function renderVercelLab(container) {
 
             <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(180px,1fr)); gap:1rem; margin-bottom:1.5rem;">
                 <div style="background:linear-gradient(135deg,#0A192F,#1a3a6b); border-radius:12px; padding:1.25rem; text-align:center; color:white;">
-                    <div style="font-size:2rem; margin-bottom:0.5rem;">💻</div>
-                    <div style="font-weight:700; font-size:0.9rem;">Your Computer</div>
-                    <div style="font-size:0.75rem; color:rgba(255,255,255,0.6); margin-top:0.25rem;">Works only locally</div>
+                    <div style="font-size: 2.0rem; margin-bottom:0.5rem;">💻</div>
+                    <div style="font-weight:700; font-size: 1.15rem;">Your Computer</div>
+                    <div style="font-size: 1.0rem; color:rgba(255,255,255,0.6); margin-top:0.25rem;">Works only locally</div>
                 </div>
-                <div style="display:flex; align-items:center; justify-content:center; font-size:2rem; color:var(--accent);">→</div>
+                <div style="display:flex; align-items:center; justify-content:center; font-size: 2.0rem; color:var(--accent);">→</div>
                 <div style="background:linear-gradient(135deg,#064e3b,#065f46); border-radius:12px; padding:1.25rem; text-align:center; color:white;">
-                    <div style="font-size:2rem; margin-bottom:0.5rem;">☁️</div>
-                    <div style="font-weight:700; font-size:0.9rem;">Vercel Cloud</div>
-                    <div style="font-size:0.75rem; color:rgba(255,255,255,0.6); margin-top:0.25rem;">Runs for the whole world</div>
+                    <div style="font-size: 2.0rem; margin-bottom:0.5rem;">☁️</div>
+                    <div style="font-weight:700; font-size: 1.15rem;">Vercel Cloud</div>
+                    <div style="font-size: 1.0rem; color:rgba(255,255,255,0.6); margin-top:0.25rem;">Runs for the whole world</div>
                 </div>
-                <div style="display:flex; align-items:center; justify-content:center; font-size:2rem; color:var(--accent);">→</div>
+                <div style="display:flex; align-items:center; justify-content:center; font-size: 2.0rem; color:var(--accent);">→</div>
                 <div style="background:linear-gradient(135deg,#1e1b4b,#312e81); border-radius:12px; padding:1.25rem; text-align:center; color:white;">
-                    <div style="font-size:2rem; margin-bottom:0.5rem;">🌐</div>
-                    <div style="font-weight:700; font-size:0.9rem;">Your Live URL</div>
-                    <div style="font-size:0.75rem; color:rgba(255,255,255,0.6); margin-top:0.25rem;">yourname.vercel.app</div>
+                    <div style="font-size: 2.0rem; margin-bottom:0.5rem;">🌐</div>
+                    <div style="font-weight:700; font-size: 1.15rem;">Your Live URL</div>
+                    <div style="font-size: 1.0rem; color:rgba(255,255,255,0.6); margin-top:0.25rem;">yourname.vercel.app</div>
                 </div>
             </div>
 
-            <div style="background:#FEF3C7; border:1px solid rgba(245,158,11,0.4); border-radius:10px; padding:1rem 1.25rem; font-size:0.85rem; color:#92400E; margin-bottom:1.25rem;">
+            <div style="background:#FEF3C7; border:1px solid rgba(245,158,11,0.4); border-radius:10px; padding:1rem 1.25rem; font-size: 1.1rem; color:#92400E; margin-bottom:1.25rem;">
                 💡 <strong>Vercel</strong> is a free cloud platform used by companies like Meta, HashiCorp, and GitHub. It makes deployment as easy as dragging a file. No coding needed!
             </div>
 
-            <div style="background:#ECFDF5; border:1px solid #A7F3D0; border-radius:10px; padding:1rem 1.25rem; font-size:0.85rem; color:#065F46;">
+            <div style="background:#ECFDF5; border:1px solid #A7F3D0; border-radius:10px; padding:1rem 1.25rem; font-size: 1.1rem; color:#065F46;">
                 ✅ <strong>What you will have at the end of this lab:</strong> A real live URL (e.g., <code>dec-myname-ai.vercel.app</code>) that opens your custom AI assistant. You can share it with anyone!
             </div>
         `, 'I understand Cloud Deployment!')}
@@ -88,31 +88,31 @@ function renderVercelLab(container) {
                 <h4 style="margin-bottom:0.75rem; display:flex; align-items:center; gap:0.5rem; color:var(--accent);">📦 What's inside your app file:</h4>
                 <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px,1fr)); gap:0.75rem;">
                     <div style="background:rgba(255, 255, 255, 0.05); border-radius:8px; padding:0.9rem; display:flex; align-items:flex-start; gap:0.75rem;">
-                        <span style="font-size:1.5rem;">💬</span>
-                        <div><div style="font-weight:600; font-size:0.875rem;">Chat Interface</div><div style="font-size:0.78rem; color:#64748B; margin-top:0.2rem;">A full chat UI where users can ask your AI questions</div></div>
+                        <span style="font-size: 1.5rem;">💬</span>
+                        <div><div style="font-weight:600; font-size: 1.125rem;">Chat Interface</div><div style="font-size: 1.03rem; color:#64748B; margin-top:0.2rem;">A full chat UI where users can ask your AI questions</div></div>
                     </div>
                     <div style="background:rgba(255, 255, 255, 0.05); border-radius:8px; padding:0.9rem; display:flex; align-items:flex-start; gap:0.75rem;">
-                        <span style="font-size:1.5rem;">🤖</span>
-                        <div><div style="font-weight:600; font-size:0.875rem;">Your System Prompt</div><div style="font-size:0.78rem; color:#64748B; margin-top:0.2rem;">Your exact Capstone prompt is embedded inside</div></div>
+                        <span style="font-size: 1.5rem;">🤖</span>
+                        <div><div style="font-weight:600; font-size: 1.125rem;">Your System Prompt</div><div style="font-size: 1.03rem; color:#64748B; margin-top:0.2rem;">Your exact Capstone prompt is embedded inside</div></div>
                     </div>
                     <div style="background:rgba(255, 255, 255, 0.05); border-radius:8px; padding:0.9rem; display:flex; align-items:flex-start; gap:0.75rem;">
-                        <span style="font-size:1.5rem;">🌐</span>
-                        <div><div style="font-weight:600; font-size:0.875rem;">Single HTML File</div><div style="font-size:0.78rem; color:#64748B; margin-top:0.2rem;">Everything in one file — no server needed to run it</div></div>
+                        <span style="font-size: 1.5rem;">🌐</span>
+                        <div><div style="font-weight:600; font-size: 1.125rem;">Single HTML File</div><div style="font-size: 1.03rem; color:#64748B; margin-top:0.2rem;">Everything in one file — no server needed to run it</div></div>
                     </div>
                     <div style="background:rgba(255, 255, 255, 0.05); border-radius:8px; padding:0.9rem; display:flex; align-items:flex-start; gap:0.75rem;">
-                        <span style="font-size:1.5rem;">📱</span>
-                        <div><div style="font-weight:600; font-size:0.875rem;">Mobile Responsive</div><div style="font-size:0.78rem; color:#64748B; margin-top:0.2rem;">Works on phones, tablets, and computers</div></div>
+                        <span style="font-size: 1.5rem;">📱</span>
+                        <div><div style="font-weight:600; font-size: 1.125rem;">Mobile Responsive</div><div style="font-size: 1.03rem; color:#64748B; margin-top:0.2rem;">Works on phones, tablets, and computers</div></div>
                     </div>
                 </div>
             </div>
 
             ${hasPrompt ? `
             <div style="background:#0F172A; border-radius:12px; padding:1rem 1.25rem; margin-bottom:1rem;">
-                <div style="color:#38BDF8; font-size:0.75rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; margin-bottom:0.5rem;">Your System Prompt Preview</div>
-                <div style="color:#CBD5E1; font-size:0.8rem; line-height:1.6; font-family:monospace; max-height:120px; overflow-y:auto; white-space:pre-wrap;">${systemPrompt.substring(0, 400)}${systemPrompt.length > 400 ? '...' : ''}</div>
+                <div style="color:#38BDF8; font-size: 1.0rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; margin-bottom:0.5rem;">Your System Prompt Preview</div>
+                <div style="color:#CBD5E1; font-size: 1.05rem; line-height:1.6; font-family:monospace; max-height:120px; overflow-y:auto; white-space:pre-wrap;">${systemPrompt.substring(0, 400)}${systemPrompt.length > 400 ? '...' : ''}</div>
             </div>` : ''}
 
-            <div style="background:#DBEAFE; border:1px solid #93C5FD; border-radius:10px; padding:1rem 1.25rem; font-size:0.85rem; color:#1E40AF;">
+            <div style="background:#DBEAFE; border:1px solid #93C5FD; border-radius:10px; padding:1rem 1.25rem; font-size: 1.1rem; color:#1E40AF;">
                 ℹ️ <strong>Note for Sir:</strong> The app uses simulated AI responses. To connect to a real Claude or ChatGPT API, students paste their system prompt into Claude.ai Projects or use an API key — covered in future sessions.
             </div>
         `, 'Understood — Let\'s Download!')}
@@ -122,17 +122,17 @@ function renderVercelLab(container) {
             <p style="margin-bottom:1.25rem; line-height:1.7;">Click the button below to download your AI assistant as a single HTML file. This is the file you will upload to Vercel in the next step.</p>
 
             <div style="background:var(--bg-card); border:2px dashed #CBD5E1; border-radius:12px; padding:2rem; text-align:center; margin-bottom:1.5rem;">
-                <div style="font-size:3rem; margin-bottom:0.75rem;">📄</div>
-                <div style="font-weight:700; color:var(--accent); font-size:1.1rem; margin-bottom:0.25rem;">my-ai-assistant.html</div>
-                <div style="color:var(--text-muted); font-size:0.85rem; margin-bottom:1.5rem;">Single file · HTML · ~15KB · Ready to deploy</div>
+                <div style="font-size: 3.0rem; margin-bottom:0.75rem;">📄</div>
+                <div style="font-weight:700; color:var(--accent); font-size: 1.1rem; margin-bottom:0.25rem;">my-ai-assistant.html</div>
+                <div style="color:var(--text-muted); font-size: 1.1rem; margin-bottom:1.5rem;">Single file · HTML · ~15KB · Ready to deploy</div>
                 ${hasPrompt ? `
-                <button class="btn btn-accent" id="btn-download-app" style="font-size:1rem; padding:0.85rem 2.5rem; border-radius:10px; font-weight:700; box-shadow:0 4px 14px rgba(245,158,11,0.3);">
+                <button class="btn btn-accent" id="btn-download-app" style="font-size: 1.0rem; padding:0.85rem 2.5rem; border-radius:10px; font-weight:700; box-shadow:0 4px 14px rgba(245,158,11,0.3);">
                     ⬇️ Download My AI App
                 </button>` : `
-                <div style="color:#EF4444; font-size:0.9rem; font-weight:600;">⚠️ Complete Module 4 first to enable download.</div>`}
+                <div style="color:#EF4444; font-size: 1.15rem; font-weight:600;">⚠️ Complete Module 4 first to enable download.</div>`}
             </div>
 
-            <div style="background:#FEF3C7; border-radius:10px; padding:1rem 1.25rem; font-size:0.85rem; color:#92400E; margin-bottom:1rem;">
+            <div style="background:#FEF3C7; border-radius:10px; padding:1rem 1.25rem; font-size: 1.1rem; color:#92400E; margin-bottom:1rem;">
                 <strong>📁 After downloading:</strong>
                 <ul style="margin: 0.5rem 0 0 1.25rem; line-height:1.9;">
                     <li>Find the file in your <strong>Downloads</strong> folder.</li>
@@ -141,7 +141,7 @@ function renderVercelLab(container) {
                 </ul>
             </div>
 
-            <div style="background:#ECFDF5; border:1px solid #A7F3D0; border-radius:10px; padding:1rem 1.25rem; font-size:0.85rem; color:#065F46;">
+            <div style="background:#ECFDF5; border:1px solid #A7F3D0; border-radius:10px; padding:1rem 1.25rem; font-size: 1.1rem; color:#065F46;">
                 💡 <strong>Tip:</strong> Rename the file to something memorable like <code>dec-pruthvi-ai.html</code> — Vercel will use this name as part of your URL!
             </div>
         `, 'I Downloaded the File!')}
@@ -153,51 +153,51 @@ function renderVercelLab(container) {
             <div style="display:flex; flex-direction:column; gap:1rem; margin-bottom:1.5rem;">
 
                 <div style="display:flex; gap:1rem; align-items:flex-start; background:rgba(255, 255, 255, 0.05); border:1px solid #E2E8F0; border-radius:12px; padding:1.1rem 1.25rem;">
-                    <div style="background:#0A192F; color:white; border-radius:50%; width:32px; height:32px; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:0.9rem; flex-shrink:0;">1</div>
+                    <div style="background:#0A192F; color:white; border-radius:50%; width:32px; height:32px; display:flex; align-items:center; justify-content:center; font-weight:800; font-size: 1.15rem; flex-shrink:0;">1</div>
                     <div>
                         <div style="font-weight:700; color:var(--accent); margin-bottom:0.25rem;">Open Vercel.com</div>
-                        <div style="font-size:0.85rem; color:#64748B; line-height:1.6;">Go to <a href="https://vercel.com/signup" target="_blank" style="color:#3B82F6; font-weight:600;">vercel.com/signup</a> → Sign up with <strong>GitHub</strong> or your Email. It's 100% free. No credit card needed.</div>
+                        <div style="font-size: 1.1rem; color:#64748B; line-height:1.6;">Go to <a href="https://vercel.com/signup" target="_blank" style="color:#3B82F6; font-weight:600;">vercel.com/signup</a> → Sign up with <strong>GitHub</strong> or your Email. It's 100% free. No credit card needed.</div>
                     </div>
                 </div>
 
                 <div style="display:flex; gap:1rem; align-items:flex-start; background:rgba(255, 255, 255, 0.05); border:1px solid #E2E8F0; border-radius:12px; padding:1.1rem 1.25rem;">
-                    <div style="background:#0A192F; color:white; border-radius:50%; width:32px; height:32px; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:0.9rem; flex-shrink:0;">2</div>
+                    <div style="background:#0A192F; color:white; border-radius:50%; width:32px; height:32px; display:flex; align-items:center; justify-content:center; font-weight:800; font-size: 1.15rem; flex-shrink:0;">2</div>
                     <div>
                         <div style="font-weight:700; color:var(--accent); margin-bottom:0.25rem;">Click "Add New Project"</div>
-                        <div style="font-size:0.85rem; color:#64748B; line-height:1.6;">On your Vercel dashboard, find the <strong>"Add New"</strong> or <strong>"Deploy"</strong> button. Look for an option that says <strong>"Browse" or drag a file</strong> (not GitHub import).</div>
+                        <div style="font-size: 1.1rem; color:#64748B; line-height:1.6;">On your Vercel dashboard, find the <strong>"Add New"</strong> or <strong>"Deploy"</strong> button. Look for an option that says <strong>"Browse" or drag a file</strong> (not GitHub import).</div>
                     </div>
                 </div>
 
                 <div style="display:flex; gap:1rem; align-items:flex-start; background:#FFFBEB; border:1px solid #F59E0B; border-radius:12px; padding:1.1rem 1.25rem;">
-                    <div style="background:#F59E0B; color:white; border-radius:50%; width:32px; height:32px; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:0.9rem; flex-shrink:0;">3</div>
+                    <div style="background:#F59E0B; color:white; border-radius:50%; width:32px; height:32px; display:flex; align-items:center; justify-content:center; font-weight:800; font-size: 1.15rem; flex-shrink:0;">3</div>
                     <div>
                         <div style="font-weight:700; color:#92400E; margin-bottom:0.25rem;">⭐ Drag & Drop Your File</div>
-                        <div style="font-size:0.85rem; color:#92400E; line-height:1.6;">Drag your <strong>my-ai-assistant.html</strong> file from Downloads and <strong>drop it into the Vercel upload zone</strong>. Vercel detects it automatically!</div>
+                        <div style="font-size: 1.1rem; color:#92400E; line-height:1.6;">Drag your <strong>my-ai-assistant.html</strong> file from Downloads and <strong>drop it into the Vercel upload zone</strong>. Vercel detects it automatically!</div>
                     </div>
                 </div>
 
                 <div style="display:flex; gap:1rem; align-items:flex-start; background:rgba(255, 255, 255, 0.05); border:1px solid #E2E8F0; border-radius:12px; padding:1.1rem 1.25rem;">
-                    <div style="background:#0A192F; color:white; border-radius:50%; width:32px; height:32px; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:0.9rem; flex-shrink:0;">4</div>
+                    <div style="background:#0A192F; color:white; border-radius:50%; width:32px; height:32px; display:flex; align-items:center; justify-content:center; font-weight:800; font-size: 1.15rem; flex-shrink:0;">4</div>
                     <div>
                         <div style="font-weight:700; color:var(--accent); margin-bottom:0.25rem;">Click "Deploy" and Wait 30 Seconds</div>
-                        <div style="font-size:0.85rem; color:#64748B; line-height:1.6;">Vercel builds your app in the cloud. You'll see a progress bar. In about 30 seconds, you'll see a <strong>🎉 success screen with confetti</strong>!</div>
+                        <div style="font-size: 1.1rem; color:#64748B; line-height:1.6;">Vercel builds your app in the cloud. You'll see a progress bar. In about 30 seconds, you'll see a <strong>🎉 success screen with confetti</strong>!</div>
                     </div>
                 </div>
 
                 <div style="display:flex; gap:1rem; align-items:flex-start; background:#ECFDF5; border:1px solid #A7F3D0; border-radius:12px; padding:1.1rem 1.25rem;">
-                    <div style="background:#10B981; color:white; border-radius:50%; width:32px; height:32px; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:0.9rem; flex-shrink:0;">5</div>
+                    <div style="background:#10B981; color:white; border-radius:50%; width:32px; height:32px; display:flex; align-items:center; justify-content:center; font-weight:800; font-size: 1.15rem; flex-shrink:0;">5</div>
                     <div>
                         <div style="font-weight:700; color:#065F46; margin-bottom:0.25rem;">Copy Your Live URL 🎉</div>
-                        <div style="font-size:0.85rem; color:#065F46; line-height:1.6;">Vercel gives you a live URL like <code style="background:#D1FAE5; padding:0.1rem 0.4rem; border-radius:4px;">dec-pruthvi-ai.vercel.app</code>. Click it to confirm your app is live — then copy the URL and enter it in Step 5!</div>
+                        <div style="font-size: 1.1rem; color:#065F46; line-height:1.6;">Vercel gives you a live URL like <code style="background:#D1FAE5; padding:0.1rem 0.4rem; border-radius:4px;">dec-pruthvi-ai.vercel.app</code>. Click it to confirm your app is live — then copy the URL and enter it in Step 5!</div>
                     </div>
                 </div>
             </div>
 
             <div style="background:#0F172A; border-radius:12px; padding:1.25rem; display:flex; align-items:center; gap:1rem; flex-wrap:wrap;">
-                <span style="font-size:2rem;">📹</span>
+                <span style="font-size: 2.0rem;">📹</span>
                 <div>
-                    <div style="color:white; font-weight:700; font-size:0.9rem;">Need help? Watch the 2-min demo</div>
-                    <a href="https://vercel.com/docs/deployments/overview" target="_blank" style="color:#38BDF8; font-size:0.82rem; text-decoration:none;">→ vercel.com/docs/deployments</a>
+                    <div style="color:white; font-weight:700; font-size: 1.15rem;">Need help? Watch the 2-min demo</div>
+                    <a href="https://vercel.com/docs/deployments/overview" target="_blank" style="color:#38BDF8; font-size: 1.07rem; text-decoration:none;">→ vercel.com/docs/deployments</a>
                 </div>
             </div>
         `, 'My App is Live on Vercel! 🚀')}
@@ -207,26 +207,26 @@ function renderVercelLab(container) {
             <p style="margin-bottom:1.25rem; line-height:1.7;">Congratulations! Paste your live Vercel URL below and share it with Sir and your colleagues. This is your proof that you built and deployed a real AI web application!</p>
 
             <div style="background:rgba(255, 255, 255, 0.05); border:2px solid #E2E8F0; border-radius:12px; padding:1.25rem; margin-bottom:1.25rem;">
-                <label style="font-weight:700; font-size:0.9rem; color:var(--accent); display:block; margin-bottom:0.75rem;">🔗 Paste Your Live Vercel URL:</label>
+                <label style="font-weight:700; font-size: 1.15rem; color:var(--accent); display:block; margin-bottom:0.75rem;">🔗 Paste Your Live Vercel URL:</label>
                 <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
                     <input type="url" id="vl-live-url" class="form-control" placeholder="https://your-app-name.vercel.app" value="${savedLiveUrl}" style="flex:1; min-width:200px;">
                     <button class="btn btn-primary" id="btn-save-url" style="white-space:nowrap;">Save & Open →</button>
                 </div>
                 ${savedLiveUrl ? `
-                <div style="margin-top:0.75rem; padding:0.6rem 1rem; background:#ECFDF5; border-radius:8px; display:flex; align-items:center; gap:0.5rem; font-size:0.85rem; color:#065F46;">
+                <div style="margin-top:0.75rem; padding:0.6rem 1rem; background:#ECFDF5; border-radius:8px; display:flex; align-items:center; gap:0.5rem; font-size: 1.1rem; color:#065F46;">
                     ✅ <strong>Your app is live at:</strong>
                     <a href="${savedLiveUrl}" target="_blank" style="color:#059669; font-weight:700; word-break:break-all;">${savedLiveUrl}</a>
                 </div>` : ''}
             </div>
 
             <div style="background:linear-gradient(135deg,#0A192F,#112240); border-radius:14px; padding:2rem; text-align:center; margin-bottom:1.25rem;">
-                <div style="font-size:3rem; margin-bottom:0.5rem;">🏆</div>
-                <div style="color:#F59E0B; font-size:0.72rem; font-weight:800; letter-spacing:0.12em; text-transform:uppercase; margin-bottom:0.5rem;">Achievement Unlocked</div>
-                <div style="color:white; font-size:1.4rem; font-weight:800; font-family:var(--font-heading); margin-bottom:0.5rem;">AI App Developer</div>
-                <div style="color:rgba(255,255,255,0.65); font-size:0.85rem; max-width:380px; margin:0 auto;">You have designed, built, and deployed a custom AI assistant to the cloud. You are now officially a developer!</div>
+                <div style="font-size: 3.0rem; margin-bottom:0.5rem;">🏆</div>
+                <div style="color:#F59E0B; font-size: 0.97rem; font-weight:800; letter-spacing:0.12em; text-transform:uppercase; margin-bottom:0.5rem;">Achievement Unlocked</div>
+                <div style="color:white; font-size: 1.4rem; font-weight:800; font-family:var(--font-heading); margin-bottom:0.5rem;">AI App Developer</div>
+                <div style="color:rgba(255,255,255,0.65); font-size: 1.1rem; max-width:380px; margin:0 auto;">You have designed, built, and deployed a custom AI assistant to the cloud. You are now officially a developer!</div>
             </div>
 
-            <div style="background:#FEF3C7; border:1px solid rgba(245,158,11,0.35); border-radius:10px; padding:1rem 1.25rem; font-size:0.85rem; color:#92400E;">
+            <div style="background:#FEF3C7; border:1px solid rgba(245,158,11,0.35); border-radius:10px; padding:1rem 1.25rem; font-size: 1.1rem; color:#92400E;">
                 <strong>📣 Share it!</strong>
                 <ul style="margin: 0.5rem 0 0 1.25rem; line-height:1.9;">
                     <li>Send the link to <strong>Vipul Sir</strong> on WhatsApp to complete the session.</li>
@@ -239,10 +239,10 @@ function renderVercelLab(container) {
         <!-- COMPLETION BANNER (shows when all done) -->
         <div id="vl-completion-banner" style="display:${Object.keys(stepsCompleted).length === 5 ? 'block' : 'none'}; margin-top:1.5rem;">
             <div style="background:linear-gradient(135deg,#064e3b,#065f46); border-radius:16px; padding:2rem; text-align:center;">
-                <div style="font-size:3rem; margin-bottom:0.75rem;">🎊</div>
-                <h3 style="color:white; margin-bottom:0.5rem; font-size:1.5rem;">All Steps Complete — Mission Accomplished!</h3>
-                <p style="color:rgba(255,255,255,0.75); font-size:0.9rem; max-width:480px; margin:0 auto 1.5rem;">You've gone from learning AI prompting to deploying a real web application. That's the full journey — from trainee to developer!</p>
-                ${savedLiveUrl ? `<a href="${savedLiveUrl}" target="_blank" class="btn" style="background:#F59E0B; color:#0A192F; font-weight:800; padding:0.8rem 2rem; border-radius:10px; font-size:1rem; text-decoration:none;">Open My Live App 🚀</a>` : ''}
+                <div style="font-size: 3.0rem; margin-bottom:0.75rem;">🎊</div>
+                <h3 style="color:white; margin-bottom:0.5rem; font-size: 1.5rem;">All Steps Complete — Mission Accomplished!</h3>
+                <p style="color:rgba(255,255,255,0.75); font-size: 1.15rem; max-width:480px; margin:0 auto 1.5rem;">You've gone from learning AI prompting to deploying a real web application. That's the full journey — from trainee to developer!</p>
+                ${savedLiveUrl ? `<a href="${savedLiveUrl}" target="_blank" class="btn" style="background:#F59E0B; color:#0A192F; font-weight:800; padding:0.8rem 2rem; border-radius:10px; font-size: 1.0rem; text-decoration:none;">Open My Live App 🚀</a>` : ''}
             </div>
         </div>
     `;
@@ -303,14 +303,14 @@ function makeStep(num, icon, title, subtitle, isCompleted, bodyHtml, completeBtn
                 ${isCompleted ? '✓' : num}
             </div>
             <div style="flex:1;">
-                <div style="font-weight:700; font-size:0.95rem; color:${isCompleted ? '#065F46' : 'var(--primary)'};">
+                <div style="font-weight:700; font-size: 1.2rem; color:${isCompleted ? '#065F46' : 'var(--primary)'};">
                     ${icon} Step ${num}: ${title}
                 </div>
-                <div style="font-size:0.78rem; color:${isCompleted ? '#059669' : 'var(--text-muted)'}; margin-top:0.15rem;">
+                <div style="font-size: 1.03rem; color:${isCompleted ? '#059669' : 'var(--text-muted)'}; margin-top:0.15rem;">
                     ${isCompleted ? '✅ Completed' : subtitle}
                 </div>
             </div>
-            <div class="vl-chevron" style="font-size:1.2rem; color:var(--text-muted); transition:transform 0.2s; transform:rotate(${isOpen ? '0' : '-90'}deg);">⌄</div>
+            <div class="vl-chevron" style="font-size: 1.2rem; color:var(--text-muted); transition:transform 0.2s; transform:rotate(${isOpen ? '0' : '-90'}deg);">⌄</div>
         </div>
 
         <!-- Step Body -->
@@ -323,7 +323,7 @@ function makeStep(num, icon, title, subtitle, isCompleted, bodyHtml, completeBtn
                     ✓ ${completeBtnLabel}
                 </button>
             </div>` : `
-            <div style="margin-top:1rem; padding:0.75rem 1rem; background:#ECFDF5; border-radius:8px; color:#065F46; font-size:0.85rem; font-weight:600;">
+            <div style="margin-top:1rem; padding:0.75rem 1rem; background:#ECFDF5; border-radius:8px; color:#065F46; font-size: 1.1rem; font-weight:600;">
                 ✅ Step ${num} completed!
             </div>`}
         </div>
@@ -378,14 +378,14 @@ function generateAndDownloadApp(systemPrompt) {
             font-size: 1.3rem;
         }
         .header h1 { font-family: 'Outfit', sans-serif; font-size: 1.1rem; color: white; font-weight: 700; }
-        .header p { font-size: 0.75rem; color: rgba(255,255,255,0.55); margin-top: 0.1rem; }
-        .badge { background: rgba(245,158,11,0.2); color: var(--accent); padding: 0.3rem 0.85rem; border-radius: 99px; font-size: 0.72rem; font-weight: 700; border: 1px solid rgba(245,158,11,0.3); letter-spacing: 0.05em; }
+        .header p { font-size: 1.0rem; color: rgba(255,255,255,0.55); margin-top: 0.1rem; }
+        .badge { background: rgba(245,158,11,0.2); color: var(--accent); padding: 0.3rem 0.85rem; border-radius: 99px; font-size: 0.97rem; font-weight: 700; border: 1px solid rgba(245,158,11,0.3); letter-spacing: 0.05em; }
 
         /* Tabs */
         .tabs { display: flex; background: #0d1f35; gap: 1px; }
         .tab-btn {
             flex: 1; padding: 0.85rem; border: none; cursor: pointer;
-            background: #0d1f35; color: rgba(255,255,255,0.45); font-size: 0.875rem; font-weight: 500;
+            background: #0d1f35; color: rgba(255,255,255,0.45); font-size: 1.125rem; font-weight: 500;
             border-bottom: 3px solid transparent; transition: all 0.2s; font-family: 'Inter', sans-serif;
         }
         .tab-btn:hover { color: rgba(255,255,255,0.8); }
@@ -401,12 +401,12 @@ function generateAndDownloadApp(systemPrompt) {
         }
         .message {
             max-width: 82%; padding: 0.85rem 1.1rem;
-            border-radius: 14px; line-height: 1.6; font-size: 0.88rem;
+            border-radius: 14px; line-height: 1.6; font-size: 1.13rem;
             animation: fadeUp 0.2s ease;
         }
         @keyframes fadeUp { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:none; } }
         .message.bot { background:var(--bg-card); color: #334155; align-self: flex-start; border-bottom-left-radius: 4px; }
-        .message.bot .bot-label { font-size: 0.68rem; font-weight: 700; color: var(--accent); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 0.35rem; display: block; }
+        .message.bot .bot-label { font-size: 0.93rem; font-weight: 700; color: var(--accent); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 0.35rem; display: block; }
         .message.user { background: linear-gradient(135deg, #0A192F, #1a3a6b); color: white; align-self: flex-end; border-bottom-right-radius: 4px; }
         .typing-indicator { display: flex; align-items: center; gap: 4px; padding: 0.75rem 1rem; background:var(--bg-card); border-radius: 14px; border-bottom-left-radius: 4px; align-self: flex-start; }
         .typing-indicator span { width: 7px; height: 7px; background: #94A3B8; border-radius: 50%; animation: bounce 1.4s infinite both; }
@@ -420,7 +420,7 @@ function generateAndDownloadApp(systemPrompt) {
         }
         input[type=text] {
             flex-grow: 1; padding: 0.75rem 1rem; border: 2px solid #E2E8F0;
-            border-radius: 10px; outline: none; font-size: 0.9rem; font-family: 'Inter', sans-serif;
+            border-radius: 10px; outline: none; font-size: 1.15rem; font-family: 'Inter', sans-serif;
             transition: border-color 0.2s;
         }
         input[type=text]:focus { border-color: var(--accent); }
@@ -428,7 +428,7 @@ function generateAndDownloadApp(systemPrompt) {
             background: linear-gradient(135deg, var(--accent), #d97706);
             color: white; border: none;
             padding: 0.75rem 1.4rem; border-radius: 10px;
-            cursor: pointer; font-weight: 700; font-size: 0.9rem;
+            cursor: pointer; font-weight: 700; font-size: 1.15rem;
             transition: all 0.2s; font-family: 'Inter', sans-serif;
         }
         .send-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(245,158,11,0.35); }
@@ -441,11 +441,11 @@ function generateAndDownloadApp(systemPrompt) {
         .info-box {
             background: #ECFDF5; border: 1px solid #A7F3D0;
             border-radius: 10px; padding: 0.9rem 1.1rem; margin-bottom: 1rem;
-            font-size: 0.85rem; color: #065F46; display: flex; align-items: flex-start; gap: 0.5rem;
+            font-size: 1.1rem; color: #065F46; display: flex; align-items: flex-start; gap: 0.5rem;
         }
         .prompt-box {
             background: #0F172A; color: #38BDF8;
-            font-family: 'Courier New', monospace; font-size: 0.8rem;
+            font-family: 'Courier New', monospace; font-size: 1.05rem;
             padding: 1.5rem; border-radius: 10px; white-space: pre-wrap;
             line-height: 1.7; max-height: 50vh; overflow-y: auto;
             border: 1px solid #1E3A5F;
@@ -453,7 +453,7 @@ function generateAndDownloadApp(systemPrompt) {
         .copy-btn {
             background: #1E293B; color: white; border: none;
             padding: 0.5rem 1.1rem; border-radius: 8px; cursor: pointer;
-            font-size: 0.8rem; font-family: 'Inter', sans-serif; font-weight: 600;
+            font-size: 1.05rem; font-family: 'Inter', sans-serif; font-weight: 600;
             transition: background 0.2s;
         }
         .copy-btn:hover { background: #334155; }
@@ -462,13 +462,13 @@ function generateAndDownloadApp(systemPrompt) {
         .suggestions { padding: 0.75rem 1.25rem; background:var(--bg-card); border-top: 1px solid #E2E8F0; display: flex; gap: 0.5rem; flex-wrap: wrap; }
         .suggest-btn {
             background:rgba(255, 255, 255, 0.05); border: 1px solid #CBD5E1; border-radius: 20px;
-            padding: 0.4rem 0.9rem; font-size: 0.78rem; color: #475569;
+            padding: 0.4rem 0.9rem; font-size: 1.03rem; color: #475569;
             cursor: pointer; transition: all 0.15s; font-family: 'Inter', sans-serif;
         }
         .suggest-btn:hover { background: var(--navy); color: white; border-color: var(--navy); }
 
         /* Footer */
-        .footer { text-align: center; color: rgba(255,255,255,0.3); font-size: 0.72rem; margin-top: 1rem; }
+        .footer { text-align: center; color: rgba(255,255,255,0.3); font-size: 0.97rem; margin-top: 1rem; }
         .footer a { color: rgba(255,255,255,0.5); text-decoration: none; }
         .footer a:hover { color: var(--accent); }
     </style>
@@ -585,7 +585,7 @@ function generateAndDownloadApp(systemPrompt) {
             removeTyping();
             const reply = responses[msgCount % responses.length];
             msgCount++;
-            addMessage(reply + '<br><br><em style="font-size:0.78rem; color:#94A3B8;">💡 Connect a real Claude API key to get live AI responses!</em>', false);
+            addMessage(reply + '<br><br><em style="font-size: 1.03rem; color:#94A3B8;">💡 Connect a real Claude API key to get live AI responses!</em>', false);
             btn.disabled = false;
             input.focus();
         }, 1000 + Math.random() * 800);

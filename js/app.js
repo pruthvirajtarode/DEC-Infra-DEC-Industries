@@ -202,12 +202,12 @@ function renderDashboard(container) {
                     <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; background: rgba(255,255,255,0.05); padding: 0.75rem 1rem; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); width: fit-content; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
                         <div id="mobile-qr-code" title="Click to zoom in/out" onclick="const isZoomed = this.classList.toggle('zoomed-dashboard-qr'); document.getElementById('dashboard-left-col').style.zIndex = isZoomed ? '100000' : '2';" style="background: white; padding: 4px; border-radius: 6px; width: 72px; height: 72px; display: flex; align-items: center; justify-content: center; cursor: zoom-in; transition: transform 0.3s ease;"></div>
                         <div>
-                            <div style="font-size: 0.75rem; color: #00d4ff; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 0.25rem;">📱 Mobile Access</div>
-                            <div style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.3;">Scan this QR to open the<br>project on your phone. <span style="font-size:0.7rem; color:#F59E0B; display:block; margin-top:3px; font-weight:600;">🔍 Click QR to Zoom</span></div>
+                            <div style="font-size: 1.0rem; color: #00d4ff; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 0.25rem;">📱 Mobile Access</div>
+                            <div style="font-size: 1.1rem; color: var(--text-muted); line-height: 1.3;">Scan this QR to open the<br>project on your phone. <span style="font-size: 0.95rem; color:#F59E0B; display:block; margin-top:3px; font-weight:600;">🔍 Click QR to Zoom</span></div>
                         </div>
                     </div>
 
-                    <h1 style="color: var(--text-main); font-size: 3rem; margin-bottom: 1rem; line-height: 1.2;">DEC AI <span style="color: var(--accent);">FOUNDATIONS</span></h1>
+                    <h1 style="color: var(--text-main); font-size: 3.0rem; margin-bottom: 1rem; line-height: 1.2;">DEC AI <span style="color: var(--accent);">FOUNDATIONS</span></h1>
                     <h3 style="color: var(--text-muted); font-family: var(--font-body); font-weight: 500; font-size: 1.25rem;">"From Everyday AI to a Working Department AI Assistant"</h3>
                     <p style="margin-top: 1.5rem; max-width: 600px; opacity: 0.9; font-size: 1.1rem; color: var(--text-muted);">
                         A hands-on AI learning environment designed around realistic construction, infrastructure, manufacturing, procurement, finance, project, HR, and operations workflows.
@@ -234,20 +234,20 @@ function renderDashboard(container) {
                         </div>
                         <!-- Floating data cards -->
                         <div style="position: absolute; top: 12px; left: -10px; background: rgba(20,20,20,0.95); border: 1px solid rgba(255,222,89,0.5); border-radius: 14px; padding: 10px 14px; animation: heroFloat3D 3s ease-in-out 0.3s infinite; box-shadow: 0 8px 24px rgba(0,0,0,0.7), 0 0 16px rgba(255,222,89,0.15); backdrop-filter: blur(8px); z-index: 10;">
-                            <div style="font-size: 9px; color: #64748B; text-transform: uppercase; letter-spacing: 1.2px; margin-bottom: 4px;">AI Tasks Today</div>
+                            <div style="font-size: 13px; color: #64748B; text-transform: uppercase; letter-spacing: 1.2px; margin-bottom: 4px;">AI Tasks Today</div>
                             <div style="font-size: 1.6rem; font-weight: 900; color: #FFDE59; line-height: 1;">142 ✓</div>
                         </div>
                         <div style="position: absolute; top: 12px; right: -10px; background: rgba(20,20,20,0.95); border: 1px solid rgba(16,185,129,0.5); border-radius: 14px; padding: 10px 14px; animation: heroFloat3D 3s ease-in-out 0.7s infinite; box-shadow: 0 8px 24px rgba(0,0,0,0.7), 0 0 16px rgba(16,185,129,0.2); backdrop-filter: blur(8px); z-index: 10;">
-                            <div style="font-size: 9px; color: #64748B; text-transform: uppercase; letter-spacing: 1.2px; margin-bottom: 4px;">Time Saved</div>
+                            <div style="font-size: 13px; color: #64748B; text-transform: uppercase; letter-spacing: 1.2px; margin-bottom: 4px;">Time Saved</div>
                             <div style="font-size: 1.6rem; font-weight: 900; color: #10B981; line-height: 1;">18h/mo</div>
                         </div>
                         <div style="position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%); background: rgba(20,20,20,0.95); border: 1px solid rgba(0,212,255,0.5); border-radius: 14px; padding: 12px 20px; animation: heroFloat3D 3s ease-in-out 1.1s infinite; box-shadow: 0 8px 24px rgba(0,0,0,0.7), 0 0 16px rgba(0,212,255,0.15); backdrop-filter: blur(8px); z-index: 10; white-space: nowrap;">
-                            <div style="font-size: 9px; color: #64748B; text-transform: uppercase; letter-spacing: 1.2px; margin-bottom: 6px;">Productivity Boost</div>
+                            <div style="font-size: 13px; color: #64748B; text-transform: uppercase; letter-spacing: 1.2px; margin-bottom: 6px;">Productivity Boost</div>
                             <div style="display: flex; align-items: center; gap: 10px;">
                                 <div style="height: 6px; width: 130px; background: rgba(255,255,255,0.08); border-radius: 3px; overflow: hidden;">
                                     <div style="height: 100%; width: 78%; background: linear-gradient(90deg, #00d4ff, #7c3aed); border-radius: 3px; animation: heroBarGrow 2.5s ease-out;"></div>
                                 </div>
-                                <span style="font-size: 0.9rem; font-weight: 900; color: #00d4ff;">78%</span>
+                                <span style="font-size: 1.15rem; font-weight: 900; color: #00d4ff;">78%</span>
                             </div>
                         </div>
                         <!-- Sparkle particles -->
@@ -268,10 +268,10 @@ function renderDashboard(container) {
         </div>
 
         <div class="flex gap-4 mb-8">
-            <div class="badge badge-info" style="font-size: 0.875rem; padding: 0.5rem 1rem;">4 MODULES</div>
-            <div class="badge badge-info" style="font-size: 0.875rem; padding: 0.5rem 1rem;">3 SESSIONS</div>
-            <div class="badge badge-info" style="font-size: 0.875rem; padding: 0.5rem 1rem;">6 HOURS</div>
-            <div class="badge badge-info" style="font-size: 0.875rem; padding: 0.5rem 1rem;">1 CAPSTONE</div>
+            <div class="badge badge-info" style="font-size: 1.125rem; padding: 0.5rem 1rem;">4 MODULES</div>
+            <div class="badge badge-info" style="font-size: 1.125rem; padding: 0.5rem 1rem;">3 SESSIONS</div>
+            <div class="badge badge-info" style="font-size: 1.125rem; padding: 0.5rem 1rem;">6 HOURS</div>
+            <div class="badge badge-info" style="font-size: 1.125rem; padding: 0.5rem 1rem;">1 CAPSTONE</div>
         </div>
 
         <!-- AI Productivity Survey Tracker Card -->
@@ -305,7 +305,7 @@ function renderDashboard(container) {
             <div class="card-header"><h3 class="card-title">My Achievements</h3></div>
             <div class="card-body">
                 ${State.get('badges') && State.get('badges').length > 0 ? 
-                    '<div class="flex gap-4 flex-wrap">' + State.get('badges').map(b => `<div class="badge badge-warning" style="font-size: 1rem; padding: 0.75rem 1.5rem; border: 1px solid var(--accent); background:rgba(255, 222, 89, 0.1);">🏆 ${b}</div>`).join('') + '</div>'
+                    '<div class="flex gap-4 flex-wrap">' + State.get('badges').map(b => `<div class="badge badge-warning" style="font-size: 1.0rem; padding: 0.75rem 1.5rem; border: 1px solid var(--accent); background:rgba(255, 222, 89, 0.1);">🏆 ${b}</div>`).join('') + '</div>'
                     : '<p class="text-muted">Complete modules to unlock your AI badges.</p>'
                 }
             </div>
@@ -462,7 +462,7 @@ function renderModule1(container) {
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
                     Module 1 Agenda
                 </h3>
-                <p style="opacity: 0.9; margin: 0; font-size: 1rem;">Before we dive into the frameworks, let's explore what we will cover and how different roles leverage AI today.</p>
+                <p style="opacity: 0.9; margin: 0; font-size: 1.0rem;">Before we dive into the frameworks, let's explore what we will cover and how different roles leverage AI today.</p>
             </div>
             <div style="padding: 2rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; background: var(--bg-main);">
                 <div style="display: flex; gap: 1rem; align-items: flex-start; background: var(--bg-card); padding: 1.5rem; border-radius: 12px; border: 1px solid var(--border-color); box-shadow: var(--shadow-sm);">
@@ -514,15 +514,15 @@ function renderModule1(container) {
                         </div>
                         <div style="padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem;">
                             <div style="background: var(--bg-card); padding: 1rem; border-radius: 8px; border-left: 3px solid #FFDE59; box-shadow: 0 1px 3px rgba(0,0,0,0.5);">
-                                <strong style="display: block; font-size: 0.875rem; color: var(--text-main); margin-bottom: 0.25rem;">ChatGPT / Claude</strong>
+                                <strong style="display: block; font-size: 1.125rem; color: var(--text-main); margin-bottom: 0.25rem;">ChatGPT / Claude</strong>
                                 <span class="text-xs text-muted">Draft proposals, summarize minutes, create communication templates</span>
                             </div>
                             <div style="background: var(--bg-card); padding: 1rem; border-radius: 8px; border-left: 3px solid #10b981; box-shadow: 0 1px 3px rgba(0,0,0,0.5);">
-                                <strong style="display: block; font-size: 0.875rem; color: var(--text-main); margin-bottom: 0.25rem;">Copilot (Excel)</strong>
+                                <strong style="display: block; font-size: 1.125rem; color: var(--text-main); margin-bottom: 0.25rem;">Copilot (Excel)</strong>
                                 <span class="text-xs text-muted">Auto-generate dashboards, analyze timeline & budget variances</span>
                             </div>
                             <div style="background: var(--bg-card); padding: 1rem; border-radius: 8px; border-left: 3px solid #f59e0b; box-shadow: 0 1px 3px rgba(0,0,0,0.5);">
-                                <strong style="display: block; font-size: 0.875rem; color: var(--text-main); margin-bottom: 0.25rem;">Google Gemini</strong>
+                                <strong style="display: block; font-size: 1.125rem; color: var(--text-main); margin-bottom: 0.25rem;">Google Gemini</strong>
                                 <span class="text-xs text-muted">Analyze contracts, extract milestones, organize project info</span>
                             </div>
                         </div>
@@ -535,11 +535,11 @@ function renderModule1(container) {
                         </div>
                         <div style="padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem;">
                             <div style="background: var(--bg-card); padding: 1rem; border-radius: 8px; border-left: 3px solid #FFDE59; box-shadow: 0 1px 3px rgba(0,0,0,0.5);">
-                                <strong style="display: block; font-size: 0.875rem; color: var(--text-main); margin-bottom: 0.25rem;">ChatGPT Vision (Mobile)</strong>
+                                <strong style="display: block; font-size: 1.125rem; color: var(--text-main); margin-bottom: 0.25rem;">ChatGPT Vision (Mobile)</strong>
                                 <span class="text-xs text-muted">Assess site conditions, document progress visually</span>
                             </div>
                             <div style="background: var(--bg-card); padding: 1rem; border-radius: 8px; border-left: 3px solid #10b981; box-shadow: 0 1px 3px rgba(0,0,0,0.5);">
-                                <strong style="display: block; font-size: 0.875rem; color: var(--text-main); margin-bottom: 0.25rem;">Google Sheets + AI</strong>
+                                <strong style="display: block; font-size: 1.125rem; color: var(--text-main); margin-bottom: 0.25rem;">Google Sheets + AI</strong>
                                 <span class="text-xs text-muted">Auto-populate daily reports, track labor & material usage</span>
                             </div>
                         </div>
@@ -552,11 +552,11 @@ function renderModule1(container) {
                         </div>
                         <div style="padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem;">
                             <div style="background: var(--bg-card); padding: 1rem; border-radius: 8px; border-left: 3px solid #FFDE59; box-shadow: 0 1px 3px rgba(0,0,0,0.5);">
-                                <strong style="display: block; font-size: 0.875rem; color: var(--text-main); margin-bottom: 0.25rem;">Engineering Mode Prompting</strong>
+                                <strong style="display: block; font-size: 1.125rem; color: var(--text-main); margin-bottom: 0.25rem;">Engineering Mode Prompting</strong>
                                 <span class="text-xs text-muted">Verify specs, research standards, generate documentation</span>
                             </div>
                             <div style="background: var(--bg-card); padding: 1rem; border-radius: 8px; border-left: 3px solid #ec4899; box-shadow: 0 1px 3px rgba(0,0,0,0.5);">
-                                <strong style="display: block; font-size: 0.875rem; color: var(--text-main); margin-bottom: 0.25rem;">Architecture Copilot</strong>
+                                <strong style="display: block; font-size: 1.125rem; color: var(--text-main); margin-bottom: 0.25rem;">Architecture Copilot</strong>
                                 <span class="text-xs text-muted">Suggest design improvements, check design against codes</span>
                             </div>
                         </div>
@@ -574,11 +574,11 @@ function renderModule1(container) {
                         </div>
                         <div style="padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem;">
                             <div style="background: var(--bg-card); padding: 1rem; border-radius: 8px; border-left: 3px solid #FFDE59; box-shadow: 0 1px 3px rgba(0,0,0,0.5);">
-                                <strong style="display: block; font-size: 0.875rem; color: var(--text-main); margin-bottom: 0.25rem;">ChatGPT Vision</strong>
+                                <strong style="display: block; font-size: 1.125rem; color: var(--text-main); margin-bottom: 0.25rem;">ChatGPT Vision</strong>
                                 <span class="text-xs text-muted">Analyze defects from site photos, classify severity</span>
                             </div>
                             <div style="background: var(--bg-card); padding: 1rem; border-radius: 8px; border-left: 3px solid #f59e0b; box-shadow: 0 1px 3px rgba(0,0,0,0.5);">
-                                <strong style="display: block; font-size: 0.875rem; color: var(--text-main); margin-bottom: 0.25rem;">Power BI + AI</strong>
+                                <strong style="display: block; font-size: 1.125rem; color: var(--text-main); margin-bottom: 0.25rem;">Power BI + AI</strong>
                                 <span class="text-xs text-muted">Generate QC dashboards, trend analysis of defect types</span>
                             </div>
                         </div>
@@ -591,11 +591,11 @@ function renderModule1(container) {
                         </div>
                         <div style="padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem;">
                             <div style="background: var(--bg-card); padding: 1rem; border-radius: 8px; border-left: 3px solid #ef4444; box-shadow: 0 1px 3px rgba(0,0,0,0.5);">
-                                <strong style="display: block; font-size: 0.875rem; color: var(--text-main); margin-bottom: 0.25rem;">Claude</strong>
+                                <strong style="display: block; font-size: 1.125rem; color: var(--text-main); margin-bottom: 0.25rem;">Claude</strong>
                                 <span class="text-xs text-muted">Draft safety policies, generate incident reports</span>
                             </div>
                             <div style="background: var(--bg-card); padding: 1rem; border-radius: 8px; border-left: 3px solid #10b981; box-shadow: 0 1px 3px rgba(0,0,0,0.5);">
-                                <strong style="display: block; font-size: 0.875rem; color: var(--text-main); margin-bottom: 0.25rem;">Copilot for Word/Excel</strong>
+                                <strong style="display: block; font-size: 1.125rem; color: var(--text-main); margin-bottom: 0.25rem;">Copilot for Word/Excel</strong>
                                 <span class="text-xs text-muted">Auto-create safety training docs, analyze KPIs</span>
                             </div>
                         </div>
@@ -608,7 +608,7 @@ function renderModule1(container) {
                         </div>
                         <div style="padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem;">
                             <div style="background: var(--bg-card); padding: 1rem; border-radius: 8px; border-left: 3px solid #FFDE59; box-shadow: 0 1px 3px rgba(0,0,0,0.5);">
-                                <strong style="display: block; font-size: 0.875rem; color: var(--text-main); margin-bottom: 0.25rem;">Claude / GPT</strong>
+                                <strong style="display: block; font-size: 1.125rem; color: var(--text-main); margin-bottom: 0.25rem;">Claude / GPT</strong>
                                 <span class="text-xs text-muted">Audit documents, create compliance matrices</span>
                             </div>
                         </div>
@@ -626,7 +626,7 @@ function renderModule1(container) {
                         </div>
                         <div style="padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem;">
                             <div style="background: var(--bg-card); padding: 1rem; border-radius: 8px; border-left: 3px solid #FFDE59; box-shadow: 0 1px 3px rgba(0,0,0,0.5);">
-                                <strong style="display: block; font-size: 0.875rem; color: var(--text-main); margin-bottom: 0.25rem;">ChatGPT Code Interpreter</strong>
+                                <strong style="display: block; font-size: 1.125rem; color: var(--text-main); margin-bottom: 0.25rem;">ChatGPT Code Interpreter</strong>
                                 <span class="text-xs text-muted">Analyze site surveys, model logistics, calculate resources</span>
                             </div>
                         </div>
@@ -639,7 +639,7 @@ function renderModule1(container) {
                         </div>
                         <div style="padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem;">
                             <div style="background: var(--bg-card); padding: 1rem; border-radius: 8px; border-left: 3px solid #FFDE59; box-shadow: 0 1px 3px rgba(0,0,0,0.5);">
-                                <strong style="display: block; font-size: 0.875rem; color: var(--text-main); margin-bottom: 0.25rem;">GitHub Copilot</strong>
+                                <strong style="display: block; font-size: 1.125rem; color: var(--text-main); margin-bottom: 0.25rem;">GitHub Copilot</strong>
                                 <span class="text-xs text-muted">Auto-generate scripts, debug infrastructure code</span>
                             </div>
                         </div>
@@ -918,7 +918,7 @@ function renderModule1(container) {
 
       <div class="prompt-section">
         <div class="section-label">Context</div>
-        <p style="font-size: 14px; color: #9CA3AF; margin: 0;">You have scattered project updates from team members. You need a professional executive summary in 5 minutes instead of spending 1 hour compiling it.</p>
+        <p style="font-size: 18px; color: #9CA3AF; margin: 0;">You have scattered project updates from team members. You need a professional executive summary in 5 minutes instead of spending 1 hour compiling it.</p>
       </div>
 
       <div class="comparison">
@@ -958,7 +958,7 @@ Keep it under 150 words, professional tone.</div>
       </div>
 
       <div style="margin-top: 16px; background: #1C1C1C; padding: 12px; border-radius: 8px; border-left: 3px solid #FFDE59;">
-        <p style="font-size: 13px; color: #9CA3AF; margin: 0;"><strong>💡 Pro Tip:</strong> Use this prompt template: "Create a [type] for [project] including [specific sections]. Keep it [length] and use [tone]."</p>
+        <p style="font-size: 17px; color: #9CA3AF; margin: 0;"><strong>💡 Pro Tip:</strong> Use this prompt template: "Create a [type] for [project] including [specific sections]. Keep it [length] and use [tone]."</p>
       </div>
     </div>
   </div>
@@ -974,7 +974,7 @@ Keep it under 150 words, professional tone.</div>
 
       <div class="prompt-section">
         <div class="section-label">Context</div>
-        <p style="font-size: 14px; color: #9CA3AF; margin: 0;">You've taken quick notes on your phone all day. Need to turn them into a formal report that the PM and client can read.</p>
+        <p style="font-size: 18px; color: #9CA3AF; margin: 0;">You've taken quick notes on your phone all day. Need to turn them into a formal report that the PM and client can read.</p>
       </div>
 
       <div class="comparison">
@@ -1011,7 +1011,7 @@ Include: Date | Weather | Workforce | Major Activities | % of Planned Work Compl
       </div>
 
       <div style="margin-top: 16px; background: #1C1C1C; padding: 12px; border-radius: 8px; border-left: 3px solid #FFDE59;">
-        <p style="font-size: 13px; color: #9CA3AF; margin: 0;"><strong>💡 Pro Tip:</strong> Voice-record your notes on phone, transcribe with Whisper/Google Docs, then paste to AI. Saves 30 mins daily!</p>
+        <p style="font-size: 17px; color: #9CA3AF; margin: 0;"><strong>💡 Pro Tip:</strong> Voice-record your notes on phone, transcribe with Whisper/Google Docs, then paste to AI. Saves 30 mins daily!</p>
       </div>
     </div>
   </div>
@@ -1027,7 +1027,7 @@ Include: Date | Weather | Workforce | Major Activities | % of Planned Work Compl
 
       <div class="prompt-section">
         <div class="section-label">Context</div>
-        <p style="font-size: 14px; color: #9CA3AF; margin: 0;">You have OSHA/Indian labor code requirements but need to turn them into an actionable site-specific procedure for DEC Infra teams.</p>
+        <p style="font-size: 18px; color: #9CA3AF; margin: 0;">You have OSHA/Indian labor code requirements but need to turn them into an actionable site-specific procedure for DEC Infra teams.</p>
       </div>
 
       <div class="comparison">
@@ -1071,7 +1071,7 @@ Comply with Indian Building Code + OSHA guidelines. Make it 1 page, printable.</
       </div>
 
       <div style="margin-top: 16px; background: #1C1C1C; padding: 12px; border-radius: 8px; border-left: 3px solid #FFDE59;">
-        <p style="font-size: 13px; color: #9CA3AF; margin: 0;"><strong>💡 Pro Tip:</strong> Ask AI to "summarize in 3 sentences" at the end so busy PMs get the gist instantly.</p>
+        <p style="font-size: 17px; color: #9CA3AF; margin: 0;"><strong>💡 Pro Tip:</strong> Ask AI to "summarize in 3 sentences" at the end so busy PMs get the gist instantly.</p>
       </div>
     </div>
   </div>
@@ -1087,7 +1087,7 @@ Comply with Indian Building Code + OSHA guidelines. Make it 1 page, printable.</
 
       <div class="prompt-section">
         <div class="section-label">Context</div>
-        <p style="font-size: 14px; color: #9CA3AF; margin: 0;">Need to send a vendor a detailed RFQ (Request for Quote) but don't want to spend time on perfect wording.</p>
+        <p style="font-size: 18px; color: #9CA3AF; margin: 0;">Need to send a vendor a detailed RFQ (Request for Quote) but don't want to spend time on perfect wording.</p>
       </div>
 
       <div class="comparison">
@@ -1130,7 +1130,7 @@ Keep email tone: professional but friendly. Include subject line. Sign as [Your 
       </div>
 
       <div style="margin-top: 16px; background: #1C1C1C; padding: 12px; border-radius: 8px; border-left: 3px solid #FFDE59;">
-        <p style="font-size: 13px; color: #9CA3AF; margin: 0;"><strong>💡 Pro Tip:</strong> Tell AI "Ensure all compliance points are covered" - it'll catch missing requirements you might forget!</p>
+        <p style="font-size: 17px; color: #9CA3AF; margin: 0;"><strong>💡 Pro Tip:</strong> Tell AI "Ensure all compliance points are covered" - it'll catch missing requirements you might forget!</p>
       </div>
     </div>
   </div>
@@ -1157,8 +1157,8 @@ Keep email tone: professional but friendly. Include subject line. Sign as [Your 
       </h3>
 
       <div style="margin-bottom: 16px;">
-        <p style="font-size: 14px; color: #9CA3AF; margin: 0 0 12px; font-weight: 500;">Scenario: IISER Library Project - Monthly Budget Review</p>
-        <p style="font-size: 13px; color: #9CA3AF; margin: 0;">Raw Excel data (scraped values from your spreadsheet):</p>
+        <p style="font-size: 18px; color: #9CA3AF; margin: 0 0 12px; font-weight: 500;">Scenario: IISER Library Project - Monthly Budget Review</p>
+        <p style="font-size: 17px; color: #9CA3AF; margin: 0;">Raw Excel data (scraped values from your spreadsheet):</p>
       </div>
 
       <table class="data-table">
@@ -1219,7 +1219,7 @@ Keep email tone: professional but friendly. Include subject line. Sign as [Your 
 
       <div class="step-section">
         <strong>Step 1: Copy this data from Excel</strong>
-        <p style="margin: 8px 0 0; font-size: 12px;">Select the table → Copy → Paste into ChatGPT/Claude</p>
+        <p style="margin: 8px 0 0; font-size: 16px;">Select the table → Copy → Paste into ChatGPT/Claude</p>
       </div>
 
       <div class="step-section">
@@ -1269,7 +1269,7 @@ Keep it 200 words max, use rupees, be specific with numbers.</div>
         AI Detects Budget Variances You Might Miss
       </h3>
 
-      <p style="font-size: 14px; color: #9CA3AF; margin: 0 0 12px;">Real scenario: Monthly spend by category across 3 concurrent DEC Infra projects:</p>
+      <p style="font-size: 18px; color: #9CA3AF; margin: 0 0 12px;">Real scenario: Monthly spend by category across 3 concurrent DEC Infra projects:</p>
 
       <table class="data-table">
         <thead>
@@ -1353,10 +1353,10 @@ Give actionable insights, not just numbers.</div>
         Protecting Sensitive Data While Using AI
       </h3>
 
-      <p style="font-size: 14px; color: #9CA3AF; margin: 0 0 16px; font-weight: 500;">Critical: What you paste into ChatGPT/Claude gets logged. Never paste client pricing, salaries, confidential costs.</p>
+      <p style="font-size: 18px; color: #9CA3AF; margin: 0 0 16px; font-weight: 500;">Critical: What you paste into ChatGPT/Claude gets logged. Never paste client pricing, salaries, confidential costs.</p>
 
       <div style="margin: 16px 0;">
-        <p style="font-size: 13px; font-weight: 500; color: #FFFFFF; margin: 0 0 12px;">Method 1: Anonymize Before Sharing</p>
+        <p style="font-size: 17px; font-weight: 500; color: #FFFFFF; margin: 0 0 12px;">Method 1: Anonymize Before Sharing</p>
         <table class="data-table">
           <thead>
             <tr>
@@ -1366,28 +1366,28 @@ Give actionable insights, not just numbers.</div>
           </thead>
           <tbody>
             <tr>
-              <td style="font-family: var(--font-mono); font-size: 11px;">Project: IISER Tirupati
+              <td style="font-family: var(--font-mono); font-size: 15px;">Project: IISER Tirupati
 Vendor A: ₹45L
 Vendor B: ₹52L
 [Real names & rates]</td>
-              <td style="font-family: var(--font-mono); font-size: 11px;">Project: Library Project
+              <td style="font-family: var(--font-mono); font-size: 15px;">Project: Library Project
 Option 1: ₹45L
 Option 2: ₹52L
 [No vendor names]</td>
             </tr>
             <tr>
-              <td style="font-family: var(--font-mono); font-size: 11px;">Salary: Manager ₹8.5L
+              <td style="font-family: var(--font-mono); font-size: 15px;">Salary: Manager ₹8.5L
 Sr. Engineer: ₹6L
 Labor cost: ₹2.1L/day</td>
-              <td style="font-family: var(--font-mono); font-size: 11px;">Personnel Cost Budget: Line A (₹8.5L), Line B (₹6L)
+              <td style="font-family: var(--font-mono); font-size: 15px;">Personnel Cost Budget: Line A (₹8.5L), Line B (₹6L)
 Productivity rate: ₹X/day
 [No names, masked amounts]</td>
             </tr>
             <tr>
-              <td style="font-family: var(--font-mono); font-size: 11px;">Client: IISER
+              <td style="font-family: var(--font-mono); font-size: 15px;">Client: IISER
 Budget: ₹195L
 Profit margin: 12%</td>
-              <td style="font-family: var(--font-mono); font-size: 11px;">Project Budget: ₹XYZ
+              <td style="font-family: var(--font-mono); font-size: 15px;">Project Budget: ₹XYZ
 Cost: ₹ABC
 Margin analysis: compare %</td>
             </tr>
@@ -1397,7 +1397,7 @@ Margin analysis: compare %</td>
 
       <div class="protection-tip">
         <strong>✅ What's SAFE to share:</strong>
-        <ul style="margin: 8px 0; padding-left: 20px; font-size: 13px;">
+        <ul style="margin: 8px 0; padding-left: 20px; font-size: 17px;">
           <li>Budget line items without vendor names</li>
           <li>Percentages instead of actual rupee amounts</li>
           <li>Timeline/schedule data (no client names needed)</li>
@@ -1407,12 +1407,12 @@ Margin analysis: compare %</td>
       </div>
 
       <div style="margin: 16px 0;">
-        <p style="font-size: 13px; font-weight: 500; color: #FFFFFF; margin: 0 0 12px;">Method 2: Use ChatGPT Enterprise/Claude Teams (Paid, Private)</p>
-        <p style="font-size: 13px; color: #9CA3AF; margin: 0;">For sensitive data, use paid enterprise versions that don't log conversations. But even then, follow anonymization best practices.</p>
+        <p style="font-size: 17px; font-weight: 500; color: #FFFFFF; margin: 0 0 12px;">Method 2: Use ChatGPT Enterprise/Claude Teams (Paid, Private)</p>
+        <p style="font-size: 17px; color: #9CA3AF; margin: 0;">For sensitive data, use paid enterprise versions that don't log conversations. But even then, follow anonymization best practices.</p>
       </div>
 
       <div style="margin: 16px 0;">
-        <p style="font-size: 13px; font-weight: 500; color: #FFFFFF; margin: 0 0 12px;">Method 3: Replace Sensitive Values</p>
+        <p style="font-size: 17px; font-weight: 500; color: #FFFFFF; margin: 0 0 12px;">Method 3: Replace Sensitive Values</p>
         <div class="code-block">BEFORE (Don't do this):
 Foundation cost: ₹48.5L (10% over ₹45L budget)
 
@@ -1427,7 +1427,7 @@ What causes 10% overruns in foundation work?</div>
 
       <div class="key-section">
         <strong style="color: #FFFFFF;">Golden Rule for DEC Infra:</strong>
-        <p style="font-size: 13px; margin: 8px 0;">✓ Anonymize client names, vendor names, exact rupee amounts
+        <p style="font-size: 17px; margin: 8px 0;">✓ Anonymize client names, vendor names, exact rupee amounts
 ✓ Share: Project type, phase, duration, generic cost categories
 ✓ Ask: Generic questions ("What causes cost overruns in X phase?")
 ✗ Never share: Specific vendor quotes, salary info, client pricing, profit margins, confidential contracts</p>
@@ -1444,7 +1444,7 @@ What causes 10% overruns in foundation work?</div>
         Drill Down: AI Explains Cost Breakdowns
       </h3>
 
-      <p style="font-size: 14px; color: #9CA3AF; margin: 0 0 12px;">Your CFO asks: "Why is our cost per sq.m. higher than industry average?"</p>
+      <p style="font-size: 18px; color: #9CA3AF; margin: 0 0 12px;">Your CFO asks: "Why is our cost per sq.m. higher than industry average?"</p>
 
       <table class="data-table">
         <thead>
@@ -1514,7 +1514,7 @@ Questions:
       <div class="analysis-box">
         <strong style="color: #10B981;">🤖 Sample Output:</strong>
         <p style="margin: 8px 0;"><strong>Variance Analysis:</strong></p>
-        <ul style="margin: 8px 0; padding-left: 20px; font-size: 13px;">
+        <ul style="margin: 8px 0; padding-left: 20px; font-size: 17px;">
           <li><strong>Civil (₹3,408 vs ₹3,000 bench):</strong> +13.6% → Likely due to complex foundation (IISER specs), soil conditions, or site logistics. <strong>Justified</strong>.</li>
           <li><strong>MEP (₹1,812 vs ₹1,600 bench):</strong> +13.3% → Higher than peers. Is IISER library spec'd with premium HVAC/IT infrastructure? If yes, justified; if no, investigate vendor rates.</li>
           <li><strong>Finishes (₹1,540 vs ₹1,200 bench):</strong> +28.3% → <strong>Biggest gap.</strong> Review material selections, labor rates. Potential to reduce ₹3-4L by negotiating finish suppliers.</li>
@@ -1534,7 +1534,7 @@ Questions:
       </div>
 
       <div style="margin-top: 16px; background: #1C1C1C; padding: 12px; border-radius: 8px; border-left: 3px solid #FFDE59;">
-        <p style="font-size: 13px; color: #9CA3AF; margin: 0;"><strong>💡 Pro Tip for Workshop:</strong> Use REAL DEC Infra budget data (anonymized) for this demo. Participants will see "this is OUR project" and engage 10x more.</p>
+        <p style="font-size: 17px; color: #9CA3AF; margin: 0;"><strong>💡 Pro Tip for Workshop:</strong> Use REAL DEC Infra budget data (anonymized) for this demo. Participants will see "this is OUR project" and engage 10x more.</p>
       </div>
     </div>
   </div>
@@ -1561,7 +1561,7 @@ Questions:
     margin-bottom: 16px;
   }
   .scenario-title {
-    font-size: 15px;
+    font-size: 19px;
     font-weight: 500;
     color: #FFFFFF;
     margin: 0 0 12px;
@@ -1573,7 +1573,7 @@ Questions:
     display: inline-block;
     background: rgba(255, 222, 89, 0.1);
     color: #FFDE59;
-    font-size: 11px;
+    font-size: 15px;
     font-weight: 500;
     padding: 4px 8px;
     border-radius: var(--radius);
@@ -1585,7 +1585,7 @@ Questions:
     padding: 12px;
     border-radius: 6px;
     font-family: var(--font-mono);
-    font-size: 12px;
+    font-size: 16px;
     overflow-x: auto;
     color: #FFFFFF;
     margin: 12px 0;
@@ -1599,7 +1599,7 @@ Questions:
     padding: 12px;
     margin: 12px 0;
     border-radius: 6px;
-    font-size: 13px;
+    font-size: 17px;
   }
   .warning-box {
     background: rgba(239, 68, 68, 0.15);
@@ -1607,7 +1607,7 @@ Questions:
     padding: 12px;
     margin: 12px 0;
     border-radius: 6px;
-    font-size: 13px;
+    font-size: 17px;
   }
   .tip-box {
     background: rgba(255, 222, 89, 0.15);
@@ -1615,12 +1615,12 @@ Questions:
     padding: 12px;
     margin: 12px 0;
     border-radius: 6px;
-    font-size: 13px;
+    font-size: 17px;
   }
   .comparison-table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 12px;
+    font-size: 16px;
     margin: 12px 0;
   }
   .comparison-table th {
@@ -1650,7 +1650,7 @@ Questions:
     border-bottom: 2px solid transparent;
     color: #9CA3AF;
     cursor: pointer;
-    font-size: 13px;
+    font-size: 17px;
     font-weight: 500;
     white-space: nowrap;
     transition: color 0.2s;
@@ -1671,7 +1671,7 @@ Questions:
     padding: 12px;
     border-radius: 6px;
     margin: 12px 0;
-    font-size: 13px;
+    font-size: 17px;
   }
   .step-number {
     display: inline-block;
@@ -1689,7 +1689,7 @@ Questions:
 
 <div class="module-container">
   <h2 style="font-size: 18px; font-weight: 500; margin: 0 0 12px; color: #FFFFFF;">Module 1C: Analyzing PDFs & Vendor Documents with AI</h2>
-  <p style="font-size: 13px; color: #9CA3AF; margin: 0 0 16px;">Extract data from vendor quotes, compare specifications, identify cost discrepancies in 5 minutes instead of 2 hours</p>
+  <p style="font-size: 17px; color: #9CA3AF; margin: 0 0 16px;">Extract data from vendor quotes, compare specifications, identify cost discrepancies in 5 minutes instead of 2 hours</p>
 
   <div class="tabs-container">
     <button class="tab-btn active" onclick="switchTab(event, 'tab1')">Vendor Quote Comparison</button>
@@ -1707,13 +1707,13 @@ Questions:
         Compare Concrete Vendor Quotes (Real Scenario)
       </h3>
 
-      <p style="font-size: 13px; color: #9CA3AF; margin: 0 0 12px;"><strong>Situation:</strong> You have 3 concrete vendor quotes for IISER Library foundation (150 cubic meters needed). All PDFs are different formats. Manual comparison = 45 minutes. AI comparison = 3 minutes.</p>
+      <p style="font-size: 17px; color: #9CA3AF; margin: 0 0 12px;"><strong>Situation:</strong> You have 3 concrete vendor quotes for IISER Library foundation (150 cubic meters needed). All PDFs are different formats. Manual comparison = 45 minutes. AI comparison = 3 minutes.</p>
 
       <div class="section-header">The 3 Vendor PDFs (What You'd Receive):</div>
 
       <div style="margin: 12px 0;">
-        <p style="font-size: 13px; font-weight: 500; color: #FFFFFF; margin: 0 0 8px;">Vendor A: Concrete Suppliers Inc (PDF with tables)</p>
-        <div style="background: #1C1C1C; padding: 12px; border-radius: 6px; font-size: 12px; border-left: 3px solid #378ADD;">
+        <p style="font-size: 17px; font-weight: 500; color: #FFFFFF; margin: 0 0 8px;">Vendor A: Concrete Suppliers Inc (PDF with tables)</p>
+        <div style="background: #1C1C1C; padding: 12px; border-radius: 6px; font-size: 16px; border-left: 3px solid #378ADD;">
           <strong>Product Offering:</strong><br/>
           • M30 Grade Concrete (Strength 30 MPa)<br/>
           • Unit Rate: ₹4,500 per cubic meter<br/>
@@ -1728,8 +1728,8 @@ Questions:
       </div>
 
       <div style="margin: 12px 0;">
-        <p style="font-size: 13px; font-weight: 500; color: #FFFFFF; margin: 0 0 8px;">Vendor B: Quality Concrete Ltd (Different format, embedded in text)</p>
-        <div style="background: #1C1C1C; padding: 12px; border-radius: 6px; font-size: 12px; border-left: 3px solid #1D9E75;">
+        <p style="font-size: 17px; font-weight: 500; color: #FFFFFF; margin: 0 0 8px;">Vendor B: Quality Concrete Ltd (Different format, embedded in text)</p>
+        <div style="background: #1C1C1C; padding: 12px; border-radius: 6px; font-size: 16px; border-left: 3px solid #1D9E75;">
           <strong>Our Offer:</strong><br/>
           We supply premium M30 grade at ₹4,200/cum for orders >100 cum (you get 5% volume discount).<br/>
           Effective rate: ₹3,990/cum<br/>
@@ -1743,8 +1743,8 @@ Questions:
       </div>
 
       <div style="margin: 12px 0;">
-        <p style="font-size: 13px; font-weight: 500; color: #FFFFFF; margin: 0 0 8px;">Vendor C: Budget Concrete Co (Price-sensitive, minimal specs)</p>
-        <div style="background: #1C1C1C; padding: 12px; border-radius: 6px; font-size: 12px; border-left: 3px solid #993C1D;">
+        <p style="font-size: 17px; font-weight: 500; color: #FFFFFF; margin: 0 0 8px;">Vendor C: Budget Concrete Co (Price-sensitive, minimal specs)</p>
+        <div style="background: #1C1C1C; padding: 12px; border-radius: 6px; font-size: 16px; border-left: 3px solid #993C1D;">
           <strong>Rock Bottom Pricing:</strong><br/>
           M30 Concrete @ ₹3,800/cum<br/>
           Bulk Order (150+): ₹3,500/cum<br/>
@@ -1816,7 +1816,7 @@ Questions:
         </tr>
       </table>
 
-      <p style="font-size: 13px; color: #9CA3AF; margin: 12px 0;"><strong>Manual time to create this table:</strong> 45 minutes (copy-pasting, formatting, math errors)</p>
+      <p style="font-size: 17px; color: #9CA3AF; margin: 12px 0;"><strong>Manual time to create this table:</strong> 45 minutes (copy-pasting, formatting, math errors)</p>
 
       <div class="section-header">Step 2: AI Does This Instantly</div>
 
@@ -1872,11 +1872,11 @@ Create a comparison table + give final recommendation with risk assessment.</div
         Extract & Compare Specifications from Vendor Datasheets
       </h3>
 
-      <p style="font-size: 13px; color: #9CA3AF; margin: 0 0 12px;"><strong>Scenario:</strong> NSDL Data Center needs UPS systems. Vendor A and Vendor B sent 20-page PDFs with technical specs scattered throughout. You need to verify both meet your requirements.</p>
+      <p style="font-size: 17px; color: #9CA3AF; margin: 0 0 12px;"><strong>Scenario:</strong> NSDL Data Center needs UPS systems. Vendor A and Vendor B sent 20-page PDFs with technical specs scattered throughout. You need to verify both meet your requirements.</p>
 
       <div class="section-header">What You Need to Check:</div>
 
-      <div style="background: #1C1C1C; padding: 12px; border-radius: 6px; margin: 12px 0; font-size: 13px;">
+      <div style="background: #1C1C1C; padding: 12px; border-radius: 6px; margin: 12px 0; font-size: 17px;">
         <p style="margin: 0 0 8px;"><strong>Your Requirements (from project spec):</strong></p>
         ✓ Capacity: 500 KVA minimum<br/>
         ✓ Battery Backup: 4 hours minimum<br/>
@@ -1931,7 +1931,7 @@ Show: Vendor | Meets Req? | Gap | Risk | Recommendation</div>
         Review Contracts for Risk & Compliance
       </h3>
 
-      <p style="font-size: 13px; color: #9CA3AF; margin: 0 0 12px;"><strong>Scenario:</strong> Medical College project needs a 15-page MEP contractor agreement. Before signing, you need to flag any risky clauses or missing protections.</p>
+      <p style="font-size: 17px; color: #9CA3AF; margin: 0 0 12px;"><strong>Scenario:</strong> Medical College project needs a 15-page MEP contractor agreement. Before signing, you need to flag any risky clauses or missing protections.</p>
 
       <div class="section-header">Common Risks in Construction Contracts:</div>
 
@@ -2011,11 +2011,11 @@ Overall: Safe to sign or needs revision? Why?</div>
         Verify Vendor Compliance Against Project Standards
       </h3>
 
-      <p style="font-size: 13px; color: #9CA3AF; margin: 0 0 12px;"><strong>Scenario:</strong> IISER Library has strict quality requirements (educational institution + research). Vendor submitted COA (Certificate of Analysis). You need to verify all test results meet IS 456 + IISER's specific requirements.</p>
+      <p style="font-size: 17px; color: #9CA3AF; margin: 0 0 12px;"><strong>Scenario:</strong> IISER Library has strict quality requirements (educational institution + research). Vendor submitted COA (Certificate of Analysis). You need to verify all test results meet IS 456 + IISER's specific requirements.</p>
 
       <div class="section-header">What a COA Typically Contains:</div>
 
-      <div style="background: #1C1C1C; padding: 12px; border-radius: 6px; margin: 12px 0; font-size: 12px;">
+      <div style="background: #1C1C1C; padding: 12px; border-radius: 6px; margin: 12px 0; font-size: 16px;">
         <strong>Example COA Data (Concrete):</strong><br/>
         Compressive Strength (7-day): 24.5 MPa (Required: ≥21 MPa) ✓<br/>
         Compressive Strength (28-day): 32.1 MPa (Required: ≥30 MPa) ✓<br/>
@@ -2647,7 +2647,7 @@ If any test FAILS, recommend: Reject batch OR Request retesting OR Accept with w
         <div class="footer">
             <h3>📊 Quick Stats</h3>
             <p>Each Module 1D provides:</p>
-            <p style="font-size: 14px; margin: 10px 0;">
+            <p style="font-size: 18px; margin: 10px 0;">
                 <strong>5-20 hours/month</strong> time savings | 
                 <strong>₹2-50L</strong> financial impact | 
                 <strong>90 minutes</strong> workshop duration
@@ -2657,7 +2657,7 @@ If any test FAILS, recommend: Reject batch OR Request retesting OR Accept with w
                 <button class="cta-button" onclick="copyToClipboard('I want Module 1D Option B: Email & Report Automation')">Copy Selection</button>
                 <button class="cta-button" onclick="copyToClipboard('I want Module 1D Option C: Schedule & Resource Optimization')">Copy Selection</button>
             </p>
-            <p style="margin-top: 15px; color: #666; font-size: 13px;">
+            <p style="margin-top: 15px; color: #666; font-size: 17px;">
                 Choose any option above and I'll create a complete, ready-to-deliver workshop module with real DEC Infra examples!
             </p>
         </div>
@@ -2673,7 +2673,7 @@ If any test FAILS, recommend: Reject batch OR Request retesting OR Accept with w
                 <p class="text-muted">Turn AI from a simple question-answering tool into a structured work assistant.</p>
             </div>
             <div style="width:130px; height:130px; flex-shrink:0; position:relative; display:flex; align-items:center; justify-content:center;">
-                <div style="width:100px; height:100px; background:linear-gradient(135deg,rgba(255,222,89,0.15),rgba(255,222,89,0.03)); border:2px solid rgba(255,222,89,0.5); border-radius:22px; display:flex; align-items:center; justify-content:center; box-shadow:0 0 30px rgba(255,222,89,0.25),0 0 60px rgba(255,222,89,0.1); animation:modFloat 3s ease-in-out infinite; font-size:2.8rem; position:relative;">📝
+                <div style="width:100px; height:100px; background:linear-gradient(135deg,rgba(255,222,89,0.15),rgba(255,222,89,0.03)); border:2px solid rgba(255,222,89,0.5); border-radius:22px; display:flex; align-items:center; justify-content:center; box-shadow:0 0 30px rgba(255,222,89,0.25),0 0 60px rgba(255,222,89,0.1); animation:modFloat 3s ease-in-out infinite; font-size: 2.8rem; position:relative;">📝
                     <div style="position:absolute; bottom:-2px; left:50%; transform:translateX(-50%); display:flex; gap:3px;">
                         <div style="width:5px; height:3px; background:var(--accent); border-radius:1px; animation:typeDot 1.2s ease infinite 0s;"></div>
                         <div style="width:5px; height:3px; background:var(--accent); border-radius:1px; animation:typeDot 1.2s ease infinite 0.2s;"></div>
@@ -2882,7 +2882,7 @@ If any test FAILS, recommend: Reject batch OR Request retesting OR Accept with w
                 if (sopIncluded) {
                     out = `<strong>WEEKLY PROGRESS REPORT</strong><br><br><strong>Incident Section:</strong><br>As per <em>Site_Safety_SOP_v2.pdf</em>, a minor injury was recorded. The worker was treated on-site. Form SS-1 has been filed within the required 12-hour window.`;
                 } else {
-                    out = `<strong>WEEKLY PROGRESS REPORT</strong><br><br><strong>Incident Section:</strong><br>A minor injury happened today. The worker is fine now. Please advise next steps. <br><br><span style="color:var(--danger); font-size:0.75rem;">(Note: Assistant didn't know the SOP rule to file Form SS-1 because it wasn't in its Knowledge Base!)</span>`;
+                    out = `<strong>WEEKLY PROGRESS REPORT</strong><br><br><strong>Incident Section:</strong><br>A minor injury happened today. The worker is fine now. Please advise next steps. <br><br><span style="color:var(--danger); font-size: 1.0rem;">(Note: Assistant didn't know the SOP rule to file Form SS-1 because it wasn't in its Knowledge Base!)</span>`;
                 }
                 document.getElementById('claude-out').innerHTML = out;
                 btn.disabled = false;
@@ -2917,7 +2917,7 @@ function renderModule2(container) {
                 <p class="text-muted">Upload the 242-row DEC Infra dataset to AI for instant budget analysis, risk scanning, vendor benchmarking.</p>
             </div>
             <div style="width:130px; height:130px; flex-shrink:0; position:relative; display:flex; align-items:center; justify-content:center;">
-                <div style="width:100px; height:100px; background:linear-gradient(135deg,rgba(6,182,212,0.15),rgba(6,182,212,0.03)); border:2px solid rgba(6,182,212,0.5); border-radius:22px; display:flex; align-items:center; justify-content:center; box-shadow:0 0 30px rgba(6,182,212,0.25); animation:modFloat 3s ease-in-out 0.4s infinite; font-size:2.8rem; position:relative;">📊
+                <div style="width:100px; height:100px; background:linear-gradient(135deg,rgba(6,182,212,0.15),rgba(6,182,212,0.03)); border:2px solid rgba(6,182,212,0.5); border-radius:22px; display:flex; align-items:center; justify-content:center; box-shadow:0 0 30px rgba(6,182,212,0.25); animation:modFloat 3s ease-in-out 0.4s infinite; font-size: 2.8rem; position:relative;">📊
                     <div style="position:absolute; bottom:8px; left:8px; right:8px; display:flex; align-items:flex-end; gap:2px; height:14px;">
                         <div style="flex:1; background:rgba(6,182,212,0.7); border-radius:1px; animation:barAnim 1.5s ease-in-out 0s infinite; height:60%;"></div>
                         <div style="flex:1; background:rgba(6,182,212,0.7); border-radius:1px; animation:barAnim 1.5s ease-in-out 0.2s infinite; height:90%;"></div>
@@ -3018,15 +3018,15 @@ function renderModule2(container) {
 <h3>How to Upload Data — Step by Step</h3>
 <div class="diagram">
 <div class="flow">
-<div class="node">1. Export Excel<br/><span style="font-size:11px;opacity:0.7">Save as .csv</span></div>
+<div class="node">1. Export Excel<br/><span style="font-size: 15px;opacity:0.7">Save as .csv</span></div>
 <div class="arr">→</div>
-<div class="node">2. Anonymize<br/><span style="font-size:11px;opacity:0.7">Replace names</span></div>
+<div class="node">2. Anonymize<br/><span style="font-size: 15px;opacity:0.7">Replace names</span></div>
 <div class="arr">→</div>
-<div class="node">3. Upload to AI<br/><span style="font-size:11px;opacity:0.7">Click 📎</span></div>
+<div class="node">3. Upload to AI<br/><span style="font-size: 15px;opacity:0.7">Click 📎</span></div>
 <div class="arr">→</div>
-<div class="node">4. Paste Prompt<br/><span style="font-size:11px;opacity:0.7">Be specific</span></div>
+<div class="node">4. Paste Prompt<br/><span style="font-size: 15px;opacity:0.7">Be specific</span></div>
 <div class="arr">→</div>
-<div class="node">5. Get Analysis<br/><span style="font-size:11px;opacity:0.7">30-60 seconds</span></div>
+<div class="node">5. Get Analysis<br/><span style="font-size: 15px;opacity:0.7">30-60 seconds</span></div>
 </div>
 </div>
 </div>
@@ -3037,12 +3037,12 @@ function renderModule2(container) {
 <div style="background:rgba(255,82,82,0.06);padding:12px;border-radius:6px;border-left:3px solid #FF5252">
 <h4 style="color:var(--danger)">❌ Bad Prompt</h4>
 <p>"Analyze this data"</p>
-<p style="font-size:13px;opacity:0.7;margin-top:6px">Result: Generic summary, misses key overruns, no actionable insight</p>
+<p style="font-size: 17px;opacity:0.7;margin-top:6px">Result: Generic summary, misses key overruns, no actionable insight</p>
 </div>
 <div style="background:rgba(76,175,80,0.06);padding:12px;border-radius:6px;border-left:3px solid #4CAF50">
 <h4 style="color:var(--success)">✓ Good Prompt</h4>
 <p>"Flag every item where spent >100%. Rank 12 projects by risk score 1-10. For top 3 riskiest, give root cause and corrective action. CEO summary, 1 page."</p>
-<p style="font-size:13px;opacity:0.7;margin-top:6px">Result: 28 overruns found, ranked list, actionable plan</p>
+<p style="font-size: 17px;opacity:0.7;margin-top:6px">Result: 28 overruns found, ranked list, actionable plan</p>
 </div>
 </div>
 <div class="info-box"><strong>ABCD Framework from Module 1:</strong> <strong>A</strong>udience (CEO/PM/Board) → <strong>B</strong>ackground (12 projects, ₹28.8 Cr) → <strong>C</strong>ontent (flag overruns, rank risks) → <strong>D</strong>elivery (table, 1-page, risk scores)</div>
@@ -3414,10 +3414,10 @@ Format as professional board report. Max 2 pages. Traffic lights throughout.</di
 <div class="section-body">
 <div class="exercise"><h3>🏋️ Team Challenge: Analyze the ₹28.8 Cr Portfolio</h3><p>4 teams, each uploads the anonymized CSV and runs ONE assigned prompt. Present top 3 findings in 2 minutes. Judged on: insight quality, actionability, and clarity.</p></div>
 <div class="grid-2">
-<div class="card"><h3>Team 1: Budget Detectives 🔍</h3><p>Prompt #1 (Risk Scan). Find the 3 most dangerous overruns. What should the CEO know TODAY?</p><p style="font-size:13px;opacity:0.7;margin-top:8px">Judge asks: "If you fix only ONE item, which and why?"</p></div>
-<div class="card"><h3>Team 2: Cost Optimizers 💰</h3><p>Prompt #5 (Rate Deep-Dive). Find 3 materials where DEC Infra overpays. Total savings?</p><p style="font-size:13px;opacity:0.7;margin-top:8px">Judge asks: "How much can we save this quarter?"</p></div>
-<div class="card"><h3>Team 3: Contingency Watchers ⚠️</h3><p>Prompt #4 (Contingency Check). Which projects run out first? What do we do?</p><p style="font-size:13px;opacity:0.7;margin-top:8px">Judge asks: "Should we reallocate? From where to where?"</p></div>
-<div class="card"><h3>Team 4: Board Briefers 📋</h3><p>Prompt #7 (Board Dashboard). Create the board report. Present as if the board is listening NOW.</p><p style="font-size:13px;opacity:0.7;margin-top:8px">Judge asks: "What decision does the board make today?"</p></div>
+<div class="card"><h3>Team 1: Budget Detectives 🔍</h3><p>Prompt #1 (Risk Scan). Find the 3 most dangerous overruns. What should the CEO know TODAY?</p><p style="font-size: 17px;opacity:0.7;margin-top:8px">Judge asks: "If you fix only ONE item, which and why?"</p></div>
+<div class="card"><h3>Team 2: Cost Optimizers 💰</h3><p>Prompt #5 (Rate Deep-Dive). Find 3 materials where DEC Infra overpays. Total savings?</p><p style="font-size: 17px;opacity:0.7;margin-top:8px">Judge asks: "How much can we save this quarter?"</p></div>
+<div class="card"><h3>Team 3: Contingency Watchers ⚠️</h3><p>Prompt #4 (Contingency Check). Which projects run out first? What do we do?</p><p style="font-size: 17px;opacity:0.7;margin-top:8px">Judge asks: "Should we reallocate? From where to where?"</p></div>
+<div class="card"><h3>Team 4: Board Briefers 📋</h3><p>Prompt #7 (Board Dashboard). Create the board report. Present as if the board is listening NOW.</p><p style="font-size: 17px;opacity:0.7;margin-top:8px">Judge asks: "What decision does the board make today?"</p></div>
 </div>
 <div class="tip"><strong>💡 Tips:</strong> Upload CSV first, then paste prompt. If ChatGPT is slow, try Claude. Focus on INSIGHTS not descriptions — tell us what you FOUND, not what you DID.</div>
 </div>
@@ -3456,13 +3456,13 @@ Format as professional board report. Max 2 pages. Traffic lights throughout.</di
 <div class="card">
 <table>
 <tr><th>#</th><th>Takeaway</th><th>Proof</th></tr>
-<tr><td style="font-size:20px;font-weight:800;color:#FFD600">1</td><td><strong>242 rows analyzed in 90 seconds</strong></td><td>28 overruns, 19 contingency burns found instantly</td></tr>
-<tr><td style="font-size:20px;font-weight:800;color:#FFD600">2</td><td><strong>AI catches what manual reviews miss</strong></td><td>₹2.9L RCC overrun hidden inside project-level totals</td></tr>
-<tr><td style="font-size:20px;font-weight:800;color:#FFD600">3</td><td><strong>Cross-project comparison reveals savings</strong></td><td>₹4.8-6.2L saved on rebar alone by standardizing rates</td></tr>
-<tr><td style="font-size:20px;font-weight:800;color:#FFD600">4</td><td><strong>Contingency reallocation prevents crises</strong></td><td>₹5L moved from healthy to stressed projects — avoided work stoppage</td></tr>
-<tr><td style="font-size:20px;font-weight:800;color:#FFD600">5</td><td><strong>Invoice analysis protects vendor relationships</strong></td><td>₹9.87L stuck invoice cleared — prevented vendor walkout</td></tr>
-<tr><td style="font-size:20px;font-weight:800;color:#FFD600">6</td><td><strong>Always anonymize before uploading</strong></td><td>2 min anonymization protects ₹crores of data</td></tr>
-<tr><td style="font-size:20px;font-weight:800;color:#FFD600">7</td><td><strong>AI assists, humans decide</strong></td><td>CS-5: AI recommended dropping best vendor — human judgment saved ₹8L</td></tr>
+<tr><td style="font-size: 20px;font-weight:800;color:#FFD600">1</td><td><strong>242 rows analyzed in 90 seconds</strong></td><td>28 overruns, 19 contingency burns found instantly</td></tr>
+<tr><td style="font-size: 20px;font-weight:800;color:#FFD600">2</td><td><strong>AI catches what manual reviews miss</strong></td><td>₹2.9L RCC overrun hidden inside project-level totals</td></tr>
+<tr><td style="font-size: 20px;font-weight:800;color:#FFD600">3</td><td><strong>Cross-project comparison reveals savings</strong></td><td>₹4.8-6.2L saved on rebar alone by standardizing rates</td></tr>
+<tr><td style="font-size: 20px;font-weight:800;color:#FFD600">4</td><td><strong>Contingency reallocation prevents crises</strong></td><td>₹5L moved from healthy to stressed projects — avoided work stoppage</td></tr>
+<tr><td style="font-size: 20px;font-weight:800;color:#FFD600">5</td><td><strong>Invoice analysis protects vendor relationships</strong></td><td>₹9.87L stuck invoice cleared — prevented vendor walkout</td></tr>
+<tr><td style="font-size: 20px;font-weight:800;color:#FFD600">6</td><td><strong>Always anonymize before uploading</strong></td><td>2 min anonymization protects ₹crores of data</td></tr>
+<tr><td style="font-size: 20px;font-weight:800;color:#FFD600">7</td><td><strong>AI assists, humans decide</strong></td><td>CS-5: AI recommended dropping best vendor — human judgment saved ₹8L</td></tr>
 </table>
 </div>
 <div class="stats">
@@ -3500,7 +3500,7 @@ function renderModule3(container) {
                 <p class="text-muted">Data classification, identifying hallucinations, and human-in-the-loop verification.</p>
             </div>
             <div style="width:130px; height:130px; flex-shrink:0; position:relative; display:flex; align-items:center; justify-content:center;">
-                <div style="width:100px; height:100px; background:linear-gradient(135deg,rgba(16,185,129,0.15),rgba(16,185,129,0.03)); border:2px solid rgba(16,185,129,0.5); border-radius:22px; display:flex; align-items:center; justify-content:center; box-shadow:0 0 30px rgba(16,185,129,0.25); animation:modFloat 3s ease-in-out 0.8s infinite; font-size:2.8rem; position:relative;">🛡️</div>
+                <div style="width:100px; height:100px; background:linear-gradient(135deg,rgba(16,185,129,0.15),rgba(16,185,129,0.03)); border:2px solid rgba(16,185,129,0.5); border-radius:22px; display:flex; align-items:center; justify-content:center; box-shadow:0 0 30px rgba(16,185,129,0.25); animation:modFloat 3s ease-in-out 0.8s infinite; font-size: 2.8rem; position:relative;">🛡️</div>
                 <div style="position:absolute; inset:-8px; border:1px solid rgba(16,185,129,0.25); border-radius:30px; animation:modSpin 7s linear infinite;"></div>
                 <div style="position:absolute; inset:-18px; border:1px dashed rgba(16,185,129,0.12); border-radius:40px; animation:modSpinRev 10s linear infinite;"></div>
                 <div style="position:absolute; width:110px; height:110px; border-radius:50%; box-shadow:0 0 0 0 rgba(16,185,129,0.4); animation:shieldPulse 2s ease-out infinite;"></div>
@@ -3547,15 +3547,15 @@ function renderModule3(container) {
 <p style="margin-top:8px"><strong>Key insight:</strong> LLMs don't "know" things the way humans do. They predict the most likely next word based on patterns they've seen. This is why they can sound confident while being completely wrong.</p>
 
 <div class="diagram">
-<p style="font-size:13px;opacity:0.7;margin-bottom:10px">How an LLM generates a response:</p>
+<p style="font-size: 17px;opacity:0.7;margin-bottom:10px">How an LLM generates a response:</p>
 <div class="flow">
 <div class="node">Your Prompt</div>
 <div class="arr">→</div>
-<div class="node">Pattern Matching<br/><span style="font-size:11px;opacity:0.7">against training data</span></div>
+<div class="node">Pattern Matching<br/><span style="font-size: 15px;opacity:0.7">against training data</span></div>
 <div class="arr">→</div>
 <div class="node">Word-by-Word<br/>Prediction</div>
 <div class="arr">→</div>
-<div class="node">Response<br/><span style="font-size:11px;opacity:0.7">(may contain errors)</span></div>
+<div class="node">Response<br/><span style="font-size: 15px;opacity:0.7">(may contain errors)</span></div>
 </div>
 </div>
 </div>
@@ -3563,7 +3563,7 @@ function renderModule3(container) {
 <div class="card">
 <h3>What Happens When You Type in ChatGPT?</h3>
 <div class="diagram">
-<p style="font-size:13px;opacity:0.7;margin-bottom:10px">Data flow — Free ChatGPT:</p>
+<p style="font-size: 17px;opacity:0.7;margin-bottom:10px">Data flow — Free ChatGPT:</p>
 <div class="flow">
 <div class="node">You type a message<br/>or upload a file</div>
 <div class="arr">→</div>
@@ -3573,7 +3573,7 @@ function renderModule3(container) {
 <div class="arr">→</div>
 <div class="node node-danger">May be used to<br/>train future models</div>
 </div>
-<p style="font-size:13px;opacity:0.7;margin-top:15px;margin-bottom:10px">Data flow — Enterprise / Teams version:</p>
+<p style="font-size: 17px;opacity:0.7;margin-top:15px;margin-bottom:10px">Data flow — Enterprise / Teams version:</p>
 <div class="flow">
 <div class="node">You type a message<br/>or upload a file</div>
 <div class="arr">→</div>
@@ -3694,17 +3694,17 @@ function renderModule3(container) {
 </div>
 
 <div class="diagram">
-<p style="font-size:15px;font-weight:600;color:var(--accent);margin-bottom:15px">The Golden Rule of AI in Construction:</p>
+<p style="font-size: 19px;font-weight:600;color:var(--accent);margin-bottom:15px">The Golden Rule of AI in Construction:</p>
 <div class="flow">
-<div class="node" style="font-size:16px;padding:15px 25px;border-color:var(--accent)">AI Generates</div>
-<div class="arr" style="font-size:30px">→</div>
-<div class="node" style="font-size:16px;padding:15px 25px;border-color:var(--accent)">Human Verifies</div>
-<div class="arr" style="font-size:30px">→</div>
-<div class="node" style="font-size:16px;padding:15px 25px;border-color:var(--accent)">Human Decides</div>
-<div class="arr" style="font-size:30px">→</div>
-<div class="node" style="font-size:16px;padding:15px 25px;border-color:var(--accent)">Human is Accountable</div>
+<div class="node" style="font-size: 16px;padding:15px 25px;border-color:var(--accent)">AI Generates</div>
+<div class="arr" style="font-size: 30px">→</div>
+<div class="node" style="font-size: 16px;padding:15px 25px;border-color:var(--accent)">Human Verifies</div>
+<div class="arr" style="font-size: 30px">→</div>
+<div class="node" style="font-size: 16px;padding:15px 25px;border-color:var(--accent)">Human Decides</div>
+<div class="arr" style="font-size: 30px">→</div>
+<div class="node" style="font-size: 16px;padding:15px 25px;border-color:var(--accent)">Human is Accountable</div>
 </div>
-<p style="font-size:14px;opacity:0.7;margin-top:15px">"The AI told me" is NEVER an acceptable defense. The person who uses the output owns the outcome.</p>
+<p style="font-size: 18px;opacity:0.7;margin-top:15px">"The AI told me" is NEVER an acceptable defense. The person who uses the output owns the outcome.</p>
 </div>
 
 </div>
@@ -3803,7 +3803,7 @@ function renderModule3(container) {
 </div>
 </div>
 
-<h3 style="color:white;margin-top:20px;font-size:18px">DEC Infra Anonymization Guide</h3>
+<h3 style="color:white;margin-top:20px;font-size: 18px">DEC Infra Anonymization Guide</h3>
 <table>
 <tr><th>Original Data</th><th>Anonymized Version</th><th>Why</th></tr>
 <tr><td>"Concrete Suppliers Inc quoted ₹4,500/cum"</td><td>"Vendor A quoted ₹4,500/cum"</td><td>Vendor identity protected</td></tr>
@@ -3998,7 +3998,7 @@ the actual IS 456 standard. Award points for each hallucination caught.]</div>
 <tr><td style="font-weight:700">Total</td><td style="text-align:right;font-weight:700;color:#FFD600">₹58,00,000</td></tr>
 </table></div>
 </div>
-<p style="text-align:center;margin-top:12px;font-size:16px"><strong>₹6L invest → ₹58L return = <span style="color:#FFD600">967% ROI</span> | Payback: 1.2 months</strong></p>
+<p style="text-align:center;margin-top:12px;font-size: 16px"><strong>₹6L invest → ₹58L return = <span style="color:#FFD600">967% ROI</span> | Payback: 1.2 months</strong></p>
 </div>
 </div>
 </div>
@@ -4072,12 +4072,12 @@ the actual IS 456 standard. Award points for each hallucination caught.]</div>
 <div class="card">
 <table>
 <tr><th>#</th><th>Rule</th><th>Why It Matters for DEC Infra</th></tr>
-<tr><td style="font-size:20px;font-weight:800;color:#FFD600">1</td><td><strong>Classify first, share second</strong></td><td>Know your data tier BEFORE opening ChatGPT</td></tr>
-<tr><td style="font-size:20px;font-weight:800;color:#FFD600">2</td><td><strong>Anonymize Tier 2</strong></td><td>Replace names, keep numbers — AI doesn't need WHO, just WHAT</td></tr>
-<tr><td style="font-size:20px;font-weight:800;color:#FFD600">3</td><td><strong>Never share Tier 3</strong></td><td>Bids, margins, salaries, contracts — one leak could cost crores</td></tr>
-<tr><td style="font-size:20px;font-weight:800;color:#FFD600">4</td><td><strong>Verify every critical output</strong></td><td>AI hallucinations cost ₹5-50L in construction</td></tr>
-<tr><td style="font-size:20px;font-weight:800;color:#FFD600">5</td><td><strong>AI assists, humans decide</strong></td><td>YOU are accountable, not the AI — always</td></tr>
-<tr><td style="font-size:20px;font-weight:800;color:#FFD600">6</td><td><strong>Enterprise tools are worth it</strong></td><td>₹6L/year protects data worth ₹50 Cr+ in business</td></tr>
+<tr><td style="font-size: 20px;font-weight:800;color:#FFD600">1</td><td><strong>Classify first, share second</strong></td><td>Know your data tier BEFORE opening ChatGPT</td></tr>
+<tr><td style="font-size: 20px;font-weight:800;color:#FFD600">2</td><td><strong>Anonymize Tier 2</strong></td><td>Replace names, keep numbers — AI doesn't need WHO, just WHAT</td></tr>
+<tr><td style="font-size: 20px;font-weight:800;color:#FFD600">3</td><td><strong>Never share Tier 3</strong></td><td>Bids, margins, salaries, contracts — one leak could cost crores</td></tr>
+<tr><td style="font-size: 20px;font-weight:800;color:#FFD600">4</td><td><strong>Verify every critical output</strong></td><td>AI hallucinations cost ₹5-50L in construction</td></tr>
+<tr><td style="font-size: 20px;font-weight:800;color:#FFD600">5</td><td><strong>AI assists, humans decide</strong></td><td>YOU are accountable, not the AI — always</td></tr>
+<tr><td style="font-size: 20px;font-weight:800;color:#FFD600">6</td><td><strong>Enterprise tools are worth it</strong></td><td>₹6L/year protects data worth ₹50 Cr+ in business</td></tr>
 </table>
 </div>
 <div class="stats">
@@ -4108,7 +4108,7 @@ function renderModule4(container) {
                 <p class="text-muted">Create a custom Microsoft Copilot Agent for DEC Infra.</p>
             </div>
             <div style="width:130px; height:130px; flex-shrink:0; position:relative; display:flex; align-items:center; justify-content:center;">
-                <div style="width:100px; height:100px; background:linear-gradient(135deg,rgba(239,68,68,0.15),rgba(239,68,68,0.03)); border:2px solid rgba(239,68,68,0.5); border-radius:22px; display:flex; align-items:center; justify-content:center; box-shadow:0 0 30px rgba(239,68,68,0.25); font-size:2.8rem; position:relative;">🚀</div>
+                <div style="width:100px; height:100px; background:linear-gradient(135deg,rgba(239,68,68,0.15),rgba(239,68,68,0.03)); border:2px solid rgba(239,68,68,0.5); border-radius:22px; display:flex; align-items:center; justify-content:center; box-shadow:0 0 30px rgba(239,68,68,0.25); font-size: 2.8rem; position:relative;">🚀</div>
             </div>
         </div>
         
@@ -4149,13 +4149,13 @@ function renderModule4(container) {
 <h3>From Copilot Chat to Custom Agent — The Evolution</h3>
 <p>In Modules 1-3, you used Copilot Chat — typing prompts one at a time and getting responses. That's powerful, but it requires you to remember the right prompt every time. A <strong>Copilot Agent</strong> is the next level: a custom AI assistant that already knows its job, has access to your company data, and follows your rules — without you needing to write a prompt each time.</p>
 <div class="diagram">
-<p style="font-size:13px;opacity:0.7;margin-bottom:10px">The evolution of AI at DEC Infra:</p>
+<p style="font-size: 17px;opacity:0.7;margin-bottom:10px">The evolution of AI at DEC Infra:</p>
 <div class="flow">
-<div class="node">Module 1-3<br/><span style="font-size:11px;opacity:0.7">Manual prompting</span></div>
+<div class="node">Module 1-3<br/><span style="font-size: 15px;opacity:0.7">Manual prompting</span></div>
 <div class="arr">→</div>
-<div class="node">Module 4<br/><span style="font-size:11px;opacity:0.7">Custom agents</span></div>
+<div class="node">Module 4<br/><span style="font-size: 15px;opacity:0.7">Custom agents</span></div>
 <div class="arr">→</div>
-<div class="node">Future<br/><span style="font-size:11px;opacity:0.7">Automated workflows</span></div>
+<div class="node">Future<br/><span style="font-size: 15px;opacity:0.7">Automated workflows</span></div>
 </div>
 </div>
 </div>
@@ -4654,7 +4654,7 @@ FORMATTING:
 
 <div class="card">
 <h3>Commitment Card</h3>
-<div style="padding:20px;background:rgba(0,120,212,0.05);border-radius:8px;border:1px dashed rgba(0,120,212,0.3);text-align:center;font-size:16px">
+<div style="padding:20px;background:rgba(0,120,212,0.05);border-radius:8px;border:1px dashed rgba(0,120,212,0.3);text-align:center;font-size: 16px">
 <p>"I commit to building <strong>at least ONE Copilot Agent</strong> within 2 weeks,<br/>
 grounded on my department's data, and sharing it with my team in Microsoft Teams.<br/>
 I will follow the data protection rules from Module 3 and verify all agent outputs."</p>
@@ -4758,7 +4758,7 @@ function renderTrainerDashboard(container) {
                     <div>
                         <h4 class="text-sm mb-2">2. Google Apps Script Code</h4>
                         <p class="text-xs text-muted mb-2">Open your Google Sheet, go to <b>Extensions > Apps Script</b>, paste the code below, and **Deploy as a Web App** (execute as: Me, access: Anyone):</p>
-                        <pre style="background:var(--bg-main); padding: 0.75rem; border-radius: 6px; font-size: 0.7rem; max-height: 150px; overflow-y: auto; border: 1px solid #CBD5E1;" id="script-code-block">
+                        <pre style="background:var(--bg-main); padding: 0.75rem; border-radius: 6px; font-size: 0.95rem; max-height: 150px; overflow-y: auto; border: 1px solid #CBD5E1;" id="script-code-block">
 function doPost(e) {
   try {
     // Opens the active sheet of the bound spreadsheet
@@ -5011,7 +5011,7 @@ function renderFlagshipDemo(container) {
             <div class="card-header text-center" style="display: block;">
                 <button class="btn btn-primary" id="btn-run-demo" style="font-size: 1.1rem; padding: 1rem 3rem;">RUN EXECUTIVE DEMO</button>
             </div>
-            <div class="card-body" id="demo-log" style="min-height: 300px; background: #0F172A; color: #38BDF8; padding: 2rem; border-radius: var(--radius-sm); font-family: monospace; font-size: 0.9rem;">
+            <div class="card-body" id="demo-log" style="min-height: 300px; background: #0F172A; color: #38BDF8; padding: 2rem; border-radius: var(--radius-sm); font-family: monospace; font-size: 1.15rem;">
                 > Ready to initialize DEC Corporate Demo Sequence...
             </div>
         </div>
@@ -5058,7 +5058,7 @@ function renderPromptLibrary(container) {
                 <p class="text-muted">A collection of ready-to-use prompts for DEC workflows.</p>
             </div>
             <div style="width:130px; height:130px; flex-shrink:0; position:relative; display:flex; align-items:center; justify-content:center;">
-                <div style="width:100px; height:100px; background:linear-gradient(135deg,rgba(255,222,89,0.15),rgba(124,58,237,0.08)); border:2px solid rgba(255,222,89,0.5); border-radius:22px; display:flex; align-items:center; justify-content:center; box-shadow:0 0 30px rgba(255,222,89,0.3),0 0 60px rgba(124,58,237,0.15); animation:modFloat 3s ease-in-out 1.2s infinite; font-size:2.8rem; position:relative;">≡ƒñû
+                <div style="width:100px; height:100px; background:linear-gradient(135deg,rgba(255,222,89,0.15),rgba(124,58,237,0.08)); border:2px solid rgba(255,222,89,0.5); border-radius:22px; display:flex; align-items:center; justify-content:center; box-shadow:0 0 30px rgba(255,222,89,0.3),0 0 60px rgba(124,58,237,0.15); animation:modFloat 3s ease-in-out 1.2s infinite; font-size: 2.8rem; position:relative;">≡ƒñû
                     <div style="position:absolute; top:-4px; right:-4px; width:10px; height:10px; background:#10B981; border-radius:50%; box-shadow:0 0 6px #10B981; animation:blinkDot 1s ease-in-out infinite;"></div>
                 </div>
                 <div style="position:absolute; inset:-8px; border:1px solid rgba(255,222,89,0.2); border-radius:30px; animation:modSpin 6s linear infinite;"></div>
@@ -5217,7 +5217,7 @@ function renderModule1Docs(container) {
                 <button class="btn btn-primary w-full mb-4" id="btn-run-comparison">Extract & Compare (Detect Red Flags)</button>
                 
                 <div id="comparison-result" class="hidden">
-                    <table class="table" style="font-size: 0.875rem; width: 100%;">
+                    <table class="table" style="font-size: 1.125rem; width: 100%;">
                         <thead>
                             <tr>
                                 <th style="width:20%;">Criteria</th>
@@ -5242,7 +5242,7 @@ function renderModule1Docs(container) {
                     <select id="doc-select" class="form-control mb-4">
                         ${optionsHtml}
                     </select>
-                    <div id="doc-viewer" style="background: var(--bg-card); padding: 1.5rem; border: 1px solid #E2E8F0; border-radius: var(--radius-sm); max-height: 500px; overflow-y: auto; white-space: pre-wrap; font-family: var(--font-body); font-size: 0.875rem; box-shadow: inset 0 2px 4px rgba(0,0,0,0.02); flex-grow: 1;"></div>
+                    <div id="doc-viewer" style="background: var(--bg-card); padding: 1.5rem; border: 1px solid #E2E8F0; border-radius: var(--radius-sm); max-height: 500px; overflow-y: auto; white-space: pre-wrap; font-family: var(--font-body); font-size: 1.125rem; box-shadow: inset 0 2px 4px rgba(0,0,0,0.02); flex-grow: 1;"></div>
                 </div>
             </div>
             
@@ -5323,13 +5323,13 @@ function renderModule1Docs(container) {
                             <td><strong>Timeline</strong></td>
                             <td>25 working days</td>
                             <td>35 working days</td>
-                            <td><span style="background:var(--danger-bg); color:var(--danger); padding:2px 4px; border-radius:4px; font-weight:bold; font-size:0.75rem;">RED FLAG</span> Vendor B takes 10 days longer.</td>
+                            <td><span style="background:var(--danger-bg); color:var(--danger); padding:2px 4px; border-radius:4px; font-weight:bold; font-size: 1.0rem;">RED FLAG</span> Vendor B takes 10 days longer.</td>
                         </tr>
                         <tr>
                             <td><strong>Penalties & Obligations</strong></td>
                             <td>None explicitly stated</td>
                             <td>₹10,000 / day delay penalty</td>
-                            <td><span style="background:var(--warning-bg); color:var(--warning); padding:2px 4px; border-radius:4px; font-weight:bold; font-size:0.75rem;">RISK</span> Vendor B has strict penalty clauses.</td>
+                            <td><span style="background:var(--warning-bg); color:var(--warning); padding:2px 4px; border-radius:4px; font-weight:bold; font-size: 1.0rem;">RISK</span> Vendor B has strict penalty clauses.</td>
                         </tr>
                     `;
                 } else if (docA.id.includes('contract') || docB.id.includes('contract')) {
@@ -5338,13 +5338,13 @@ function renderModule1Docs(container) {
                             <td><strong>Payment Terms</strong></td>
                             <td>45 days of invoice submission</td>
                             <td>20% Advance, 80% within 30 days</td>
-                            <td><span style="background:var(--warning-bg); color:var(--warning); padding:2px 4px; border-radius:4px; font-weight:bold; font-size:0.75rem;">RISK</span> Vendor B requires heavy advance.</td>
+                            <td><span style="background:var(--warning-bg); color:var(--warning); padding:2px 4px; border-radius:4px; font-weight:bold; font-size: 1.0rem;">RISK</span> Vendor B requires heavy advance.</td>
                         </tr>
                         <tr>
                             <td><strong>Liabilities</strong></td>
                             <td>Capped at contract value</td>
                             <td>Uncapped for structural failure</td>
-                            <td><span style="background:var(--danger-bg); color:var(--danger); padding:2px 4px; border-radius:4px; font-weight:bold; font-size:0.75rem;">RED FLAG</span> Vendor B has uncapped liability risk.</td>
+                            <td><span style="background:var(--danger-bg); color:var(--danger); padding:2px 4px; border-radius:4px; font-weight:bold; font-size: 1.0rem;">RED FLAG</span> Vendor B has uncapped liability risk.</td>
                         </tr>
                     `;
                 } else {
@@ -5495,7 +5495,7 @@ function renderCaseStudies(container) {
                     </div>
 
                     <div class="p-3 border rounded mb-4" style="background:#0F172A; color: #38BDF8; font-family: monospace; height: 120px; display:flex; flex-direction:column; justify-content:flex-end; overflow:hidden;">
-                        <div id="sensor-feed" style="font-size: 0.75rem; line-height:1.2;">
+                        <div id="sensor-feed" style="font-size: 1.0rem; line-height:1.2;">
                             > Connecting to Mill Motor A...<br>
                             > Vibration: 2.1mm/s (Normal)<br>
                             > Vibration: 2.2mm/s (Normal)<br>
@@ -5566,7 +5566,7 @@ function renderCaseStudies(container) {
                     </div>
 
                     <div class="p-3 border rounded mb-4" style="background:#0F172A; color: #10B981; font-family: monospace; height: 120px; display:flex; flex-direction:column; justify-content:flex-end; overflow:hidden;">
-                        <div id="invoice-feed" style="font-size: 0.75rem; line-height:1.2;">
+                        <div id="invoice-feed" style="font-size: 1.0rem; line-height:1.2;">
                             > Waiting for batch...<br>
                         </div>
                     </div>
@@ -5599,7 +5599,7 @@ function renderCaseStudies(container) {
                     </div>
 
                     <div class="p-3 border rounded mb-4" style="background:#0F172A; color: #F8FAFC; font-family: monospace; height: 150px; display:flex; flex-direction:column; justify-content:flex-end; overflow:hidden;">
-                        <div id="vercel-feed" style="font-size: 0.75rem; line-height:1.2;">
+                        <div id="vercel-feed" style="font-size: 1.0rem; line-height:1.2;">
                             > Ready to deploy to production...<br>
                         </div>
                     </div>
@@ -5615,7 +5615,7 @@ function renderCaseStudies(container) {
                             </div>
                         </div>
                         <div style="height: 250px; border: 1px dashed #cbd5e1; border-radius: 8px; padding: 1rem; display: flex; align-items: center; justify-content: center; flex-direction: column;">
-                            <span style="font-size: 4rem;">🚀</span>
+                            <span style="font-size: 4.0rem;">🚀</span>
                             <h3 class="mt-2">Build Completed</h3>
                             <p class="text-muted text-sm">100% Uptime Guaranteed</p>
                         </div>
@@ -5670,7 +5670,7 @@ function renderCaseStudies(container) {
                     </div>
 
                     <div class="p-3 border rounded mb-4" style="background:#0F172A; color: #38BDF8; font-family: monospace; height: 120px; display:flex; flex-direction:column; justify-content:flex-end; overflow:hidden;">
-                        <div id="logistics-feed" style="font-size: 0.75rem; line-height:1.2;">
+                        <div id="logistics-feed" style="font-size: 1.0rem; line-height:1.2;">
                             > Tracking 120 active fleets...<br>
                         </div>
                     </div>
@@ -5703,7 +5703,7 @@ function renderCaseStudies(container) {
                     </div>
 
                     <div class="p-3 border rounded mb-4" style="background:#0F172A; color: #EF4444; font-family: monospace; height: 120px; display:flex; flex-direction:column; justify-content:flex-end; overflow:hidden;">
-                        <div id="safety-feed" style="font-size: 0.75rem; line-height:1.2;">
+                        <div id="safety-feed" style="font-size: 1.0rem; line-height:1.2;">
                             > Connecting to Site CCTV feeds...<br>
                         </div>
                     </div>
@@ -6086,10 +6086,10 @@ function renderProductivityForms(container) {
         let html = '<div class="flex gap-2 flex-wrap" style="display:flex; gap: 0.5rem; flex-wrap: wrap;">';
         hoursArr.forEach(h => {
             const isActive = h === selected;
-            html += `<button type="button" class="btn hour-btn ${isActive ? 'btn-primary' : 'btn-secondary'}" data-hour="${h}" data-prefix="${prefix}" style="min-width: 44px; height: 44px; padding: 0; display: inline-flex; align-items: center; justify-content: center; border-radius: 8px; font-weight: 700; font-size: 0.9rem; border: 1px solid ${isActive ? 'var(--primary)' : '#CBD5E1'}; position:relative;"><span style="pointer-events:none;">${h}</span></button>`;
+            html += `<button type="button" class="btn hour-btn ${isActive ? 'btn-primary' : 'btn-secondary'}" data-hour="${h}" data-prefix="${prefix}" style="min-width: 44px; height: 44px; padding: 0; display: inline-flex; align-items: center; justify-content: center; border-radius: 8px; font-weight: 700; font-size: 1.15rem; border: 1px solid ${isActive ? 'var(--primary)' : '#CBD5E1'}; position:relative;"><span style="pointer-events:none;">${h}</span></button>`;
         });
         html += '</div>';
-        html += `<div style="margin-top:0.5rem; font-size:0.78rem; color:var(--text-muted);">Selected: <strong style="color:var(--accent);">${selected} hr${selected !== 1 ? 's' : ''} / week</strong></div>`;
+        html += `<div style="margin-top:0.5rem; font-size: 1.03rem; color:var(--text-muted);">Selected: <strong style="color:var(--accent);">${selected} hr${selected !== 1 ? 's' : ''} / week</strong></div>`;
         return html;
     }
     
@@ -6103,45 +6103,45 @@ function renderProductivityForms(container) {
                         <p class="text-muted">Analyze your productivity gains, AI utilization shift, and satisfaction delta before and after the sessions.</p>
                     </div>
                     <div style="width:100px; height:100px; flex-shrink:0; position:relative; display:flex; align-items:center; justify-content:center; margin-top:-20px;">
-                        <div style="width:80px; height:80px; background:linear-gradient(135deg,rgba(255,222,89,0.15),rgba(124,58,237,0.08)); border:2px solid rgba(255,222,89,0.5); border-radius:18px; display:flex; align-items:center; justify-content:center; box-shadow:0 10px 30px rgba(0,0,0,0.4),0 0 20px rgba(255,222,89,0.2); animation:modFloat 3s ease-in-out 1.5s infinite; font-size:2.2rem; position:relative;">🤖
+                        <div style="width:80px; height:80px; background:linear-gradient(135deg,rgba(255,222,89,0.15),rgba(124,58,237,0.08)); border:2px solid rgba(255,222,89,0.5); border-radius:18px; display:flex; align-items:center; justify-content:center; box-shadow:0 10px 30px rgba(0,0,0,0.4),0 0 20px rgba(255,222,89,0.2); animation:modFloat 3s ease-in-out 1.5s infinite; font-size: 2.2rem; position:relative;">🤖
                             <div style="position:absolute; top:-3px; right:-3px; width:8px; height:8px; background:#10B981; border-radius:50%; box-shadow:0 0 6px #10B981; animation:blinkDot 1s ease-in-out infinite;"></div>
                         </div>
                         <div style="position:absolute; inset:-6px; border:1px solid rgba(255,222,89,0.15); border-radius:24px; animation:modSpin 6s linear infinite;"></div>
                     </div>
                 </div>
                 <button id="btn-show-qr" class="btn btn-secondary" style="display:inline-flex; align-items:center; gap:0.5rem; white-space:nowrap; font-weight:600; padding: 0.6rem 1.2rem; border-radius: 8px; flex-shrink:0;" title="Show QR code for employees to scan">
-                    <span style="font-size:1.25rem;">📱</span><span class="qr-btn-text"> Show QR Code for Employees</span>
+                    <span style="font-size: 1.25rem;">📱</span><span class="qr-btn-text"> Show QR Code for Employees</span>
                 </button>
             </div>
 
             <!-- QR Code Modal Overlay -->
             <div id="qr-modal-overlay" style="display:none; position:fixed; inset:0; background:rgba(10,25,47,0.7); z-index:9999; backdrop-filter:blur(6px); animation: fadeInOverlay 0.25s ease;" onclick="if(event.target===this) document.getElementById('qr-modal-overlay').style.display='none';">
                 <div style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); background:white; border-radius:20px; box-shadow:0 32px 80px rgba(10,25,47,0.3); padding:2.5rem; max-width:520px; width:90%; text-align:center; animation: scaleInModal 0.25s ease;">
-                    <button onclick="document.getElementById('qr-modal-overlay').style.display='none'" style="position:absolute; top:1rem; right:1rem; background:none; border:none; font-size:1.5rem; cursor:pointer; color:#94A3B8; line-height:1;">✕</button>
+                    <button onclick="document.getElementById('qr-modal-overlay').style.display='none'" style="position:absolute; top:1rem; right:1rem; background:none; border:none; font-size: 1.5rem; cursor:pointer; color:#94A3B8; line-height:1;">✕</button>
 
                     <div style="margin-bottom:0.5rem;">
-                        <span style="background:#0A192F; color:white; padding:0.35rem 1rem; border-radius:50px; font-size:0.72rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase;">DEC AI FOUNDATIONS</span>
+                        <span style="background:#0A192F; color:white; padding:0.35rem 1rem; border-radius:50px; font-size: 0.97rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase;">DEC AI FOUNDATIONS</span>
                     </div>
-                    <h3 style="font-family:var(--font-heading); font-size:1.5rem; color:#0A192F; margin:0.75rem 0 0.4rem;">Employee Feedback QR Code</h3>
-                    <p style="font-size:0.85rem; color:#64748B; margin-bottom:1.5rem;">Employees scan this code to directly open the feedback form. Responses are saved to Excel automatically.</p>
+                    <h3 style="font-family:var(--font-heading); font-size: 1.5rem; color:#0A192F; margin:0.75rem 0 0.4rem;">Employee Feedback QR Code</h3>
+                    <p style="font-size: 1.1rem; color:#64748B; margin-bottom:1.5rem;">Employees scan this code to directly open the feedback form. Responses are saved to Excel automatically.</p>
 
                     <div style="position:relative; display:inline-block; margin-bottom:1.5rem;">
                         <div class="qr-zoom-wrapper" title="Click to zoom in/out" onclick="this.classList.toggle('zoomed-qr')" style="display:inline-block; padding:1rem; border:3px solid #0A192F; border-radius:16px; background:white; box-shadow:0 8px 24px rgba(10,25,47,0.12); cursor:zoom-in; transition:all 0.3s ease;">
                             <div id="qr-modal-code"></div>
                         </div>
-                        <div style="position:absolute; bottom:-22px; left:0; right:0; text-align:center; font-size:0.85rem; color:#64748B; font-weight:600; pointer-events:none;">🔍 Click QR to Zoom</div>
+                        <div style="position:absolute; bottom:-22px; left:0; right:0; text-align:center; font-size: 1.1rem; color:#64748B; font-weight:600; pointer-events:none;">🔍 Click QR to Zoom</div>
                     </div>
 
-                    <div style="background:#F1F5F9; border-radius:8px; padding:0.5rem 1rem; font-size:0.75rem; font-family:monospace; color:#64748B; margin-bottom:1.5rem; word-break:break-all;">
+                    <div style="background:#F1F5F9; border-radius:8px; padding:0.5rem 1rem; font-size: 1.0rem; font-family:monospace; color:#64748B; margin-bottom:1.5rem; word-break:break-all;">
                         https://dec-infra-dec-industries.vercel.app/#/productivity
                     </div>
 
                     <div style="display:flex; gap:0.75rem; justify-content:center; flex-wrap:wrap;">
-                        <button onclick="window.open('qr-feedback.html','_blank')" style="display:inline-flex; align-items:center; gap:0.5rem; background:#0A192F; color:white; border:none; padding:0.65rem 1.4rem; border-radius:8px; font-size:0.875rem; font-weight:600; cursor:pointer;">🖨️ Open Print Poster</button>
-                        <button onclick="downloadQRFromModal()" style="display:inline-flex; align-items:center; gap:0.5rem; background:#F59E0B; color:#0A192F; border:none; padding:0.65rem 1.4rem; border-radius:8px; font-size:0.875rem; font-weight:600; cursor:pointer;">⬇️ Download QR Image</button>
+                        <button onclick="window.open('qr-feedback.html','_blank')" style="display:inline-flex; align-items:center; gap:0.5rem; background:#0A192F; color:white; border:none; padding:0.65rem 1.4rem; border-radius:8px; font-size: 1.125rem; font-weight:600; cursor:pointer;">🖨️ Open Print Poster</button>
+                        <button onclick="downloadQRFromModal()" style="display:inline-flex; align-items:center; gap:0.5rem; background:#F59E0B; color:#0A192F; border:none; padding:0.65rem 1.4rem; border-radius:8px; font-size: 1.125rem; font-weight:600; cursor:pointer;">⬇️ Download QR Image</button>
                     </div>
 
-                    <div style="background:#FEF3C7; border:1px solid rgba(245,158,11,0.3); border-radius:8px; padding:0.75rem 1rem; font-size:0.8rem; color:#92400E; margin-top:1.25rem; text-align:left;">
+                    <div style="background:#FEF3C7; border:1px solid rgba(245,158,11,0.3); border-radius:8px; padding:0.75rem 1rem; font-size: 1.05rem; color:#92400E; margin-top:1.25rem; text-align:left;">
                         💡 <strong>Tip for Sir:</strong> Open the Print Poster page and press Ctrl+P to print a clean A4 QR poster. Place it in the training room before the session starts.
                     </div>
                 </div>
@@ -6297,7 +6297,7 @@ function renderProductivityForms(container) {
                                 </select>
                             </div>
 
-                            <button type="submit" class="btn btn-accent w-full" style="padding: 0.75rem; font-size: 1rem; margin-top: 1rem;">
+                            <button type="submit" class="btn btn-accent w-full" style="padding: 0.75rem; font-size: 1.0rem; margin-top: 1rem;">
                                 ${beforeData ? 'Update Baseline Survey' : 'Submit Baseline Survey'}
                             </button>
                         </form>
@@ -6368,7 +6368,7 @@ function renderProductivityForms(container) {
                                 <textarea id="after-feedback" class="form-control" rows="4" placeholder="e.g., - Learned how to write structured system prompts to act as a Site Manager.\n- Discovered Data Labs to find ledgers anomalies automatically.\n- Gained understanding of green/amber/red data classification rules to prevent leaks." required>${afterData ? afterData.feedbackPointers : ''}</textarea>
                             </div>
 
-                            <button type="submit" class="btn btn-accent w-full" style="padding: 0.75rem; font-size: 1rem; margin-top: 1rem;">
+                            <button type="submit" class="btn btn-accent w-full" style="padding: 0.75rem; font-size: 1.0rem; margin-top: 1rem;">
                                 ${afterData ? 'Update Feedback & View ROI' : 'Submit Feedback & View ROI'}
                             </button>
                         </form>
@@ -6397,22 +6397,22 @@ function renderProductivityForms(container) {
                     <div class="flex gap-4 mt-8 flex-wrap" style="display:flex; gap:1.5rem; flex-wrap:wrap; margin-top:2rem;">
                         <div style="flex:1; min-width:180px; background:rgba(255,255,255,0.08); padding:1.25rem; border-radius:8px; border:1px solid rgba(255,255,255,0.1);">
                             <div class="text-xs" style="color:var(--accent); text-transform:uppercase; font-weight:600; letter-spacing:0.05em;">AI Integration</div>
-                            <div style="font-size:2.25rem; font-weight:700; margin-top:0.5rem; font-family:var(--font-heading);">${b.aiUsagePct}% ➔ ${a.aiUsagePct}%</div>
+                            <div style="font-size: 2.25rem; font-weight:700; margin-top:0.5rem; font-family:var(--font-heading);">${b.aiUsagePct}% ➔ ${a.aiUsagePct}%</div>
                             <div class="text-xs text-muted" style="color:#94A3B8 !important; margin-top:0.25rem;">+${a.aiUsagePct - b.aiUsagePct}% active workflows</div>
                         </div>
                         <div style="flex:1; min-width:180px; background:rgba(255,255,255,0.08); padding:1.25rem; border-radius:8px; border:1px solid rgba(255,255,255,0.1);">
                             <div class="text-xs" style="color:var(--accent); text-transform:uppercase; font-weight:600; letter-spacing:0.05em;">Weekly Time Saved</div>
-                            <div style="font-size:2.25rem; font-weight:700; margin-top:0.5rem; font-family:var(--font-heading);">${timeSaved} hrs</div>
+                            <div style="font-size: 2.25rem; font-weight:700; margin-top:0.5rem; font-family:var(--font-heading);">${timeSaved} hrs</div>
                             <div class="text-xs text-muted" style="color:#94A3B8 !important; margin-top:0.25rem;">${timeSavedPct}% reduction in manual delay</div>
                         </div>
                         <div style="flex:1; min-width:180px; background:rgba(255,255,255,0.08); padding:1.25rem; border-radius:8px; border:1px solid rgba(255,255,255,0.1);">
                             <div class="text-xs" style="color:var(--accent); text-transform:uppercase; font-weight:600; letter-spacing:0.05em;">Annual Hours Gained</div>
-                            <div style="font-size:2.25rem; font-weight:700; margin-top:0.5rem; font-family:var(--font-heading);">${annualHoursSaved} hrs</div>
+                            <div style="font-size: 2.25rem; font-weight:700; margin-top:0.5rem; font-family:var(--font-heading);">${annualHoursSaved} hrs</div>
                             <div class="text-xs text-muted" style="color:#94A3B8 !important; margin-top:0.25rem;">Reclaimed for core activities</div>
                         </div>
                         <div style="flex:1; min-width:180px; background:rgba(255,255,255,0.08); padding:1.25rem; border-radius:8px; border:1px solid rgba(255,255,255,0.1);">
                             <div class="text-xs" style="color:var(--accent); text-transform:uppercase; font-weight:600; letter-spacing:0.05em;">AI Tool Rating Shift</div>
-                            <div style="font-size:2.25rem; font-weight:700; margin-top:0.5rem; font-family:var(--font-heading);">${b.chatgptRating}/10 ➔ ${a.chatgptRating}/10</div>
+                            <div style="font-size: 2.25rem; font-weight:700; margin-top:0.5rem; font-family:var(--font-heading);">${b.chatgptRating}/10 ➔ ${a.chatgptRating}/10</div>
                             <div class="text-xs text-muted" style="color:#94A3B8 !important; margin-top:0.25rem;">${utilityGainPct >= 0 ? '+' : ''}${utilityGainPct}% output quality jump</div>
                         </div>
                     </div>
@@ -6484,46 +6484,46 @@ function renderProductivityForms(container) {
                         <div style="background: linear-gradient(135deg, #0A192F 0%, #112240 60%, #1a3a6b 100%); padding: 2.5rem 3rem; border-radius: 0 0 24px 24px; text-align:center; position:relative; overflow:hidden;">
                             <div style="position:absolute; top:-60px; right:-60px; width:200px; height:200px; background:rgba(245,158,11,0.08); border-radius:50%;"></div>
                             <div style="position:absolute; bottom:-40px; left:-40px; width:160px; height:160px; background:rgba(16,185,129,0.06); border-radius:50%;"></div>
-                            <div style="font-size:3rem; margin-bottom:0.5rem;">🏆</div>
-                            <div style="font-family:'Outfit',sans-serif; font-size:0.72rem; font-weight:700; color:#F59E0B; letter-spacing:0.15em; text-transform:uppercase; margin-bottom:0.5rem;">Certificate of Completion</div>
-                            <h1 style="font-family:'Outfit',sans-serif; color:white; font-size:2rem; margin:0 0 0.25rem; font-weight:800;">DEC AI FOUNDATIONS</h1>
-                            <div style="color:rgba(255,255,255,0.6); font-size:0.85rem; margin-bottom:1.5rem;">Enterprise AI Training Program &nbsp;|&nbsp; ${today}</div>
+                            <div style="font-size: 3.0rem; margin-bottom:0.5rem;">🏆</div>
+                            <div style="font-family:'Outfit',sans-serif; font-size: 0.97rem; font-weight:700; color:#F59E0B; letter-spacing:0.15em; text-transform:uppercase; margin-bottom:0.5rem;">Certificate of Completion</div>
+                            <h1 style="font-family:'Outfit',sans-serif; color:white; font-size: 2.0rem; margin:0 0 0.25rem; font-weight:800;">DEC AI FOUNDATIONS</h1>
+                            <div style="color:rgba(255,255,255,0.6); font-size: 1.1rem; margin-bottom:1.5rem;">Enterprise AI Training Program &nbsp;|&nbsp; ${today}</div>
                             <div style="background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2); border-radius:12px; padding:1.25rem 2rem; display:inline-block; max-width:600px;">
-                                <div style="color:rgba(255,255,255,0.7); font-size:0.8rem; margin-bottom:0.4rem;">This certifies that</div>
-                                <div style="font-size:1.75rem; font-weight:700; color:white; font-family:'Outfit',sans-serif;">${b.name || 'Participant'}</div>
-                                <div style="color:rgba(255,255,255,0.7); font-size:0.85rem; margin-top:0.4rem;">has successfully completed the <strong style="color:#F59E0B;">6-Hour AI Foundations</strong> program covering prompt engineering, data intelligence, safe AI usage & AI assistant building.</div>
+                                <div style="color:rgba(255,255,255,0.7); font-size: 1.05rem; margin-bottom:0.4rem;">This certifies that</div>
+                                <div style="font-size: 1.75rem; font-weight:700; color:white; font-family:'Outfit',sans-serif;">${b.name || 'Participant'}</div>
+                                <div style="color:rgba(255,255,255,0.7); font-size: 1.1rem; margin-top:0.4rem;">has successfully completed the <strong style="color:#F59E0B;">6-Hour AI Foundations</strong> program covering prompt engineering, data intelligence, safe AI usage & AI assistant building.</div>
                             </div>
                         </div>
 
                         <!-- ROI METRIC CARDS -->
                         <div style="padding: 2rem 3rem 1rem;">
-                            <h2 style="font-family:'Outfit',sans-serif; color:#0A192F; font-size:1.1rem; font-weight:700; margin-bottom:1.25rem; display:flex; align-items:center; gap:0.5rem;">📊 Productivity Impact Summary</h2>
+                            <h2 style="font-family:'Outfit',sans-serif; color:#0A192F; font-size: 1.1rem; font-weight:700; margin-bottom:1.25rem; display:flex; align-items:center; gap:0.5rem;">📊 Productivity Impact Summary</h2>
                             <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:1rem; margin-bottom:2rem;">
                                 <div style="background:linear-gradient(135deg,#0A192F,#1a3a6b); border-radius:12px; padding:1.25rem; text-align:center; color:white;">
-                                    <div style="font-size:0.68rem; font-weight:700; color:#F59E0B; letter-spacing:0.08em; text-transform:uppercase; margin-bottom:0.5rem;">AI Integration</div>
-                                    <div style="font-size:1.5rem; font-weight:800; font-family:'Outfit',sans-serif;">${b.aiUsagePct}%→${a.aiUsagePct}%</div>
-                                    <div style="font-size:0.72rem; color:rgba(255,255,255,0.6); margin-top:0.25rem;">+${a.aiUsagePct-b.aiUsagePct}% shift</div>
+                                    <div style="font-size: 0.93rem; font-weight:700; color:#F59E0B; letter-spacing:0.08em; text-transform:uppercase; margin-bottom:0.5rem;">AI Integration</div>
+                                    <div style="font-size: 1.5rem; font-weight:800; font-family:'Outfit',sans-serif;">${b.aiUsagePct}%→${a.aiUsagePct}%</div>
+                                    <div style="font-size: 0.97rem; color:rgba(255,255,255,0.6); margin-top:0.25rem;">+${a.aiUsagePct-b.aiUsagePct}% shift</div>
                                 </div>
                                 <div style="background:linear-gradient(135deg,#064e3b,#065f46); border-radius:12px; padding:1.25rem; text-align:center; color:white;">
-                                    <div style="font-size:0.68rem; font-weight:700; color:#6EE7B7; letter-spacing:0.08em; text-transform:uppercase; margin-bottom:0.5rem;">Weekly Time Saved</div>
-                                    <div style="font-size:1.5rem; font-weight:800; font-family:'Outfit',sans-serif;">${timeSaved} hrs</div>
-                                    <div style="font-size:0.72rem; color:rgba(255,255,255,0.6); margin-top:0.25rem;">${timeSavedPct}% reduction</div>
+                                    <div style="font-size: 0.93rem; font-weight:700; color:#6EE7B7; letter-spacing:0.08em; text-transform:uppercase; margin-bottom:0.5rem;">Weekly Time Saved</div>
+                                    <div style="font-size: 1.5rem; font-weight:800; font-family:'Outfit',sans-serif;">${timeSaved} hrs</div>
+                                    <div style="font-size: 0.97rem; color:rgba(255,255,255,0.6); margin-top:0.25rem;">${timeSavedPct}% reduction</div>
                                 </div>
                                 <div style="background:linear-gradient(135deg,#1e1b4b,#312e81); border-radius:12px; padding:1.25rem; text-align:center; color:white;">
-                                    <div style="font-size:0.68rem; font-weight:700; color:#A5B4FC; letter-spacing:0.08em; text-transform:uppercase; margin-bottom:0.5rem;">Annual Hours Gained</div>
-                                    <div style="font-size:1.5rem; font-weight:800; font-family:'Outfit',sans-serif;">${annualHoursSaved} hrs</div>
-                                    <div style="font-size:0.72rem; color:rgba(255,255,255,0.6); margin-top:0.25rem;">per year reclaimed</div>
+                                    <div style="font-size: 0.93rem; font-weight:700; color:#A5B4FC; letter-spacing:0.08em; text-transform:uppercase; margin-bottom:0.5rem;">Annual Hours Gained</div>
+                                    <div style="font-size: 1.5rem; font-weight:800; font-family:'Outfit',sans-serif;">${annualHoursSaved} hrs</div>
+                                    <div style="font-size: 0.97rem; color:rgba(255,255,255,0.6); margin-top:0.25rem;">per year reclaimed</div>
                                 </div>
                                 <div style="background:linear-gradient(135deg,#78350f,#92400e); border-radius:12px; padding:1.25rem; text-align:center; color:white;">
-                                    <div style="font-size:0.68rem; font-weight:700; color:#FCD34D; letter-spacing:0.08em; text-transform:uppercase; margin-bottom:0.5rem;">AI Tool Rating</div>
-                                    <div style="font-size:1.5rem; font-weight:800; font-family:'Outfit',sans-serif;">${b.chatgptRating}→${a.chatgptRating}/10</div>
-                                    <div style="font-size:0.72rem; color:rgba(255,255,255,0.6); margin-top:0.25rem;">+${a.chatgptRating-b.chatgptRating} marks gain</div>
+                                    <div style="font-size: 0.93rem; font-weight:700; color:#FCD34D; letter-spacing:0.08em; text-transform:uppercase; margin-bottom:0.5rem;">AI Tool Rating</div>
+                                    <div style="font-size: 1.5rem; font-weight:800; font-family:'Outfit',sans-serif;">${b.chatgptRating}→${a.chatgptRating}/10</div>
+                                    <div style="font-size: 0.97rem; color:rgba(255,255,255,0.6); margin-top:0.25rem;">+${a.chatgptRating-b.chatgptRating} marks gain</div>
                                 </div>
                             </div>
 
                             <!-- DETAILED TABLE -->
-                            <h2 style="font-family:'Outfit',sans-serif; color:#0A192F; font-size:1rem; font-weight:700; margin-bottom:0.75rem;">📋 Detailed Assessment Comparison</h2>
-                            <table style="width:100%; border-collapse:collapse; border-radius:10px; overflow:hidden; font-size:0.875rem; margin-bottom:2rem;">
+                            <h2 style="font-family:'Outfit',sans-serif; color:#0A192F; font-size: 1.0rem; font-weight:700; margin-bottom:0.75rem;">📋 Detailed Assessment Comparison</h2>
+                            <table style="width:100%; border-collapse:collapse; border-radius:10px; overflow:hidden; font-size: 1.125rem; margin-bottom:2rem;">
                                 <thead>
                                     <tr style="background:#0A192F; color:white;">
                                         <th style="padding:12px 14px; text-align:left;">Parameter</th>
@@ -6555,18 +6555,18 @@ function renderProductivityForms(container) {
                             </table>
 
                             <!-- FEEDBACK SECTION -->
-                            <h2 style="font-family:'Outfit',sans-serif; color:#0A192F; font-size:1rem; font-weight:700; margin-bottom:0.75rem;">💬 My Key Takeaways & Learnings</h2>
-                            <div style="background:#FFFBEB; border:1px solid #F59E0B; border-left:5px solid #F59E0B; border-radius:10px; padding:1.5rem; font-size:0.9rem; line-height:1.8; color:#1E293B; white-space:pre-wrap; margin-bottom:2rem; font-style:italic;">${a.feedbackPointers}</div>
+                            <h2 style="font-family:'Outfit',sans-serif; color:#0A192F; font-size: 1.0rem; font-weight:700; margin-bottom:0.75rem;">💬 My Key Takeaways & Learnings</h2>
+                            <div style="background:#FFFBEB; border:1px solid #F59E0B; border-left:5px solid #F59E0B; border-radius:10px; padding:1.5rem; font-size: 1.15rem; line-height:1.8; color:#1E293B; white-space:pre-wrap; margin-bottom:2rem; font-style:italic;">${a.feedbackPointers}</div>
 
                             <!-- ANNUAL ROI CALLOUT -->
                             <div style="background:linear-gradient(135deg,#ECFDF5,#D1FAE5); border:2px solid #10B981; border-radius:14px; padding:1.5rem 2rem; text-align:center; margin-bottom:1.5rem;">
-                                <div style="font-size:0.75rem; font-weight:700; color:#065F46; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:0.5rem;">🌟 Total Annual Productivity Gain</div>
-                                <div style="font-size:2.5rem; font-weight:800; color:#065F46; font-family:'Outfit',sans-serif;">${annualHoursSaved} Hours / Year</div>
-                                <div style="font-size:0.85rem; color:#047857; margin-top:0.25rem;">Reclaimed from manual tasks · Calculated over 52 business weeks</div>
+                                <div style="font-size: 1.0rem; font-weight:700; color:#065F46; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:0.5rem;">🌟 Total Annual Productivity Gain</div>
+                                <div style="font-size: 2.5rem; font-weight:800; color:#065F46; font-family:'Outfit',sans-serif;">${annualHoursSaved} Hours / Year</div>
+                                <div style="font-size: 1.1rem; color:#047857; margin-top:0.25rem;">Reclaimed from manual tasks · Calculated over 52 business weeks</div>
                             </div>
 
                             <!-- FOOTER -->
-                            <div style="border-top:2px solid #E2E8F0; padding-top:1rem; display:flex; justify-content:space-between; align-items:center; font-size:0.75rem; color:#94A3B8;">
+                            <div style="border-top:2px solid #E2E8F0; padding-top:1rem; display:flex; justify-content:space-between; align-items:center; font-size: 1.0rem; color:#94A3B8;">
                                 <span>DEC Infra &amp; DEC Industries &nbsp;|&nbsp; AI Foundations Training</span>
                                 <span>Generated: ${today}</span>
                             </div>
@@ -6733,7 +6733,7 @@ function renderDatasetHub(container) {
                 <div class="p-3 border rounded cursor-pointer dataset-select-item ${isActive ? 'active-dataset' : ''}" 
                      data-id="${d.id}" 
                      style="border-radius: 6px; border: 1px solid ${isActive ? 'var(--accent)' : '#CBD5E1'}; background: ${isActive ? '#F8FAFC' : 'var(--bg-main)'}; cursor: pointer; transition: all 0.2s;">
-                    <h4 style="margin: 0; font-size: 0.95rem; font-weight: 600; color: ${isActive ? 'var(--accent)' : 'var(--text-main)'};">${d.name}</h4>
+                    <h4 style="margin: 0; font-size: 1.2rem; font-weight: 600; color: ${isActive ? 'var(--accent)' : 'var(--text-main)'};">${d.name}</h4>
                     <p class="text-xs text-muted" style="margin: 0.25rem 0 0 0; line-height: 1.4;">${d.desc}</p>
                 </div>
             `;
@@ -6803,7 +6803,7 @@ function renderDatasetHub(container) {
 
                         <!-- Preview Table -->
                         <div class="table-responsive" style="max-height: 300px; overflow: auto; border: 1px solid var(--border-color); border-radius: 6px; background: var(--bg-main);">
-                            <table class="table" style="margin: 0; font-size: 0.85rem;">
+                            <table class="table" style="margin: 0; font-size: 1.1rem;">
                                 <thead>
                                     <tr>
                                         ${headersHtml}
@@ -6817,7 +6817,7 @@ function renderDatasetHub(container) {
                     </div>
 
                     <!-- Instruction Card for uploading to Claude -->
-                    <div style="background: rgba(0, 0, 0, 0.3); border-left: 4px solid var(--primary); padding: 1rem; border-radius: 4px; margin-top: 1.5rem; font-size: 0.85rem;">
+                    <div style="background: rgba(0, 0, 0, 0.3); border-left: 4px solid var(--primary); padding: 1rem; border-radius: 4px; margin-top: 1.5rem; font-size: 1.1rem;">
                         <h4 style="margin: 0 0 0.25rem 0; color: var(--text-main); font-weight: 600;">💡 Training Exercise Tip for Claude Projects:</h4>
                         <p style="margin: 0; color: var(--text-muted); line-height: 1.5;">Click <b>Download CSV</b> to save this file to your computer. Then, open your Claude Project, upload this CSV under the "Project Knowledge" section, and prompt your assistant to audit the file or analyze the records for potential anomalies!</p>
                     </div>

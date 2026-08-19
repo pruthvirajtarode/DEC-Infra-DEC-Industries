@@ -4141,6 +4141,7 @@ function renderModule3(container) {
           { q: "15. Ask how to write a change order justification", ans: "SAFE", why: "Asking for a generic template or instructions is completely safe.", opts: [{l:"SAFE ✓",v:"SAFE"}, {l:"ANONYMIZE ⚠",v:"ANONYMIZE"}, {l:"RISKY ✗",v:"RISKY"}] }
         ];
 
+        window.state = window.state || {};
         window.state.scores = { "Hallucinations (3)": {correct:0, total:3}, "Data Safety (15)": {correct:0, total:15} };
         window.state.hIndex = 0;
         window.state.dIndex = 0;

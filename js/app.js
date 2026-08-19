@@ -1137,409 +1137,224 @@ Keep email tone: professional but friendly. Include subject line. Sign as [Your 
 
 </div>`;
         } else if (activeSubTab === '1b') {
-            contentHtml = `<div class="excel-module">
-  <h2 style="font-size: 18px; font-weight: 500; margin: 0 0 20px; color: #FFFFFF;">Module 1B: Protect & Analyze Excel Files with AI</h2>
+            contentHtml = `
+<style>
 
-  <div class="tabs-container">
-    <button class="tab-btn active" onclick="switchTab(event, 'demo1')">Budget Analysis</button>
-    <button class="tab-btn" onclick="switchTab(event, 'demo2')">Variance Analysis</button>
-    <button class="tab-btn" onclick="switchTab(event, 'demo3')">Data Protection</button>
-    <button class="tab-btn" onclick="switchTab(event, 'demo4')">Cost Breakdown</button>
-  </div>
+:root{
+  --ink:#E2E8F0;
+  --ink-soft:#94A3B8;
+  --canvas:var(--bg-main);
+  --card:var(--bg-card);
+  --line:var(--border-color);
+  --line-soft:rgba(255,255,255,0.05);
 
-  <!-- DEMO 1: Budget Analysis -->
-  <div id="demo1" class="tab-content active">
-    <div class="demo-card">
-      <div class="role-badge">Project Manager / Finance</div>
-      <h3 class="demo-title">
-        <span>💰</span>
-        AI Budget Variance Analysis (Live Demo)
-      </h3>
+  --role:#3355D1;
+  --task:#0E7C66;
+  --context:#C9761B;
+  --format:#7A3EA1;
+  --tone:#C42D62;
+  --neutral:#6E7A8C;
 
-      <div style="margin-bottom: 16px;">
-        <p style="font-size: 18px; color: #9CA3AF; margin: 0 0 12px; font-weight: 500;">Scenario: IISER Library Project - Monthly Budget Review</p>
-        <p style="font-size: 17px; color: #9CA3AF; margin: 0;">Raw Excel data (scraped values from your spreadsheet):</p>
-      </div>
+  --good:#0E7C66;
+  --bad:#C42D62;
 
-      <table class="data-table">
-        <thead>
-          <tr>
-            <th>Budget Line Item</th>
-            <th>Budgeted (₹ Lacs)</th>
-            <th>Spent to Date (₹ Lacs)</th>
-            <th>% Spent</th>
-            <th>Remaining (₹ Lacs)</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Civil Works - Foundation</td>
-            <td>45.00</td>
-            <td>48.50</td>
-            <td>107.8%</td>
-            <td>-3.50</td>
-          </tr>
-          <tr>
-            <td>Structural - RCC Frame</td>
-            <td>65.00</td>
-            <td>52.30</td>
-            <td>80.5%</td>
-            <td>12.70</td>
-          </tr>
-          <tr>
-            <td>MEP (Mechanical)</td>
-            <td>28.00</td>
-            <td>15.20</td>
-            <td>54.3%</td>
-            <td>12.80</td>
-          </tr>
-          <tr>
-            <td>Electrical Systems</td>
-            <td>22.00</td>
-            <td>18.90</td>
-            <td>85.9%</td>
-            <td>3.10</td>
-          </tr>
-          <tr>
-            <td>Finishes (Paint, Flooring)</td>
-            <td>35.00</td>
-            <td>8.50</td>
-            <td>24.3%</td>
-            <td>26.50</td>
-          </tr>
-          <tr style="background: #1C1C1C; font-weight: 500;">
-            <td>TOTAL</td>
-            <td>195.00</td>
-            <td>143.40</td>
-            <td>73.5%</td>
-            <td>51.60</td>
-          </tr>
-        </tbody>
-      </table>
+  --r:14px;
+  --shadow:0 1px 0 rgba(16,27,46,.06), 0 6px 18px -8px rgba(16,27,46,.28);
+  --dur:.22s;
+}
+@media (prefers-reduced-motion: reduce){
+  :root{--dur:0.001s}
+  *{animation:none !important; transition-duration:.001s !important}
+}
 
-      <div class="step-section">
-        <strong>Step 1: Copy this data from Excel</strong>
-        <p style="margin: 8px 0 0; font-size: 16px;">Select the table → Copy → Paste into ChatGPT/Claude</p>
-      </div>
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:"DM Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  color:var(--ink);
+  background-color:var(--canvas);
+  background-image:
+    linear-gradient(to right, rgba(16,27,46,.045) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(16,27,46,.045) 1px, transparent 1px);
+  background-size:28px 28px;
+  -webkit-font-smoothing:antialiased;
+  line-height:1.45;
+  min-height:100svh;
+}
+.wrap{max-width:840px;margin:0 auto;padding:20px 16px 64px}
 
-      <div class="step-section">
-        <strong>Step 2: Use this prompt with AI</strong>
-      </div>
+/* ---------- type ---------- */
+h1,h2,h3,.display{font-family:"Bricolage Grotesque","DM Sans",system-ui,sans-serif;font-weight:800;letter-spacing:-.02em;margin:0}
+.eyebrow{
+  font-family:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);
+}
 
-      <div class="prompt-input">Analyze this project budget data from our IISER Library project:
+/* ---------- shell ---------- */
+.topbar{
+  display:flex;align-items:center;gap:12px;justify-content:space-between;
+  margin-bottom:16px;flex-wrap:wrap;
+}
+.brandmark{display:flex;align-items:center;gap:10px}
+.brandmark .glyph{
+  width:30px;height:30px;border-radius:9px;background:var(--ink);color:#F8FAFC;
+  display:grid;place-items:center;font-family:"JetBrains Mono",monospace;font-weight:700;font-size:15px;
+}
+.brandmark b{font-family:"Bricolage Grotesque",sans-serif;font-size:16px;letter-spacing:-.01em}
 
-[PASTE YOUR EXCEL TABLE HERE]
+.pips{display:flex;gap:5px;align-items:center}
+.pip{width:9px;height:9px;border-radius:50%;background:var(--bg-card);border:1.5px solid var(--line);}
+.pip.done{background:var(--good);border-color:var(--good)}
+.pip.now{background:var(--ink);border-color:var(--ink);transform:scale(1.28)}
 
-Provide:
-1. Key findings (which line items are over/under budget?)
-2. Red flags (items exceeding 100% - why?)
-3. Risk assessment (will remaining budget cover finish work?)
-4. Top 3 recommendations to stay on budget
-5. Forecast: If spending continues at current rate, what will final project cost be?
+/* ---------- cards ---------- */
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow)}
+.brief{padding:18px 18px 16px;margin-bottom:14px}
+.brief .eyebrow{display:block;margin-bottom:7px}
+.brief h2{font-size:clamp(19px,4.4vw,25px);line-height:1.2}
+.brief p{margin:9px 0 0;color:var(--ink-soft);font-size:14.5px}
 
-Keep it 200 words max, use rupees, be specific with numbers.</div>
+/* ---------- readout (signature) ---------- */
+.readout{
+  background:var(--ink);color:#D9E3F0;border-radius:var(--r);padding:15px 16px;margin-bottom:14px;
+  font-family:"JetBrains Mono",ui-monospace,Menlo,monospace;font-size:13px;line-height:1.65;
+  min-height:74px;position:relative;overflow-wrap:anywhere;
+}
+.readout .rlabel{
+  font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#7F91A8;display:block;margin-bottom:8px;
+}
+.readout .empty{color:#6B7C93;font-style:italic}
+.readout .seg{display:inline}
+.readout .seg[data-t="role"]{color:#9BB2FF}
+.readout .seg[data-t="task"]{color:#67D9BC}
+.readout .seg[data-t="context"]{color:#F5C065}
+.readout .seg[data-t="format"]{color:#CFA0F0}
+.readout .seg[data-t="tone"]{color:#FF9BBE}
+.caret{display:inline-block;width:8px;height:15px;background:#67D9BC;vertical-align:-3px;margin-left:2px;animation:blink 1.05s steps(1,end) infinite}
+@keyframes blink{50%{opacity:0}}
 
-      <div class="analysis-box">
-        <strong style="color: #10B981;">🤖 Example AI Output:</strong>
-        <p style="margin: 8px 0;">Foundation work is <strong>7.8% over budget</strong> (₹48.5L vs ₹45L budget) - likely due to soil conditions requiring extra reinforcement. RCC frame is on track at 80.5%. Biggest risk: Finishes phase only started (24.3% spent) but ₹26.5L remains - if finish costs inflate (common in India due to labor), project could exceed budget by ₹2-3L. <strong>Recommendation:</strong> Lock finish material rates NOW, negotiate labor contracts, and monitor daily rates on site.</p>
-      </div>
+/* ---------- slots ---------- */
+.rail{display:flex;flex-direction:column;gap:9px;margin-bottom:18px}
+.slot{
+  width:100%;text-align:left;font:inherit;cursor:pointer;
+  background:var(--bg-card);border:1.5px dashed var(--line);border-radius:12px;
+  padding:12px 14px;min-height:58px;display:flex;align-items:center;gap:12px;
+  transition:border-color var(--dur), background var(--dur), transform var(--dur);
+}
+.slot:hover:not(.filled){border-color:var(--ink-soft)}
+.slot.armed{border-color:var(--ink);background:#1E293B;border-style:solid}
+.slot.over{border-color:var(--ink);background:#334155;transform:scale(1.012)}
+.slot .num{
+  font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--ink-soft);
+  border:1px solid var(--line);border-radius:6px;padding:2px 6px;flex:none;
+}
+.slot .hintlabel{font-size:14px;color:var(--ink-soft)}
+.slot .hintlabel .ttl{font-weight:700;color:var(--ink)}
+.slot.filled{border-style:solid;cursor:pointer;background:var(--bg-card)}
+.slot.filled .chipwrap{flex:1;min-width:0}
+.slot.snap{animation:snap .32s cubic-bezier(.2,1.5,.4,1)}
+@keyframes snap{0%{transform:scale(.9)}60%{transform:scale(1.03)}100%{transform:scale(1)}}
+.slot.reject{animation:shake .34s}
+@keyframes shake{0%,100%{transform:translateX(0)}22%{transform:translateX(-7px)}55%{transform:translateX(6px)}80%{transform:translateX(-3px)}}
 
-      <div class="protection-tip">
-        <strong>🔒 Data Protection Tip:</strong> Don't paste sensitive vendor rates or client costs. Instead: "Our Foundation work exceeded budget by 8%. What could cause this?" → AI gives you generic troubleshooting without seeing real amounts.
-      </div>
+/* ---------- chips ---------- */
+.chip{
+  display:inline-flex;align-items:center;gap:9px;font:inherit;text-align:left;
+  border-radius:11px;padding:10px 13px;font-size:14px;line-height:1.35;
+  border:1.5px solid var(--line);background:var(--bg-card);color:var(--ink);cursor:grab;
+  transition:transform var(--dur), box-shadow var(--dur), border-color var(--dur), background var(--dur);
+}
+.chip:active{cursor:grabbing}
+.chip .tag{
+  font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+  padding:3px 6px;border-radius:5px;flex:none;background:rgba(0,0,0,.4);color:#F8FAFC;
+}
+.tray{display:flex;flex-wrap:wrap;gap:9px}
+.tray .chip:hover{transform:translateY(-2px);box-shadow:0 8px 16px -8px rgba(16,27,46,.4);border-color:var(--ink-soft)}
+.tray .chip.picked{border-color:var(--ink);background:var(--ink);color:#F8FAFC;transform:translateY(-2px)}
+.tray .chip.gone{display:none}
+.chip.placed{width:100%;color:#F8FAFC;border-color:transparent}
+.chip.placed[data-t="role"]{background:var(--role)}
+.chip.placed[data-t="task"]{background:var(--task)}
+.chip.placed[data-t="context"]{background:var(--context)}
+.chip.placed[data-t="format"]{background:var(--format)}
+.chip.placed[data-t="tone"]{background:var(--tone)}
+.chip .x{margin-left:auto;flex:none;opacity:.75;font-size:16px;line-height:1}
 
-      <div class="key-section">
-        <strong style="color: #FFFFFF;">🎯 What This Does:</strong>
-        <ul class="insights-list">
-          <li>Spot budget overruns in seconds (would take Excel formulas + manual review)</li>
-          <li>Flags risks automatically (foundation overage → soil issues → supply chain delays?)</li>
-          <li>Suggests corrective actions (negotiate, reallocate, fast-track)</li>
-          <li>Gives you talking points for client calls</li>
-        </ul>
-      </div>
-    </div>
-  </div>
+/* ---------- controls ---------- */
+.traybox{padding:16px;margin-bottom:14px}
+.traybox .eyebrow{display:block;margin-bottom:11px}
+.actions{display:flex;gap:9px;flex-wrap:wrap;align-items:center}
+button.btn{
+  font:inherit;font-weight:700;font-size:14.5px;border-radius:11px;padding:12px 20px;cursor:pointer;
+  border:1.5px solid var(--ink);background:var(--ink);color:#F8FAFC;
+  transition:transform var(--dur), opacity var(--dur), background var(--dur);
+}
+button.btn:hover{transform:translateY(-1px)}
+button.btn.ghost{background:transparent;color:var(--ink);border-color:var(--line)}
+button.btn.ghost:hover{border-color:var(--ink-soft)}
+button.btn:disabled{opacity:.4;cursor:not-allowed;transform:none}
+button.btn.wide{width:100%;justify-content:center;text-align:center}
+:focus-visible{outline:3px solid #3355D1;outline-offset:2px;border-radius:8px}
 
-  <!-- DEMO 2: Variance Analysis -->
-  <div id="demo2" class="tab-content">
-    <div class="demo-card">
-      <div class="role-badge">Project Manager / Cost Controller</div>
-      <h3 class="demo-title">
-        <span>📊</span>
-        AI Detects Budget Variances You Might Miss
-      </h3>
+/* ---------- nudge ---------- */
+.nudge{
+  margin-top:12px;padding:12px 14px;border-radius:11px;font-size:14px;
+  border-left:4px solid var(--bad);background:#FDEEF3;color:#7A1638;
+}
+.nudge.good{border-left-color:var(--good);background:#E7F5F1;color:#0A4E40}
+.nudge b{font-weight:700}
 
-      <p style="font-size: 18px; color: #9CA3AF; margin: 0 0 12px;">Real scenario: Monthly spend by category across 3 concurrent DEC Infra projects:</p>
+/* ---------- result ---------- */
+.result{padding:22px 18px}
+.stars{display:flex;gap:7px;margin:2px 0 12px;font-size:30px;line-height:1}
+.star{color:var(--line);}
+.star.on{color:#E0A21B}
+.why{margin:0 0 16px;font-size:15px;color:var(--ink-soft)}
+.why strong{color:var(--ink)}
+.finalprompt{
+  background:var(--ink);color:#D9E3F0;border-radius:12px;padding:14px 15px;margin-bottom:14px;
+  font-family:"JetBrains Mono",monospace;font-size:12.5px;line-height:1.7;white-space:pre-wrap;overflow-wrap:anywhere;
+}
+.anatomy{list-style:none;margin:0 0 18px;padding:0;display:flex;flex-direction:column;gap:7px}
+.anatomy li{display:flex;gap:10px;font-size:13.5px;align-items:baseline}
+.anatomy .k{
+  font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+  color:#F8FAFC;padding:3px 7px;border-radius:5px;flex:none;min-width:74px;text-align:center;
+}
+.k[data-t="role"]{background:var(--role)}
+.k[data-t="task"]{background:var(--task)}
+.k[data-t="context"]{background:var(--context)}
+.k[data-t="format"]{background:var(--format)}
+.k[data-t="tone"]{background:var(--tone)}
+.anatomy .v{color:var(--ink-soft)}
 
-      <table class="data-table">
-        <thead>
-          <tr>
-            <th>Project</th>
-            <th>Civil Works (₹L)</th>
-            <th>MEP (₹L)</th>
-            <th>Finishes (₹L)</th>
-            <th>Contingency Used (₹L)</th>
-            <th>Total Month (₹L)</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>IISER Library</td>
-            <td>18.5</td>
-            <td>6.2</td>
-            <td>3.1</td>
-            <td>2.0</td>
-            <td>29.8</td>
-          </tr>
-          <tr>
-            <td>Medical College</td>
-            <td>22.3</td>
-            <td>8.5</td>
-            <td>1.8</td>
-            <td>1.5</td>
-            <td>34.1</td>
-          </tr>
-          <tr>
-            <td>IT Park</td>
-            <td>12.1</td>
-            <td>9.8</td>
-            <td>5.6</td>
-            <td>3.2</td>
-            <td>30.7</td>
-          </tr>
-        </tbody>
-      </table>
+/* ---------- start / finish ---------- */
+.hero{padding:30px 22px 26px;margin-bottom:14px}
+.hero h1{font-size:clamp(30px,7.6vw,46px);line-height:1.02;margin-bottom:12px}
+.hero h1 .em{
+  background:linear-gradient(transparent 62%, #FFD98A 62%);
+}
+.hero p{margin:0 0 20px;font-size:16px;color:var(--ink-soft);max-width:52ch}
+.legend{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:22px}
+.legend span{
+  font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;
+  color:#F8FAFC;padding:5px 9px;border-radius:6px;
+}
+.recipe{padding:20px 18px}
+.recipe h3{font-size:20px;margin-bottom:4px}
+.recipe .sub{color:var(--ink-soft);font-size:14px;margin:0 0 16px}
+.scorebig{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:44px;letter-spacing:-.03em;line-height:1}
+.scorebig small{font-size:15px;font-weight:500;color:var(--ink-soft);letter-spacing:0}
+.foot{text-align:center;color:var(--ink-soft);font-size:12.5px;margin-top:22px}
+.hidden{display:none !important}
+.dragging{opacity:.35}
 
-      <div class="prompt-input">Compare spending patterns across our 3 projects:
-
-[PASTE TABLE]
-
-Questions:
-1. Which project is spending contingency highest? Red flag?
-2. Why is IT Park spending more on MEP than others?
-3. Which project is most at risk if delays happen?
-4. Rank projects by budget health (1 = best, 3 = worst)
-5. What should we monitor closely next month?
-
-Give actionable insights, not just numbers.</div>
-
-      <div class="analysis-box">
-        <strong style="color: #10B981;">🤖 Sample AI Output:</strong>
-        <p style="margin: 8px 0;"><strong>At Risk: IT Park</strong> - Already using 32% of contingency (₹3.2L of ~₹10L total). MEP spend (₹9.8L) is higher than peers, suggesting complex systems or scope creep. <strong>Healthiest: Medical College</strong> - Spending contingency at 16% rate, linear civil progress. <strong>Monitor:</strong> IISER's finishing cost trajectory; current ₹3.1L/month suggests ₹9-12L total (may exceed budget if interior specs expand).</p>
-      </div>
-
-      <div class="warning-box">
-        <strong>⚠️ Why Manual Review Misses This:</strong> You'd scan numbers, see IT Park MEP at ₹9.8L and think "OK, engineering is complex." AI connects it to contingency burn + project timeline → "high risk of overrun if delays cascade."
-      </div>
-
-      <div class="key-section">
-        <strong style="color: #FFFFFF;">Benefits of AI Variance Analysis:</strong>
-        <ul class="insights-list">
-          <li>Spots cross-project spending anomalies (which PM is over-spending?)</li>
-          <li>Flags contingency burn rate (how many months until reserves dry up?)</li>
-          <li>Predicts which projects will need cost intervention</li>
-          <li>Gives early warnings before problems blow up</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
-  <!-- DEMO 3: Data Protection -->
-  <div id="demo3" class="tab-content">
-    <div class="demo-card">
-      <div class="role-badge">All Roles</div>
-      <h3 class="demo-title">
-        <span>🔐</span>
-        Protecting Sensitive Data While Using AI
-      </h3>
-
-      <p style="font-size: 18px; color: #9CA3AF; margin: 0 0 16px; font-weight: 500;">Critical: What you paste into ChatGPT/Claude gets logged. Never paste client pricing, salaries, confidential costs.</p>
-
-      <div style="margin: 16px 0;">
-        <p style="font-size: 17px; font-weight: 500; color: #FFFFFF; margin: 0 0 12px;">Method 1: Anonymize Before Sharing</p>
-        <table class="data-table">
-          <thead>
-            <tr>
-              <th style="width: 45%;">❌ DON'T Send This</th>
-              <th style="width: 45%;">✅ ANONYMIZE & Send This</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td style="font-family: var(--font-mono); font-size: 15px;">Project: IISER Tirupati
-Vendor A: ₹45L
-Vendor B: ₹52L
-[Real names & rates]</td>
-              <td style="font-family: var(--font-mono); font-size: 15px;">Project: Library Project
-Option 1: ₹45L
-Option 2: ₹52L
-[No vendor names]</td>
-            </tr>
-            <tr>
-              <td style="font-family: var(--font-mono); font-size: 15px;">Salary: Manager ₹8.5L
-Sr. Engineer: ₹6L
-Labor cost: ₹2.1L/day</td>
-              <td style="font-family: var(--font-mono); font-size: 15px;">Personnel Cost Budget: Line A (₹8.5L), Line B (₹6L)
-Productivity rate: ₹X/day
-[No names, masked amounts]</td>
-            </tr>
-            <tr>
-              <td style="font-family: var(--font-mono); font-size: 15px;">Client: IISER
-Budget: ₹195L
-Profit margin: 12%</td>
-              <td style="font-family: var(--font-mono); font-size: 15px;">Project Budget: ₹XYZ
-Cost: ₹ABC
-Margin analysis: compare %</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <div class="protection-tip">
-        <strong>✅ What's SAFE to share:</strong>
-        <ul style="margin: 8px 0; padding-left: 20px; font-size: 17px;">
-          <li>Budget line items without vendor names</li>
-          <li>Percentages instead of actual rupee amounts</li>
-          <li>Timeline/schedule data (no client names needed)</li>
-          <li>General problem ("We're 15% over on foundations") without specifics</li>
-          <li>Anonymized metrics (project size, duration, team size)</li>
-        </ul>
-      </div>
-
-      <div style="margin: 16px 0;">
-        <p style="font-size: 17px; font-weight: 500; color: #FFFFFF; margin: 0 0 12px;">Method 2: Use ChatGPT Enterprise/Claude Teams (Paid, Private)</p>
-        <p style="font-size: 17px; color: #9CA3AF; margin: 0;">For sensitive data, use paid enterprise versions that don't log conversations. But even then, follow anonymization best practices.</p>
-      </div>
-
-      <div style="margin: 16px 0;">
-        <p style="font-size: 17px; font-weight: 500; color: #FFFFFF; margin: 0 0 12px;">Method 3: Replace Sensitive Values</p>
-        <div class="code-block">BEFORE (Don't do this):
-Foundation cost: ₹48.5L (10% over ₹45L budget)
-
-AFTER (Do this):
-Foundation cost: ₹XXL (10% over ₹YYL budget)
-What causes 10% overruns in foundation work?</div>
-      </div>
-
-      <div class="warning-box">
-        <strong>⚠️ Real Risk:</strong> ChatGPT free version trains on your data. If you paste client budget ₹195L for IISER, someone else might ask "summarize IISER project budgets" and get generic learnings from YOUR data. Always anonymize.
-      </div>
-
-      <div class="key-section">
-        <strong style="color: #FFFFFF;">Golden Rule for DEC Infra:</strong>
-        <p style="font-size: 17px; margin: 8px 0;">✓ Anonymize client names, vendor names, exact rupee amounts
-✓ Share: Project type, phase, duration, generic cost categories
-✓ Ask: Generic questions ("What causes cost overruns in X phase?")
-✗ Never share: Specific vendor quotes, salary info, client pricing, profit margins, confidential contracts</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- DEMO 4: Cost Breakdown -->
-  <div id="demo4" class="tab-content">
-    <div class="demo-card">
-      <div class="role-badge">Cost Controller / Finance</div>
-      <h3 class="demo-title">
-        <span>🔍</span>
-        Drill Down: AI Explains Cost Breakdowns
-      </h3>
-
-      <p style="font-size: 18px; color: #9CA3AF; margin: 0 0 12px;">Your CFO asks: "Why is our cost per sq.m. higher than industry average?"</p>
-
-      <table class="data-table">
-        <thead>
-          <tr>
-            <th>Category</th>
-            <th>Amount (₹L)</th>
-            <th>% of Total</th>
-            <th>Cost/Sq.M (₹)</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Civil Works</td>
-            <td>85.2</td>
-            <td>43.7%</td>
-            <td>3,408</td>
-          </tr>
-          <tr>
-            <td>MEP (Mech, Elec, Plumb)</td>
-            <td>45.3</td>
-            <td>23.2%</td>
-            <td>1,812</td>
-          </tr>
-          <tr>
-            <td>Finishes</td>
-            <td>38.5</td>
-            <td>19.8%</td>
-            <td>1,540</td>
-          </tr>
-          <tr>
-            <td>Project Management (PM)</td>
-            <td>12.8</td>
-            <td>6.6%</td>
-            <td>512</td>
-          </tr>
-          <tr>
-            <td>Contingency (Used)</td>
-            <td>12.2</td>
-            <td>6.3%</td>
-            <td>488</td>
-          </tr>
-          <tr style="background: #1C1C1C; font-weight: 500;">
-            <td>TOTAL</td>
-            <td>194.0</td>
-            <td>100%</td>
-            <td>7,760</td>
-          </tr>
-        </tbody>
-      </table>
-
-      <div class="prompt-input">Our library project cost breakdown:
-
-[PASTE TABLE]
-
-Industry benchmarks for similar projects:
-- Civil: ₹3,000/sq.m
-- MEP: ₹1,600/sq.m
-- Finishes: ₹1,200/sq.m
-- PM overhead: 5%
-
-Questions:
-1. Where are we above/below benchmark?
-2. Is our cost structure justified? (Any red flags?)
-3. Which categories have most variance from industry?
-4. For future projects, what should we tighten?</div>
-
-      <div class="analysis-box">
-        <strong style="color: #10B981;">🤖 Sample Output:</strong>
-        <p style="margin: 8px 0;"><strong>Variance Analysis:</strong></p>
-        <ul style="margin: 8px 0; padding-left: 20px; font-size: 17px;">
-          <li><strong>Civil (₹3,408 vs ₹3,000 bench):</strong> +13.6% → Likely due to complex foundation (IISER specs), soil conditions, or site logistics. <strong>Justified</strong>.</li>
-          <li><strong>MEP (₹1,812 vs ₹1,600 bench):</strong> +13.3% → Higher than peers. Is IISER library spec'd with premium HVAC/IT infrastructure? If yes, justified; if no, investigate vendor rates.</li>
-          <li><strong>Finishes (₹1,540 vs ₹1,200 bench):</strong> +28.3% → <strong>Biggest gap.</strong> Review material selections, labor rates. Potential to reduce ₹3-4L by negotiating finish suppliers.</li>
-          <li><strong>PM overhead (6.6% vs 5% bench):</strong> Slightly high but acceptable for educational project complexity.</li>
-        </ul>
-        <p style="margin: 8px 0;"><strong>Recommendation:</strong> Civil & MEP are defensible given project type. Focus cost recovery efforts on Finishes phase — negotiate now before work starts.</p>
-      </div>
-
-      <div class="key-section">
-        <strong style="color: #FFFFFF;">Why This Matters:</strong>
-        <ul class="insights-list">
-          <li>Benchmarking costs manually = 2-3 hours research + spreadsheets</li>
-          <li>AI does it in 2 minutes, with industry context</li>
-          <li>Identifies where you have leverage (Finishes for negotiation)</li>
-          <li>Justifies cost differences to clients/stakeholders</li>
-        </ul>
-      </div>
-
-      <div style="margin-top: 16px; background: #1C1C1C; padding: 12px; border-radius: 8px; border-left: 3px solid #FFDE59;">
-        <p style="font-size: 17px; color: #9CA3AF; margin: 0;"><strong>💡 Pro Tip for Workshop:</strong> Use REAL DEC Infra budget data (anonymized) for this demo. Participants will see "this is OUR project" and engage 10x more.</p>
-      </div>
-    </div>
-  </div>
-
-</div>`;
+</style>
+<div class="wrap">
+  <div class="topbar">
+    <div class="brandmark"><span class="glyph">›</span><b>Prompt Builder</b></div>
+`;
         } else if (activeSubTab === '1c') {
             contentHtml = `<style>
   .module-container {
@@ -2891,7 +2706,456 @@ If any test FAILS, recommend: Reject batch OR Request retesting OR Accept with w
             }, 600);
         });
 
-    }, 100);
+    
+/* ---------------- storage (safe wrapper) ---------------- */
+const mem = {};
+const store = {
+  async get(k){
+    try{ const r = await Promise.resolve(k); return r ? r.value : (mem[k] ?? null); }
+    catch(e){ return mem[k] ?? null; }
+  },
+  async set(k,v){
+    mem[k]=v;
+    try{ await Promise.resolve(k,v); }catch(e){}
+  }
+};
+
+/* ---------------- content ---------------- */
+const TYPE_NAME = {
+  role:"Role", task:"Task", context:"Context", format:"Format", tone:"Tone"
+};
+const TYPE_ASK = {
+  role:"Who should the AI be?",
+  task:"What exactly must it do?",
+  context:"What does it need to know about your situation?",
+  format:"What should the answer look like?",
+  tone:"How should it sound?"
+};
+
+const LEVELS = [
+  {
+    title:"Ask your manager for leave",
+    brief:"You need three days off. You open ChatGPT and type “write leave email”. It gives you something generic. Let's fix that.",
+    blocks:[
+      {t:"role",    x:"Act as a professional business writer"},
+      {t:"task",    x:"Write a leave request email to my manager"},
+      {t:"context", x:"I need 3 days off next week for a family wedding in Pune"},
+      {t:"format",  x:"Under 120 words, with a clear subject line"},
+      {t:"tone",    x:"Polite and professional"}
+    ],
+    decoys:[
+      {x:"Make it a good email", why:"“Good” means nothing to an AI. Good how — short? formal? persuasive?"},
+      {x:"Please help me fast",  why:"Urgency changes nothing about the output. Spend those words on detail instead."}
+    ],
+    why:"Notice what changed: the AI now knows who it's being, what it's writing, why you're asking, how long it should be and how it should sound. Same request, four extra facts, completely different email."
+  },
+  {
+    title:"Get an Excel formula that works",
+    brief:"Your invoice tracker has 2,000 rows and you need to spot the overdue ones. Build the prompt that gets a formula you can paste in.",
+    blocks:[
+      {t:"role",    x:"Act as an Excel expert"},
+      {t:"task",    x:"Write a formula that flags overdue invoices"},
+      {t:"context", x:"Column C has due dates, column D has payment status, 2,000 rows"},
+      {t:"format",  x:"Give the formula first, then explain each part in one line"},
+      {t:"tone",    x:"Simple, beginner-friendly language"}
+    ],
+    decoys:[
+      {x:"Excel is so confusing", why:"Venting is human, but it's not information. The AI can't use it."},
+      {x:"Do the needful",        why:"The AI doesn't know what “the needful” is. Name the actual task."}
+    ],
+    why:"Column names are the whole game here. Without them the AI invents a formula for imaginary columns and you spend ten minutes debugging it."
+  },
+  {
+    title:"Announce your promotion on LinkedIn",
+    brief:"Four years of work, one post. Generic AI writing is obvious to everyone who reads it — so give it something real to work with.",
+    blocks:[
+      {t:"role",    x:"Act as a LinkedIn content writer"},
+      {t:"task",    x:"Write a post announcing my promotion"},
+      {t:"context", x:"Sales Executive to Regional Sales Manager, 4 years at a logistics firm"},
+      {t:"format",  x:"3 short paragraphs, ending with one question"},
+      {t:"tone",    x:"Warm and grateful, not boastful"}
+    ],
+    decoys:[
+      {x:"Make it go viral",           why:"Nobody can promise reach — not you, not the AI. Ask for the writing, not the outcome."},
+      {x:"Add lots of emojis everywhere", why:"Vague styling instructions get overdone. If you want emojis, say how many and where."}
+    ],
+    why:"“Not boastful” is doing heavy lifting. Telling the AI what to avoid is often faster than describing what you want."
+  },
+  {
+    title:"Summarise a 40-page report",
+    brief:"Your CEO has five minutes and a quarterly sales review sits on your desk. Build a prompt that produces something you'd actually forward.",
+    blocks:[
+      {t:"role",    x:"Act as a business analyst"},
+      {t:"task",    x:"Summarise the report I paste below"},
+      {t:"context", x:"40-page quarterly sales review, and my CEO has 5 minutes"},
+      {t:"format",  x:"6 bullets, then 3 risks, then 1 recommendation"},
+      {t:"tone",    x:"Direct, no jargon"}
+    ],
+    decoys:[
+      {x:"Summarise it nicely", why:"“Nicely” has no length, no structure, no audience. It's a wish, not an instruction."},
+      {x:"Short karo",          why:"Short means 50 words to one person and 500 to another. Pick a number."}
+    ],
+    why:"“6 bullets, then 3 risks, then 1 recommendation” is a shape. Give the AI a shape and you stop getting walls of text."
+  },
+  {
+    title:"Rewrite your resume bullets",
+    brief:"You're a QA engineer applying for automation roles. Recruiters spend seven seconds per resume — the bullets have to land.",
+    blocks:[
+      {t:"role",    x:"Act as a technical recruiter who screens resumes"},
+      {t:"task",    x:"Rewrite my work experience bullets"},
+      {t:"context", x:"QA engineer, 3 years' experience, applying for automation roles"},
+      {t:"format",  x:"5 bullets, each starting with an action verb"},
+      {t:"tone",    x:"Confident and factual"}
+    ],
+    decoys:[
+      {x:"Make me sound amazing", why:"This invites the AI to invent achievements you never had. Recruiters catch it."},
+      {x:"You know what I mean",  why:"It genuinely doesn't. The AI has no memory of your job or your life."}
+    ],
+    why:"Casting the AI as the recruiter — the person who judges the output — is a shortcut to better writing. It reviews as it writes."
+  },
+  {
+    title:"Reply to an angry customer",
+    brief:"Order nine days late, full refund demanded, and the reply goes out under your name. Precision matters more than politeness here.",
+    blocks:[
+      {t:"role",    x:"Act as a customer support lead"},
+      {t:"task",    x:"Draft a reply to an angry customer"},
+      {t:"context", x:"Their order arrived 9 days late and they've asked for a full refund"},
+      {t:"format",  x:"Under 150 words: one apology line, then 3 next steps"},
+      {t:"tone",    x:"Calm and accountable, no excuses"}
+    ],
+    decoys:[
+      {x:"Handle it properly", why:"Properly by whose standard? Refund them? Offer credit? Escalate? Decide, then say it."},
+      {x:"Say sorry a lot",    why:"Repeated apologies read as panic. One clear apology plus action beats five sorries."}
+    ],
+    why:"When the stakes are real, constraints protect you. “Under 150 words, one apology, three steps” makes it hard for the AI to ramble you into trouble."
+  },
+  {
+    title:"Investigate a drop in signups",
+    brief:"Signups fell last month and nobody knows why. You have the data. Build a prompt that gets analysis instead of guesses.",
+    blocks:[
+      {t:"role",    x:"Act as a data analyst"},
+      {t:"task",    x:"Find why our monthly signups dropped"},
+      {t:"context", x:"I'll share 6 months of daily signups, traffic source and campaign spend"},
+      {t:"format",  x:"Top 3 likely causes, each with the number that supports it"},
+      {t:"tone",    x:"Skeptical — tell me what the data cannot prove"}
+    ],
+    decoys:[
+      {x:"Analyse everything",              why:"Everything is nothing. An unbounded ask returns an unusable answer."},
+      {x:"Give full details of all the data", why:"You don't want the data described back to you. You want a conclusion."}
+    ],
+    why:"Asking for the supporting number per cause is the difference between analysis and confident-sounding fiction. Always make it show its work."
+  },
+  {
+    title:"Final challenge — design a workshop",
+    brief:"No labels this time. Thirty finance staff, none of whom have opened ChatGPT, and one hour of your life. You know the five ingredients — find them.",
+    hideLabels:true,
+    blocks:[
+      {t:"role",    x:"Act as a corporate trainer"},
+      {t:"task",    x:"Build a 60-minute workshop outline on using AI at work"},
+      {t:"context", x:"30 non-technical finance staff who have never used ChatGPT"},
+      {t:"format",  x:"A table with time, activity and takeaway per segment"},
+      {t:"tone",    x:"Practical and hands-on, minimal theory"}
+    ],
+    decoys:[
+      {x:"Make it interesting",  why:"Interesting is a result, not an instruction. Ask for the thing that makes it interesting — exercises, examples, live demos."},
+      {x:"Cover all AI topics",  why:"In 60 minutes? Scope is a gift you give the AI. Narrow it yourself."},
+      {x:"Best training ever",   why:"Praise-bait doesn't improve output. It just wastes a line of your prompt."}
+    ],
+    why:"You just built a five-part prompt with no scaffolding. That's the whole skill — Role, Task, Context, Format, Tone, every single time."
+  }
+];
+
+const ORDER = ["role","task","context","format","tone"];
+
+/* ---------------- state ---------------- */
+let S = {
+  level:0, placed:{}, tray:[], picked:null,
+  mistakes:0, hintsUsed:0, hintedTypes:[], scores:[], nudge:null, done:false
+};
+const el = id => document.getElementById(id);
+const screen = el("screen");
+
+function shuffle(a){ const b=a.slice(); for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]];} return b; }
+function esc(s){ return String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
+
+/* ---------------- boot ---------------- */
+(async function boot(){
+  const saved = await store.get("promptbuilder:progress");
+  let resume = 0, scores = [];
+  if(saved){ try{ const p = JSON.parse(saved); resume = p.level||0; scores = p.scores||[]; }catch(e){} }
+  renderStart(resume, scores);
+})();
+
+function renderPips(){
+  const p = el("pips");
+  p.innerHTML = LEVELS.map((_,i)=>{
+    const c = i < S.level ? "done" : (i === S.level ? "now" : "");
+    return `<span class="pip ${c}"></span>`;
+  }).join("");
+}
+
+/* ---------------- start screen ---------------- */
+function renderStart(resume, scores){
+  el("pips").innerHTML = "";
+  const canResume = resume > 0 && resume < LEVELS.length;
+  screen.innerHTML = `
+    <section class="card hero">
+      <span class="eyebrow">8 puzzles · about 10 minutes</span>
+      <h1 style="margin-top:10px">Most people write<br>bad prompts. <span class="em">Fix that</span> in eight rounds.</h1>
+      <p>A weak prompt gets a weak answer — that's not the AI being dumb, that's the prompt being empty. Drag the right pieces into place and watch a vague request turn into one that works.</p>
+      <div class="legend">
+        <span style="background:var(--role)">Role</span>
+        <span style="background:var(--task)">Task</span>
+        <span style="background:var(--context)">Context</span>
+        <span style="background:var(--format)">Format</span>
+        <span style="background:var(--tone)">Tone</span>
+      </div>
+      <div class="actions">
+        <button class="btn" id="startBtn">${canResume ? "Continue from level "+(resume+1) : "Start puzzle 1"}</button>
+        ${canResume ? `<button class="btn ghost" id="restartBtn">Start over</button>` : ""}
+      </div>
+    </section>`;
+  el("startBtn").onclick = ()=>{ S.level = canResume ? resume : 0; S.scores = canResume ? scores : []; startLevel(); };
+  if(canResume) el("restartBtn").onclick = ()=>{ S.level=0; S.scores=[]; startLevel(); };
+}
+
+/* ---------------- level ---------------- */
+function startLevel(){
+  const L = LEVELS[S.level];
+  const items = [];
+  L.blocks.forEach((b,i)=> items.push({id:"b"+i, t:b.t, x:b.x, decoy:false}));
+  L.decoys.forEach((d,i)=> items.push({id:"d"+i, t:null, x:d.x, why:d.why, decoy:true}));
+  S.tray = shuffle(items);
+  S.placed = {}; S.picked = null; S.mistakes = 0; S.hintsUsed = 0; S.hintedTypes = []; S.nudge = null; S.done = false;
+  renderPips();
+  renderLevel();
+}
+
+function assembled(){
+  return ORDER.filter(t=>S.placed[t]).map(t=>({t, x:S.placed[t].x}));
+}
+
+function readoutHTML(){
+  const segs = assembled();
+  if(!segs.length) return `<span class="empty">Your prompt appears here as you build it…</span><span class="caret"></span>`;
+  return segs.map(s=>`<span class="seg" data-t="${s.t}">${esc(s.x)}.</span>`).join(" ") + `<span class="caret"></span>`;
+}
+
+function renderLevel(){
+  const L = LEVELS[S.level];
+  const filledCount = Object.keys(S.placed).length;
+
+  const rail = ORDER.map((t,i)=>{
+    const p = S.placed[t];
+    if(p){
+      return `<div class="slot filled" data-type="${t}">
+        <span class="num">${i+1}</span>
+        <span class="chipwrap"><button class="chip placed" data-t="${t}" data-remove="${t}">
+          <span class="tag">${TYPE_NAME[t]}</span><span>${esc(p.x)}</span><span class="x" aria-hidden="true">×</span>
+        </button></span>
+      </div>`;
+    }
+    const revealed = !L.hideLabels || S.hintedTypes.includes(t);
+    const label = revealed
+      ? `<span class="hintlabel"><span class="ttl">${TYPE_NAME[t]}</span> — ${TYPE_ASK[t]}</span>`
+      : `<span class="hintlabel">Piece ${i+1} of 5 — work out what belongs here</span>`;
+    return `<button class="slot" data-slot="${t}" aria-label="Empty slot ${i+1}">
+      <span class="num">${i+1}</span>${label}
+    </button>`;
+  }).join("");
+
+  const tray = S.tray.map(it=>{
+    const used = !it.decoy && S.placed[it.t] && S.placed[it.t].id === it.id;
+    return `<button class="chip ${used?"gone":""} ${S.picked===it.id?"picked":""}"
+      draggable="true" data-chip="${it.id}">${esc(it.x)}</button>`;
+  }).join("");
+
+  screen.innerHTML = `
+    <section class="card brief">
+      <span class="eyebrow">Puzzle ${S.level+1} of ${LEVELS.length}</span>
+      <h2>${esc(L.title)}</h2>
+      <p>${esc(L.brief)}</p>
+    </section>
+
+    <div class="readout" id="readout"><span class="rlabel">Your prompt</span><div id="rtext">${readoutHTML()}</div></div>
+
+    <div class="rail" id="rail">${rail}</div>
+
+    <section class="card traybox">
+      <span class="eyebrow">Tap a piece, then tap a slot — or drag it across</span>
+      <div class="tray" id="tray">${tray}</div>
+      ${S.nudge ? `<div class="nudge ${S.nudge.good?"good":""}">${S.nudge.html}</div>` : ""}
+    </section>
+
+    <div class="actions">
+      <button class="btn" id="checkBtn" ${filledCount<5?"disabled":""}>Check my prompt</button>
+      <button class="btn ghost" id="hintBtn" ${filledCount>=5?"disabled":""}>Hint</button>
+      <button class="btn ghost" id="clearBtn">Clear</button>
+    </div>`;
+
+  wireLevel();
+}
+
+function wireLevel(){
+  // chips
+  document.querySelectorAll("[data-chip]").forEach(node=>{
+    const id = node.dataset.chip;
+    node.onclick = ()=>{ S.picked = (S.picked===id) ? null : id; softRerender(); };
+    node.addEventListener("dragstart", e=>{
+      S.picked = id; node.classList.add("dragging");
+      e.dataTransfer.setData("text/plain", id); e.dataTransfer.effectAllowed = "move";
+      document.querySelectorAll("[data-slot]").forEach(s=>s.classList.add("armed"));
+    });
+    node.addEventListener("dragend", ()=>{
+      node.classList.remove("dragging");
+      document.querySelectorAll("[data-slot]").forEach(s=>s.classList.remove("armed","over"));
+    });
+  });
+
+  // slots
+  document.querySelectorAll("[data-slot]").forEach(node=>{
+    const type = node.dataset.slot;
+    node.onclick = ()=>{ if(S.picked) tryPlace(S.picked, type, node); };
+    node.addEventListener("dragover", e=>{ e.preventDefault(); node.classList.add("over"); });
+    node.addEventListener("dragleave", ()=> node.classList.remove("over"));
+    node.addEventListener("drop", e=>{
+      e.preventDefault(); node.classList.remove("over");
+      const id = e.dataTransfer.getData("text/plain") || S.picked;
+      if(id) tryPlace(id, type, node);
+    });
+  });
+
+  // remove placed
+  document.querySelectorAll("[data-remove]").forEach(node=>{
+    node.onclick = ()=>{ delete S.placed[node.dataset.remove]; S.nudge = null; renderLevel(); };
+  });
+
+  el("checkBtn").onclick = check;
+  el("clearBtn").onclick = ()=>{ S.placed={}; S.picked=null; S.nudge=null; renderLevel(); };
+  el("hintBtn").onclick = hint;
+}
+
+function softRerender(){
+  document.querySelectorAll("[data-chip]").forEach(n=>{
+    n.classList.toggle("picked", n.dataset.chip === S.picked);
+  });
+  document.querySelectorAll("[data-slot]").forEach(s=> s.classList.toggle("armed", !!S.picked));
+}
+
+function tryPlace(id, type, node){
+  const item = S.tray.find(i=>i.id===id);
+  if(!item) return;
+
+  if(item.decoy){
+    S.mistakes++;
+    S.picked = null;
+    node.classList.add("reject");
+    setTimeout(()=>node.classList.remove("reject"), 360);
+    S.nudge = { good:false, html:`<b>“${esc(item.x)}”</b> doesn't belong in a prompt. ${esc(item.why)}` };
+    setTimeout(renderLevel, 340);
+    return;
+  }
+
+  if(item.t !== type){
+    S.mistakes++;
+    S.picked = null;
+    node.classList.add("reject");
+    setTimeout(()=>node.classList.remove("reject"), 360);
+    S.nudge = { good:false, html:`That piece is the <b>${TYPE_NAME[item.t]}</b>, not the ${TYPE_NAME[type]}. ${esc(TYPE_ASK[type])}` };
+    setTimeout(renderLevel, 340);
+    return;
+  }
+
+  S.placed[type] = item;
+  S.picked = null;
+  S.nudge = { good:true, html:`<b>${TYPE_NAME[type]}</b> locked in. ${esc(TYPE_ASK[type])}` };
+  renderLevel();
+  const slot = document.querySelector(`.slot.filled[data-type="${type}"]`);
+  if(slot){ slot.classList.add("snap"); setTimeout(()=>slot.classList.remove("snap"), 340); }
+}
+
+function hint(){
+  const missing = ORDER.filter(t=>!S.placed[t]);
+  if(!missing.length) return;
+  const t = missing[0];
+  S.hintsUsed++;
+  if(!S.hintedTypes.includes(t)) S.hintedTypes.push(t);
+  const item = S.tray.find(i=>!i.decoy && i.t===t);
+  S.nudge = { good:true, html:`Slot ${ORDER.indexOf(t)+1} needs the <b>${TYPE_NAME[t]}</b> — ${esc(TYPE_ASK[t])} Look for the piece starting “${esc(item.x.split(" ").slice(0,3).join(" "))}…”` };
+  renderLevel();
+}
+
+/* ---------------- result ---------------- */
+function check(){
+  const stars = (S.mistakes===0 && S.hintsUsed===0) ? 3 : ((S.mistakes<=2 && S.hintsUsed<=1) ? 2 : 1);
+  S.scores[S.level] = stars;
+  store.set("promptbuilder:progress", JSON.stringify({level:S.level+1, scores:S.scores}));
+  renderResult(stars);
+}
+
+function renderResult(stars){
+  const L = LEVELS[S.level];
+  const full = ORDER.map(t=>S.placed[t].x + ".").join(" ");
+  const last = S.level === LEVELS.length-1;
+  screen.innerHTML = `
+    <section class="card result">
+      <span class="eyebrow">Prompt complete</span>
+      <div class="stars" aria-label="${stars} out of 3 stars">
+        ${[1,2,3].map(i=>`<span class="star ${i<=stars?"on":""}">★</span>`).join("")}
+      </div>
+      <p class="why"><strong>${esc(L.title)}.</strong> ${esc(L.why)}</p>
+      <div class="finalprompt" id="fp">${esc(full)}</div>
+      <ul class="anatomy">
+        ${ORDER.map(t=>`<li><span class="k" data-t="${t}">${TYPE_NAME[t]}</span><span class="v">${esc(S.placed[t].x)}</span></li>`).join("")}
+      </ul>
+      <div class="actions">
+        <button class="btn" id="nextBtn">${last ? "See your results" : "Next puzzle"}</button>
+        <button class="btn ghost" id="copyBtn">Copy prompt</button>
+        <button class="btn ghost" id="retryBtn">Try again</button>
+      </div>
+    </section>`;
+
+  el("nextBtn").onclick = ()=>{
+    if(last){ renderFinish(); }
+    else { S.level++; startLevel(); }
+  };
+  el("retryBtn").onclick = startLevel;
+  el("copyBtn").onclick = async (e)=>{
+    try{ await navigator.clipboard.writeText(full); e.target.textContent = "Copied"; }
+    catch(err){ e.target.textContent = "Select the text above to copy"; }
+    setTimeout(()=>{ e.target.textContent = "Copy prompt"; }, 1800);
+  };
+}
+
+/* ---------------- finish ---------------- */
+function renderFinish(){
+  const total = S.scores.reduce((a,b)=>a+(b||0),0);
+  const max = LEVELS.length*3;
+  renderPips();
+  screen.innerHTML = `
+    <section class="card recipe">
+      <span class="eyebrow">All 8 puzzles cleared</span>
+      <h3 style="margin-top:8px">Your prompt recipe</h3>
+      <p class="sub">Keep this. Every prompt you write from now on should answer these five questions.</p>
+      <ul class="anatomy" style="margin-bottom:20px">
+        ${ORDER.map(t=>`<li><span class="k" data-t="${t}">${TYPE_NAME[t]}</span><span class="v">${esc(TYPE_ASK[t])}</span></li>`).join("")}
+      </ul>
+      <div class="finalprompt">Act as a [role].
+[What you want done].
+Context: [what the AI needs to know about your situation].
+Format: [length, structure, what the answer should look like].
+Tone: [how it should sound, and what to avoid].</div>
+      <div style="display:flex;align-items:baseline;gap:10px;margin:18px 0 16px">
+        <span class="scorebig">${total}<small> / ${max} stars</small></span>
+      </div>
+      <div class="actions">
+        <button class="btn wide" id="againBtn">Play again</button>
+      </div>
+    </section>`;
+  el("againBtn").onclick = ()=>{ S.level=0; S.scores=[]; store.set("promptbuilder:progress", JSON.stringify({level:0,scores:[]})); startLevel(); };
+}
+
+        }, 100);
 
         // Add event listeners for sub-tabs
         const tabBtns = container.querySelectorAll('.sub-tab-btn');

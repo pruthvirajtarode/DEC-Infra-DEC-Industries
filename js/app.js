@@ -5,6 +5,28 @@
 
 
 // Expose revealNextStep to window for inline onclick
+
+// Global Intersection Observer for Scroll Animations
+window.initScrollReveal = function() {
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('is-revealed');
+                // Optional: Stop observing once revealed
+                // observer.unobserve(entry.target); 
+            }
+        });
+    }, {
+        root: null,
+        threshold: 0.15, // Trigger when 15% of the element is visible
+        rootMargin: "0px 0px -50px 0px" // Trigger slightly before it hits the very bottom
+    });
+
+    document.querySelectorAll('.reveal-on-scroll').forEach(el => {
+        observer.observe(el);
+    });
+};
+
 window.revealNextStep = function(el) {
     let nextArr = el.nextElementSibling;
     if (nextArr && nextArr.classList.contains('arr')) {
@@ -3811,7 +3833,7 @@ function renderModule3(container) {
 <div class="stat"><span class="n">15</span><span class="l">Quiz Scenarios</span></div>
 <div class="stat"><span class="n">₹5-50L</span><span class="l">Risk Avoided</span></div>
 </div>
-<div class="card glass-card animate-slide-up"><p>By the end of this module, you will:</p><ul>
+<div class="card glass-card reveal-on-scroll"><p>By the end of this module, you will:</p><ul>
 <li>Understand how AI actually processes and stores your data</li>
 <li>Know the 5 categories of AI risk relevant to construction</li>
 <li>Classify any DEC Infra data into 3 tiers: Public, Internal, Confidential</li>
@@ -3831,7 +3853,7 @@ function renderModule3(container) {
 <div class="section-head" onclick="toggle(this)"><h2>🧠 Part 1: How AI Actually Works — What Happens to Your Data</h2><span class="arrow">▼</span></div>
 <div class="section-body">
 
-<div class="card glass-card animate-slide-up">
+<div class="card glass-card reveal-on-scroll">
 <h3>What is a Large Language Model (LLM)?</h3>
 <p>ChatGPT and Claude are Large Language Models (LLMs). Think of them as extremely advanced autocomplete systems. They were trained on billions of pages of text from the internet — books, websites, papers, forums — and learned patterns in human language.</p>
 <p style="margin-top:8px"><strong>Key insight:</strong> LLMs don't "know" things the way humans do. They predict the most likely next word based on patterns they've seen. This is why they can sound confident while being completely wrong.</p>
@@ -3850,7 +3872,7 @@ function renderModule3(container) {
 </div>
 </div>
 
-<div class="card glass-card animate-slide-up">
+<div class="card glass-card reveal-on-scroll">
 <h3>What Happens When You Type in ChatGPT?</h3>
 <div class="diagram">
 <p style="font-size: 17px;opacity:0.7;margin-bottom:10px">Data flow — Free ChatGPT:</p>
@@ -3877,7 +3899,7 @@ function renderModule3(container) {
 <p style="margin-top:10px"><strong>The critical difference:</strong> Free tools may absorb your data into the model itself. Enterprise tools process and forget. This is why the ₹2,500/user/month investment matters — it's the difference between a locked cabinet and an open notice board.</p>
 </div>
 
-<div class="card glass-card animate-slide-up">
+<div class="card glass-card reveal-on-scroll">
 <h3>Why Does This Matter for Construction?</h3>
 <p>Construction companies handle uniquely sensitive data that most industries don't:</p>
 <div class="grid-2">
@@ -3937,11 +3959,11 @@ function renderModule3(container) {
 </style>
 
 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 25px;">
-    <div onclick="this.classList.toggle('zoomed-in')" class="zoomable-card card glass-card animate-slide-up" style="border: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.4); box-shadow: inset 0 0 30px rgba(0,0,0,0.5);">
+    <div onclick="this.classList.toggle('zoomed-in')" class="zoomable-card card glass-card reveal-on-scroll" style="border: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.4); box-shadow: inset 0 0 30px rgba(0,0,0,0.5);">
         <h3 style="text-align:center; color: var(--text-main); margin-bottom: 5px; font-size:1.1rem"><span style="text-shadow: 0 0 10px rgba(59, 130, 246, 0.4)">Live Risk Distribution (Overall)</span></h3>
         <div style="height: 250px; position: relative;"><canvas id="risk-donut-chart"></canvas></div>
     </div>
-    <div onclick="this.classList.toggle('zoomed-in')" class="zoomable-card card glass-card animate-slide-up" style="border: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.4); box-shadow: inset 0 0 30px rgba(0,0,0,0.5);">
+    <div onclick="this.classList.toggle('zoomed-in')" class="zoomable-card card glass-card reveal-on-scroll" style="border: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.4); box-shadow: inset 0 0 30px rgba(0,0,0,0.5);">
         <h3 style="text-align:center; color: var(--text-main); margin-bottom: 5px; font-size:1.1rem">Department Vulnerability Radar (Real-Time)</h3>
         <div style="height: 250px; position: relative;"><canvas id="risk-radar-chart"></canvas></div>
     </div>
@@ -3949,31 +3971,31 @@ function renderModule3(container) {
 
 <h3 style="color:var(--text-main); margin-bottom:15px; font-weight:600; text-align:center">Hover to Reveal Real-World Impact</h3>
 <div class="flip-grid">
-    <div class="flip-card">
+    <div class="flip-card reveal-on-scroll">
         <div class="flip-card-inner fc-danger">
             <div class="flip-card-front"><div class="icon">🔓</div><h3>Data Leakage</h3><p style="color:var(--text-muted);font-size:0.9rem">Your Info Becomes Public</p></div>
             <div class="flip-card-back"><h4 style="color:#ef4444;margin-bottom:10px">Real-world parallel:</h4><p style="font-size:0.9rem;opacity:0.9;text-align:left">Samsung engineers accidentally leaked proprietary chip designs by pasting code into ChatGPT. A similar leak at DEC Infra — pasting a tender bid — could cost a <strong>₹50 Cr contract</strong>.</p></div>
         </div>
     </div>
-    <div class="flip-card">
+    <div class="flip-card reveal-on-scroll">
         <div class="flip-card-inner fc-warning">
             <div class="flip-card-front"><div class="icon">👻</div><h3>Hallucination</h3><p style="color:var(--text-muted);font-size:0.9rem">AI Generates False Info</p></div>
             <div class="flip-card-back"><h4 style="color:#f59e0b;margin-bottom:10px">How often does it happen?</h4><p style="font-size:0.9rem;opacity:0.9;text-align:left">LLMs hallucinate 3-10% of the time. In specialized domains like Indian construction codes, the rate is higher. A fabricated IS code clause can lead to <strong>structural failure or rework</strong>.</p></div>
         </div>
     </div>
-    <div class="flip-card">
+    <div class="flip-card reveal-on-scroll">
         <div class="flip-card-inner fc-accent">
             <div class="flip-card-front"><div class="icon">🤖</div><h3>Over-Reliance</h3><p style="color:var(--text-muted);font-size:0.9rem">Trusting AI Without Verifying</p></div>
             <div class="flip-card-back"><h4 style="color:#3b82f6;margin-bottom:10px">The human factor:</h4><p style="font-size:0.9rem;opacity:0.9;text-align:left">Humans are <strong>3x more likely</strong> to accept an AI's answer without questioning it. A cost estimate off by ₹22L or a missed safety checklist item happens because "the AI said so."</p></div>
         </div>
     </div>
-    <div class="flip-card">
+    <div class="flip-card reveal-on-scroll">
         <div class="flip-card-inner fc-info">
             <div class="flip-card-front"><div class="icon">⚖️</div><h3>Compliance Violation</h3><p style="color:var(--text-muted);font-size:0.9rem">Breaking DPDP Act Laws</p></div>
             <div class="flip-card-back"><h4 style="color:#10b981;margin-bottom:10px">DPDP 2023 Reality:</h4><p style="font-size:0.9rem;opacity:0.9;text-align:left">Uploading employee Aadhaar numbers, PAN, or salary data to an overseas AI service carries penalties up to <strong>₹250 Crore</strong>. Data localization matters.</p></div>
         </div>
     </div>
-    <div class="flip-card">
+    <div class="flip-card reveal-on-scroll">
         <div class="flip-card-inner fc-ethical">
             <div class="flip-card-front"><div class="icon">🎭</div><h3>Ethical Misuse</h3><p style="color:var(--text-muted);font-size:0.9rem">Fake Docs & Impersonation</p></div>
             <div class="flip-card-back"><h4 style="color:#8b5cf6;margin-bottom:10px">Examples of misuse:</h4><p style="font-size:0.9rem;opacity:0.9;text-align:left">Generating a fake concrete test certificate. Inflating progress percentages. Using AI to draft fake insurance certificates. Grounds for immediate termination.</p></div>
@@ -3992,7 +4014,7 @@ function renderModule3(container) {
 <div class="section-head" onclick="toggle(this)"><h2>🔑 Part 3: The AI Trust Equation — When to Trust, When to Verify</h2><span class="arrow">▼</span></div>
 <div class="section-body">
 
-<div class="card glass-card animate-slide-up">
+<div class="card glass-card reveal-on-scroll">
 <h3>The 4-Level Trust Framework for AI Outputs</h3>
 <p>Not all AI outputs carry the same risk. Use this framework to decide how much verification is needed:</p>
 <table>
@@ -4076,7 +4098,7 @@ function renderModule3(container) {
 <div class="section-head" onclick="toggle(this)"><h2>🔒 Part 5: Data Classification — The 3-Tier System for DEC Infra</h2><span class="arrow">▼</span></div>
 <div class="section-body">
 <div class="grid-3">
-<div class="card glass-card animate-slide-up" style="border-top:3px solid var(--success); background: var(--bg-card);">
+<div class="card glass-card reveal-on-scroll" style="border-top:3px solid var(--success); background: var(--bg-card);">
 <h3 style="color:var(--success)">🟢 Tier 1: Public / Safe</h3>
 <p>Share freely with any AI tool</p>
 <ul>
@@ -4088,7 +4110,7 @@ function renderModule3(container) {
 <li>Training materials</li>
 </ul>
 </div>
-<div class="card glass-card animate-slide-up" style="border-top:3px solid var(--warning); background: var(--bg-card);">
+<div class="card glass-card reveal-on-scroll" style="border-top:3px solid var(--warning); background: var(--bg-card);">
 <h3 style="color:var(--warning)">🟡 Tier 2: Internal — Anonymize</h3>
 <p>Share ONLY after removing identifiers</p>
 <ul>
@@ -4100,7 +4122,7 @@ function renderModule3(container) {
 <li>Specs (remove proprietary detail)</li>
 </ul>
 </div>
-<div class="card glass-card animate-slide-up" style="border-top:3px solid var(--danger); background: var(--bg-card);">
+<div class="card glass-card reveal-on-scroll" style="border-top:3px solid var(--danger); background: var(--bg-card);">
 <h3 style="color:var(--danger)">🔴 Tier 3: Confidential — NEVER</h3>
 <p>NEVER upload to any external AI</p>
 <ul>
@@ -4149,7 +4171,7 @@ function renderModule3(container) {
 </div>
 
 
-<div class="zoomable-card card glass-card animate-slide-up" onclick="this.classList.toggle(\'zoomed-in\')" style="border: 1px solid var(--border-color); background: rgba(0,0,0,0.3); margin-bottom: 20px;">
+<div class="zoomable-card card glass-card reveal-on-scroll" onclick="this.classList.toggle(\'zoomed-in\')" style="border: 1px solid var(--border-color); background: rgba(0,0,0,0.3); margin-bottom: 20px;">
     <h3 style="text-align:center; color: var(--text-main); margin-bottom: 15px;">Maximum Financial Impact (₹ Lakhs)</h3>
     <div style="height: 300px; position: relative;">
         <canvas id="cost-bar-chart"></canvas>
@@ -4266,7 +4288,7 @@ function renderModule3(container) {
 </div>
 </div>
 
-<div class="card glass-card animate-slide-up">
+<div class="card glass-card reveal-on-scroll">
 <h3>Hallucination Red Flags — Quick Reference</h3>
 <table>
 <tr><th>Red Flag</th><th>Example</th><th>Action</th></tr>
@@ -4304,7 +4326,7 @@ function renderModule3(container) {
 <tr><td>Safe for Tier 2?</td><td style="color:var(--warning)">Only anonymized</td><td style="color:var(--success)">Yes</td><td style="color:var(--success)">Yes</td><td style="color:var(--success)">Yes</td></tr>
 </table>
 
-<div class="card glass-card animate-slide-up">
+<div class="card glass-card reveal-on-scroll">
 <h3>💰 DEC Infra Cost-Benefit Analysis</h3>
 <div class="grid-2">
 <div><h4>Annual Investment (20 users)</h4>
@@ -4329,7 +4351,7 @@ function renderModule3(container) {
 <div class="section">
 <div class="section-head" onclick="toggle(this)"><h2>📜 Part 9: DEC Infra AI Usage Policy (Draft)</h2><span class="arrow">▼</span></div>
 <div class="section-body">
-<div class="card glass-card animate-slide-up">
+<div class="card glass-card reveal-on-scroll">
 <h3>Draft AI Usage Policy — DEC Infra Projects Pvt Ltd</h3>
 <h4>Section 1: Approved AI Tools</h4>
 <ul><li>ChatGPT (OpenAI) — Tier 1 & anonymized Tier 2 only</li><li>Claude (Anthropic) — Tier 1 & anonymized Tier 2 only</li><li>Microsoft Copilot — internal M365 documents</li><li>All other AI tools require IT approval</li></ul>
@@ -4347,8 +4369,8 @@ function renderModule3(container) {
 <h3>🏋️ Group Exercise: Customize the Policy for YOUR Department</h3>
 <p>In groups of 3-4, add 3 department-specific rules. Examples:</p>
 <div class="grid-2">
-<div class="card glass-card animate-slide-up"><h4>Project Execution</h4><ul><li>"AI schedules must be validated in Primavera/MS Project before sharing"</li><li>"Site photos must not contain client logos or signage"</li><li>"AI estimates require QS verification before inclusion in any report"</li></ul></div>
-<div class="card glass-card animate-slide-up"><h4>Quality & Safety</h4><ul><li>"AI safety checklists require certified safety officer sign-off"</li><li>"Mix designs from AI must NEVER replace lab designs"</li><li>"NCR reports must reference verified IS clause numbers only"</li></ul></div>
+<div class="card glass-card reveal-on-scroll"><h4>Project Execution</h4><ul><li>"AI schedules must be validated in Primavera/MS Project before sharing"</li><li>"Site photos must not contain client logos or signage"</li><li>"AI estimates require QS verification before inclusion in any report"</li></ul></div>
+<div class="card glass-card reveal-on-scroll"><h4>Quality & Safety</h4><ul><li>"AI safety checklists require certified safety officer sign-off"</li><li>"Mix designs from AI must NEVER replace lab designs"</li><li>"NCR reports must reference verified IS clause numbers only"</li></ul></div>
 </div>
 </div>
 </div>
@@ -4389,7 +4411,7 @@ function renderModule3(container) {
 <div class="section">
 <div class="section-head" onclick="toggle(this)"><h2>🎯 Key Takeaways — 6 Rules to Remember</h2><span class="arrow">▼</span></div>
 <div class="section-body">
-<div class="card glass-card animate-slide-up">
+<div class="card glass-card reveal-on-scroll">
 <div id="data-quiz-container"></div>
 <div id="m3-results-container" style="margin-top: 30px;"></div>
 <div class="stats">
@@ -4497,13 +4519,13 @@ function renderModule3(container) {
             const el = document.getElementById('hallucination-quiz-container');
             if(!el) return;
             if(window.state.hIndex >= hData.length) {
-                el.innerHTML = `<div class="card glass-card animate-slide-up" style="border-top:3px solid var(--success);text-align:center"><h3 style="color:var(--success)">✓ Hallucination Section Complete</h3><p>Score: ${window.state.scores["Hallucinations (3)"].correct}/3</p></div>`;
+                el.innerHTML = `<div class="card glass-card reveal-on-scroll" style="border-top:3px solid var(--success);text-align:center"><h3 style="color:var(--success)">✓ Hallucination Section Complete</h3><p>Score: ${window.state.scores["Hallucinations (3)"].correct}/3</p></div>`;
                 return;
             }
             const q = hData[window.state.hIndex];
             const optsHtml = q.opts.map(o => `<button class="opt-btn" onclick="handleQuiz('hallucination', '${o.v}', this)">${o.l}</button>`).join('');
             el.innerHTML = `
-                <div class="card glass-card animate-slide-up" style="border: 2px solid var(--accent); background: rgba(0,0,0,0.2);">
+                <div class="card glass-card reveal-on-scroll" style="border: 2px solid var(--accent); background: rgba(0,0,0,0.2);">
                     <div style="font-family:monospace; color:var(--text-muted); margin-bottom:10px;">Scenario ${window.state.hIndex+1} of ${hData.length}</div>
                     <div style="font-size:20px; font-weight:600; margin-bottom:16px; line-height: 1.4;">${q.q}</div>
                     <div>${optsHtml}</div>
@@ -4516,13 +4538,13 @@ function renderModule3(container) {
             const el = document.getElementById('data-quiz-container');
             if(!el) return;
             if(window.state.dIndex >= dData.length) {
-                el.innerHTML = `<div class="card glass-card animate-slide-up" style="border-top:3px solid var(--success);text-align:center"><h3 style="color:var(--success)">✓ Data Classification Section Complete</h3><p>Score: ${window.state.scores["Data Safety (15)"].correct}/15</p></div>`;
+                el.innerHTML = `<div class="card glass-card reveal-on-scroll" style="border-top:3px solid var(--success);text-align:center"><h3 style="color:var(--success)">✓ Data Classification Section Complete</h3><p>Score: ${window.state.scores["Data Safety (15)"].correct}/15</p></div>`;
                 return;
             }
             const q = dData[window.state.dIndex];
             const optsHtml = q.opts.map(o => `<button class="opt-btn" onclick="handleQuiz('data', '${o.v}', this)">${o.l}</button>`).join('');
             el.innerHTML = `
-                <div class="card glass-card animate-slide-up" style="border: 2px solid var(--accent); background: rgba(0,0,0,0.2);">
+                <div class="card glass-card reveal-on-scroll" style="border: 2px solid var(--accent); background: rgba(0,0,0,0.2);">
                     <div style="font-family:monospace; color:var(--text-muted); margin-bottom:10px;">Scenario ${window.state.dIndex+1} of ${dData.length}</div>
                     <div style="font-size:20px; font-weight:600; margin-bottom:16px; line-height: 1.4;">${q.q}</div>
                     <div>${optsHtml}</div>
@@ -4552,7 +4574,7 @@ function renderModule3(container) {
                 else if(finalPct >= 70) msg = "Good job! You have a solid grasp on safety basics.";
 
                 el.innerHTML = `
-                <div class="card glass-card animate-slide-up" style="padding:30px; text-align:center; border-top: 4px solid var(--primary);">
+                <div class="card glass-card reveal-on-scroll" style="padding:30px; text-align:center; border-top: 4px solid var(--primary);">
                     <h2 style="font-size:32px; margin-bottom:20px;">Module Complete</h2>
                     <div style="margin:30px 0; max-width: 500px; margin-left: auto; margin-right: auto;">
                         <div class="bar-row"><div class="bar-label">Hallucinations</div><div class="bar-track"><div class="bar-fill" style="background:${hColor}" data-width="${hPct}%"></div><div class="bar-val">${hc}/${ht}</div></div></div>
@@ -4562,7 +4584,8 @@ function renderModule3(container) {
                     <div style="font-size:18px; color:var(--text-muted);">${msg}</div>
                 </div>
                 `;
-                setTimeout(() => { el.querySelectorAll('.bar-fill').forEach(b => { b.style.width = b.dataset.width; }); }, 100);
+                setTimeout(() => { el.querySelectorAll('.bar-fill').forEach(b => { b.style.width = b.dataset.width; });     window.initScrollReveal();
+        }, 100);
             }
         }
         renderH();
@@ -4759,11 +4782,13 @@ function renderModule3(container) {
         }
         renderCharts();
 
-    }, 100);
+        window.initScrollReveal();
+        }, 100);
 
     setTimeout(() => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
-    }, 100);
+        window.initScrollReveal();
+        }, 100);
 }
 
 function renderModule4(container) {

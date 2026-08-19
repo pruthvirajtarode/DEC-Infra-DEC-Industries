@@ -3623,6 +3623,13 @@ function renderModule3(container) {
 <div class="section-head" onclick="toggle(this)"><h2>⚠️ Part 2: The 5 Categories of AI Risk in Construction</h2><span class="arrow">▼</span></div>
 <div class="section-body">
 
+<div class="card" style="border: 1px solid var(--border-color); background: rgba(0,0,0,0.3); margin-bottom: 20px;">
+    <h3 style="text-align:center; color: var(--text-main); margin-bottom: 15px;">Distribution of AI Risks in Construction</h3>
+    <div style="height: 300px; position: relative;">
+        <canvas id="risk-donut-chart"></canvas>
+    </div>
+</div>
+
 <div class="card" style="border-top:3px solid var(--danger); background: var(--bg-card);">
 <h3 style="color:var(--danger)">Risk 1: Data Leakage — Your Information Becomes Public</h3>
 <p>When you upload data to free AI tools, it may be stored, reviewed by humans, or used to train future models. Your confidential vendor rates, client terms, or employee data could influence AI responses to other users — including your competitors.</p>
@@ -3827,6 +3834,14 @@ function renderModule3(container) {
 <div class="section-body">
 
 <p style="margin-bottom:15px;opacity:0.8">Fictional but realistic scenarios modeled on DEC Infra's actual project types. Click each to expand.</p>
+
+<div class="card" style="border: 1px solid var(--border-color); background: rgba(0,0,0,0.3); margin-bottom: 20px;">
+    <h3 style="text-align:center; color: var(--text-main); margin-bottom: 15px;">Maximum Financial Impact (₹ Lakhs)</h3>
+    <div style="height: 300px; position: relative;">
+        <canvas id="cost-bar-chart"></canvas>
+    </div>
+    <p style="text-align:center; color: var(--text-muted); font-size: 13px; margin-top: 10px;">Note: Logarithmic scale used to show massive variance in risk costs.</p>
+</div>
 
 <div class="case-study" onclick="toggleCS(this)">
 <div class="case-study-header"><h3><span class="cs-tag cs-tag-leak">DATA LEAK</span> CS-1: Vendor Quotes Reach a Competitor</h3><span class="cs-arrow">▼</span></div>
@@ -4237,6 +4252,72 @@ function renderModule3(container) {
         }
         renderH();
         renderD();
+
+        function renderCharts() {
+            const ctxDonut = document.getElementById('risk-donut-chart');
+            if (ctxDonut && typeof Chart !== 'undefined') {
+                new Chart(ctxDonut, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Data Leakage (Confidentiality)', 'Hallucination (Accuracy)', 'Over-Reliance (Human Error)', 'Compliance (Legal)', 'Ethical Misuse'],
+                        datasets: [{
+                            data: [40, 30, 15, 10, 5],
+                            backgroundColor: [
+                                'rgba(239, 68, 68, 0.8)',   // Danger
+                                'rgba(245, 158, 11, 0.8)',  // Warning
+                                'rgba(59, 130, 246, 0.8)',  // Accent
+                                'rgba(16, 185, 129, 0.8)',  // Success
+                                'rgba(139, 92, 246, 0.8)'   // Purple
+                            ],
+                            borderColor: '#1e293b',
+                            borderWidth: 2
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { position: 'bottom', labels: { color: '#94a3b8', font: { family: 'monospace', size: 12 } } }
+                        }
+                    }
+                });
+            }
+
+            const ctxBar = document.getElementById('cost-bar-chart');
+            if (ctxBar && typeof Chart !== 'undefined') {
+                new Chart(ctxBar, {
+                    type: 'bar',
+                    data: {
+                        labels: ['DPDP Violation', 'Tender Data Leak', 'Fire Safety Failure', 'Wrong Mix Design', 'Scaffolding Plan Leak'],
+                        datasets: [{
+                            label: 'Potential Financial Impact (₹ Lakhs)',
+                            data: [25000, 5000, 100, 15, 5],
+                            backgroundColor: 'rgba(16, 185, 129, 0.6)',
+                            borderColor: 'rgba(16, 185, 129, 1)',
+                            borderWidth: 1,
+                            borderRadius: 6
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: {
+                                type: 'logarithmic',
+                                ticks: { color: '#94a3b8' },
+                                grid: { color: 'rgba(255,255,255,0.05)' }
+                            },
+                            x: { ticks: { color: '#94a3b8', font: { size: 10 } }, grid: { display: false } }
+                        },
+                        plugins: {
+                            legend: { display: false }
+                        }
+                    }
+                });
+            }
+        }
+        renderCharts();
+
     }, 100);
 
     setTimeout(() => {

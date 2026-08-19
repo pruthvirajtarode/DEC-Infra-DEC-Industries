@@ -665,3 +665,39 @@ pre {
     opacity: 1;
     transform: translateY(0);
 }
+
+
+/* Mobile Responsiveness for New Features */
+@media (max-width: 768px) {
+    /* Flowcharts: Allow wrapping or vertical stacking on small screens */
+    .flow {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px !important;
+    }
+    .flow .node {
+        width: 100%;
+        text-align: center;
+        margin-bottom: 5px;
+    }
+    .flow .arr {
+        transform: rotate(90deg) !important;
+        margin: 5px 0;
+    }
+    
+    /* 3D Flip Cards: Ensure they stack */
+    .flip-grid {
+        grid-template-columns: 1fr !important;
+    }
+    
+    /* Zoomed-in charts: Maximize space on mobile */
+    .zoomed-in {
+        width: 95vw !important;
+        height: 80vh !important;
+    }
+    
+    /* Live Cost Ticker: Scale down font size */
+    #live-cost-ticker {
+        font-size: 2.5rem !important;
+    }
+}

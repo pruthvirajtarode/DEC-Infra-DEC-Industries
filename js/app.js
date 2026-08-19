@@ -3887,59 +3887,73 @@ function renderModule3(container) {
 <div class="section-head" onclick="toggle(this)"><h2>⚠️ Part 2: The 5 Categories of AI Risk in Construction</h2><span class="arrow">▼</span></div>
 <div class="section-body">
 
-<div class="card" style="border: 1px solid var(--border-color); background: rgba(0,0,0,0.3); margin-bottom: 20px;">
-    <h3 style="text-align:center; color: var(--text-main); margin-bottom: 15px;">Distribution of AI Risks in Construction</h3>
-    <div style="height: 300px; position: relative;">
-        <canvas id="risk-donut-chart"></canvas>
+
+<style>
+.flip-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-bottom: 25px; perspective: 1000px; }
+.flip-card { background-color: transparent; height: 260px; perspective: 1000px; cursor: pointer; }
+.flip-card-inner { position: relative; width: 100%; height: 100%; text-align: center; transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1); transform-style: preserve-3d; }
+.flip-card:hover .flip-card-inner, .flip-card.flipped .flip-card-inner { transform: rotateY(180deg); }
+.flip-card-front, .flip-card-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 12px; padding: 25px 20px; box-shadow: 0 8px 32px rgba(0,0,0,0.2); display: flex; flex-direction: column; justify-content: center; align-items: center; border: 1px solid rgba(255,255,255,0.05); }
+.flip-card-front { background: linear-gradient(145deg, #1A1F2C 0%, #12151D 100%); }
+.flip-card-back { background: linear-gradient(145deg, #0A1128 0%, #050A17 100%); transform: rotateY(180deg); }
+.flip-card-front h3 { margin-top: 15px; font-size: 1.2rem; }
+.flip-card-front .icon { font-size: 3rem; margin-bottom: 10px; }
+.fc-danger { border-top: 4px solid #ef4444; }
+.fc-danger .icon { color: #ef4444; text-shadow: 0 0 15px rgba(239,68,68,0.5); }
+.fc-warning { border-top: 4px solid #f59e0b; }
+.fc-warning .icon { color: #f59e0b; text-shadow: 0 0 15px rgba(245,158,11,0.5); }
+.fc-accent { border-top: 4px solid #3b82f6; }
+.fc-accent .icon { color: #3b82f6; text-shadow: 0 0 15px rgba(59,130,246,0.5); }
+.fc-info { border-top: 4px solid #10b981; }
+.fc-info .icon { color: #10b981; text-shadow: 0 0 15px rgba(16,185,129,0.5); }
+.fc-ethical { border-top: 4px solid #8b5cf6; }
+.fc-ethical .icon { color: #8b5cf6; text-shadow: 0 0 15px rgba(139,92,246,0.5); }
+</style>
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 25px;">
+    <div class="card" style="border: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.4); box-shadow: inset 0 0 30px rgba(0,0,0,0.5);">
+        <h3 style="text-align:center; color: var(--text-main); margin-bottom: 5px; font-size:1.1rem">Live Risk Distribution (Overall)</h3>
+        <div style="height: 250px; position: relative;"><canvas id="risk-donut-chart"></canvas></div>
+    </div>
+    <div class="card" style="border: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.4); box-shadow: inset 0 0 30px rgba(0,0,0,0.5);">
+        <h3 style="text-align:center; color: var(--text-main); margin-bottom: 5px; font-size:1.1rem">Department Vulnerability Radar (Real-Time)</h3>
+        <div style="height: 250px; position: relative;"><canvas id="risk-radar-chart"></canvas></div>
     </div>
 </div>
 
-<div class="card" style="border-top:3px solid var(--danger); background: var(--bg-card);">
-<h3 style="color:var(--danger)">Risk 1: Data Leakage — Your Information Becomes Public</h3>
-<p>When you upload data to free AI tools, it may be stored, reviewed by humans, or used to train future models. Your confidential vendor rates, client terms, or employee data could influence AI responses to other users — including your competitors.</p>
-<h4>Real-world parallel:</h4>
-<p>In 2023, Samsung engineers accidentally leaked proprietary chip designs by pasting source code into ChatGPT. The company banned ChatGPT for all employees. A similar leak at DEC Infra — pasting a tender bid into ChatGPT — could cost a ₹50 Cr contract.</p>
+<h3 style="color:var(--text-main); margin-bottom:15px; font-weight:600; text-align:center">Hover to Reveal Real-World Impact</h3>
+<div class="flip-grid">
+    <div class="flip-card">
+        <div class="flip-card-inner fc-danger">
+            <div class="flip-card-front"><div class="icon">🔓</div><h3>Data Leakage</h3><p style="color:var(--text-muted);font-size:0.9rem">Your Info Becomes Public</p></div>
+            <div class="flip-card-back"><h4 style="color:#ef4444;margin-bottom:10px">Real-world parallel:</h4><p style="font-size:0.9rem;opacity:0.9;text-align:left">Samsung engineers accidentally leaked proprietary chip designs by pasting code into ChatGPT. A similar leak at DEC Infra — pasting a tender bid — could cost a <strong>₹50 Cr contract</strong>.</p></div>
+        </div>
+    </div>
+    <div class="flip-card">
+        <div class="flip-card-inner fc-warning">
+            <div class="flip-card-front"><div class="icon">👻</div><h3>Hallucination</h3><p style="color:var(--text-muted);font-size:0.9rem">AI Generates False Info</p></div>
+            <div class="flip-card-back"><h4 style="color:#f59e0b;margin-bottom:10px">How often does it happen?</h4><p style="font-size:0.9rem;opacity:0.9;text-align:left">LLMs hallucinate 3-10% of the time. In specialized domains like Indian construction codes, the rate is higher. A fabricated IS code clause can lead to <strong>structural failure or rework</strong>.</p></div>
+        </div>
+    </div>
+    <div class="flip-card">
+        <div class="flip-card-inner fc-accent">
+            <div class="flip-card-front"><div class="icon">🤖</div><h3>Over-Reliance</h3><p style="color:var(--text-muted);font-size:0.9rem">Trusting AI Without Verifying</p></div>
+            <div class="flip-card-back"><h4 style="color:#3b82f6;margin-bottom:10px">The human factor:</h4><p style="font-size:0.9rem;opacity:0.9;text-align:left">Humans are <strong>3x more likely</strong> to accept an AI's answer without questioning it. A cost estimate off by ₹22L or a missed safety checklist item happens because "the AI said so."</p></div>
+        </div>
+    </div>
+    <div class="flip-card">
+        <div class="flip-card-inner fc-info">
+            <div class="flip-card-front"><div class="icon">⚖️</div><h3>Compliance Violation</h3><p style="color:var(--text-muted);font-size:0.9rem">Breaking DPDP Act Laws</p></div>
+            <div class="flip-card-back"><h4 style="color:#10b981;margin-bottom:10px">DPDP 2023 Reality:</h4><p style="font-size:0.9rem;opacity:0.9;text-align:left">Uploading employee Aadhaar numbers, PAN, or salary data to an overseas AI service carries penalties up to <strong>₹250 Crore</strong>. Data localization matters.</p></div>
+        </div>
+    </div>
+    <div class="flip-card">
+        <div class="flip-card-inner fc-ethical">
+            <div class="flip-card-front"><div class="icon">🎭</div><h3>Ethical Misuse</h3><p style="color:var(--text-muted);font-size:0.9rem">Fake Docs & Impersonation</p></div>
+            <div class="flip-card-back"><h4 style="color:#8b5cf6;margin-bottom:10px">Examples of misuse:</h4><p style="font-size:0.9rem;opacity:0.9;text-align:left">Generating a fake concrete test certificate. Inflating progress percentages. Using AI to draft fake insurance certificates. Grounds for immediate termination.</p></div>
+        </div>
+    </div>
 </div>
-
-<div class="card" style="border-top:3px solid var(--warning); background: var(--bg-card);">
-<h3 style="color:var(--warning)">Risk 2: Hallucination — AI Generates False Information</h3>
-<p>AI doesn't distinguish fact from fiction. It generates the most statistically likely text, not the most accurate. In construction, a hallucinated IS code clause, wrong material specification, or fabricated regulatory requirement can lead to non-compliance, rework, or structural failure.</p>
-<h4>How often does it happen?</h4>
-<p>Studies show LLMs hallucinate 3-10% of the time on factual questions. In specialized domains like Indian construction codes, the rate is likely higher because training data is sparse. A 5% hallucination rate across 100 AI queries per month means 5 false statements you need to catch.</p>
-</div>
-
-<div class="card" style="border-top:3px solid var(--accent); background: var(--bg-card);">
-<h3 style="color:var(--accent)">Risk 3: Over-Reliance — Trusting AI Without Verification</h3>
-<p>As teams get comfortable with AI, they start trusting outputs without checking. This is the most dangerous risk because it's invisible until something goes wrong. A cost estimate that's off by ₹22L, a safety checklist that misses a critical item, a contract review that overlooks a liability clause — all because "the AI said so."</p>
-<h4>The human factor:</h4>
-<p>Research shows humans are 3x more likely to accept an answer from AI without questioning it compared to a human colleague's answer. We unconsciously treat AI as an authority because it sounds confident and structured.</p>
-</div>
-
-<div class="card" style="border-top:3px solid var(--info); background: var(--bg-card);">
-<h3 style="color:var(--info)">Risk 4: Compliance Violation — Breaking Laws Without Knowing</h3>
-<p>India's Digital Personal Data Protection Act (DPDP 2023) imposes strict rules on how personal data is processed. Uploading employee Aadhaar numbers, PAN details, or salary information to an overseas AI service may constitute unauthorized cross-border data transfer — carrying penalties up to ₹250 Crore.</p>
-<h4>Key DPDP provisions for DEC Infra:</h4>
-<ul>
-<li><strong>Consent requirement:</strong> You need employee consent before processing their personal data via AI</li>
-<li><strong>Purpose limitation:</strong> Data collected for HR can't be used for AI analysis without separate consent</li>
-<li><strong>Data localization:</strong> Certain categories of data may need to stay within India</li>
-<li><strong>Breach notification:</strong> If data leaks through AI, you must notify the Data Protection Board within 72 hours</li>
-</ul>
-</div>
-
-<div class="card" style="border-top:3px solid var(--success); background: var(--bg-card);">
-<h3 style="color:var(--success)">Risk 5: Ethical Misuse — Using AI Inappropriately</h3>
-<p>AI can be misused to generate fake compliance certificates, fabricate test reports, create misleading progress documentation, or impersonate individuals. Even if technically possible, these uses are unethical and often illegal.</p>
-<h4>Examples of misuse in construction:</h4>
-<ul>
-<li>Generating a fake concrete test certificate to pass an audit</li>
-<li>Using AI to inflate progress percentages in client reports</li>
-<li>Creating a fabricated meeting transcript with invented attendees</li>
-<li>Using AI to draft fake insurance certificates for subcontractors</li>
-</ul>
-<p style="margin-top:8px"><strong>DEC Infra's position:</strong> Any use of AI to generate false, misleading, or fraudulent documents is grounds for immediate termination and potential legal action.</p>
-</div>
-
 <div class="tip"><strong>💡 Key Teaching Point:</strong> These 5 risks are not theoretical — they happen every day at companies that adopt AI without governance. Module 3 exists to make sure DEC Infra adopts AI safely, capturing the ₹30-70L/year benefit without the ₹5-250 Cr downside.</div>
 
 </div>
@@ -4098,6 +4112,16 @@ function renderModule3(container) {
 <div class="section-body">
 
 <p style="margin-bottom:15px;opacity:0.8">Fictional but realistic scenarios modeled on DEC Infra's actual project types. Click each to expand.</p>
+
+<div style="background: linear-gradient(90deg, #1A1F2C 0%, #050A17 100%); border: 2px solid #ef4444; border-radius: 12px; padding: 25px; margin-bottom: 30px; text-align: center; box-shadow: 0 0 30px rgba(239,68,68,0.2);">
+    <h3 style="color:#ef4444; margin:0 0 10px 0; font-size:1.2rem; text-transform:uppercase; letter-spacing:2px">🔴 Live Risk Exposure Simulation 🔴</h3>
+    <p style="color:var(--text-muted); margin:0 0 15px 0;">Calculated maximum liability for DEC Infra across all active AI leaks</p>
+    <div style="font-family: 'JetBrains Mono', monospace; font-size: 4.5rem; font-weight: 800; color: #fff; text-shadow: 0 0 20px rgba(255,255,255,0.4); display:flex; justify-content:center; align-items:baseline;">
+        <span style="font-size:3rem; margin-right:10px; color:#ef4444">₹</span>
+        <span id="live-cost-ticker">0</span>
+    </div>
+</div>
+
 
 <div class="card" style="border: 1px solid var(--border-color); background: rgba(0,0,0,0.3); margin-bottom: 20px;">
     <h3 style="text-align:center; color: var(--text-main); margin-bottom: 15px;">Maximum Financial Impact (₹ Lakhs)</h3>
@@ -4546,6 +4570,132 @@ function renderModule3(container) {
                         }
                     }
                 });
+            }
+
+            
+            // 1. Radar Chart
+            const ctxRadar = document.getElementById('risk-radar-chart');
+            if (ctxRadar && typeof Chart !== 'undefined') {
+                new Chart(ctxRadar, {
+                    type: 'radar',
+                    data: {
+                        labels: ['Finance', 'HR', 'Procurement', 'Civil Eng', 'MEP Eng', 'Legal'],
+                        datasets: [{
+                            label: 'Current Vulnerability Index',
+                            data: [85, 95, 75, 40, 60, 90],
+                            backgroundColor: 'rgba(239, 68, 68, 0.2)',
+                            borderColor: 'rgba(239, 68, 68, 1)',
+                            pointBackgroundColor: 'rgba(239, 68, 68, 1)',
+                            pointBorderColor: '#fff',
+                            pointHoverBackgroundColor: '#fff',
+                            pointHoverBorderColor: 'rgba(239, 68, 68, 1)'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            r: {
+                                angleLines: { color: 'rgba(255, 255, 255, 0.1)' },
+                                grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                                pointLabels: { color: '#94a3b8', font: { size: 11 } },
+                                ticks: { display: false, min: 0, max: 100 }
+                            }
+                        },
+                        plugins: { legend: { display: false } }
+                    }
+                });
+            }
+
+            // 2. Animated Line Chart for Hallucination
+            const ctxLine = document.getElementById('hallucination-line-chart');
+            if (ctxLine && typeof Chart !== 'undefined') {
+                const lineChart = new Chart(ctxLine, {
+                    type: 'line',
+                    data: {
+                        labels: ['0 min', '2 min', '4 min', '6 min', '8 min'],
+                        datasets: [
+                            {
+                                label: 'Accuracy %',
+                                data: [98, 95, 88, 75, 60],
+                                borderColor: '#10b981',
+                                backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                                tension: 0.4,
+                                fill: true
+                            },
+                            {
+                                label: 'Hallucination Probability %',
+                                data: [2, 5, 12, 25, 40],
+                                borderColor: '#ef4444',
+                                backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                                tension: 0.4,
+                                fill: true
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        animation: { duration: 1000 },
+                        scales: {
+                            y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8' }, min: 0, max: 100 },
+                            x: { grid: { display: false }, ticks: { color: '#94a3b8' } }
+                        }
+                    }
+                });
+
+                // Simulate live updates
+                let mins = 8;
+                let acc = 60;
+                let hal = 40;
+                setInterval(() => {
+                    if(document.getElementById('hallucination-line-chart')) {
+                        mins += 2;
+                        acc = Math.max(15, acc - (Math.random() * 10 + 2));
+                        hal = Math.min(85, hal + (Math.random() * 10 + 2));
+                        
+                        lineChart.data.labels.push(mins + ' min');
+                        lineChart.data.datasets[0].data.push(acc);
+                        lineChart.data.datasets[1].data.push(hal);
+                        
+                        if(lineChart.data.labels.length > 10) {
+                            lineChart.data.labels.shift();
+                            lineChart.data.datasets[0].data.shift();
+                            lineChart.data.datasets[1].data.shift();
+                        }
+                        lineChart.update();
+                    }
+                }, 2500);
+            }
+
+            // 3. Live Cost Ticker Animation
+            const tickerEl = document.getElementById('live-cost-ticker');
+            if(tickerEl) {
+                const targetCost = 250500000;
+                let currentCost = 0;
+                const duration = 4000; // 4 seconds
+                const steps = 60;
+                const increment = targetCost / steps;
+                
+                const timer = setInterval(() => {
+                    currentCost += increment;
+                    if(currentCost >= targetCost) {
+                        currentCost = targetCost;
+                        clearInterval(timer);
+                        
+                        // Add small random fluctuations after reaching target
+                        setInterval(() => {
+                            if(document.getElementById('live-cost-ticker')) {
+                                const fluctuation = Math.floor(Math.random() * 50000);
+                                const sign = Math.random() > 0.5 ? 1 : -1;
+                                document.getElementById('live-cost-ticker').innerText = (targetCost + (fluctuation * sign)).toLocaleString('en-IN');
+                            }
+                        }, 2000);
+                    }
+                    if(document.getElementById('live-cost-ticker')) {
+                        document.getElementById('live-cost-ticker').innerText = Math.floor(currentCost).toLocaleString('en-IN');
+                    }
+                }, duration / steps);
             }
 
             const ctxBar = document.getElementById('cost-bar-chart');

@@ -1,505 +1,701 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>M3: Safe AI — DEC AI Foundations</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-
 <style>
-:root{
-  --ink:#FFFFFF;
-  --ink-soft:#94A3B8;
-  --canvas:#0F172A;
-  --card:#1E293B;
-  --line:#334155;
-  --line-soft:#1E293B;
-  --safe:#10B981;
-  --risky:#EF4444;
-  --anonymize:#F59E0B;
-  --neutral:#3B82F6;
-  --r:16px;
-  --shadow:0 10px 30px -10px rgba(0,0,0,0.5);
-  --dur:.25s;
-}
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0f0f1a;--card:#1a1a2e;--card2:#16213e;--border:rgba(255,255,255,0.08);--text:#e0e0e0;--accent:#FFD600;--blue:#2196F3;--green:#4CAF50;--red:#FF5252;--orange:#FF9800}
+body{font-family:'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;padding-bottom:60px}
+.module-header{background:linear-gradient(135deg,#B71C1C 0%,#D32F2F 60%,#E53935 100%);padding:40px 30px;text-align:center;border-bottom:3px solid var(--accent)}
+.module-header .tag{display:inline-block;background:rgba(0,0,0,0.3);padding:4px 14px;border-radius:15px;font-size: 16px;font-weight:600;margin-bottom:10px;letter-spacing:1px}
+.module-header h1{font-size: 36px;font-weight:800;margin-bottom:8px}
+.module-header p{font-size: 18px;opacity:0.85;max-width:750px;margin:0 auto}
+.container{max-width:1000px;margin:0 auto;padding:20px}
 
-*{box-sizing:border-box}
-html,body{margin:0;padding:0}
-body{
-  font-family:"DM Sans", ui-sans-serif, system-ui, sans-serif;
-  color:var(--ink);
-  background-color:var(--canvas);
-  background-image:
-    linear-gradient(to right, rgba(255,255,255,.03) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255,255,255,.03) 1px, transparent 1px);
-  background-size:32px 32px;
-  -webkit-font-smoothing:antialiased;
-  line-height:1.5;
-  min-height:100svh;
-}
-.wrap{max-width:800px;margin:0 auto;padding:24px 16px 80px}
+/* Sections */
+.section{background:var(--card);border:1px solid var(--border);border-radius:12px;margin:20px 0;overflow:hidden}
+.section-head{padding:18px 24px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;transition:background 0.2s}
+.section-head:hover{background:rgba(255,255,255,0.03)}
+.section-head h2{font-size: 20px;font-weight:700;display:flex;align-items:center;gap:10px}
+.section-head .arrow{font-size: 18px;opacity:0.5;transition:transform 0.3s}
+.section-body{padding:0 24px 24px;display:none}
+.section.open .section-body{display:block}
+.section.open .arrow{transform:rotate(180deg)}
 
-/* type */
-h1,h2,h3,.display{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;letter-spacing:-.02em;margin:0}
-.eyebrow{
-  font-family:"JetBrains Mono",monospace;
-  font-size:12px;letter-spacing:.15em;text-transform:uppercase;color:var(--neutral);
-  font-weight:700;
-}
+/* Cards */
+.card{background:var(--card2);border:1px solid var(--border);border-radius:8px;padding:18px;margin:12px 0}
+.card h3{font-size: 17px;font-weight:600;color:var(--accent);margin-bottom:8px}
+.card h4{font-size: 19px;font-weight:600;color:var(--blue);margin-bottom:6px;margin-top:10px}
+.card p,.card li{font-size: 18px;opacity:0.85;line-height:1.7}
+.card ul{list-style:none;margin:8px 0}
+.card ul li{padding:4px 0 4px 22px;position:relative}
+.card ul li:before{content:"▸";position:absolute;left:0;color:var(--accent);font-weight:bold}
 
-/* topbar */
-.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px}
-.brandmark{display:flex;align-items:center;gap:10px; font-family:"Bricolage Grotesque",sans-serif;font-size:18px;font-weight:700}
-.brandmark .glyph{width:32px;height:32px;border-radius:10px;background:linear-gradient(135deg, #FF5252, #B71C1C);color:#fff;display:grid;place-items:center;font-size:16px;}
-.pips{display:flex;gap:6px;}
-.pip{width:10px;height:10px;border-radius:50%;background:var(--line);transition:all var(--dur)}
-.pip.done{background:var(--safe)}
-.pip.now{background:var(--neutral);transform:scale(1.3)}
+/* Layout */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:15px}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:15px}
+@media(max-width:768px){.grid-2,.grid-3{grid-template-columns:1fr}}
 
-/* cards */
-.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:24px;margin-bottom:16px;animation:fadein var(--dur) ease-out}
-@keyframes fadein{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+/* Stats */
+.stats{display:flex;gap:15px;flex-wrap:wrap;margin:15px 0}
+.stat{background:var(--card2);border:1px solid var(--border);border-radius:8px;padding:15px;text-align:center;flex:1;min-width:120px}
+.stat .n{font-size: 28px;font-weight:800;color:var(--accent);display:block}
+.stat .l{font-size: 16px;opacity:0.7}
 
-.hero h1{font-size:clamp(32px, 6vw, 48px);line-height:1.1;margin:12px 0 16px}
-.hero p{font-size:17px;color:var(--ink-soft);max-width:54ch}
+/* Tables */
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size: 17px}
+th{background:rgba(255,255,255,0.08);padding:10px 12px;text-align:left;font-weight:600;border-bottom:2px solid var(--border)}
+td{padding:8px 12px;border-bottom:1px solid var(--border)}
+tr:hover{background:rgba(255,255,255,0.02)}
 
-.module-title{font-size:24px;margin-bottom:8px;}
-.module-desc{font-size:16px;color:var(--ink-soft);margin-bottom:20px;}
+/* Alerts */
+.tip{background:rgba(255,214,0,0.08);border-left:3px solid var(--accent);padding:12px 16px;margin:12px 0;border-radius:0 8px 8px 0;font-size: 18px}
+.warning{background:rgba(255,82,82,0.08);border-left:3px solid var(--red);padding:12px 16px;margin:12px 0;border-radius:0 8px 8px 0;font-size: 18px}
+.success{background:rgba(76,175,80,0.08);border-left:3px solid var(--green);padding:12px 16px;margin:12px 0;border-radius:0 8px 8px 0;font-size: 18px}
+.info-box{background:rgba(33,150,243,0.08);border-left:3px solid var(--blue);padding:12px 16px;margin:12px 0;border-radius:0 8px 8px 0;font-size: 18px}
 
-/* buttons */
-.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px;}
-.btn{
-  font:inherit;font-weight:700;font-size:15px;border-radius:12px;padding:14px 24px;cursor:pointer;
-  border:none;background:var(--ink);color:var(--canvas);
-  transition:transform 0.15s, opacity 0.15s;
-}
-.btn:hover{transform:translateY(-2px)}
-.btn:active{transform:translateY(1px)}
-.btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--line)}
-.btn.ghost:hover{border-color:var(--ink-soft)}
+/* Prompts */
+.prompt{background:#1e1e2e;border:2px solid #69F0AE;border-radius:8px;padding:16px;margin:12px 0;font-family:'Courier New',monospace;font-size: 17px;color:#a6e3a1;line-height:1.5;white-space:pre-wrap;position:relative}
+.prompt-label{display:inline-block;background:#69F0AE;color:#1e1e2e;padding:3px 12px;border-radius:15px;font-size: 19px;font-weight:700;margin-bottom:8px;font-family:'Segoe UI',sans-serif}
+.copy-btn{position:absolute;top:10px;right:10px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);color:#69F0AE;padding:4px 12px;border-radius:5px;cursor:pointer;font-size: 19px;font-family:'Segoe UI',sans-serif}
 
-/* quiz options */
-.options-grid{display:flex;flex-direction:column;gap:12px;margin-top:20px;}
-.opt-btn{
-  font:inherit;font-weight:700;font-size:16px;border-radius:12px;padding:16px 20px;
-  cursor:pointer;background:rgba(255,255,255,0.03);border:2px solid var(--line);
-  color:var(--ink);text-align:left;display:flex;align-items:center;justify-content:space-between;
-  transition:all 0.2s;
-}
-.opt-btn:hover:not(:disabled){background:rgba(255,255,255,0.08);border-color:var(--ink-soft)}
-.opt-btn:disabled{cursor:default;opacity:0.6}
-.opt-btn.correct{background:rgba(16, 185, 129, 0.1);border-color:var(--safe);color:var(--safe);opacity:1}
-.opt-btn.wrong{background:rgba(239, 68, 68, 0.1);border-color:var(--risky);color:var(--risky);opacity:1}
+/* Exercise */
+.exercise{background:rgba(156,39,176,0.08);border:2px solid rgba(156,39,176,0.2);border-radius:8px;padding:18px;margin:12px 0}
+.exercise h3{color:#CE93D8;font-size: 16px;margin-bottom:8px}
 
-/* feedback */
-.feedback{margin-top:20px;padding:16px;border-radius:12px;font-size:15px;animation:fadein var(--dur)}
-.feedback.good{background:rgba(16,185,129,0.15);border-left:4px solid var(--safe)}
-.feedback.bad{background:rgba(239,68,68,0.15);border-left:4px solid var(--risky)}
-.feedback.warn{background:rgba(245,158,11,0.15);border-left:4px solid var(--anonymize)}
+/* Badges */
+.badge{display:inline-block;padding:3px 10px;border-radius:12px;font-size: 19px;font-weight:700}
+.badge-safe{background:rgba(76,175,80,0.15);color:var(--green);border:1px solid rgba(76,175,80,0.3)}
+.badge-risky{background:rgba(255,82,82,0.15);color:var(--red);border:1px solid rgba(255,82,82,0.3)}
+.badge-warn{background:rgba(255,152,0,0.15);color:var(--orange);border:1px solid rgba(255,152,0,0.3)}
 
-/* chart */
-.chart-wrap{margin:30px 0;}
-.bar-row{display:flex;align-items:center;gap:16px;margin-bottom:12px}
-.bar-label{width:140px;font-weight:700;font-size:14px;color:var(--ink-soft);text-transform:uppercase;letter-spacing:1px;text-align:right}
-.bar-track{flex:1;height:24px;background:rgba(255,255,255,0.05);border-radius:12px;overflow:hidden;position:relative}
-.bar-fill{height:100%;border-radius:12px;transition:width 1s cubic-bezier(0.2, 0.8, 0.2, 1);width:0%}
-.bar-val{position:absolute;right:10px;top:50%;transform:translateY(-50%);font-family:"JetBrains Mono",monospace;font-size:12px;font-weight:700}
+/* Case Study */
+.case-study{background:var(--card2);border:1px solid var(--border);border-radius:10px;margin:16px 0;overflow:hidden}
+.case-study-header{padding:14px 18px;cursor:pointer;display:flex;align-items:center;justify-content:space-between}
+.case-study-header:hover{background:rgba(255,255,255,0.03)}
+.case-study-header h3{font-size: 16px;font-weight:600;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.case-study-header .cs-arrow{font-size: 18px;opacity:0.4;transition:transform 0.3s}
+.case-study-body{padding:0 18px 18px;display:none}
+.case-study.cs-open .case-study-body{display:block}
+.case-study.cs-open .cs-arrow{transform:rotate(180deg)}
+.cs-tag{font-size: 19px;padding:2px 8px;border-radius:10px;font-weight:600}
+.cs-tag-leak{background:rgba(255,82,82,0.15);color:#FF5252}
+.cs-tag-halluc{background:rgba(255,152,0,0.15);color:#FF9800}
+.cs-tag-good{background:rgba(76,175,80,0.15);color:#4CAF50}
+.cs-tag-policy{background:rgba(33,150,243,0.15);color:#2196F3}
+.cs-tag-global{background:rgba(156,39,176,0.15);color:#CE93D8}
+.cs-block{background:rgba(0,0,0,0.2);border-radius:6px;padding:14px;margin:10px 0;font-size: 18px}
+.cs-block h4{font-size: 18px;margin-bottom:6px}
+.cs-block.what-happened{border-left:3px solid #FF5252}
+.cs-block.impact{border-left:3px solid #FF9800}
+.cs-block.lesson{border-left:3px solid #4CAF50}
+.cs-block.action{border-left:3px solid #2196F3}
 
-/* tags */
-.tag{display:inline-block;padding:4px 10px;border-radius:8px;font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase}
-.t-safe{background:rgba(16,185,129,0.2);color:var(--safe)}
-.t-risky{background:rgba(239,68,68,0.2);color:var(--risky)}
-.t-anon{background:rgba(245,158,11,0.2);color:var(--anonymize)}
-
-.scenario-text{font-size:20px;font-weight:500;margin:16px 0;line-height:1.4}
-.theory-block{background:rgba(0,0,0,0.2);padding:16px;border-radius:12px;margin:16px 0;border-left:3px solid var(--neutral)}
-
-.progress-text{text-align:center;font-family:"JetBrains Mono",monospace;font-size:13px;color:var(--ink-soft);margin-bottom:16px}
+/* Theory diagram */
+.diagram{background:rgba(0,0,0,0.3);border-radius:10px;padding:20px;margin:15px 0;text-align:center}
+.diagram .flow{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;margin:10px 0}
+.diagram .node{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:8px;padding:10px 16px;font-size: 17px;font-weight:600}
+.diagram .node-danger{border-color:rgba(255,82,82,0.4);color:#FF5252}
+.diagram .node-safe{border-color:rgba(76,175,80,0.4);color:#4CAF50}
+.diagram .arr{color:var(--accent);font-size: 20px;font-weight:bold}
 </style>
 </head>
 <body>
 
-<div class="wrap">
-  <div class="topbar">
-    <div class="brandmark"><span class="glyph">3</span>DEC AI Foundations</div>
-    <div class="pips" id="pips"></div>
-  </div>
-  <div id="screen" aria-live="polite"></div>
+<div class="module-header">
+<div class="tag">SESSION 3</div>
+<h1>M3: Safe AI — Governance & Data Protection</h1>
+<p>Theory, real-world incidents, DEC Infra case studies, hallucination detection, data classification, and enterprise AI policy — everything you need to use AI responsibly in construction</p>
+</div>
+
+<div class="container">
+
+<!-- OBJECTIVES -->
+<div class="section open">
+<div class="section-head" onclick="toggle(this)"><h2>🎯 Learning Objectives</h2><span class="arrow">▼</span></div>
+<div class="section-body">
+<div class="stats">
+<div class="stat"><span class="n">120</span><span class="l">Minutes</span></div>
+<div class="stat"><span class="n">12</span><span class="l">Case Studies</span></div>
+<div class="stat"><span class="n">15</span><span class="l">Quiz Scenarios</span></div>
+<div class="stat"><span class="n">₹5-50L</span><span class="l">Risk Avoided</span></div>
+</div>
+<div class="card"><p>By the end of this module, you will:</p><ul>
+<li>Understand how AI actually processes and stores your data</li>
+<li>Know the 5 categories of AI risk relevant to construction</li>
+<li>Classify any DEC Infra data into 3 tiers: Public, Internal, Confidential</li>
+<li>Anonymize budgets, vendor quotes & reports before using AI</li>
+<li>Detect AI hallucinations in concrete specs, IS codes & calculations</li>
+<li>Understand India's Digital Personal Data Protection Act (DPDP 2023)</li>
+<li>Apply DEC Infra's AI usage policy to daily workflows</li>
+<li>Score 13+ out of 15 on the "Is This Safe?" quiz</li>
+</ul></div>
+</div>
+</div>
+
+<!-- ============================================================ -->
+<!-- PART 1: THEORY — HOW AI ACTUALLY WORKS -->
+<!-- ============================================================ -->
+<div class="section open">
+<div class="section-head" onclick="toggle(this)"><h2>🧠 Part 1: How AI Actually Works — What Happens to Your Data</h2><span class="arrow">▼</span></div>
+<div class="section-body">
+
+<div class="card">
+<h3>What is a Large Language Model (LLM)?</h3>
+<p>ChatGPT and Claude are Large Language Models (LLMs). Think of them as extremely advanced autocomplete systems. They were trained on billions of pages of text from the internet — books, websites, papers, forums — and learned patterns in human language.</p>
+<p style="margin-top:8px"><strong>Key insight:</strong> LLMs don't "know" things the way humans do. They predict the most likely next word based on patterns they've seen. This is why they can sound confident while being completely wrong.</p>
+
+<div class="diagram">
+<p style="font-size: 17px;opacity:0.7;margin-bottom:10px">How an LLM generates a response:</p>
+<div class="flow">
+<div class="node">Your Prompt</div>
+<div class="arr">→</div>
+<div class="node">Pattern Matching<br/><span style="font-size: 19px;opacity:0.7">against training data</span></div>
+<div class="arr">→</div>
+<div class="node">Word-by-Word<br/>Prediction</div>
+<div class="arr">→</div>
+<div class="node">Response<br/><span style="font-size: 19px;opacity:0.7">(may contain errors)</span></div>
+</div>
+</div>
+</div>
+
+<div class="card">
+<h3>What Happens When You Type in ChatGPT?</h3>
+<div class="diagram">
+<p style="font-size: 17px;opacity:0.7;margin-bottom:10px">Data flow — Free ChatGPT:</p>
+<div class="flow">
+<div class="node">You type a message<br/>or upload a file</div>
+<div class="arr">→</div>
+<div class="node node-danger">Sent to OpenAI<br/>servers (USA)</div>
+<div class="arr">→</div>
+<div class="node node-danger">Stored up to<br/>30 days</div>
+<div class="arr">→</div>
+<div class="node node-danger">May be used to<br/>train future models</div>
+</div>
+<p style="font-size: 17px;opacity:0.7;margin-top:15px;margin-bottom:10px">Data flow — Enterprise / Teams version:</p>
+<div class="flow">
+<div class="node">You type a message<br/>or upload a file</div>
+<div class="arr">→</div>
+<div class="node node-safe">Sent to servers<br/>(encrypted)</div>
+<div class="arr">→</div>
+<div class="node node-safe">Processed &<br/>immediately deleted</div>
+<div class="arr">→</div>
+<div class="node node-safe">NEVER used<br/>for training</div>
+</div>
+</div>
+<p style="margin-top:10px"><strong>The critical difference:</strong> Free tools may absorb your data into the model itself. Enterprise tools process and forget. This is why the ₹2,500/user/month investment matters — it's the difference between a locked cabinet and an open notice board.</p>
+</div>
+
+<div class="card">
+<h3>Why Does This Matter for Construction?</h3>
+<p>Construction companies handle uniquely sensitive data that most industries don't:</p>
+<div class="grid-2">
+<div>
+<h4>🏗️ Data Other Industries Don't Have</h4>
+<ul>
+<li><strong>Vendor negotiated rates</strong> — reveal your cost structure to competitors</li>
+<li><strong>Tender bid prices</strong> — competitors can undercut you by ₹1</li>
+<li><strong>Client contract terms</strong> — NDA violations can lose you the client</li>
+<li><strong>Structural calculations</strong> — errors can cause building collapse</li>
+<li><strong>Safety records</strong> — can be used against you in litigation</li>
+</ul>
+</div>
+<div>
+<h4>💥 Consequences Unique to Construction</h4>
+<ul>
+<li>Wrong AI calculation → structural failure → lives at risk</li>
+<li>Leaked bid price → lost ₹50 Cr tender → company survival</li>
+<li>Client contract exposed → ₹2 Cr legal liability</li>
+<li>Fake IS code reference → regulatory shutdown of site</li>
+<li>Employee data leaked → DPDP Act penalty up to ₹250 Cr</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- ============================================================ -->
+<!-- PART 2: THEORY — 5 CATEGORIES OF AI RISK -->
+<!-- ============================================================ -->
+<div class="section">
+<div class="section-head" onclick="toggle(this)"><h2>⚠️ Part 2: The 5 Categories of AI Risk in Construction</h2><span class="arrow">▼</span></div>
+<div class="section-body">
+
+<div class="card" style="border-top:3px solid #FF5252">
+<h3 style="color:#FF5252">Risk 1: Data Leakage — Your Information Becomes Public</h3>
+<p>When you upload data to free AI tools, it may be stored, reviewed by humans, or used to train future models. Your confidential vendor rates, client terms, or employee data could influence AI responses to other users — including your competitors.</p>
+<h4>Real-world parallel:</h4>
+<p>In 2023, Samsung engineers accidentally leaked proprietary chip designs by pasting source code into ChatGPT. The company banned ChatGPT for all employees. A similar leak at DEC Infra — pasting a tender bid into ChatGPT — could cost a ₹50 Cr contract.</p>
+</div>
+
+<div class="card" style="border-top:3px solid #FF9800">
+<h3 style="color:#FF9800">Risk 2: Hallucination — AI Generates False Information</h3>
+<p>AI doesn't distinguish fact from fiction. It generates the most statistically likely text, not the most accurate. In construction, a hallucinated IS code clause, wrong material specification, or fabricated regulatory requirement can lead to non-compliance, rework, or structural failure.</p>
+<h4>How often does it happen?</h4>
+<p>Studies show LLMs hallucinate 3-10% of the time on factual questions. In specialized domains like Indian construction codes, the rate is likely higher because training data is sparse. A 5% hallucination rate across 100 AI queries per month means 5 false statements you need to catch.</p>
+</div>
+
+<div class="card" style="border-top:3px solid #9C27B0">
+<h3 style="color:#CE93D8">Risk 3: Over-Reliance — Trusting AI Without Verification</h3>
+<p>As teams get comfortable with AI, they start trusting outputs without checking. This is the most dangerous risk because it's invisible until something goes wrong. A cost estimate that's off by ₹22L, a safety checklist that misses a critical item, a contract review that overlooks a liability clause — all because "the AI said so."</p>
+<h4>The human factor:</h4>
+<p>Research shows humans are 3x more likely to accept an answer from AI without questioning it compared to a human colleague's answer. We unconsciously treat AI as an authority because it sounds confident and structured.</p>
+</div>
+
+<div class="card" style="border-top:3px solid #2196F3">
+<h3 style="color:#64B5F6">Risk 4: Compliance Violation — Breaking Laws Without Knowing</h3>
+<p>India's Digital Personal Data Protection Act (DPDP 2023) imposes strict rules on how personal data is processed. Uploading employee Aadhaar numbers, PAN details, or salary information to an overseas AI service may constitute unauthorized cross-border data transfer — carrying penalties up to ₹250 Crore.</p>
+<h4>Key DPDP provisions for DEC Infra:</h4>
+<ul>
+<li><strong>Consent requirement:</strong> You need employee consent before processing their personal data via AI</li>
+<li><strong>Purpose limitation:</strong> Data collected for HR can't be used for AI analysis without separate consent</li>
+<li><strong>Data localization:</strong> Certain categories of data may need to stay within India</li>
+<li><strong>Breach notification:</strong> If data leaks through AI, you must notify the Data Protection Board within 72 hours</li>
+</ul>
+</div>
+
+<div class="card" style="border-top:3px solid #4CAF50">
+<h3 style="color:#4CAF50">Risk 5: Ethical Misuse — Using AI Inappropriately</h3>
+<p>AI can be misused to generate fake compliance certificates, fabricate test reports, create misleading progress documentation, or impersonate individuals. Even if technically possible, these uses are unethical and often illegal.</p>
+<h4>Examples of misuse in construction:</h4>
+<ul>
+<li>Generating a fake concrete test certificate to pass an audit</li>
+<li>Using AI to inflate progress percentages in client reports</li>
+<li>Creating a fabricated meeting transcript with invented attendees</li>
+<li>Using AI to draft fake insurance certificates for subcontractors</li>
+</ul>
+<p style="margin-top:8px"><strong>DEC Infra's position:</strong> Any use of AI to generate false, misleading, or fraudulent documents is grounds for immediate termination and potential legal action.</p>
+</div>
+
+<div class="tip"><strong>💡 Key Teaching Point:</strong> These 5 risks are not theoretical — they happen every day at companies that adopt AI without governance. Module 3 exists to make sure DEC Infra adopts AI safely, capturing the ₹30-70L/year benefit without the ₹5-250 Cr downside.</div>
+
+</div>
+</div>
+
+<!-- ============================================================ -->
+<!-- PART 3: THEORY — AI TRUST EQUATION -->
+<!-- ============================================================ -->
+<div class="section">
+<div class="section-head" onclick="toggle(this)"><h2>🔑 Part 3: The AI Trust Equation — When to Trust, When to Verify</h2><span class="arrow">▼</span></div>
+<div class="section-body">
+
+<div class="card">
+<h3>The 4-Level Trust Framework for AI Outputs</h3>
+<p>Not all AI outputs carry the same risk. Use this framework to decide how much verification is needed:</p>
+<table>
+<tr><th>Trust Level</th><th>Type of Output</th><th>Verification Needed</th><th>DEC Infra Example</th></tr>
+<tr><td style="color:#4CAF50;font-weight:700">Level 1: LOW RISK<br/>Trust freely</td><td>Drafting, formatting, summarizing, brainstorming, general knowledge</td><td>Quick read-through</td><td>Drafting a project status email, creating a meeting agenda, summarizing a report</td></tr>
+<tr><td style="color:#64B5F6;font-weight:700">Level 2: MEDIUM RISK<br/>Verify key facts</td><td>Data analysis, comparison reports, trend identification, cost summaries</td><td>Cross-check key numbers in Excel/ERP</td><td>Budget variance analysis, vendor comparison table, schedule trend report</td></tr>
+<tr><td style="color:#FF9800;font-weight:700">Level 3: HIGH RISK<br/>Expert verification</td><td>Safety protocols, quality specs, regulatory references, contract analysis</td><td>Qualified professional must review</td><td>Safety checklist for height work, IS 456 compliance check, contract risk review</td></tr>
+<tr><td style="color:#FF5252;font-weight:700">Level 4: CRITICAL RISK<br/>Never use AI alone</td><td>Structural calculations, final cost estimates for bids, legal opinions, medical/safety-critical decisions</td><td>Certified engineer/lawyer sign-off mandatory</td><td>Structural load calculations, tender bid pricing, RCC design, fire safety design</td></tr>
+</table>
+</div>
+
+<div class="diagram">
+<p style="font-size: 19px;font-weight:600;color:var(--accent);margin-bottom:15px">The Golden Rule of AI in Construction:</p>
+<div class="flow">
+<div class="node" style="font-size: 16px;padding:15px 25px;border-color:var(--accent)">AI Generates</div>
+<div class="arr" style="font-size: 30px">→</div>
+<div class="node" style="font-size: 16px;padding:15px 25px;border-color:var(--accent)">Human Verifies</div>
+<div class="arr" style="font-size: 30px">→</div>
+<div class="node" style="font-size: 16px;padding:15px 25px;border-color:var(--accent)">Human Decides</div>
+<div class="arr" style="font-size: 30px">→</div>
+<div class="node" style="font-size: 16px;padding:15px 25px;border-color:var(--accent)">Human is Accountable</div>
+</div>
+<p style="font-size: 18px;opacity:0.7;margin-top:15px">"The AI told me" is NEVER an acceptable defense. The person who uses the output owns the outcome.</p>
+</div>
+
+</div>
+</div>
+
+<!-- ============================================================ -->
+<!-- PART 4: GLOBAL AI SAFETY INCIDENTS -->
+<!-- ============================================================ -->
+<div class="section">
+<div class="section-head" onclick="toggle(this)"><h2>🌍 Part 4: Real-World AI Safety Incidents — Lessons from Industry</h2><span class="arrow">▼</span></div>
+<div class="section-body">
+
+<p style="margin-bottom:15px;opacity:0.8">These are real incidents from global companies. They show what happens when AI is used without proper governance.</p>
+
+<div class="case-study" onclick="toggleCS(this)">
+<div class="case-study-header"><h3><span class="cs-tag cs-tag-global">GLOBAL</span> Samsung — Source Code Leaked via ChatGPT</h3><span class="cs-arrow">▼</span></div>
+<div class="case-study-body">
+<div class="cs-block what-happened"><h4 style="color:#FF5252">What Happened</h4><p>Samsung semiconductor engineers pasted proprietary chip design source code into ChatGPT to debug errors. Within weeks, Samsung discovered their confidential code was now part of ChatGPT's training data — potentially accessible to competitors including TSMC and Intel.</p></div>
+<div class="cs-block impact"><h4 style="color:#FF9800">Impact</h4><p>Samsung banned ChatGPT company-wide. They invested $10M+ building an internal AI system. The leaked code represented years of R&D worth billions of dollars. Industry analysts estimated potential competitive damage at $100M-$1B.</p></div>
+<div class="cs-block lesson"><h4 style="color:#4CAF50">Lesson for DEC Infra</h4><p>If engineers at Samsung — a $350B tech company — can make this mistake, anyone can. DEC Infra's equivalent would be pasting a tender bid, client contract, or proprietary construction method into ChatGPT. The damage: lost tenders, client lawsuits, competitive disadvantage.</p></div>
+</div>
+</div>
+
+<div class="case-study" onclick="toggleCS(this)">
+<div class="case-study-header"><h3><span class="cs-tag cs-tag-global">GLOBAL</span> Air Canada — AI Chatbot Gives Wrong Refund Policy</h3><span class="cs-arrow">▼</span></div>
+<div class="case-study-body">
+<div class="cs-block what-happened"><h4 style="color:#FF5252">What Happened</h4><p>Air Canada's AI chatbot told a customer he could book a full-price ticket now and apply for a bereavement discount later. This was completely wrong — the airline's actual policy required applying BEFORE booking. The customer relied on the AI, paid full price, and was denied the discount.</p></div>
+<div class="cs-block impact"><h4 style="color:#FF9800">Impact</h4><p>Air Canada argued "the chatbot is a separate legal entity and we're not responsible for its answers." The court ruled: <strong>"Air Canada is responsible for ALL information on its website, including AI-generated responses."</strong> Air Canada was ordered to pay the refund difference.</p></div>
+<div class="cs-block lesson"><h4 style="color:#4CAF50">Lesson for DEC Infra</h4><p>If DEC Infra uses AI to generate client communications, contract interpretations, or compliance statements — and the AI is wrong — DEC Infra is legally liable, not the AI. "ChatGPT said we could do this" will not protect you in court. <strong>The company owns every AI output it uses.</strong></p></div>
+</div>
+</div>
+
+<div class="case-study" onclick="toggleCS(this)">
+<div class="case-study-header"><h3><span class="cs-tag cs-tag-global">GLOBAL</span> US Lawyer — Filed Court Brief with Fake Cases</h3><span class="cs-arrow">▼</span></div>
+<div class="case-study-body">
+<div class="cs-block what-happened"><h4 style="color:#FF5252">What Happened</h4><p>A New York lawyer used ChatGPT to research legal precedents for a court case. ChatGPT generated 6 case citations that looked perfectly real — correct formatting, plausible case names, realistic legal reasoning. The lawyer filed them with the court without verifying.</p></div>
+<div class="cs-block impact"><h4 style="color:#FF9800">Impact</h4><p>All 6 cases were completely fabricated by ChatGPT. The judge discovered the fake citations, sanctioned the lawyer, and the incident made international headlines. The lawyer faced potential disbarment and a $5,000 fine. His client's case was severely damaged.</p></div>
+<div class="cs-block lesson"><h4 style="color:#4CAF50">Lesson for DEC Infra</h4><p>When AI cites "IS 3696 Clause 7.4.2" or "NBC 2016 Section 4.3.1(b)" — verify it. AI fabricates technical references with the same confidence as real ones. A DEC Infra safety officer citing a fake IS clause in an audit could face regulatory action and site shutdown.</p></div>
+</div>
+</div>
+
+<div class="case-study" onclick="toggleCS(this)">
+<div class="case-study-header"><h3><span class="cs-tag cs-tag-global">INDIA</span> Indian IT Company — Client Data Used for AI Training</h3><span class="cs-arrow">▼</span></div>
+<div class="case-study-body">
+<div class="cs-block what-happened"><h4 style="color:#FF5252">What Happened</h4><p>Employees at a major Indian IT services company uploaded client deliverables to ChatGPT for code review and documentation. The client's contract had a strict data localization clause — all data must remain within India. ChatGPT servers are in the USA.</p></div>
+<div class="cs-block impact"><h4 style="color:#FF9800">Impact</h4><p>When the client discovered their proprietary code was sent to US-based servers, they invoked the data breach clause. The IT company faced: contract termination (₹200 Cr annual revenue at risk), legal proceedings for NDA violation, reputational damage across the industry, and mandatory data security audit costing ₹5 Cr.</p></div>
+<div class="cs-block lesson"><h4 style="color:#4CAF50">Lesson for DEC Infra</h4><p>DEC Infra's contracts with NSDL, IISER, government bodies likely contain confidentiality and data handling clauses. Uploading project data to ChatGPT could violate these clauses even if the data seems "harmless." Always check: Does this client contract restrict sharing data with third parties?</p></div>
+</div>
+</div>
+
+</div>
+</div>
+
+<!-- ============================================================ -->
+<!-- PART 5: DATA CLASSIFICATION -->
+<!-- ============================================================ -->
+<div class="section">
+<div class="section-head" onclick="toggle(this)"><h2>🔒 Part 5: Data Classification — The 3-Tier System for DEC Infra</h2><span class="arrow">▼</span></div>
+<div class="section-body">
+<div class="grid-3">
+<div class="card" style="border-top:3px solid #4CAF50">
+<h3 style="color:#4CAF50">🟢 Tier 1: Public / Safe</h3>
+<p>Share freely with any AI tool</p>
+<ul>
+<li>General industry knowledge</li>
+<li>Public info from decinfra.com</li>
+<li>Published standards (IS 456, NBC, OSHA)</li>
+<li>Generic templates & checklists</li>
+<li>Industry benchmark data</li>
+<li>Training materials</li>
+</ul>
+</div>
+<div class="card" style="border-top:3px solid #FF9800">
+<h3 style="color:#FF9800">🟡 Tier 2: Internal — Anonymize</h3>
+<p>Share ONLY after removing identifiers</p>
+<ul>
+<li>Budget data (remove vendor/client names)</li>
+<li>Schedules (remove project identity)</li>
+<li>Test results (remove lab names)</li>
+<li>Site photos (remove logos/faces)</li>
+<li>Progress reports (remove names)</li>
+<li>Specs (remove proprietary detail)</li>
+</ul>
+</div>
+<div class="card" style="border-top:3px solid #FF5252">
+<h3 style="color:#FF5252">🔴 Tier 3: Confidential — NEVER</h3>
+<p>NEVER upload to any external AI</p>
+<ul>
+<li>Vendor quotes & negotiated rates</li>
+<li>Profit margins & markups</li>
+<li>Employee salaries, Aadhaar, PAN</li>
+<li>Client contracts & agreements</li>
+<li>Bank details & credentials</li>
+<li>Tender bids & pricing strategy</li>
+</ul>
+</div>
+</div>
+
+<h3 style="color:white;margin-top:20px;font-size: 18px">DEC Infra Anonymization Guide</h3>
+<table>
+<tr><th>Original Data</th><th>Anonymized Version</th><th>Why</th></tr>
+<tr><td>"Concrete Suppliers Inc quoted ₹4,500/cum"</td><td>"Vendor A quoted ₹4,500/cum"</td><td>Vendor identity protected</td></tr>
+<tr><td>"IISER Library, Tirupati — ₹12.5 Cr"</td><td>"Educational Building, South India — ₹XX Cr"</td><td>Client & location protected</td></tr>
+<tr><td>"Mr. Anirudh Gupta, CMD, approved"</td><td>"Senior management approved"</td><td>Individual identity protected</td></tr>
+<tr><td>"NSDL awarded DEC Infra the contract"</td><td>"Client awarded Company the contract"</td><td>Both parties protected</td></tr>
+<tr><td>"Our bid: ₹45.7 Cr for NMDC project"</td><td><span style="color:#FF5252">⛔ NEVER SHARE — Tier 3</span></td><td>Competitor would undercut</td></tr>
+<tr><td>"DEC Infra profit margin: 14.2%"</td><td><span style="color:#FF5252">⛔ NEVER SHARE — Tier 3</span></td><td>Commercially devastating</td></tr>
+<tr><td>"Staff salary: ₹8.5 LPA, Aadhaar: 1234..."</td><td><span style="color:#FF5252">⛔ NEVER SHARE — Tier 3</span></td><td>DPDP Act violation</td></tr>
+</table>
+
+<div class="tip"><strong>💡 The DEC Infra Rule:</strong> If you wouldn't print it and leave it at a competitor's office, don't upload it to free ChatGPT.</div>
+</div>
+</div>
+
+<!-- ============================================================ -->
+<!-- PART 6: DEC INFRA CASE STUDIES -->
+<!-- ============================================================ -->
+<div class="section">
+<div class="section-head" onclick="toggle(this)"><h2>📂 Part 6: DEC Infra Case Studies — Data Leak Scenarios</h2><span class="arrow">▼</span></div>
+<div class="section-body">
+
+<p style="margin-bottom:15px;opacity:0.8">Fictional but realistic scenarios modeled on DEC Infra's actual project types. Click each to expand.</p>
+
+<div class="case-study" onclick="toggleCS(this)">
+<div class="case-study-header"><h3><span class="cs-tag cs-tag-leak">DATA LEAK</span> CS-1: Vendor Quotes Reach a Competitor</h3><span class="cs-arrow">▼</span></div>
+<div class="case-study-body">
+<div class="cs-block what-happened"><h4 style="color:#FF5252">📍 Scenario</h4><p>A DEC Infra procurement manager uploads 3 structural steel quotes — with full vendor names, exact rates per MT, and delivery terms — to free ChatGPT for comparison. The prompt: "Compare Tata Steel (₹58,500/MT), JSW (₹56,200/MT), and Vizag Steel (₹54,800/MT) for 200 MT to Tirupati."</p></div>
+<div class="cs-block impact"><h4 style="color:#FF9800">💥 Risk</h4><p>DEC Infra's exact vendor rates and quantities now sit on OpenAI servers. A competitor asking "What are typical steel rates for projects in Tirupati?" may get answers influenced by this data. Over 10 tenders/year, the competitive disadvantage could cost <strong>₹40L+ annually</strong>.</p></div>
+<div class="cs-block lesson"><h4 style="color:#4CAF50">✅ Fix</h4><p>Replace vendor names with "Vendor A/B/C." Remove location. Use "~200 MT" instead of exact quantity. The AI comparison works identically — zero data exposure. <strong>Time to anonymize: 2 minutes.</strong></p></div>
+</div>
+</div>
+
+<div class="case-study" onclick="toggleCS(this)">
+<div class="case-study-header"><h3><span class="cs-tag cs-tag-leak">DATA LEAK</span> CS-2: NSDL Contract Uploaded for "Quick Review"</h3><span class="cs-arrow">▼</span></div>
+<div class="case-study-body">
+<div class="cs-block what-happened"><h4 style="color:#FF5252">📍 Scenario</h4><p>A DEC Infra PM needs to check the penalty clause in the NSDL Data Center contract. Instead of reading the 45-page PDF, he uploads the entire file to ChatGPT: "Does this contract have a late delivery penalty?"</p></div>
+<div class="cs-block impact"><h4 style="color:#FF9800">💥 Risk</h4><p>NSDL's confidential terms, DEC Infra's negotiated rates, IP clauses, and payment schedules are now on OpenAI's servers. If NSDL discovers this breach: contract termination, legal action for NDA violation (<strong>₹50L-₹2 Cr exposure</strong>), loss of future NSDL business (<strong>₹5-10 Cr</strong>).</p></div>
+<div class="cs-block lesson"><h4 style="color:#4CAF50">✅ Fix</h4><p>Option 1: Ctrl+F "penalty" in the PDF (10 seconds). Option 2: Extract only the penalty clause, remove party names, paste that single paragraph. Option 3: Use enterprise AI where data isn't retained. <strong>Never upload full contracts to free tools.</strong></p></div>
+</div>
+</div>
+
+<div class="case-study" onclick="toggleCS(this)">
+<div class="case-study-header"><h3><span class="cs-tag cs-tag-leak">DATA LEAK</span> CS-3: Employee Salary Sheet with Aadhaar</h3><span class="cs-arrow">▼</span></div>
+<div class="case-study-body">
+<div class="cs-block what-happened"><h4 style="color:#FF5252">📍 Scenario</h4><p>DEC Infra HR uploads 150 employee records — names, designations, Aadhaar, PAN, salaries — to ChatGPT asking: "Are our construction engineer salaries competitive?"</p></div>
+<div class="cs-block impact"><h4 style="color:#FF9800">💥 Risk</h4><p>Violates DPDP Act 2023. Aadhaar + PAN = identity theft risk for 150 employees. Penalties: up to <strong>₹250 Cr</strong> under DPDP. Employee trust destruction. Competitors now know exactly what to offer to poach your best engineers.</p></div>
+<div class="cs-block lesson"><h4 style="color:#4CAF50">✅ Fix</h4><p>Share ONLY aggregated data: "25 site engineers averaging ₹X LPA, 15 PMs at ₹Y LPA — competitive for Hyderabad?" No names, no Aadhaar, no PAN. AI gives identical quality benchmarking. <strong>Time to anonymize: 5 minutes.</strong></p></div>
+</div>
+</div>
+
+<div class="case-study" onclick="toggleCS(this)">
+<div class="case-study-header"><h3><span class="cs-tag cs-tag-leak">DATA LEAK</span> CS-4: Tender Bid Price Shared for "Sanity Check"</h3><span class="cs-arrow">▼</span></div>
+<div class="case-study-body">
+<div class="cs-block what-happened"><h4 style="color:#FF5252">📍 Scenario</h4><p>A DEC Infra estimator uploads a complete BOQ with final tender price to ChatGPT: "Check if my total of ₹45.72 Cr for this railway station project looks reasonable. The project is for NMDC in Nagpur with 18-month duration." He includes line-by-line rates, quantities, and margins.</p></div>
+<div class="cs-block impact"><h4 style="color:#FF9800">💥 Risk</h4><p>This is the nuclear scenario. The exact bid price, line-by-line cost structure, margin strategy, and client identity are now on external servers. If a competing construction firm's employee asks ChatGPT about "typical railway station construction costs in Nagpur," the response could be influenced by DEC Infra's actual bid data. <strong>A competitor underbidding by just 2% = ₹91L less = DEC Infra loses the tender.</strong></p></div>
+<div class="cs-block lesson"><h4 style="color:#4CAF50">✅ Fix</h4><p>NEVER upload tender bids to any AI tool — free or paid. For sanity checking, use internal Excel models or ask AI generic questions: "What is typical cost per sqm for a railway station in central India?" without sharing YOUR numbers. <strong>Tender data is always Tier 3.</strong></p></div>
+</div>
+</div>
+
+<div class="case-study" onclick="toggleCS(this)">
+<div class="case-study-header"><h3><span class="cs-tag cs-tag-good">BEST PRACTICE</span> CS-5: Budget Analysis Done Right</h3><span class="cs-arrow">▼</span></div>
+<div class="case-study-body">
+<div class="cs-block" style="border-left:3px solid #4CAF50"><h4 style="color:#4CAF50">📍 Scenario</h4><p>A DEC Infra finance manager needs to analyze budget overruns across 10 projects. She spends 10 minutes doing find-and-replace in Excel: vendors → "Vendor A/B/C", projects → "Project Alpha/Beta/Gamma", locations → "Location 1/2/3". All numerical data kept intact. Uploads to ChatGPT.</p></div>
+<div class="cs-block action"><h4 style="color:#2196F3">📊 Result</h4><p>AI identified 3 overrun items, flagged contingency burns, and caught a ₹3.5L issue nobody had noticed. Analysis quality = identical to using real names. Time investment in anonymization: 10 minutes. Value protected: all vendor relationships, client confidentiality, and competitive positioning. <strong>This is how it's done.</strong></p></div>
+</div>
+</div>
+
+</div>
+</div>
+
+<!-- ============================================================ -->
+<!-- PART 7: HALLUCINATION CASE STUDIES -->
+<!-- ============================================================ -->
+<div class="section">
+<div class="section-head" onclick="toggle(this)"><h2>🔍 Part 7: AI Hallucinations — Construction-Specific Dangers</h2><span class="arrow">▼</span></div>
+<div class="section-body">
+<div class="warning"><strong>⚠️ AI can confidently state things that are completely wrong.</strong> In construction, acting on false AI output can cost ₹5-50L or endanger lives.</div>
+
+<div class="case-study" onclick="toggleCS(this)">
+<div class="case-study-header"><h3><span class="cs-tag cs-tag-halluc">HALLUCINATION</span> CS-6: Fake IS Code Clause in Safety Plan</h3><span class="cs-arrow">▼</span></div>
+<div class="case-study-body">
+<div class="cs-block what-happened"><h4 style="color:#FF5252">📍 Scenario</h4><p>DEC Infra safety officer asks ChatGPT: "IS code requirements for scaffolding safety?" AI responds: "As per IS 3696 Part 1:1987, Clause 7.4.2, scaffolding above 4m requires safety nets with mesh ≤100mm, inspected daily by competent person."</p></div>
+<div class="cs-block impact"><h4 style="color:#FF9800">💥 Problem</h4><p>IS 3696 is real, but <strong>Clause 7.4.2 doesn't exist</strong>. The mesh specification is from a different section with different requirements. The safety officer included this in the IISER Library safety plan. During a client audit, the consultant flagged it — embarrassing DEC Infra and triggering a full re-review of all safety documentation. <strong>Cost: ₹2-5L in re-documentation + reputation damage.</strong></p></div>
+<div class="cs-block lesson"><h4 style="color:#4CAF50">✅ How to Catch It</h4><p>Always verify specific clause numbers by looking them up in the actual standard. Better prompt: "What are scaffolding requirements? Flag any clause numbers you are uncertain about so I can verify."</p></div>
+</div>
+</div>
+
+<div class="case-study" onclick="toggleCS(this)">
+<div class="case-study-header"><h3><span class="cs-tag cs-tag-halluc">HALLUCINATION</span> CS-7: Wrong Concrete Mix Design for Medical College</h3><span class="cs-arrow">▼</span></div>
+<div class="case-study-body">
+<div class="cs-block what-happened"><h4 style="color:#FF5252">📍 Scenario</h4><p>Site engineer at Medical College, Suryapet asks Claude: "M30 mix design per IS 10262?" Claude gives specific quantities: Cement 380 kg/m³, FA 695 kg/m³, CA 1180 kg/m³, W/C 0.45.</p></div>
+<div class="cs-block impact"><h4 style="color:#FF9800">💥 Problem</h4><p>These are <strong>generic estimates, not actual mix design values</strong>. Real M30 mix design depends on local aggregate properties, cement brand/grade, moisture content, and site temperature. Using AI numbers without lab testing could produce concrete that fails 28-day strength tests. <strong>Cost: ₹5-15L to break and re-pour foundation sections.</strong> If the failure is discovered after the building is occupied: structural safety hazard.</p></div>
+<div class="cs-block lesson"><h4 style="color:#4CAF50">✅ How to Catch It</h4><p>NEVER use AI for final engineering calculations. Mix designs MUST come from an approved lab testing actual materials. Ask AI to "explain the M30 mix design process" — not "give me the M30 mix design."</p></div>
+</div>
+</div>
+
+<div class="case-study" onclick="toggleCS(this)">
+<div class="case-study-header"><h3><span class="cs-tag cs-tag-halluc">HALLUCINATION</span> CS-8: Invented RERA Regulation</h3><span class="cs-arrow">▼</span></div>
+<div class="case-study-body">
+<div class="cs-block what-happened"><h4 style="color:#FF5252">📍 Scenario</h4><p>Contracts manager asks: "RERA penalties for project delay in Telangana?" ChatGPT cites "Section 22A: ₹10,000/day/unit for delays exceeding 6 months."</p></div>
+<div class="cs-block impact"><h4 style="color:#FF9800">💥 Problem</h4><p><strong>Section 22A doesn't exist.</strong> AI fabricated an entire regulatory section. If DEC Infra uses this in risk assessment for Kollur Housing, they could overestimate exposure by ₹10-20L (unnecessary contingency) or present wrong information to legal counsel, resulting in a flawed negotiation strategy with the housing authority.</p></div>
+<div class="cs-block lesson"><h4 style="color:#4CAF50">✅ How to Catch It</h4><p>Verify ALL regulatory references against the official gazette notification or regulator website. AI is particularly unreliable with Indian regulatory specifics (RERA state variations, BOCW amendments, local building bylaws).</p></div>
+</div>
+</div>
+
+<div class="case-study" onclick="toggleCS(this)">
+<div class="case-study-header"><h3><span class="cs-tag cs-tag-halluc">HALLUCINATION</span> CS-9: BOQ Total Off by ₹22.56 Lakh</h3><span class="cs-arrow">▼</span></div>
+<div class="case-study-body">
+<div class="cs-block what-happened"><h4 style="color:#FF5252">📍 Scenario</h4><p>An estimator uploads a 45-line-item BOQ and asks AI to calculate the total cost. AI returns ₹3,24,56,780. The estimator includes this in a tender submission for the Gajwel Auditorium.</p></div>
+<div class="cs-block impact"><h4 style="color:#FF9800">💥 Problem</h4><p>Manual verification revealed actual total: ₹3,47,12,340. <strong>AI arithmetic error: ₹22.56L.</strong> It miscalculated rate × quantity on 3 line items. If DEC Infra submitted the AI bid, they'd win a project that loses ₹22.56L — eating into margin and potentially causing a net loss on a 14-month project.</p></div>
+<div class="cs-block lesson"><h4 style="color:#4CAF50">✅ How to Catch It</h4><p>ALWAYS do final calculations in Excel. Use AI to structure the BOQ, identify missing items, and compare rates — but never for final arithmetic. A 5-minute Excel cross-check catches errors that cost lakhs.</p></div>
+</div>
+</div>
+
+<div class="case-study" onclick="toggleCS(this)">
+<div class="case-study-header"><h3><span class="cs-tag cs-tag-halluc">HALLUCINATION</span> CS-10: AI Approves a Non-Compliant Fire Safety Design</h3><span class="cs-arrow">▼</span></div>
+<div class="case-study-body">
+<div class="cs-block what-happened"><h4 style="color:#FF5252">📍 Scenario</h4><p>A DEC Infra architect asks Claude to review the Medical College fire safety layout: "Is this compliant with NBC 2016 fire safety requirements? The building has 4 staircases for 6 floors, corridor width 1.8m, fire doors on every floor." Claude responds: "This layout appears compliant with NBC Part 4 Fire and Life Safety requirements."</p></div>
+<div class="cs-block impact"><h4 style="color:#FF9800">💥 Problem</h4><p>Claude <strong>cannot actually analyze a building layout</strong> — it only processed text, not spatial relationships. The actual NBC requirement for a medical facility of this size might require 6 staircases, 2.4m corridors, and a refuge floor. By "approving" a non-compliant design, AI gave false confidence. If the building was built to this design, it would fail the fire department inspection — requiring <strong>₹50L-₹1 Cr in structural modifications</strong> after construction. In a worst case, non-compliant fire safety could cost lives.</p></div>
+<div class="cs-block lesson"><h4 style="color:#4CAF50">✅ How to Catch It</h4><p>Fire safety compliance requires a licensed fire consultant with actual building drawings, not text descriptions. AI can explain NBC requirements in general, but it <strong>CANNOT certify compliance</strong>. Only a qualified fire safety engineer with access to architectural drawings, building specifications, and occupancy calculations can certify compliance.</p></div>
+</div>
+</div>
+
+<div class="case-study" onclick="toggleCS(this)">
+<div class="case-study-header"><h3><span class="cs-tag cs-tag-halluc">HALLUCINATION</span> CS-11: AI Generates a Fake Vendor "Track Record"</h3><span class="cs-arrow">▼</span></div>
+<div class="case-study-body">
+<div class="cs-block what-happened"><h4 style="color:#FF5252">📍 Scenario</h4><p>A DEC Infra PM asks ChatGPT: "Tell me about Quality Concrete Ltd — what projects have they completed? Are they reliable?" ChatGPT responds with a detailed company profile listing 5 completed projects (including 2 government buildings), 15 years of experience, ISO 9001 certification, and 4.5/5 customer rating.</p></div>
+<div class="cs-block impact"><h4 style="color:#FF9800">💥 Problem</h4><p>Quality Concrete Ltd is a fictional vendor we created for our workshop. <strong>ChatGPT fabricated an entire company history.</strong> Every project, every certification, every rating is hallucinated. If a procurement officer relied on this to shortlist a vendor without independent verification, they could award a ₹30L contract to a company with zero track record — risking project delays, quality failures, and financial loss.</p></div>
+<div class="cs-block lesson"><h4 style="color:#4CAF50">✅ How to Catch It</h4><p>NEVER use AI to verify vendor credibility. Always: (1) Request documents directly from vendor, (2) Call references independently, (3) Check MCA/ROC records, (4) Visit their office/facility, (5) Ask for audited financials. AI cannot verify real-world entity information — it generates plausible-sounding but often fictional company profiles.</p></div>
+</div>
+</div>
+
+<div class="card">
+<h3>Hallucination Red Flags — Quick Reference</h3>
+<table>
+<tr><th>Red Flag</th><th>Example</th><th>Action</th></tr>
+<tr><td>Very specific clause numbers</td><td>"As per Clause 7.4.2(b)(iii)..."</td><td>Look up the actual clause</td></tr>
+<tr><td>Precise decimal values</td><td>"Strength: 31.47 MPa exactly"</td><td>Verify — real data is rarely this precise</td></tr>
+<tr><td>Confident "always" or "never"</td><td>"IS 456 always requires..."</td><td>Standards have exceptions & conditions</td></tr>
+<tr><td>Mixing different standards</td><td>Citing OSHA in Indian context</td><td>Check which standard applies here</td></tr>
+<tr><td>Invented organizations</td><td>"Per NCBRI guidelines..."</td><td>Verify organization actually exists</td></tr>
+<tr><td>Detailed company profiles</td><td>"Company X completed 5 projects..."</td><td>Verify independently — AI fabricates</td></tr>
+<tr><td>Round-number estimates</td><td>"Exactly ₹5,00,000 per floor"</td><td>Real costs are almost never round</td></tr>
+<tr><td>Overly specific timelines</td><td>"Takes exactly 14 days per IS code"</td><td>Standards rarely specify exact durations</td></tr>
+</table>
+</div>
+
+<div class="exercise">
+<h3>🧪 Live Exercise: Spot the Hallucination</h3>
+<p>Facilitator runs this prompt live. Participants identify which facts are real and which are AI fabrications:</p>
+<span class="prompt-label">DEMO PROMPT</span>
+<div class="prompt"><button class="copy-btn" onclick="copyPrompt(this)">📋 Copy</button>What are the IS 456:2000 requirements for M30 grade concrete?
+Include: minimum cement content, maximum water-cement ratio,
+minimum curing period, compressive strength at 7 and 28 days,
+and maximum temperature for concrete placement.
+
+[After AI responds, participants verify each claim against
+the actual IS 456 standard. Award points for each hallucination caught.]</div>
+</div>
+</div>
+</div>
+
+<!-- ============================================================ -->
+<!-- PART 8: FREE vs PAID -->
+<!-- ============================================================ -->
+<div class="section">
+<div class="section-head" onclick="toggle(this)"><h2>💳 Part 8: Free vs Paid AI Tools — Data Security Comparison</h2><span class="arrow">▼</span></div>
+<div class="section-body">
+<table>
+<tr><th>Feature</th><th><span class="badge badge-risky">Free ChatGPT</span></th><th><span class="badge badge-safe">ChatGPT Teams</span></th><th><span class="badge badge-safe">Claude Teams</span></th><th><span class="badge badge-warn">MS Copilot</span></th></tr>
+<tr><td>Trains on your data?</td><td style="color:#FF5252">Yes ⚠️</td><td style="color:#4CAF50">No ✓</td><td style="color:#4CAF50">No ✓</td><td style="color:#4CAF50">No ✓</td></tr>
+<tr><td>Data retained?</td><td>Up to 30 days</td><td>Not retained</td><td>Not retained</td><td>Within M365 tenant</td></tr>
+<tr><td>Human review possible?</td><td style="color:#FF5252">Yes</td><td style="color:#4CAF50">No</td><td style="color:#4CAF50">No</td><td style="color:#4CAF50">No</td></tr>
+<tr><td>SOC 2 / ISO 27001?</td><td>Partial</td><td>Yes</td><td>Yes (SOC 2)</td><td>Yes</td></tr>
+<tr><td>Admin controls?</td><td>No</td><td>Full</td><td>Full</td><td>Via M365</td></tr>
+<tr><td>Cost/user/month</td><td>Free / ₹1,600</td><td>~₹2,100</td><td>~₹2,500</td><td>~₹2,200</td></tr>
+<tr><td>Safe for Tier 2?</td><td style="color:#FF9800">Only anonymized</td><td style="color:#4CAF50">Yes</td><td style="color:#4CAF50">Yes</td><td style="color:#4CAF50">Yes</td></tr>
+</table>
+
+<div class="card">
+<h3>💰 DEC Infra Cost-Benefit Analysis</h3>
+<div class="grid-2">
+<div><h4>Annual Investment (20 users)</h4>
+<table><tr><td>Claude Teams × 20 × 12 months</td><td style="text-align:right;font-weight:700">₹6,00,000</td></tr></table>
+</div>
+<div><h4>Annual Return (Conservative)</h4>
+<table>
+<tr><td>Time savings</td><td style="text-align:right">₹18,00,000</td></tr>
+<tr><td>Better procurement</td><td style="text-align:right">₹30,00,000</td></tr>
+<tr><td>Risk avoidance</td><td style="text-align:right">₹10,00,000</td></tr>
+<tr><td style="font-weight:700">Total</td><td style="text-align:right;font-weight:700;color:#FFD600">₹58,00,000</td></tr>
+</table></div>
+</div>
+<p style="text-align:center;margin-top:12px;font-size: 16px"><strong>₹6L invest → ₹58L return = <span style="color:#FFD600">967% ROI</span> | Payback: 1.2 months</strong></p>
+</div>
+</div>
+</div>
+
+<!-- ============================================================ -->
+<!-- PART 9: AI USAGE POLICY -->
+<!-- ============================================================ -->
+<div class="section">
+<div class="section-head" onclick="toggle(this)"><h2>📜 Part 9: DEC Infra AI Usage Policy (Draft)</h2><span class="arrow">▼</span></div>
+<div class="section-body">
+<div class="card">
+<h3>Draft AI Usage Policy — DEC Infra Projects Pvt Ltd</h3>
+<h4>Section 1: Approved AI Tools</h4>
+<ul><li>ChatGPT (OpenAI) — Tier 1 & anonymized Tier 2 only</li><li>Claude (Anthropic) — Tier 1 & anonymized Tier 2 only</li><li>Microsoft Copilot — internal M365 documents</li><li>All other AI tools require IT approval</li></ul>
+<h4>Section 2: Data Handling</h4>
+<ul><li>Tier 1 (Public): Use freely</li><li>Tier 2 (Internal): MUST anonymize before free tools; can use as-is with enterprise tools</li><li>Tier 3 (Confidential): NEVER upload to any external AI</li><li>Default: When unsure, treat as Tier 2</li></ul>
+<h4>Section 3: Verification Requirements</h4>
+<ul><li>All official AI outputs → human verification required</li><li>Safety-critical → senior engineer sign-off</li><li>Financial → finance team cross-check in Excel/ERP</li><li>Legal → legal advisor review</li><li>IS/regulatory references → verify against source document</li></ul>
+<h4>Section 4: Prohibited Uses</h4>
+<ul><li>Uploading employee personal data (Aadhaar, PAN, salaries)</li><li>Sharing full client contracts</li><li>Using AI as final engineering calculations</li><li>Generating fake certificates, test reports, or compliance docs</li><li>Sharing tender bid prices or profit margins</li></ul>
+<h4>Section 5: Accountability</h4>
+<ul><li>Person using AI is fully responsible for verifying outputs</li><li>"The AI told me" is never an acceptable defense</li><li>Report suspected data breaches to IT within 24 hours</li><li>Quarterly AI usage review by department heads</li></ul>
+</div>
+
+<div class="exercise">
+<h3>🏋️ Group Exercise: Customize the Policy for YOUR Department</h3>
+<p>In groups of 3-4, add 3 department-specific rules. Examples:</p>
+<div class="grid-2">
+<div class="card"><h4>Project Execution</h4><ul><li>"AI schedules must be validated in Primavera/MS Project before sharing"</li><li>"Site photos must not contain client logos or signage"</li><li>"AI estimates require QS verification before inclusion in any report"</li></ul></div>
+<div class="card"><h4>Quality & Safety</h4><ul><li>"AI safety checklists require certified safety officer sign-off"</li><li>"Mix designs from AI must NEVER replace lab designs"</li><li>"NCR reports must reference verified IS clause numbers only"</li></ul></div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- ============================================================ -->
+<!-- PART 10: IS THIS SAFE QUIZ -->
+<!-- ============================================================ -->
+<div class="section">
+<div class="section-head" onclick="toggle(this)"><h2>🧪 Part 10: "Is This Safe?" — 15 DEC Infra Scenarios</h2><span class="arrow">▼</span></div>
+<div class="section-body">
+<p style="margin-bottom:15px;opacity:0.8">For each: <span class="badge badge-safe">SAFE ✓</span> or <span class="badge badge-risky">RISKY ✗</span> or <span class="badge badge-warn">ANONYMIZE ⚠</span></p>
+<table>
+<tr><th>#</th><th>Scenario</th><th>Verdict</th><th>Why</th></tr>
+<tr><td>1</td><td>Ask AI to draft a safety checklist for height work</td><td><span class="badge badge-safe">SAFE ✓</span></td><td>Generic safety knowledge</td></tr>
+<tr><td>2</td><td>Upload 3 vendor quotes with names and exact rates</td><td><span class="badge badge-risky">RISKY ✗</span></td><td>Vendor names + rates = Tier 3</td></tr>
+<tr><td>3</td><td>Ask AI to explain IS 456 requirements</td><td><span class="badge badge-safe">SAFE ✓</span></td><td>Public standard</td></tr>
+<tr><td>4</td><td>Upload attendance register with Aadhaar numbers</td><td><span class="badge badge-risky">RISKY ✗</span></td><td>Personal data — DPDP violation</td></tr>
+<tr><td>5</td><td>Upload test results with lab name replaced</td><td><span class="badge badge-safe">SAFE ✓</span></td><td>Properly anonymized Tier 2</td></tr>
+<tr><td>6</td><td>Upload full NSDL contract for review</td><td><span class="badge badge-risky">RISKY ✗</span></td><td>Client contract = Tier 3</td></tr>
+<tr><td>7</td><td>Upload site photos, no logos visible</td><td><span class="badge badge-safe">SAFE ✓</span></td><td>Generic photos, no identifiers</td></tr>
+<tr><td>8</td><td>Share profit margin on Medical College project</td><td><span class="badge badge-risky">RISKY ✗</span></td><td>Tier 3 — commercially sensitive</td></tr>
+<tr><td>9</td><td>Upload budget with vendors as "A/B/C"</td><td><span class="badge badge-safe">SAFE ✓</span></td><td>Properly anonymized Tier 2</td></tr>
+<tr><td>10</td><td>Ask AI to draft project status email</td><td><span class="badge badge-warn">ANONYMIZE ⚠</span></td><td>Remove internal details</td></tr>
+<tr><td>11</td><td>Upload tender bid for NMDC project</td><td><span class="badge badge-risky">RISKY ✗</span></td><td>Tier 3 — competitor advantage</td></tr>
+<tr><td>12</td><td>Compare two scaffolding designs</td><td><span class="badge badge-warn">ANONYMIZE ⚠</span></td><td>OK technically, remove project name</td></tr>
+<tr><td>13</td><td>Upload subcontractor insurance certificate</td><td><span class="badge badge-warn">ANONYMIZE ⚠</span></td><td>Remove company name, keep policy details</td></tr>
+<tr><td>14</td><td>Share DEC Infra annual revenue figures</td><td><span class="badge badge-risky">RISKY ✗</span></td><td>Tier 3 unless already in ROC public filing</td></tr>
+<tr><td>15</td><td>Ask how to write a change order justification</td><td><span class="badge badge-safe">SAFE ✓</span></td><td>Generic knowledge, no company data</td></tr>
+</table>
+<div class="success"><strong>✓ Scoring:</strong> 13-15 = AI Safety Expert 🏆 | 10-12 = Good 👍 | 7-9 = Practice ⚠️ | <7 = Review the 3-Tier system 🔄</div>
+</div>
+</div>
+
+<!-- ============================================================ -->
+<!-- KEY TAKEAWAYS -->
+<!-- ============================================================ -->
+<div class="section">
+<div class="section-head" onclick="toggle(this)"><h2>🎯 Key Takeaways — 6 Rules to Remember</h2><span class="arrow">▼</span></div>
+<div class="section-body">
+<div class="card">
+<table>
+<tr><th>#</th><th>Rule</th><th>Why It Matters for DEC Infra</th></tr>
+<tr><td style="font-size: 20px;font-weight:800;color:#FFD600">1</td><td><strong>Classify first, share second</strong></td><td>Know your data tier BEFORE opening ChatGPT</td></tr>
+<tr><td style="font-size: 20px;font-weight:800;color:#FFD600">2</td><td><strong>Anonymize Tier 2</strong></td><td>Replace names, keep numbers — AI doesn't need WHO, just WHAT</td></tr>
+<tr><td style="font-size: 20px;font-weight:800;color:#FFD600">3</td><td><strong>Never share Tier 3</strong></td><td>Bids, margins, salaries, contracts — one leak could cost crores</td></tr>
+<tr><td style="font-size: 20px;font-weight:800;color:#FFD600">4</td><td><strong>Verify every critical output</strong></td><td>AI hallucinations cost ₹5-50L in construction</td></tr>
+<tr><td style="font-size: 20px;font-weight:800;color:#FFD600">5</td><td><strong>AI assists, humans decide</strong></td><td>YOU are accountable, not the AI — always</td></tr>
+<tr><td style="font-size: 20px;font-weight:800;color:#FFD600">6</td><td><strong>Enterprise tools are worth it</strong></td><td>₹6L/year protects data worth ₹50 Cr+ in business</td></tr>
+</table>
+</div>
+<div class="stats">
+<div class="stat"><span class="n">12</span><span class="l">Case Studies</span></div>
+<div class="stat"><span class="n">15</span><span class="l">Quiz Scenarios</span></div>
+<div class="stat"><span class="n">5</span><span class="l">Risk Categories</span></div>
+<div class="stat"><span class="n">₹5-250 Cr</span><span class="l">Risk Avoided</span></div>
+</div>
+</div>
+</div>
+
 </div>
 
 <script>
-const SCREENS = [
-  {
-    type: "hero",
-    eyebrow: "Module 3",
-    title: "Safe AI & Data Governance",
-    desc: "AI is powerful, but uploading the wrong data can cost the company crores in lost bids, client lawsuits, or DPDP fines. Let's master the rules of AI safety in construction."
-  },
-  {
-    type: "theory",
-    eyebrow: "The Golden Rule",
-    title: "How AI Processes Your Data",
-    content: `
-      <p>When you type into free tools like ChatGPT, your data goes to external servers and <strong>may be used to train future models</strong>.</p>
-      <div class="theory-block">
-        <strong style="color:var(--safe)">Enterprise Tools (Safe):</strong> Data is encrypted, processed, and immediately deleted. Never used for training.<br><br>
-        <strong style="color:var(--risky)">Free Tools (Risky):</strong> Data is retained for 30 days and can influence answers given to competitors.
-      </div>
-      <p>A mistake here can leak vendor rates, tender bids, or client contracts.</p>
-    `
-  },
-  {
-    type: "quiz_sequence",
-    eyebrow: "Is This Safe?",
-    title: "Data Classification Quiz",
-    desc: "Decide if it's Safe to upload, if you should Anonymize it first, or if it's Risky (Never share).",
-    questions: [
-      {
-        q: "1. Ask AI to draft a safety checklist for height work",
-        ans: "SAFE",
-        why: "Generic safety knowledge is Tier 1 and completely safe to share.",
-        opts: [{l:"SAFE ✓",v:"SAFE"}, {l:"ANONYMIZE ⚠",v:"ANONYMIZE"}, {l:"RISKY ✗",v:"RISKY"}]
-      },
-      {
-        q: "2. Upload 3 vendor quotes with names and exact rates",
-        ans: "RISKY",
-        why: "Vendor names + negotiated rates are Tier 3 Confidential. Sharing this exposes our cost structure to competitors.",
-        opts: [{l:"SAFE ✓",v:"SAFE"}, {l:"ANONYMIZE ⚠",v:"ANONYMIZE"}, {l:"RISKY ✗",v:"RISKY"}]
-      },
-      {
-        q: "3. Ask AI to explain IS 456 concrete mix requirements",
-        ans: "SAFE",
-        why: "IS codes are public standards. There is no company-specific data here.",
-        opts: [{l:"SAFE ✓",v:"SAFE"}, {l:"ANONYMIZE ⚠",v:"ANONYMIZE"}, {l:"RISKY ✗",v:"RISKY"}]
-      },
-      {
-        q: "4. Upload attendance register with Aadhaar numbers",
-        ans: "RISKY",
-        why: "Uploading PII (Personally Identifiable Information) violates India's DPDP Act and carries penalties up to ₹250 Cr.",
-        opts: [{l:"SAFE ✓",v:"SAFE"}, {l:"ANONYMIZE ⚠",v:"ANONYMIZE"}, {l:"RISKY ✗",v:"RISKY"}]
-      },
-      {
-        q: "5. Upload test results with lab name replaced",
-        ans: "SAFE",
-        why: "Properly anonymized Tier 2 data. By removing the lab name, you protect identities while still getting AI's mathematical analysis.",
-        opts: [{l:"SAFE ✓",v:"SAFE"}, {l:"ANONYMIZE ⚠",v:"ANONYMIZE"}, {l:"RISKY ✗",v:"RISKY"}]
-      },
-      {
-        q: "6. Upload full NSDL contract for review",
-        ans: "RISKY",
-        why: "Client contracts are Tier 3. A leaked contract allows competitors to see your legal positioning and client terms.",
-        opts: [{l:"SAFE ✓",v:"SAFE"}, {l:"ANONYMIZE ⚠",v:"ANONYMIZE"}, {l:"RISKY ✗",v:"RISKY"}]
-      },
-      {
-        q: "7. Upload site photos, no logos visible",
-        ans: "SAFE",
-        why: "Generic photos with no identifiers (logos, faces, signage) are safe to analyze with AI vision tools.",
-        opts: [{l:"SAFE ✓",v:"SAFE"}, {l:"ANONYMIZE ⚠",v:"ANONYMIZE"}, {l:"RISKY ✗",v:"RISKY"}]
-      },
-      {
-        q: "8. Share profit margin on Medical College project",
-        ans: "RISKY",
-        why: "Profit margins are commercially sensitive Tier 3 data. Never share this externally.",
-        opts: [{l:"SAFE ✓",v:"SAFE"}, {l:"ANONYMIZE ⚠",v:"ANONYMIZE"}, {l:"RISKY ✗",v:"RISKY"}]
-      },
-      {
-        q: "9. Upload budget with vendors as 'A/B/C'",
-        ans: "SAFE",
-        why: "Properly anonymized Tier 2 data. AI can crunch the numbers without knowing who the vendors are.",
-        opts: [{l:"SAFE ✓",v:"SAFE"}, {l:"ANONYMIZE ⚠",v:"ANONYMIZE"}, {l:"RISKY ✗",v:"RISKY"}]
-      },
-      {
-        q: "10. Ask AI to draft project status email",
-        ans: "ANONYMIZE",
-        why: "You should remove internal details, specific financial figures, and client names before asking for drafting help.",
-        opts: [{l:"SAFE ✓",v:"SAFE"}, {l:"ANONYMIZE ⚠",v:"ANONYMIZE"}, {l:"RISKY ✗",v:"RISKY"}]
-      },
-      {
-        q: "11. Upload tender bid for NMDC project",
-        ans: "RISKY",
-        why: "Tender bids are the most critical Tier 3 data. A leaked bid allows competitors to easily underbid us.",
-        opts: [{l:"SAFE ✓",v:"SAFE"}, {l:"ANONYMIZE ⚠",v:"ANONYMIZE"}, {l:"RISKY ✗",v:"RISKY"}]
-      },
-      {
-        q: "12. Compare two scaffolding designs",
-        ans: "ANONYMIZE",
-        why: "It's OK technically to compare designs, but you must remove the project name and location first.",
-        opts: [{l:"SAFE ✓",v:"SAFE"}, {l:"ANONYMIZE ⚠",v:"ANONYMIZE"}, {l:"RISKY ✗",v:"RISKY"}]
-      },
-      {
-        q: "13. Upload subcontractor insurance certificate",
-        ans: "ANONYMIZE",
-        why: "Remove the subcontractor's company name and PII, but keep the policy details for AI to check compliance.",
-        opts: [{l:"SAFE ✓",v:"SAFE"}, {l:"ANONYMIZE ⚠",v:"ANONYMIZE"}, {l:"RISKY ✗",v:"RISKY"}]
-      },
-      {
-        q: "14. Share DEC Infra annual revenue figures",
-        ans: "RISKY",
-        why: "Tier 3 data unless it is already in a public ROC filing. Avoid sharing financial totals.",
-        opts: [{l:"SAFE ✓",v:"SAFE"}, {l:"ANONYMIZE ⚠",v:"ANONYMIZE"}, {l:"RISKY ✗",v:"RISKY"}]
-      },
-      {
-        q: "15. Ask how to write a change order justification",
-        ans: "SAFE",
-        why: "Asking for a generic template or instructions is completely safe.",
-        opts: [{l:"SAFE ✓",v:"SAFE"}, {l:"ANONYMIZE ⚠",v:"ANONYMIZE"}, {l:"RISKY ✗",v:"RISKY"}]
-      }
-    ]
-  },
-  {
-    type: "theory",
-    eyebrow: "The Second Risk",
-    title: "AI Hallucinations",
-    content: `
-      <p>AI doesn't "know" facts; it predicts the next likely word. It can confidently state things that are completely wrong.</p>
-      <div class="theory-block" style="border-color:var(--anonymize)">
-        <strong>Hallucination Red Flags:</strong>
-        <ul style="margin-top:8px;padding-left:20px;opacity:0.9">
-          <li>Very specific clause numbers (e.g., Clause 7.4.2(b))</li>
-          <li>Precise decimal values (e.g., 31.47 MPa)</li>
-          <li>Detailed fictional company profiles</li>
-        </ul>
-      </div>
-      <p>Always verify critical outputs (safety protocols, concrete specs) with a qualified engineer or official document.</p>
-    `
-  },
-  {
-    type: "quiz_sequence",
-    eyebrow: "Fact or Fiction?",
-    title: "Spot the Hallucination",
-    desc: "Review these AI responses and decide if they are factual or likely hallucinations.",
-    questions: [
-      {
-        q: "AI says: 'As per IS 3696 Part 1:1987, Clause 7.4.2, scaffolding above 4m requires nets with mesh ≤100mm.'",
-        ans: "HALLUCINATION",
-        why: "IS 3696 exists, but Clause 7.4.2 does not. AI frequently fabricates specific clause numbers to sound authoritative.",
-        opts: [{l:"FACT",v:"FACT"}, {l:"HALLUCINATION",v:"HALLUCINATION"}]
-      },
-      {
-        q: "AI provides a specific M30 concrete mix design: 'Cement 380 kg/m³, FA 695 kg/m³, CA 1180 kg/m³'",
-        ans: "HALLUCINATION",
-        why: "Actual mix designs require lab testing of local aggregates and moisture. AI is guessing based on generic formulas.",
-        opts: [{l:"FACT",v:"FACT"}, {l:"HALLUCINATION",v:"HALLUCINATION"}]
-      },
-      {
-        q: "AI says: 'Quality Concrete Ltd completed 5 government projects, holds ISO 9001, and has 15 years experience.'",
-        ans: "HALLUCINATION",
-        why: "Quality Concrete Ltd is a fictional company. AI will invent entire company histories rather than admitting it doesn't know.",
-        opts: [{l:"FACT",v:"FACT"}, {l:"HALLUCINATION",v:"HALLUCINATION"}]
-      }
-    ]
-  },
-  {
-    type: "results",
-    title: "Module Complete",
-    desc: "You've mastered the fundamentals of Safe AI at DEC Infra. Here is your performance summary:"
-  }
-];
-
-let currentScreen = 0;
-let subIndex = 0;
-let state = {
-  scores: {
-    "Data Safety (15)": {correct:0, total:15},
-    "Hallucinations (3)": {correct:0, total:3}
-  },
-  totalCorrect: 0,
-  totalQuestions: 18
-};
-
-const el = id => document.getElementById(id);
-const screenEl = el("screen");
-
-function renderPips() {
-  let html = '';
-  for(let i=0; i<SCREENS.length; i++) {
-    let cls = 'pip';
-    if(i < currentScreen) cls += ' done';
-    if(i === currentScreen) cls += ' now';
-    html += `<div class="${cls}"></div>`;
-  }
-  el("pips").innerHTML = html;
-}
-
-function renderHero(data) {
-  screenEl.innerHTML = `
-    <div class="card hero">
-      <span class="eyebrow">${data.eyebrow}</span>
-      <h1>${data.title}</h1>
-      <p>${data.desc}</p>
-      <div class="actions">
-        <button class="btn" onclick="nextScreen()">Start Module</button>
-      </div>
-    </div>
-  `;
-}
-
-function renderTheory(data) {
-  screenEl.innerHTML = `
-    <div class="card">
-      <span class="eyebrow">${data.eyebrow}</span>
-      <h2 class="module-title" style="margin-top:8px">${data.title}</h2>
-      <div style="font-size:17px;line-height:1.6">${data.content}</div>
-      <div class="actions">
-        <button class="btn" onclick="nextScreen()">Continue</button>
-      </div>
-    </div>
-  `;
-}
-
-function renderQuiz(data) {
-  const q = data.questions[subIndex];
-  const progress = `Scenario ${subIndex+1} of ${data.questions.length}`;
-  
-  let optsHtml = q.opts.map(o => 
-    `<button class="opt-btn" onclick="handleAnswer('${o.v}', this)">${o.l}</button>`
-  ).join('');
-
-  screenEl.innerHTML = `
-    <div class="card">
-      <span class="eyebrow">${data.eyebrow}</span>
-      <h2 class="module-title" style="margin-top:8px">${data.title}</h2>
-      <div class="progress-text">${progress}</div>
-      
-      <div class="scenario-text">${q.q}</div>
-      
-      <div class="options-grid" id="optGrid">
-        ${optsHtml}
-      </div>
-      
-      <div id="feedbackArea"></div>
-    </div>
-  `;
-}
-
-window.handleAnswer = function(selected, btnEl) {
-  const data = SCREENS[currentScreen];
-  const q = data.questions[subIndex];
-  const isCorrect = (selected === q.ans);
-  
-  const category = (data.title.includes("Data")) ? "Data Safety (15)" : "Hallucinations (3)";
-  if(isCorrect) {
-    state.scores[category].correct++;
-    state.totalCorrect++;
-  }
-  
-  const btns = document.querySelectorAll('.opt-btn');
-  btns.forEach(b => b.disabled = true);
-  
-  if(isCorrect) {
-    btnEl.classList.add('correct');
-  } else {
-    btnEl.classList.add('wrong');
-    btns.forEach(b => {
-      if(b.innerText.includes(q.ans)) b.classList.add('correct');
-    });
-  }
-  
-  const fClass = isCorrect ? 'good' : 'bad';
-  const fIcon = isCorrect ? '✓ Correct' : '✗ Incorrect';
-  
-  el("feedbackArea").innerHTML = `
-    <div class="feedback ${fClass}">
-      <strong>${fIcon}</strong> — ${q.why}
-    </div>
-    <div class="actions">
-      <button class="btn" onclick="nextSub()">${subIndex < data.questions.length-1 ? 'Next Scenario' : 'Continue'}</button>
-    </div>
-  `;
-}
-
-window.nextSub = function() {
-  const data = SCREENS[currentScreen];
-  if (subIndex < data.questions.length - 1) {
-    subIndex++;
-    renderQuiz(data);
-  } else {
-    nextScreen();
-  }
-}
-
-function renderResults(data) {
-  let barsHtml = '';
-  for(const [cat, score] of Object.entries(state.scores)) {
-    const pct = Math.round((score.correct / score.total) * 100);
-    const color = pct >= 80 ? 'var(--safe)' : (pct >= 50 ? 'var(--anonymize)' : 'var(--risky)');
-    barsHtml += `
-      <div class="bar-row">
-        <div class="bar-label">${cat}</div>
-        <div class="bar-track">
-          <div class="bar-fill" style="width:0%; background:${color}" data-width="${pct}%"></div>
-          <div class="bar-val">${score.correct}/${score.total}</div>
-        </div>
-      </div>
-    `;
-  }
-
-  const finalPct = Math.round((state.totalCorrect / state.totalQuestions) * 100);
-  let msg = "Great job!";
-  if(finalPct < 60) msg = "Keep practicing. Review the 3-Tier system.";
-  else if(finalPct >= 90) msg = "Excellent! You are an AI Safety Expert. 🏆";
-
-  screenEl.innerHTML = `
-    <div class="card result">
-      <span class="eyebrow">Results</span>
-      <h1 class="hero" style="font-size:36px;margin:8px 0">${data.title}</h1>
-      <p style="font-size:18px;color:var(--ink-soft)">${data.desc}</p>
-      
-      <div class="chart-wrap">
-        ${barsHtml}
-      </div>
-      
-      <div class="theory-block" style="text-align:center;border-left:none;background:rgba(255,255,255,0.05)">
-        <div style="font-size:48px;font-weight:800;font-family:'Bricolage Grotesque',sans-serif">${finalPct}%</div>
-        <div style="color:var(--ink-soft)">${msg}</div>
-      </div>
-
-      <div class="actions" style="justify-content:center">
-        <button class="btn ghost" onclick="restart()">Restart Module</button>
-      </div>
-    </div>
-  `;
-
-  setTimeout(() => {
-    document.querySelectorAll('.bar-fill').forEach(b => {
-      b.style.width = b.dataset.width;
-    });
-  }, 100);
-}
-
-window.nextScreen = function() {
-  currentScreen++;
-  subIndex = 0;
-  loadScreen();
-}
-
-window.restart = function() {
-  currentScreen = 0;
-  subIndex = 0;
-  state = {
-    scores: {
-      "Data Safety (15)": {correct:0, total:15},
-      "Hallucinations (3)": {correct:0, total:3}
-    },
-    totalCorrect: 0,
-    totalQuestions: 18
-  };
-  loadScreen();
-}
-
-function loadScreen() {
-  renderPips();
-  const data = SCREENS[currentScreen];
-  if(data.type === 'hero') renderHero(data);
-  else if(data.type === 'theory') renderTheory(data);
-  else if(data.type === 'quiz_sequence') renderQuiz(data);
-  else if(data.type === 'results') renderResults(data);
-}
-
-loadScreen();
-
+function toggle(el){el.parentElement.classList.toggle('open')}
+function toggleCS(el){if(el.classList.contains('case-study'))el.classList.toggle('cs-open')}
+function copyPrompt(btn){const t=btn.parentElement.textContent.replace('📋 Copy','').trim();navigator.clipboard.writeText(t).then(()=>{btn.textContent='✓ Copied!';setTimeout(()=>btn.textContent='📋 Copy',2000)});event.stopPropagation()}
 </script>
 </body>
 </html>

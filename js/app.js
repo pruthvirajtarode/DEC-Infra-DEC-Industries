@@ -3454,30 +3454,34 @@ Format as professional board report. Max 2 pages. Traffic lights throughout.</di
 <div class="section-head" onclick="toggle(this)"><h2>🎯 Key Takeaways</h2><span class="arrow">▼</span></div>
 <div class="section-body">
 <div class="card">
+<div id="data-quiz-container"></div>
+<div id="m3-results-container" style="margin-top: 30px;"></div>
+</div>
+</div>
+
+<!-- ============================================================ -->
+<!-- KEY TAKEAWAYS -->
+<!-- ============================================================ -->
+<div class="section">
+<div class="section-head" onclick="toggle(this)"><h2>🎯 Key Takeaways — 6 Rules to Remember</h2><span class="arrow">▼</span></div>
+<div class="section-body">
+<div class="card">
 <table>
-<tr><th>#</th><th>Takeaway</th><th>Proof</th></tr>
-<tr><td style="font-size: 20px;font-weight:800;color:#FFD600">1</td><td><strong>242 rows analyzed in 90 seconds</strong></td><td>28 overruns, 19 contingency burns found instantly</td></tr>
-<tr><td style="font-size: 20px;font-weight:800;color:#FFD600">2</td><td><strong>AI catches what manual reviews miss</strong></td><td>₹2.9L RCC overrun hidden inside project-level totals</td></tr>
-<tr><td style="font-size: 20px;font-weight:800;color:#FFD600">3</td><td><strong>Cross-project comparison reveals savings</strong></td><td>₹4.8-6.2L saved on rebar alone by standardizing rates</td></tr>
-<tr><td style="font-size: 20px;font-weight:800;color:#FFD600">4</td><td><strong>Contingency reallocation prevents crises</strong></td><td>₹5L moved from healthy to stressed projects — avoided work stoppage</td></tr>
-<tr><td style="font-size: 20px;font-weight:800;color:#FFD600">5</td><td><strong>Invoice analysis protects vendor relationships</strong></td><td>₹9.87L stuck invoice cleared — prevented vendor walkout</td></tr>
-<tr><td style="font-size: 20px;font-weight:800;color:#FFD600">6</td><td><strong>Always anonymize before uploading</strong></td><td>2 min anonymization protects ₹crores of data</td></tr>
-<tr><td style="font-size: 20px;font-weight:800;color:#FFD600">7</td><td><strong>AI assists, humans decide</strong></td><td>CS-5: AI recommended dropping best vendor — human judgment saved ₹8L</td></tr>
+<tr><th>#</th><th>Rule</th><th>Why It Matters for DEC Infra</th></tr>
+<tr><td style="font-size: 20px;font-weight:800;color:#FFD600">1</td><td><strong>Classify first, share second</strong></td><td>Know your data tier BEFORE opening ChatGPT</td></tr>
+<tr><td style="font-size: 20px;font-weight:800;color:#FFD600">2</td><td><strong>Anonymize Tier 2</strong></td><td>Replace names, keep numbers — AI doesn't need WHO, just WHAT</td></tr>
+<tr><td style="font-size: 20px;font-weight:800;color:#FFD600">3</td><td><strong>Never share Tier 3</strong></td><td>Bids, margins, salaries, contracts — one leak could cost crores</td></tr>
+<tr><td style="font-size: 20px;font-weight:800;color:#FFD600">4</td><td><strong>Verify every critical output</strong></td><td>AI hallucinations cost ₹5-50L in construction</td></tr>
+<tr><td style="font-size: 20px;font-weight:800;color:#FFD600">5</td><td><strong>AI assists, humans decide</strong></td><td>YOU are accountable, not the AI — always</td></tr>
+<tr><td style="font-size: 20px;font-weight:800;color:#FFD600">6</td><td><strong>Enterprise tools are worth it</strong></td><td>₹6L/year protects data worth ₹50 Cr+ in business</td></tr>
 </table>
 </div>
 <div class="stats">
-<div class="stat"><span class="n">90 sec</span><span class="l">vs 4-6 hrs manual</span></div>
-<div class="stat"><span class="n">₹28.8 Cr</span><span class="l">Portfolio analyzed</span></div>
-<div class="stat"><span class="n">7</span><span class="l">Ready prompts</span></div>
-<div class="stat"><span class="n">₹12-24L</span><span class="l">Annual savings</span></div>
+<div class="stat"><span class="n">12</span><span class="l">Case Studies</span></div>
+<div class="stat"><span class="n">15</span><span class="l">Quiz Scenarios</span></div>
+<div class="stat"><span class="n">5</span><span class="l">Risk Categories</span></div>
+<div class="stat"><span class="n">₹5-250 Cr</span><span class="l">Risk Avoided</span></div>
 </div>
-<div class="card"><h3>Your 1-Week Action Plan</h3><ul>
-<li><strong>Today:</strong> Download both CSV files and try Prompt #1 yourself</li>
-<li><strong>Tomorrow:</strong> Export YOUR project's budget as CSV, anonymize it, run Risk Scan</li>
-<li><strong>This week:</strong> Try 3 different prompts on your actual data</li>
-<li><strong>Next week:</strong> Start building your personal prompt library</li>
-<li><strong>This month:</strong> Replace one manual reporting task with AI analysis</li>
-</ul></div>
 </div>
 </div>
 
@@ -3486,26 +3490,198 @@ Format as professional board report. Max 2 pages. Traffic lights throughout.</di
 `;
     
     // Auto-scroll to top
+    
+    // --- GAMIFIED QUIZ LOGIC ---
+    setTimeout(() => {
+        const hData = [
+          {
+            q: "AI says: 'As per IS 3696 Part 1:1987, Clause 7.4.2, scaffolding above 4m requires nets with mesh ≤100mm.'",
+            ans: "HALLUCINATION",
+            why: "IS 3696 exists, but Clause 7.4.2 does not. AI frequently fabricates specific clause numbers to sound authoritative.",
+            opts: [{l:"FACT",v:"FACT"}, {l:"HALLUCINATION",v:"HALLUCINATION"}]
+          },
+          {
+            q: "AI provides a specific M30 concrete mix design: 'Cement 380 kg/m³, FA 695 kg/m³, CA 1180 kg/m³'",
+            ans: "HALLUCINATION",
+            why: "Actual mix designs require lab testing of local aggregates and moisture. AI is guessing based on generic formulas.",
+            opts: [{l:"FACT",v:"FACT"}, {l:"HALLUCINATION",v:"HALLUCINATION"}]
+          },
+          {
+            q: "AI says: 'Quality Concrete Ltd completed 5 government projects, holds ISO 9001, and has 15 years experience.'",
+            ans: "HALLUCINATION",
+            why: "Quality Concrete Ltd is a fictional company. AI will invent entire company histories rather than admitting it doesn't know.",
+            opts: [{l:"FACT",v:"FACT"}, {l:"HALLUCINATION",v:"HALLUCINATION"}]
+          }
+        ];
+
+        const dData = [
+          { q: "1. Ask AI to draft a safety checklist for height work", ans: "SAFE", why: "Generic safety knowledge is Tier 1 and completely safe to share.", opts: [{l:"SAFE ✓",v:"SAFE"}, {l:"ANONYMIZE ⚠",v:"ANONYMIZE"}, {l:"RISKY ✗",v:"RISKY"}] },
+          { q: "2. Upload 3 vendor quotes with names and exact rates", ans: "RISKY", why: "Vendor names + negotiated rates are Tier 3 Confidential. Exposes cost structure to competitors.", opts: [{l:"SAFE ✓",v:"SAFE"}, {l:"ANONYMIZE ⚠",v:"ANONYMIZE"}, {l:"RISKY ✗",v:"RISKY"}] },
+          { q: "3. Ask AI to explain IS 456 concrete mix requirements", ans: "SAFE", why: "IS codes are public standards. There is no company-specific data here.", opts: [{l:"SAFE ✓",v:"SAFE"}, {l:"ANONYMIZE ⚠",v:"ANONYMIZE"}, {l:"RISKY ✗",v:"RISKY"}] },
+          { q: "4. Upload attendance register with Aadhaar numbers", ans: "RISKY", why: "Uploading PII violates India's DPDP Act and carries penalties up to ₹250 Cr.", opts: [{l:"SAFE ✓",v:"SAFE"}, {l:"ANONYMIZE ⚠",v:"ANONYMIZE"}, {l:"RISKY ✗",v:"RISKY"}] },
+          { q: "5. Upload test results with lab name replaced", ans: "SAFE", why: "Properly anonymized Tier 2 data. Removes identities while keeping mathematical analysis.", opts: [{l:"SAFE ✓",v:"SAFE"}, {l:"ANONYMIZE ⚠",v:"ANONYMIZE"}, {l:"RISKY ✗",v:"RISKY"}] },
+          { q: "6. Upload full NSDL contract for review", ans: "RISKY", why: "Client contracts are Tier 3. A leaked contract shows competitors your legal positioning.", opts: [{l:"SAFE ✓",v:"SAFE"}, {l:"ANONYMIZE ⚠",v:"ANONYMIZE"}, {l:"RISKY ✗",v:"RISKY"}] },
+          { q: "7. Upload site photos, no logos visible", ans: "SAFE", why: "Generic photos with no identifiers (logos, faces, signage) are safe to analyze.", opts: [{l:"SAFE ✓",v:"SAFE"}, {l:"ANONYMIZE ⚠",v:"ANONYMIZE"}, {l:"RISKY ✗",v:"RISKY"}] },
+          { q: "8. Share profit margin on Medical College project", ans: "RISKY", why: "Profit margins are commercially sensitive Tier 3 data. Never share this externally.", opts: [{l:"SAFE ✓",v:"SAFE"}, {l:"ANONYMIZE ⚠",v:"ANONYMIZE"}, {l:"RISKY ✗",v:"RISKY"}] },
+          { q: "9. Upload budget with vendors as 'A/B/C'", ans: "SAFE", why: "Properly anonymized Tier 2 data. AI can crunch numbers without knowing vendors.", opts: [{l:"SAFE ✓",v:"SAFE"}, {l:"ANONYMIZE ⚠",v:"ANONYMIZE"}, {l:"RISKY ✗",v:"RISKY"}] },
+          { q: "10. Ask AI to draft project status email", ans: "ANONYMIZE", why: "Remove internal details, specific financial figures, and client names before asking for help.", opts: [{l:"SAFE ✓",v:"SAFE"}, {l:"ANONYMIZE ⚠",v:"ANONYMIZE"}, {l:"RISKY ✗",v:"RISKY"}] },
+          { q: "11. Upload tender bid for NMDC project", ans: "RISKY", why: "Tender bids are critical Tier 3 data. A leaked bid allows competitors to underbid us.", opts: [{l:"SAFE ✓",v:"SAFE"}, {l:"ANONYMIZE ⚠",v:"ANONYMIZE"}, {l:"RISKY ✗",v:"RISKY"}] },
+          { q: "12. Compare two scaffolding designs", ans: "ANONYMIZE", why: "It's OK technically to compare designs, but you must remove the project name and location first.", opts: [{l:"SAFE ✓",v:"SAFE"}, {l:"ANONYMIZE ⚠",v:"ANONYMIZE"}, {l:"RISKY ✗",v:"RISKY"}] },
+          { q: "13. Upload subcontractor insurance certificate", ans: "ANONYMIZE", why: "Remove the subcontractor's company name and PII, but keep the policy details.", opts: [{l:"SAFE ✓",v:"SAFE"}, {l:"ANONYMIZE ⚠",v:"ANONYMIZE"}, {l:"RISKY ✗",v:"RISKY"}] },
+          { q: "14. Share DEC Infra annual revenue figures", ans: "RISKY", why: "Tier 3 data unless it is already in a public ROC filing. Avoid sharing financial totals.", opts: [{l:"SAFE ✓",v:"SAFE"}, {l:"ANONYMIZE ⚠",v:"ANONYMIZE"}, {l:"RISKY ✗",v:"RISKY"}] },
+          { q: "15. Ask how to write a change order justification", ans: "SAFE", why: "Asking for a generic template or instructions is completely safe.", opts: [{l:"SAFE ✓",v:"SAFE"}, {l:"ANONYMIZE ⚠",v:"ANONYMIZE"}, {l:"RISKY ✗",v:"RISKY"}] }
+        ];
+
+        let state = {
+            scores: {
+                "Hallucinations (3)": {correct:0, total:3},
+                "Data Safety (15)": {correct:0, total:15}
+            },
+            hIndex: 0,
+            dIndex: 0
+        };
+
+        window.handleQuiz = function(type, selected, btnEl) {
+            const data = type === 'hallucination' ? hData : dData;
+            const idx = type === 'hallucination' ? state.hIndex : state.dIndex;
+            const q = data[idx];
+            const isCorrect = (selected === q.ans);
+            const category = type === 'hallucination' ? "Hallucinations (3)" : "Data Safety (15)";
+
+            if(isCorrect) state.scores[category].correct++;
+
+            const container = btnEl.closest('.card');
+            const btns = container.querySelectorAll('.opt-btn');
+            btns.forEach(b => b.disabled = true);
+
+            if(isCorrect) {
+                btnEl.classList.add('correct');
+            } else {
+                btnEl.classList.add('wrong');
+                btns.forEach(b => {
+                    if(b.innerText.includes(q.ans)) b.classList.add('correct');
+                });
+            }
+
+            const fClass = isCorrect ? 'good' : 'bad';
+            const fIcon = isCorrect ? '✓ Correct' : '✗ Incorrect';
+            
+            let fbHTML = `<div class="quiz-feedback ${fClass}"><strong>${fIcon}</strong> — ${q.why}</div>`;
+            fbHTML += `<div style="margin-top:16px"><button class="btn btn-primary" onclick="nextQuiz('${type}')">${idx < data.length-1 ? 'Next Scenario' : 'Finish Section'}</button></div>`;
+            
+            container.querySelector('.feedback-area').innerHTML = fbHTML;
+        };
+
+        window.nextQuiz = function(type) {
+            if(type === 'hallucination') {
+                state.hIndex++;
+                renderH();
+            } else {
+                state.dIndex++;
+                renderD();
+            }
+            checkResults();
+        };
+
+        function renderH() {
+            const el = document.getElementById('hallucination-quiz-container');
+            if(!el) return;
+            if(state.hIndex >= hData.length) {
+                el.innerHTML = `<div class="card" style="border-top:3px solid var(--success);text-align:center"><h3 style="color:var(--success)">✓ Hallucination Section Complete</h3><p>Score: ${state.scores["Hallucinations (3)"].correct}/3</p></div>`;
+                return;
+            }
+            const q = hData[state.hIndex];
+            const optsHtml = q.opts.map(o => `<button class="opt-btn" onclick="handleQuiz('hallucination', '${o.v}', this)">${o.l}</button>`).join('');
+            el.innerHTML = `
+                <div class="card" style="border: 2px solid var(--accent); background: rgba(0,0,0,0.2);">
+                    <div style="font-family:monospace; color:var(--text-muted); margin-bottom:10px;">Scenario ${state.hIndex+1} of ${hData.length}</div>
+                    <div style="font-size:20px; font-weight:600; margin-bottom:16px; line-height: 1.4;">${q.q}</div>
+                    <div>${optsHtml}</div>
+                    <div class="feedback-area"></div>
+                </div>
+            `;
+        }
+
+        function renderD() {
+            const el = document.getElementById('data-quiz-container');
+            if(!el) return;
+            if(state.dIndex >= dData.length) {
+                el.innerHTML = `<div class="card" style="border-top:3px solid var(--success);text-align:center"><h3 style="color:var(--success)">✓ Data Classification Section Complete</h3><p>Score: ${state.scores["Data Safety (15)"].correct}/15</p></div>`;
+                return;
+            }
+            const q = dData[state.dIndex];
+            const optsHtml = q.opts.map(o => `<button class="opt-btn" onclick="handleQuiz('data', '${o.v}', this)">${o.l}</button>`).join('');
+            el.innerHTML = `
+                <div class="card" style="border: 2px solid var(--accent); background: rgba(0,0,0,0.2);">
+                    <div style="font-family:monospace; color:var(--text-muted); margin-bottom:10px;">Scenario ${state.dIndex+1} of ${dData.length}</div>
+                    <div style="font-size:20px; font-weight:600; margin-bottom:16px; line-height: 1.4;">${q.q}</div>
+                    <div>${optsHtml}</div>
+                    <div class="feedback-area"></div>
+                </div>
+            `;
+        }
+
+        function checkResults() {
+            if(state.hIndex >= hData.length && state.dIndex >= dData.length) {
+                const el = document.getElementById('m3-results-container');
+                if(!el) return;
+                
+                const hc = state.scores["Hallucinations (3)"].correct;
+                const ht = state.scores["Hallucinations (3)"].total;
+                const dc = state.scores["Data Safety (15)"].correct;
+                const dt = state.scores["Data Safety (15)"].total;
+                
+                const hPct = Math.round((hc/ht)*100);
+                const dPct = Math.round((dc/dt)*100);
+                const hColor = hPct >= 80 ? 'var(--success)' : (hPct >= 50 ? 'var(--warning)' : 'var(--danger)');
+                const dColor = dPct >= 80 ? 'var(--success)' : (dPct >= 50 ? 'var(--warning)' : 'var(--danger)');
+
+                const finalPct = Math.round(((hc+dc)/(ht+dt))*100);
+                let msg = "Keep practicing! Review the 3-Tier system.";
+                if(finalPct >= 90) msg = "Excellent! You are an AI Safety Expert. 🏆";
+                else if(finalPct >= 70) msg = "Good job! You have a solid grasp on safety basics.";
+
+                el.innerHTML = `
+                <div class="card" style="padding:30px; text-align:center; border-top: 4px solid var(--primary);">
+                    <h2 style="font-size:32px; margin-bottom:20px;">Module Complete</h2>
+                    
+                    <div style="margin:30px 0; max-width: 500px; margin-left: auto; margin-right: auto;">
+                        <div class="bar-row">
+                            <div class="bar-label">Hallucinations</div>
+                            <div class="bar-track">
+                                <div class="bar-fill" style="background:${hColor}" data-width="${hPct}%"></div>
+                                <div class="bar-val">${hc}/${ht}</div>
+                            </div>
+                        </div>
+                        <div class="bar-row">
+                            <div class="bar-label">Data Safety</div>
+                            <div class="bar-track">
+                                <div class="bar-fill" style="background:${dColor}" data-width="${dPct}%"></div>
+                                <div class="bar-val">${dc}/${dt}</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="font-size:48px;font-weight:800; color:var(--text-main); margin-bottom:10px;">${finalPct}%</div>
+                    <div style="font-size:18px; color:var(--text-muted);">${msg}</div>
+                </div>
+                `;
+
+                setTimeout(() => {
+                    el.querySelectorAll('.bar-fill').forEach(b => {
+                        b.style.width = b.dataset.width;
+                    });
+                }, 100);
+            }
+        }
+
+        renderH();
+        renderD();
+    }, 100);
+
     setTimeout(() => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }, 100);
-}
-
-function renderModule3(container) {
-    container.innerHTML = `
-        <div class="mb-4" style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; padding: 0 1rem;">
-            <div>
-                <span class="badge badge-success">Session 3</span>
-                <h2 class="mt-4" style="background: -webkit-linear-gradient(45deg, #F8FAFC, #10B981); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Module 3: Safe AI Usage & Responsible Adoption</h2>
-                <p class="text-muted">Interactive Data Classification & Hallucination Training.</p>
-            </div>
-            <img src="3d-shield.png" class="float-3d" style="width: 100px; height: auto;" alt="3D Shield">
-        </div>
-        <div style="width: 100%; height: 85vh; border: 1px solid var(--border-color); border-radius: 12px; overflow: hidden; margin-top: 1rem; box-shadow: 0 10px 30px rgba(0,0,0,0.2);">
-            <iframe src="M3_%20Safe%20AI%20%E2%80%94%20DEC%20AI%20Foundations.html" style="width: 100%; height: 100%; border: none;"></iframe>
-        </div>
-    `;
-    setTimeout(() => { window.scrollTo({ top: 0, behavior: 'smooth' }); }, 100);
 }
 
 function renderModule4(container) {
@@ -6287,3 +6463,24 @@ function renderDatasetHub(container) {
 window.toggle = function(el){el.parentElement.classList.toggle('open')}
 window.toggleCS = function(el){if(el.classList.contains('case-study'))el.classList.toggle('cs-open')}
 window.copyPrompt = function(btn){const t=btn.parentElement.textContent.replace('📋 Copy','').trim();navigator.clipboard.writeText(t).then(()=>{btn.textContent='✓ Copied!';setTimeout(()=>btn.textContent='📋 Copy',2000)});event.stopPropagation()}
+<style>
+/* Gamified Quiz CSS */
+.opt-btn { font:inherit;font-weight:700;font-size:16px;border-radius:12px;padding:16px 20px;cursor:pointer;background:rgba(255,255,255,0.03);border:2px solid var(--border-color);color:var(--text-main);text-align:left;display:flex;align-items:center;justify-content:space-between;transition:all 0.2s;margin-bottom:8px;width:100%; }
+.opt-btn:hover:not(:disabled) { background:rgba(255,255,255,0.08);border-color:var(--text-muted); }
+.opt-btn:disabled { cursor:default;opacity:0.6; }
+.opt-btn.correct { background:rgba(16, 185, 129, 0.1);border-color:var(--success);color:var(--success);opacity:1; }
+.opt-btn.wrong { background:rgba(239, 68, 68, 0.1);border-color:var(--danger);color:var(--danger);opacity:1; }
+
+.quiz-feedback { margin-top:20px;padding:16px;border-radius:12px;font-size:15px;animation:fadein 0.3s; }
+.quiz-feedback.good { background:rgba(16,185,129,0.15);border-left:4px solid var(--success); }
+.quiz-feedback.bad { background:rgba(239,68,68,0.15);border-left:4px solid var(--danger); }
+.quiz-feedback.warn { background:rgba(245,158,11,0.15);border-left:4px solid var(--warning); }
+
+.bar-row { display:flex;align-items:center;gap:16px;margin-bottom:12px; }
+.bar-label { width:160px;font-weight:700;font-size:14px;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;text-align:right; }
+.bar-track { flex:1;height:24px;background:rgba(255,255,255,0.05);border-radius:12px;overflow:hidden;position:relative; }
+.bar-fill { height:100%;border-radius:12px;transition:width 1s cubic-bezier(0.2, 0.8, 0.2, 1);width:0%; }
+.bar-val { position:absolute;right:10px;top:50%;transform:translateY(-50%);font-family:monospace;font-size:12px;font-weight:700; }
+@keyframes fadein{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+</style>
+

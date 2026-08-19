@@ -3491,27 +3491,34 @@ Format as professional board report. Max 2 pages. Traffic lights throughout.</di
     
     // Auto-scroll to top
     
-    // --- GAMIFIED QUIZ LOGIC ---
+    // --- GAMIFIED QUIZ CSS & LOGIC ---
+    if(!document.getElementById('m3-gamified-css')) {
+        document.head.insertAdjacentHTML('beforeend', `<style id="m3-gamified-css">
+        .opt-btn { font:inherit;font-weight:700;font-size:16px;border-radius:12px;padding:16px 20px;cursor:pointer;background:rgba(255,255,255,0.03);border:2px solid var(--border-color);color:var(--text-main);text-align:left;display:flex;align-items:center;justify-content:space-between;transition:all 0.2s;margin-bottom:8px;width:100%; }
+        .opt-btn:hover:not(:disabled) { background:rgba(255,255,255,0.08);border-color:var(--text-muted); }
+        .opt-btn:disabled { cursor:default;opacity:0.6; }
+        .opt-btn.correct { background:rgba(16, 185, 129, 0.1);border-color:var(--success);color:var(--success);opacity:1; }
+        .opt-btn.wrong { background:rgba(239, 68, 68, 0.1);border-color:var(--danger);color:var(--danger);opacity:1; }
+
+        .quiz-feedback { margin-top:20px;padding:16px;border-radius:12px;font-size:15px;animation:fadein 0.3s; }
+        .quiz-feedback.good { background:rgba(16,185,129,0.15);border-left:4px solid var(--success); }
+        .quiz-feedback.bad { background:rgba(239,68,68,0.15);border-left:4px solid var(--danger); }
+        .quiz-feedback.warn { background:rgba(245,158,11,0.15);border-left:4px solid var(--warning); }
+
+        .bar-row { display:flex;align-items:center;gap:16px;margin-bottom:12px; }
+        .bar-label { width:160px;font-weight:700;font-size:14px;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;text-align:right; }
+        .bar-track { flex:1;height:24px;background:rgba(255,255,255,0.05);border-radius:12px;overflow:hidden;position:relative; }
+        .bar-fill { height:100%;border-radius:12px;transition:width 1s cubic-bezier(0.2, 0.8, 0.2, 1);width:0%; }
+        .bar-val { position:absolute;right:10px;top:50%;transform:translateY(-50%);font-family:monospace;font-size:12px;font-weight:700; }
+        @keyframes fadein{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+        </style>`);
+    }
+
     setTimeout(() => {
         const hData = [
-          {
-            q: "AI says: 'As per IS 3696 Part 1:1987, Clause 7.4.2, scaffolding above 4m requires nets with mesh ≤100mm.'",
-            ans: "HALLUCINATION",
-            why: "IS 3696 exists, but Clause 7.4.2 does not. AI frequently fabricates specific clause numbers to sound authoritative.",
-            opts: [{l:"FACT",v:"FACT"}, {l:"HALLUCINATION",v:"HALLUCINATION"}]
-          },
-          {
-            q: "AI provides a specific M30 concrete mix design: 'Cement 380 kg/m³, FA 695 kg/m³, CA 1180 kg/m³'",
-            ans: "HALLUCINATION",
-            why: "Actual mix designs require lab testing of local aggregates and moisture. AI is guessing based on generic formulas.",
-            opts: [{l:"FACT",v:"FACT"}, {l:"HALLUCINATION",v:"HALLUCINATION"}]
-          },
-          {
-            q: "AI says: 'Quality Concrete Ltd completed 5 government projects, holds ISO 9001, and has 15 years experience.'",
-            ans: "HALLUCINATION",
-            why: "Quality Concrete Ltd is a fictional company. AI will invent entire company histories rather than admitting it doesn't know.",
-            opts: [{l:"FACT",v:"FACT"}, {l:"HALLUCINATION",v:"HALLUCINATION"}]
-          }
+          { q: "AI says: 'As per IS 3696 Part 1:1987, Clause 7.4.2, scaffolding above 4m requires nets with mesh ≤100mm.'", ans: "HALLUCINATION", why: "IS 3696 exists, but Clause 7.4.2 does not. AI frequently fabricates specific clause numbers to sound authoritative.", opts: [{l:"FACT",v:"FACT"}, {l:"HALLUCINATION",v:"HALLUCINATION"}] },
+          { q: "AI provides a specific M30 concrete mix design: 'Cement 380 kg/m³, FA 695 kg/m³, CA 1180 kg/m³'", ans: "HALLUCINATION", why: "Actual mix designs require lab testing of local aggregates and moisture. AI is guessing based on generic formulas.", opts: [{l:"FACT",v:"FACT"}, {l:"HALLUCINATION",v:"HALLUCINATION"}] },
+          { q: "AI says: 'Quality Concrete Ltd completed 5 government projects, holds ISO 9001, and has 15 years experience.'", ans: "HALLUCINATION", why: "Quality Concrete Ltd is a fictional company. AI will invent entire company histories rather than admitting it doesn't know.", opts: [{l:"FACT",v:"FACT"}, {l:"HALLUCINATION",v:"HALLUCINATION"}] }
         ];
 
         const dData = [
@@ -3533,12 +3540,8 @@ Format as professional board report. Max 2 pages. Traffic lights throughout.</di
         ];
 
         let state = {
-            scores: {
-                "Hallucinations (3)": {correct:0, total:3},
-                "Data Safety (15)": {correct:0, total:15}
-            },
-            hIndex: 0,
-            dIndex: 0
+            scores: { "Hallucinations (3)": {correct:0, total:3}, "Data Safety (15)": {correct:0, total:15} },
+            hIndex: 0, dIndex: 0
         };
 
         window.handleQuiz = function(type, selected, btnEl) {
@@ -3554,13 +3557,10 @@ Format as professional board report. Max 2 pages. Traffic lights throughout.</di
             const btns = container.querySelectorAll('.opt-btn');
             btns.forEach(b => b.disabled = true);
 
-            if(isCorrect) {
-                btnEl.classList.add('correct');
-            } else {
+            if(isCorrect) btnEl.classList.add('correct');
+            else {
                 btnEl.classList.add('wrong');
-                btns.forEach(b => {
-                    if(b.innerText.includes(q.ans)) b.classList.add('correct');
-                });
+                btns.forEach(b => { if(b.innerText.includes(q.ans)) b.classList.add('correct'); });
             }
 
             const fClass = isCorrect ? 'good' : 'bad';
@@ -3568,18 +3568,12 @@ Format as professional board report. Max 2 pages. Traffic lights throughout.</di
             
             let fbHTML = `<div class="quiz-feedback ${fClass}"><strong>${fIcon}</strong> — ${q.why}</div>`;
             fbHTML += `<div style="margin-top:16px"><button class="btn btn-primary" onclick="nextQuiz('${type}')">${idx < data.length-1 ? 'Next Scenario' : 'Finish Section'}</button></div>`;
-            
             container.querySelector('.feedback-area').innerHTML = fbHTML;
         };
 
         window.nextQuiz = function(type) {
-            if(type === 'hallucination') {
-                state.hIndex++;
-                renderH();
-            } else {
-                state.dIndex++;
-                renderD();
-            }
+            if(type === 'hallucination') { state.hIndex++; renderH(); }
+            else { state.dIndex++; renderD(); }
             checkResults();
         };
 
@@ -3644,37 +3638,17 @@ Format as professional board report. Max 2 pages. Traffic lights throughout.</di
                 el.innerHTML = `
                 <div class="card" style="padding:30px; text-align:center; border-top: 4px solid var(--primary);">
                     <h2 style="font-size:32px; margin-bottom:20px;">Module Complete</h2>
-                    
                     <div style="margin:30px 0; max-width: 500px; margin-left: auto; margin-right: auto;">
-                        <div class="bar-row">
-                            <div class="bar-label">Hallucinations</div>
-                            <div class="bar-track">
-                                <div class="bar-fill" style="background:${hColor}" data-width="${hPct}%"></div>
-                                <div class="bar-val">${hc}/${ht}</div>
-                            </div>
-                        </div>
-                        <div class="bar-row">
-                            <div class="bar-label">Data Safety</div>
-                            <div class="bar-track">
-                                <div class="bar-fill" style="background:${dColor}" data-width="${dPct}%"></div>
-                                <div class="bar-val">${dc}/${dt}</div>
-                            </div>
-                        </div>
+                        <div class="bar-row"><div class="bar-label">Hallucinations</div><div class="bar-track"><div class="bar-fill" style="background:${hColor}" data-width="${hPct}%"></div><div class="bar-val">${hc}/${ht}</div></div></div>
+                        <div class="bar-row"><div class="bar-label">Data Safety</div><div class="bar-track"><div class="bar-fill" style="background:${dColor}" data-width="${dPct}%"></div><div class="bar-val">${dc}/${dt}</div></div></div>
                     </div>
-
                     <div style="font-size:48px;font-weight:800; color:var(--text-main); margin-bottom:10px;">${finalPct}%</div>
                     <div style="font-size:18px; color:var(--text-muted);">${msg}</div>
                 </div>
                 `;
-
-                setTimeout(() => {
-                    el.querySelectorAll('.bar-fill').forEach(b => {
-                        b.style.width = b.dataset.width;
-                    });
-                }, 100);
+                setTimeout(() => { el.querySelectorAll('.bar-fill').forEach(b => { b.style.width = b.dataset.width; }); }, 100);
             }
         }
-
         renderH();
         renderD();
     }, 100);
@@ -6463,24 +6437,3 @@ function renderDatasetHub(container) {
 window.toggle = function(el){el.parentElement.classList.toggle('open')}
 window.toggleCS = function(el){if(el.classList.contains('case-study'))el.classList.toggle('cs-open')}
 window.copyPrompt = function(btn){const t=btn.parentElement.textContent.replace('📋 Copy','').trim();navigator.clipboard.writeText(t).then(()=>{btn.textContent='✓ Copied!';setTimeout(()=>btn.textContent='📋 Copy',2000)});event.stopPropagation()}
-<style>
-/* Gamified Quiz CSS */
-.opt-btn { font:inherit;font-weight:700;font-size:16px;border-radius:12px;padding:16px 20px;cursor:pointer;background:rgba(255,255,255,0.03);border:2px solid var(--border-color);color:var(--text-main);text-align:left;display:flex;align-items:center;justify-content:space-between;transition:all 0.2s;margin-bottom:8px;width:100%; }
-.opt-btn:hover:not(:disabled) { background:rgba(255,255,255,0.08);border-color:var(--text-muted); }
-.opt-btn:disabled { cursor:default;opacity:0.6; }
-.opt-btn.correct { background:rgba(16, 185, 129, 0.1);border-color:var(--success);color:var(--success);opacity:1; }
-.opt-btn.wrong { background:rgba(239, 68, 68, 0.1);border-color:var(--danger);color:var(--danger);opacity:1; }
-
-.quiz-feedback { margin-top:20px;padding:16px;border-radius:12px;font-size:15px;animation:fadein 0.3s; }
-.quiz-feedback.good { background:rgba(16,185,129,0.15);border-left:4px solid var(--success); }
-.quiz-feedback.bad { background:rgba(239,68,68,0.15);border-left:4px solid var(--danger); }
-.quiz-feedback.warn { background:rgba(245,158,11,0.15);border-left:4px solid var(--warning); }
-
-.bar-row { display:flex;align-items:center;gap:16px;margin-bottom:12px; }
-.bar-label { width:160px;font-weight:700;font-size:14px;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;text-align:right; }
-.bar-track { flex:1;height:24px;background:rgba(255,255,255,0.05);border-radius:12px;overflow:hidden;position:relative; }
-.bar-fill { height:100%;border-radius:12px;transition:width 1s cubic-bezier(0.2, 0.8, 0.2, 1);width:0%; }
-.bar-val { position:absolute;right:10px;top:50%;transform:translateY(-50%);font-family:monospace;font-size:12px;font-weight:700; }
-@keyframes fadein{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-</style>
-

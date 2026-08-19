@@ -565,3 +565,41 @@ pre {
 }
 
 
+
+
+/* Zoomable Charts */
+.zoomable-card {
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    cursor: zoom-in;
+    position: relative;
+}
+.zoomable-card::after {
+    content: "🔍 Click to Zoom";
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    background: rgba(0,0,0,0.6);
+    padding: 3px 8px;
+    border-radius: 12px;
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+}
+.zoomable-card:hover::after { opacity: 1; }
+
+.zoomed-in {
+    position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    width: 80vw !important;
+    max-width: 900px !important;
+    height: 70vh !important;
+    z-index: 9999 !important;
+    cursor: zoom-out !important;
+    box-shadow: 0 0 0 100vw rgba(0, 0, 0, 0.85), 0 20px 60px rgba(0, 0, 0, 0.8) !important;
+}
+.zoomed-in > div { height: calc(100% - 40px) !important; }
+.zoomed-in::after { content: "✖ Close"; opacity: 1; }

@@ -3911,11 +3911,11 @@ function renderModule3(container) {
 </style>
 
 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 25px;">
-    <div class="card glass-card animate-slide-up" style="border: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.4); box-shadow: inset 0 0 30px rgba(0,0,0,0.5);">
+    <div onclick="this.classList.toggle('zoomed-in')" class="zoomable-card card glass-card animate-slide-up" style="border: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.4); box-shadow: inset 0 0 30px rgba(0,0,0,0.5);">
         <h3 style="text-align:center; color: var(--text-main); margin-bottom: 5px; font-size:1.1rem"><span style="text-shadow: 0 0 10px rgba(59, 130, 246, 0.4)">Live Risk Distribution (Overall)</span></h3>
         <div style="height: 250px; position: relative;"><canvas id="risk-donut-chart"></canvas></div>
     </div>
-    <div class="card glass-card animate-slide-up" style="border: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.4); box-shadow: inset 0 0 30px rgba(0,0,0,0.5);">
+    <div onclick="this.classList.toggle('zoomed-in')" class="zoomable-card card glass-card animate-slide-up" style="border: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.4); box-shadow: inset 0 0 30px rgba(0,0,0,0.5);">
         <h3 style="text-align:center; color: var(--text-main); margin-bottom: 5px; font-size:1.1rem">Department Vulnerability Radar (Real-Time)</h3>
         <div style="height: 250px; position: relative;"><canvas id="risk-radar-chart"></canvas></div>
     </div>

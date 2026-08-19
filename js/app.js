@@ -4139,7 +4139,7 @@ function renderModule3(container) {
 
 <p style="margin-bottom:15px;opacity:0.8">Fictional but realistic scenarios modeled on DEC Infra's actual project types. Click each to expand.</p>
 
-<div style="background: linear-gradient(90deg, #1A1F2C 0%, #050A17 100%); border: 2px solid #ef4444; border-radius: 12px; padding: 25px; margin-bottom: 30px; text-align: center; box-shadow: 0 0 30px rgba(239,68,68,0.2);">
+<div class="zoomable-card" onclick="this.classList.toggle('zoomed-in')" style="background: linear-gradient(90deg, #1A1F2C 0%, #050A17 100%); border: 2px solid #ef4444; border-radius: 12px; padding: 25px; margin-bottom: 30px; text-align: center; box-shadow: 0 0 30px rgba(239,68,68,0.2);">
     <h3 style="color:#ef4444; margin:0 0 10px 0; font-size:1.2rem; text-shadow: 0 0 15px rgba(239, 68, 68, 0.5); text-transform:uppercase; letter-spacing:2px">🔴 Live Risk Exposure Simulation 🔴</h3>
     <p style="color:var(--text-muted); margin:0 0 15px 0;">Calculated maximum liability for DEC Infra across all active AI leaks</p>
     <div style="font-family: 'JetBrains Mono', monospace; font-size: 4.5rem; font-weight: 800; color: #fff; text-shadow: 0 0 20px rgba(255,255,255,0.4); display:flex; justify-content:center; align-items:baseline;">
@@ -4149,7 +4149,7 @@ function renderModule3(container) {
 </div>
 
 
-<div class="card glass-card animate-slide-up" style="border: 1px solid var(--border-color); background: rgba(0,0,0,0.3); margin-bottom: 20px;">
+<div class="zoomable-card card glass-card animate-slide-up" onclick="this.classList.toggle(\'zoomed-in\')" style="border: 1px solid var(--border-color); background: rgba(0,0,0,0.3); margin-bottom: 20px;">
     <h3 style="text-align:center; color: var(--text-main); margin-bottom: 15px;">Maximum Financial Impact (₹ Lakhs)</h3>
     <div style="height: 300px; position: relative;">
         <canvas id="cost-bar-chart"></canvas>

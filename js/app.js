@@ -3000,7 +3000,18 @@ function wireLevel(){
   // chips
   document.querySelectorAll("[data-chip]").forEach(node=>{
     const id = node.dataset.chip;
-    node.onclick = ()=>{ S.picked = (S.picked===id) ? null : id; softRerender(); };
+    node.onclick = ()=>{ 
+        // AUTO-PLACE LOGIC: Find the first empty slot and try to place it there automatically!
+        const firstEmpty = ORDER.find(t=>!S.placed[t]);
+        if(firstEmpty) {
+            const slotNode = document.querySelector(`[data-slot="${firstEmpty}"]`);
+            if(slotNode) tryPlace(id, firstEmpty, slotNode);
+        } else {
+            // Fallback to original pick behavior if all slots are full
+            S.picked = (S.picked===id) ? null : id; 
+            softRerender(); 
+        }
+    };
     node.addEventListener("dragstart", e=>{
       S.picked = id; node.classList.add("dragging");
       e.dataTransfer.setData("text/plain", id); e.dataTransfer.effectAllowed = "move";

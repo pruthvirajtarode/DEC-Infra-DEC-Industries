@@ -603,3 +603,51 @@ pre {
 }
 .zoomed-in > div { height: calc(100% - 40px) !important; }
 .zoomed-in::after { content: "✖ Close"; opacity: 1; }
+
+
+/* Interactive Flow Animations */
+.interactive-flow .node {
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+}
+.interactive-flow .node:not(.final-node)::after {
+    content: "Click to reveal ➜";
+    position: absolute;
+    bottom: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.75rem;
+    color: var(--accent);
+    opacity: 0.8;
+    white-space: nowrap;
+    animation: pulseGlow 2s infinite;
+}
+.interactive-flow .node.clicked::after, .interactive-flow .node.final-node::after {
+    display: none;
+}
+@keyframes pulseGlow {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 1; text-shadow: 0 0 10px var(--accent); }
+}
+
+.interactive-flow .node:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 10px 25px rgba(255, 222, 89, 0.2);
+    border-color: var(--accent);
+}
+.interactive-flow .hidden-step {
+    opacity: 0 !important;
+    transform: translateX(-30px) !important;
+    pointer-events: none !important;
+    position: absolute; /* Keep it from taking up layout space until revealed */
+}
+.interactive-flow .revealed-step {
+    opacity: 1 !important;
+    transform: translateX(0) !important;
+    transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    position: relative; /* Restore layout space */
+}
+.interactive-flow .arr.hidden-step {
+    transform: scale(0) !important;
+}

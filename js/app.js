@@ -3,6 +3,21 @@
  */
 
 
+
+// Expose revealNextStep to window for inline onclick
+window.revealNextStep = function(el) {
+    let nextArr = el.nextElementSibling;
+    if (nextArr && nextArr.classList.contains('arr')) {
+        nextArr.classList.remove('hidden-step');
+        nextArr.classList.add('revealed-step');
+        let nextNode = nextArr.nextElementSibling;
+        if (nextNode && nextNode.classList.contains('node')) {
+            nextNode.classList.remove('hidden-step');
+            nextNode.classList.add('revealed-step');
+        }
+    }
+};
+
 window.switchTab = function(e, tabName) {
     document.querySelectorAll('.tab-content').forEach(t => {
         t.classList.remove('active');
@@ -3823,14 +3838,14 @@ function renderModule3(container) {
 
 <div class="diagram">
 <p style="font-size: 17px;opacity:0.7;margin-bottom:10px">How an LLM generates a response:</p>
-<div class="flow">
-<div class="node">Your Prompt</div>
-<div class="arr">→</div>
-<div class="node">Pattern Matching<br/><span style="font-size: 15px;opacity:0.7">against training data</span></div>
-<div class="arr">→</div>
-<div class="node">Word-by-Word<br/>Prediction</div>
-<div class="arr">→</div>
-<div class="node">Response<br/><span style="font-size: 15px;opacity:0.7">(may contain errors)</span></div>
+<div class="flow interactive-flow">
+<div class="node" onclick="this.classList.add('clicked'); revealNextStep(this)">Your Prompt</div>
+<div class="arr hidden-step">→</div>
+<div class="node hidden-step" onclick="this.classList.add('clicked'); revealNextStep(this)">Pattern Matching<br/><span style="font-size: 15px;opacity:0.7">against training data</span></div>
+<div class="arr hidden-step">→</div>
+<div class="node hidden-step" onclick="this.classList.add('clicked'); revealNextStep(this)">Word-by-Word<br/>Prediction</div>
+<div class="arr hidden-step">→</div>
+<div class="node final-node hidden-step">Response<br/><span style="font-size: 15px;opacity:0.7">(may contain errors)</span></div>
 </div>
 </div>
 </div>
@@ -3839,24 +3854,24 @@ function renderModule3(container) {
 <h3>What Happens When You Type in ChatGPT?</h3>
 <div class="diagram">
 <p style="font-size: 17px;opacity:0.7;margin-bottom:10px">Data flow — Free ChatGPT:</p>
-<div class="flow">
-<div class="node">You type a message<br/>or upload a file</div>
-<div class="arr">→</div>
-<div class="node node-danger">Sent to OpenAI<br/>servers (USA)</div>
-<div class="arr">→</div>
-<div class="node node-danger">Stored up to<br/>30 days</div>
-<div class="arr">→</div>
-<div class="node node-danger">May be used to<br/>train future models</div>
+<div class="flow interactive-flow">
+<div class="node" onclick="this.classList.add('clicked'); revealNextStep(this)">You type a message<br/>or upload a file</div>
+<div class="arr hidden-step">→</div>
+<div class="node node-danger hidden-step" onclick="this.classList.add('clicked'); revealNextStep(this)">Sent to OpenAI<br/>servers (USA)</div>
+<div class="arr hidden-step">→</div>
+<div class="node node-danger hidden-step" onclick="this.classList.add('clicked'); revealNextStep(this)">Stored up to<br/>30 days</div>
+<div class="arr hidden-step">→</div>
+<div class="node node-danger final-node hidden-step">May be used to<br/>train future models</div>
 </div>
 <p style="font-size: 17px;opacity:0.7;margin-top:15px;margin-bottom:10px">Data flow — Enterprise / Teams version:</p>
-<div class="flow">
-<div class="node">You type a message<br/>or upload a file</div>
-<div class="arr">→</div>
-<div class="node node-safe">Sent to servers<br/>(encrypted)</div>
-<div class="arr">→</div>
-<div class="node node-safe">Processed &<br/>immediately deleted</div>
-<div class="arr">→</div>
-<div class="node node-safe">NEVER used<br/>for training</div>
+<div class="flow interactive-flow">
+<div class="node" onclick="this.classList.add('clicked'); revealNextStep(this)">You type a message<br/>or upload a file</div>
+<div class="arr hidden-step">→</div>
+<div class="node node-safe hidden-step" onclick="this.classList.add('clicked'); revealNextStep(this)">Sent to servers<br/>(encrypted)</div>
+<div class="arr hidden-step">→</div>
+<div class="node node-safe hidden-step" onclick="this.classList.add('clicked'); revealNextStep(this)">Processed &<br/>immediately deleted</div>
+<div class="arr hidden-step">→</div>
+<div class="node node-safe final-node hidden-step">NEVER used<br/>for training</div>
 </div>
 </div>
 <p style="margin-top:10px"><strong>The critical difference:</strong> Free tools may absorb your data into the model itself. Enterprise tools process and forget. This is why the ₹2,500/user/month investment matters — it's the difference between a locked cabinet and an open notice board.</p>

@@ -4006,14 +4006,14 @@ function renderModule3(container) {
 
 <div class="diagram">
 <p style="font-size: 19px;font-weight:600;color:var(--accent);margin-bottom:15px">The Golden Rule of AI in Construction:</p>
-<div class="flow">
-<div class="node" style="font-size: 16px;padding:15px 25px;border-color:var(--accent)">AI Generates</div>
-<div class="arr" style="font-size: 30px">→</div>
-<div class="node" style="font-size: 16px;padding:15px 25px;border-color:var(--accent)">Human Verifies</div>
-<div class="arr" style="font-size: 30px">→</div>
-<div class="node" style="font-size: 16px;padding:15px 25px;border-color:var(--accent)">Human Decides</div>
-<div class="arr" style="font-size: 30px">→</div>
-<div class="node" style="font-size: 16px;padding:15px 25px;border-color:var(--accent)">Human is Accountable</div>
+<div class="flow interactive-flow">
+<div class="node" style="font-size: 16px;padding:15px 25px;border-color:var(--accent)" onclick="this.classList.add('clicked'); revealNextStep(this)">AI Generates</div>
+<div class="arr hidden-step" style="font-size: 30px">→</div>
+<div class="node hidden-step" style="font-size: 16px;padding:15px 25px;border-color:var(--accent)" onclick="this.classList.add('clicked'); revealNextStep(this)">Human Verifies</div>
+<div class="arr hidden-step" style="font-size: 30px">→</div>
+<div class="node hidden-step" style="font-size: 16px;padding:15px 25px;border-color:var(--accent)" onclick="this.classList.add('clicked'); revealNextStep(this)">Human Decides</div>
+<div class="arr hidden-step" style="font-size: 30px">→</div>
+<div class="node final-node hidden-step" style="font-size: 16px;padding:15px 25px;border-color:var(--accent)">Human is Accountable</div>
 </div>
 <p style="font-size: 18px;opacity:0.7;margin-top:15px">"The AI told me" is NEVER an acceptable defense. The person who uses the output owns the outcome.</p>
 </div>

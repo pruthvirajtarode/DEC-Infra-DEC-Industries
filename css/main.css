@@ -64,10 +64,52 @@
 body {
     font-family: var(--font-body);
     color: var(--text-main);
-    background: radial-gradient(circle at top right, rgba(139, 92, 246, 0.1) 0%, var(--bg-main) 40%, var(--bg-main) 100%);
     background-color: var(--bg-main);
+    background-image: 
+        radial-gradient(circle at 15% 50%, rgba(139, 92, 246, 0.15), transparent 25%),
+        radial-gradient(circle at 85% 30%, rgba(16, 185, 129, 0.15), transparent 25%),
+        linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 100% 100%, 100% 100%, 40px 40px, 40px 40px;
+    background-position: 0 0, 0 0, 0 0, 0 0;
+    animation: backgroundShift 30s linear infinite;
     line-height: 1.5;
     -webkit-font-smoothing: antialiased;
+}
+
+@keyframes backgroundShift {
+    0% { background-position: 0 0, 0 0, 0 0, 0 0; }
+    100% { background-position: 100% 100%, -100% -100%, 40px 40px, 40px 40px; }
+}
+
+/* Glassmorphism Classes */
+.glass-card {
+    background: rgba(20, 20, 20, 0.4) !important;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37) !important;
+    transition: var(--transition);
+}
+
+.glass-card:hover {
+    border-color: rgba(255, 255, 255, 0.2) !important;
+    box-shadow: 0 8px 32px 0 rgba(255, 255, 255, 0.05) !important;
+}
+
+/* Neon Glow Typography */
+.neon-text-danger { text-shadow: 0 0 10px rgba(239, 68, 68, 0.5), 0 0 20px rgba(239, 68, 68, 0.3); }
+.neon-text-success { text-shadow: 0 0 10px rgba(16, 185, 129, 0.5), 0 0 20px rgba(16, 185, 129, 0.3); }
+.neon-text-accent { text-shadow: 0 0 10px rgba(59, 130, 246, 0.5), 0 0 20px rgba(59, 130, 246, 0.3); }
+
+/* Scroll Animations */
+.animate-slide-up {
+    animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes slideUp {
+    0% { opacity: 0; transform: translateY(30px); }
+    100% { opacity: 1; transform: translateY(0); }
 }
 
 h1, h2, h3, h4, h5, h6 {

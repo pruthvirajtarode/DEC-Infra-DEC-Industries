@@ -3785,7 +3785,7 @@ function renderModule3(container) {
 <div class="stat"><span class="n">15</span><span class="l">Quiz Scenarios</span></div>
 <div class="stat"><span class="n">₹5-50L</span><span class="l">Risk Avoided</span></div>
 </div>
-<div class="card"><p>By the end of this module, you will:</p><ul>
+<div class="card glass-card animate-slide-up"><p>By the end of this module, you will:</p><ul>
 <li>Understand how AI actually processes and stores your data</li>
 <li>Know the 5 categories of AI risk relevant to construction</li>
 <li>Classify any DEC Infra data into 3 tiers: Public, Internal, Confidential</li>
@@ -3805,7 +3805,7 @@ function renderModule3(container) {
 <div class="section-head" onclick="toggle(this)"><h2>🧠 Part 1: How AI Actually Works — What Happens to Your Data</h2><span class="arrow">▼</span></div>
 <div class="section-body">
 
-<div class="card">
+<div class="card glass-card animate-slide-up">
 <h3>What is a Large Language Model (LLM)?</h3>
 <p>ChatGPT and Claude are Large Language Models (LLMs). Think of them as extremely advanced autocomplete systems. They were trained on billions of pages of text from the internet — books, websites, papers, forums — and learned patterns in human language.</p>
 <p style="margin-top:8px"><strong>Key insight:</strong> LLMs don't "know" things the way humans do. They predict the most likely next word based on patterns they've seen. This is why they can sound confident while being completely wrong.</p>
@@ -3824,7 +3824,7 @@ function renderModule3(container) {
 </div>
 </div>
 
-<div class="card">
+<div class="card glass-card animate-slide-up">
 <h3>What Happens When You Type in ChatGPT?</h3>
 <div class="diagram">
 <p style="font-size: 17px;opacity:0.7;margin-bottom:10px">Data flow — Free ChatGPT:</p>
@@ -3851,7 +3851,7 @@ function renderModule3(container) {
 <p style="margin-top:10px"><strong>The critical difference:</strong> Free tools may absorb your data into the model itself. Enterprise tools process and forget. This is why the ₹2,500/user/month investment matters — it's the difference between a locked cabinet and an open notice board.</p>
 </div>
 
-<div class="card">
+<div class="card glass-card animate-slide-up">
 <h3>Why Does This Matter for Construction?</h3>
 <p>Construction companies handle uniquely sensitive data that most industries don't:</p>
 <div class="grid-2">
@@ -3911,11 +3911,11 @@ function renderModule3(container) {
 </style>
 
 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 25px;">
-    <div class="card" style="border: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.4); box-shadow: inset 0 0 30px rgba(0,0,0,0.5);">
-        <h3 style="text-align:center; color: var(--text-main); margin-bottom: 5px; font-size:1.1rem">Live Risk Distribution (Overall)</h3>
+    <div class="card glass-card animate-slide-up" style="border: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.4); box-shadow: inset 0 0 30px rgba(0,0,0,0.5);">
+        <h3 style="text-align:center; color: var(--text-main); margin-bottom: 5px; font-size:1.1rem"><span style="text-shadow: 0 0 10px rgba(59, 130, 246, 0.4)">Live Risk Distribution (Overall)</span></h3>
         <div style="height: 250px; position: relative;"><canvas id="risk-donut-chart"></canvas></div>
     </div>
-    <div class="card" style="border: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.4); box-shadow: inset 0 0 30px rgba(0,0,0,0.5);">
+    <div class="card glass-card animate-slide-up" style="border: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.4); box-shadow: inset 0 0 30px rgba(0,0,0,0.5);">
         <h3 style="text-align:center; color: var(--text-main); margin-bottom: 5px; font-size:1.1rem">Department Vulnerability Radar (Real-Time)</h3>
         <div style="height: 250px; position: relative;"><canvas id="risk-radar-chart"></canvas></div>
     </div>
@@ -3966,7 +3966,7 @@ function renderModule3(container) {
 <div class="section-head" onclick="toggle(this)"><h2>🔑 Part 3: The AI Trust Equation — When to Trust, When to Verify</h2><span class="arrow">▼</span></div>
 <div class="section-body">
 
-<div class="card">
+<div class="card glass-card animate-slide-up">
 <h3>The 4-Level Trust Framework for AI Outputs</h3>
 <p>Not all AI outputs carry the same risk. Use this framework to decide how much verification is needed:</p>
 <table>
@@ -4050,7 +4050,7 @@ function renderModule3(container) {
 <div class="section-head" onclick="toggle(this)"><h2>🔒 Part 5: Data Classification — The 3-Tier System for DEC Infra</h2><span class="arrow">▼</span></div>
 <div class="section-body">
 <div class="grid-3">
-<div class="card" style="border-top:3px solid var(--success); background: var(--bg-card);">
+<div class="card glass-card animate-slide-up" style="border-top:3px solid var(--success); background: var(--bg-card);">
 <h3 style="color:var(--success)">🟢 Tier 1: Public / Safe</h3>
 <p>Share freely with any AI tool</p>
 <ul>
@@ -4062,7 +4062,7 @@ function renderModule3(container) {
 <li>Training materials</li>
 </ul>
 </div>
-<div class="card" style="border-top:3px solid var(--warning); background: var(--bg-card);">
+<div class="card glass-card animate-slide-up" style="border-top:3px solid var(--warning); background: var(--bg-card);">
 <h3 style="color:var(--warning)">🟡 Tier 2: Internal — Anonymize</h3>
 <p>Share ONLY after removing identifiers</p>
 <ul>
@@ -4074,7 +4074,7 @@ function renderModule3(container) {
 <li>Specs (remove proprietary detail)</li>
 </ul>
 </div>
-<div class="card" style="border-top:3px solid var(--danger); background: var(--bg-card);">
+<div class="card glass-card animate-slide-up" style="border-top:3px solid var(--danger); background: var(--bg-card);">
 <h3 style="color:var(--danger)">🔴 Tier 3: Confidential — NEVER</h3>
 <p>NEVER upload to any external AI</p>
 <ul>
@@ -4114,7 +4114,7 @@ function renderModule3(container) {
 <p style="margin-bottom:15px;opacity:0.8">Fictional but realistic scenarios modeled on DEC Infra's actual project types. Click each to expand.</p>
 
 <div style="background: linear-gradient(90deg, #1A1F2C 0%, #050A17 100%); border: 2px solid #ef4444; border-radius: 12px; padding: 25px; margin-bottom: 30px; text-align: center; box-shadow: 0 0 30px rgba(239,68,68,0.2);">
-    <h3 style="color:#ef4444; margin:0 0 10px 0; font-size:1.2rem; text-transform:uppercase; letter-spacing:2px">🔴 Live Risk Exposure Simulation 🔴</h3>
+    <h3 style="color:#ef4444; margin:0 0 10px 0; font-size:1.2rem; text-shadow: 0 0 15px rgba(239, 68, 68, 0.5); text-transform:uppercase; letter-spacing:2px">🔴 Live Risk Exposure Simulation 🔴</h3>
     <p style="color:var(--text-muted); margin:0 0 15px 0;">Calculated maximum liability for DEC Infra across all active AI leaks</p>
     <div style="font-family: 'JetBrains Mono', monospace; font-size: 4.5rem; font-weight: 800; color: #fff; text-shadow: 0 0 20px rgba(255,255,255,0.4); display:flex; justify-content:center; align-items:baseline;">
         <span style="font-size:3rem; margin-right:10px; color:#ef4444">₹</span>
@@ -4123,7 +4123,7 @@ function renderModule3(container) {
 </div>
 
 
-<div class="card" style="border: 1px solid var(--border-color); background: rgba(0,0,0,0.3); margin-bottom: 20px;">
+<div class="card glass-card animate-slide-up" style="border: 1px solid var(--border-color); background: rgba(0,0,0,0.3); margin-bottom: 20px;">
     <h3 style="text-align:center; color: var(--text-main); margin-bottom: 15px;">Maximum Financial Impact (₹ Lakhs)</h3>
     <div style="height: 300px; position: relative;">
         <canvas id="cost-bar-chart"></canvas>
@@ -4240,7 +4240,7 @@ function renderModule3(container) {
 </div>
 </div>
 
-<div class="card">
+<div class="card glass-card animate-slide-up">
 <h3>Hallucination Red Flags — Quick Reference</h3>
 <table>
 <tr><th>Red Flag</th><th>Example</th><th>Action</th></tr>
@@ -4278,7 +4278,7 @@ function renderModule3(container) {
 <tr><td>Safe for Tier 2?</td><td style="color:var(--warning)">Only anonymized</td><td style="color:var(--success)">Yes</td><td style="color:var(--success)">Yes</td><td style="color:var(--success)">Yes</td></tr>
 </table>
 
-<div class="card">
+<div class="card glass-card animate-slide-up">
 <h3>💰 DEC Infra Cost-Benefit Analysis</h3>
 <div class="grid-2">
 <div><h4>Annual Investment (20 users)</h4>
@@ -4303,7 +4303,7 @@ function renderModule3(container) {
 <div class="section">
 <div class="section-head" onclick="toggle(this)"><h2>📜 Part 9: DEC Infra AI Usage Policy (Draft)</h2><span class="arrow">▼</span></div>
 <div class="section-body">
-<div class="card">
+<div class="card glass-card animate-slide-up">
 <h3>Draft AI Usage Policy — DEC Infra Projects Pvt Ltd</h3>
 <h4>Section 1: Approved AI Tools</h4>
 <ul><li>ChatGPT (OpenAI) — Tier 1 & anonymized Tier 2 only</li><li>Claude (Anthropic) — Tier 1 & anonymized Tier 2 only</li><li>Microsoft Copilot — internal M365 documents</li><li>All other AI tools require IT approval</li></ul>
@@ -4321,8 +4321,8 @@ function renderModule3(container) {
 <h3>🏋️ Group Exercise: Customize the Policy for YOUR Department</h3>
 <p>In groups of 3-4, add 3 department-specific rules. Examples:</p>
 <div class="grid-2">
-<div class="card"><h4>Project Execution</h4><ul><li>"AI schedules must be validated in Primavera/MS Project before sharing"</li><li>"Site photos must not contain client logos or signage"</li><li>"AI estimates require QS verification before inclusion in any report"</li></ul></div>
-<div class="card"><h4>Quality & Safety</h4><ul><li>"AI safety checklists require certified safety officer sign-off"</li><li>"Mix designs from AI must NEVER replace lab designs"</li><li>"NCR reports must reference verified IS clause numbers only"</li></ul></div>
+<div class="card glass-card animate-slide-up"><h4>Project Execution</h4><ul><li>"AI schedules must be validated in Primavera/MS Project before sharing"</li><li>"Site photos must not contain client logos or signage"</li><li>"AI estimates require QS verification before inclusion in any report"</li></ul></div>
+<div class="card glass-card animate-slide-up"><h4>Quality & Safety</h4><ul><li>"AI safety checklists require certified safety officer sign-off"</li><li>"Mix designs from AI must NEVER replace lab designs"</li><li>"NCR reports must reference verified IS clause numbers only"</li></ul></div>
 </div>
 </div>
 </div>
@@ -4363,7 +4363,7 @@ function renderModule3(container) {
 <div class="section">
 <div class="section-head" onclick="toggle(this)"><h2>🎯 Key Takeaways — 6 Rules to Remember</h2><span class="arrow">▼</span></div>
 <div class="section-body">
-<div class="card">
+<div class="card glass-card animate-slide-up">
 <div id="data-quiz-container"></div>
 <div id="m3-results-container" style="margin-top: 30px;"></div>
 <div class="stats">
@@ -4471,13 +4471,13 @@ function renderModule3(container) {
             const el = document.getElementById('hallucination-quiz-container');
             if(!el) return;
             if(window.state.hIndex >= hData.length) {
-                el.innerHTML = `<div class="card" style="border-top:3px solid var(--success);text-align:center"><h3 style="color:var(--success)">✓ Hallucination Section Complete</h3><p>Score: ${window.state.scores["Hallucinations (3)"].correct}/3</p></div>`;
+                el.innerHTML = `<div class="card glass-card animate-slide-up" style="border-top:3px solid var(--success);text-align:center"><h3 style="color:var(--success)">✓ Hallucination Section Complete</h3><p>Score: ${window.state.scores["Hallucinations (3)"].correct}/3</p></div>`;
                 return;
             }
             const q = hData[window.state.hIndex];
             const optsHtml = q.opts.map(o => `<button class="opt-btn" onclick="handleQuiz('hallucination', '${o.v}', this)">${o.l}</button>`).join('');
             el.innerHTML = `
-                <div class="card" style="border: 2px solid var(--accent); background: rgba(0,0,0,0.2);">
+                <div class="card glass-card animate-slide-up" style="border: 2px solid var(--accent); background: rgba(0,0,0,0.2);">
                     <div style="font-family:monospace; color:var(--text-muted); margin-bottom:10px;">Scenario ${window.state.hIndex+1} of ${hData.length}</div>
                     <div style="font-size:20px; font-weight:600; margin-bottom:16px; line-height: 1.4;">${q.q}</div>
                     <div>${optsHtml}</div>
@@ -4490,13 +4490,13 @@ function renderModule3(container) {
             const el = document.getElementById('data-quiz-container');
             if(!el) return;
             if(window.state.dIndex >= dData.length) {
-                el.innerHTML = `<div class="card" style="border-top:3px solid var(--success);text-align:center"><h3 style="color:var(--success)">✓ Data Classification Section Complete</h3><p>Score: ${window.state.scores["Data Safety (15)"].correct}/15</p></div>`;
+                el.innerHTML = `<div class="card glass-card animate-slide-up" style="border-top:3px solid var(--success);text-align:center"><h3 style="color:var(--success)">✓ Data Classification Section Complete</h3><p>Score: ${window.state.scores["Data Safety (15)"].correct}/15</p></div>`;
                 return;
             }
             const q = dData[window.state.dIndex];
             const optsHtml = q.opts.map(o => `<button class="opt-btn" onclick="handleQuiz('data', '${o.v}', this)">${o.l}</button>`).join('');
             el.innerHTML = `
-                <div class="card" style="border: 2px solid var(--accent); background: rgba(0,0,0,0.2);">
+                <div class="card glass-card animate-slide-up" style="border: 2px solid var(--accent); background: rgba(0,0,0,0.2);">
                     <div style="font-family:monospace; color:var(--text-muted); margin-bottom:10px;">Scenario ${window.state.dIndex+1} of ${dData.length}</div>
                     <div style="font-size:20px; font-weight:600; margin-bottom:16px; line-height: 1.4;">${q.q}</div>
                     <div>${optsHtml}</div>
@@ -4526,7 +4526,7 @@ function renderModule3(container) {
                 else if(finalPct >= 70) msg = "Good job! You have a solid grasp on safety basics.";
 
                 el.innerHTML = `
-                <div class="card" style="padding:30px; text-align:center; border-top: 4px solid var(--primary);">
+                <div class="card glass-card animate-slide-up" style="padding:30px; text-align:center; border-top: 4px solid var(--primary);">
                     <h2 style="font-size:32px; margin-bottom:20px;">Module Complete</h2>
                     <div style="margin:30px 0; max-width: 500px; margin-left: auto; margin-right: auto;">
                         <div class="bar-row"><div class="bar-label">Hallucinations</div><div class="bar-track"><div class="bar-fill" style="background:${hColor}" data-width="${hPct}%"></div><div class="bar-val">${hc}/${ht}</div></div></div>

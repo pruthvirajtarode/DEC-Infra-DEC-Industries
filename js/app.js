@@ -4519,13 +4519,13 @@ function renderModule3(container) {
             const el = document.getElementById('hallucination-quiz-container');
             if(!el) return;
             if(window.state.hIndex >= hData.length) {
-                el.innerHTML = `<div class="card glass-card reveal-on-scroll" style="border-top:3px solid var(--success);text-align:center"><h3 style="color:var(--success)">✓ Hallucination Section Complete</h3><p>Score: ${window.state.scores["Hallucinations (3)"].correct}/3</p></div>`;
+                el.innerHTML = `<div class="card glass-card" style="border-top:3px solid var(--success);text-align:center"><h3 style="color:var(--success)">✓ Hallucination Section Complete</h3><p>Score: ${window.state.scores["Hallucinations (3)"].correct}/3</p></div>`;
                 return;
             }
             const q = hData[window.state.hIndex];
             const optsHtml = q.opts.map(o => `<button class="opt-btn" onclick="handleQuiz('hallucination', '${o.v}', this)">${o.l}</button>`).join('');
             el.innerHTML = `
-                <div class="card glass-card reveal-on-scroll" style="border: 2px solid var(--accent); background: rgba(0,0,0,0.2);">
+                <div class="card glass-card" style="border: 2px solid var(--accent); background: rgba(0,0,0,0.2); animation:fadein 0.3s;">
                     <div style="font-family:monospace; color:var(--text-muted); margin-bottom:10px;">Scenario ${window.state.hIndex+1} of ${hData.length}</div>
                     <div style="font-size:20px; font-weight:600; margin-bottom:16px; line-height: 1.4;">${q.q}</div>
                     <div>${optsHtml}</div>
@@ -4538,13 +4538,13 @@ function renderModule3(container) {
             const el = document.getElementById('data-quiz-container');
             if(!el) return;
             if(window.state.dIndex >= dData.length) {
-                el.innerHTML = `<div class="card glass-card reveal-on-scroll" style="border-top:3px solid var(--success);text-align:center"><h3 style="color:var(--success)">✓ Data Classification Section Complete</h3><p>Score: ${window.state.scores["Data Safety (15)"].correct}/15</p></div>`;
+                el.innerHTML = `<div class="card glass-card" style="border-top:3px solid var(--success);text-align:center"><h3 style="color:var(--success)">✓ Data Classification Section Complete</h3><p>Score: ${window.state.scores["Data Safety (15)"].correct}/15</p></div>`;
                 return;
             }
             const q = dData[window.state.dIndex];
             const optsHtml = q.opts.map(o => `<button class="opt-btn" onclick="handleQuiz('data', '${o.v}', this)">${o.l}</button>`).join('');
             el.innerHTML = `
-                <div class="card glass-card reveal-on-scroll" style="border: 2px solid var(--accent); background: rgba(0,0,0,0.2);">
+                <div class="card glass-card" style="border: 2px solid var(--accent); background: rgba(0,0,0,0.2); animation:fadein 0.3s;">
                     <div style="font-family:monospace; color:var(--text-muted); margin-bottom:10px;">Scenario ${window.state.dIndex+1} of ${dData.length}</div>
                     <div style="font-size:20px; font-weight:600; margin-bottom:16px; line-height: 1.4;">${q.q}</div>
                     <div>${optsHtml}</div>
@@ -4574,7 +4574,7 @@ function renderModule3(container) {
                 else if(finalPct >= 70) msg = "Good job! You have a solid grasp on safety basics.";
 
                 el.innerHTML = `
-                <div class="card glass-card reveal-on-scroll" style="padding:30px; text-align:center; border-top: 4px solid var(--primary);">
+                <div class="card glass-card" style="padding:30px; text-align:center; border-top: 4px solid var(--primary); animation:fadein 0.3s;">
                     <h2 style="font-size:32px; margin-bottom:20px;">Module Complete</h2>
                     <div style="margin:30px 0; max-width: 500px; margin-left: auto; margin-right: auto;">
                         <div class="bar-row"><div class="bar-label">Hallucinations</div><div class="bar-track"><div class="bar-fill" style="background:${hColor}" data-width="${hPct}%"></div><div class="bar-val">${hc}/${ht}</div></div></div>

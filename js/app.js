@@ -4383,25 +4383,8 @@ function renderModule3(container) {
 <div class="section-head" onclick="toggle(this)"><h2>🧪 Part 10: "Is This Safe?" — 15 DEC Infra Scenarios</h2><span class="arrow">▼</span></div>
 <div class="section-body">
 <p style="margin-bottom:15px;opacity:0.8">For each: <span class="badge badge-safe">SAFE ✓</span> or <span class="badge badge-risky">RISKY ✗</span> or <span class="badge badge-warn">ANONYMIZE ⚠</span></p>
-<table>
-<tr><th>#</th><th>Scenario</th><th>Verdict</th><th>Why</th></tr>
-<tr><td>1</td><td>Ask AI to draft a safety checklist for height work</td><td><span class="badge badge-safe">SAFE ✓</span></td><td>Generic safety knowledge</td></tr>
-<tr><td>2</td><td>Upload 3 vendor quotes with names and exact rates</td><td><span class="badge badge-risky">RISKY ✗</span></td><td>Vendor names + rates = Tier 3</td></tr>
-<tr><td>3</td><td>Ask AI to explain IS 456 requirements</td><td><span class="badge badge-safe">SAFE ✓</span></td><td>Public standard</td></tr>
-<tr><td>4</td><td>Upload attendance register with Aadhaar numbers</td><td><span class="badge badge-risky">RISKY ✗</span></td><td>Personal data — DPDP violation</td></tr>
-<tr><td>5</td><td>Upload test results with lab name replaced</td><td><span class="badge badge-safe">SAFE ✓</span></td><td>Properly anonymized Tier 2</td></tr>
-<tr><td>6</td><td>Upload full NSDL contract for review</td><td><span class="badge badge-risky">RISKY ✗</span></td><td>Client contract = Tier 3</td></tr>
-<tr><td>7</td><td>Upload site photos, no logos visible</td><td><span class="badge badge-safe">SAFE ✓</span></td><td>Generic photos, no identifiers</td></tr>
-<tr><td>8</td><td>Share profit margin on Medical College project</td><td><span class="badge badge-risky">RISKY ✗</span></td><td>Tier 3 — commercially sensitive</td></tr>
-<tr><td>9</td><td>Upload budget with vendors as "A/B/C"</td><td><span class="badge badge-safe">SAFE ✓</span></td><td>Properly anonymized Tier 2</td></tr>
-<tr><td>10</td><td>Ask AI to draft project status email</td><td><span class="badge badge-warn">ANONYMIZE ⚠</span></td><td>Remove internal details</td></tr>
-<tr><td>11</td><td>Upload tender bid for NMDC project</td><td><span class="badge badge-risky">RISKY ✗</span></td><td>Tier 3 — competitor advantage</td></tr>
-<tr><td>12</td><td>Compare two scaffolding designs</td><td><span class="badge badge-warn">ANONYMIZE ⚠</span></td><td>OK technically, remove project name</td></tr>
-<tr><td>13</td><td>Upload subcontractor insurance certificate</td><td><span class="badge badge-warn">ANONYMIZE ⚠</span></td><td>Remove company name, keep policy details</td></tr>
-<tr><td>14</td><td>Share DEC Infra annual revenue figures</td><td><span class="badge badge-risky">RISKY ✗</span></td><td>Tier 3 unless already in ROC public filing</td></tr>
-<tr><td>15</td><td>Ask how to write a change order justification</td><td><span class="badge badge-safe">SAFE ✓</span></td><td>Generic knowledge, no company data</td></tr>
-</table>
-<div class="success"><strong>✓ Scoring:</strong> 13-15 = AI Safety Expert 🏆 | 10-12 = Good 👍 | 7-9 = Practice ⚠️ | <7 = Review the 3-Tier system 🔄</div>
+<div id="data-quiz-container"></div>
+<div id="m3-results-container" style="margin-top: 30px;"></div>
 </div>
 </div>
 
@@ -4412,8 +4395,15 @@ function renderModule3(container) {
 <div class="section-head" onclick="toggle(this)"><h2>🎯 Key Takeaways — 6 Rules to Remember</h2><span class="arrow">▼</span></div>
 <div class="section-body">
 <div class="card glass-card reveal-on-scroll">
-<div id="data-quiz-container"></div>
-<div id="m3-results-container" style="margin-top: 30px;"></div>
+<table>
+<tr><th>#</th><th>Rule</th><th>Why It Matters for DEC Infra</th></tr>
+<tr><td style="font-size: 20px;font-weight:800;color:var(--accent)">1</td><td><strong>Classify first, share second</strong></td><td>Know your data tier BEFORE opening ChatGPT</td></tr>
+<tr><td style="font-size: 20px;font-weight:800;color:var(--accent)">2</td><td><strong>Anonymize Tier 2</strong></td><td>Replace names, keep numbers — AI doesn't need WHO, just WHAT</td></tr>
+<tr><td style="font-size: 20px;font-weight:800;color:var(--accent)">3</td><td><strong>Never share Tier 3</strong></td><td>Bids, margins, salaries, contracts — one leak could cost crores</td></tr>
+<tr><td style="font-size: 20px;font-weight:800;color:var(--accent)">4</td><td><strong>Verify every critical output</strong></td><td>AI hallucinations cost ₹5-50L in construction</td></tr>
+<tr><td style="font-size: 20px;font-weight:800;color:var(--accent)">5</td><td><strong>AI assists, humans decide</strong></td><td>YOU are accountable, not the AI — always</td></tr>
+<tr><td style="font-size: 20px;font-weight:800;color:var(--accent)">6</td><td><strong>Enterprise tools are worth it</strong></td><td>₹6L/year protects data worth ₹50 Cr+ in business</td></tr>
+</table>
 <div class="stats">
 <div class="stat"><span class="n">12</span><span class="l">Case Studies</span></div>
 <div class="stat"><span class="n">15</span><span class="l">Quiz Scenarios</span></div>

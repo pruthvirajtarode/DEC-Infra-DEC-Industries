@@ -4404,6 +4404,7 @@ function renderModule3(container) {
 <tr><td style="font-size: 20px;font-weight:800;color:var(--accent)">5</td><td><strong>AI assists, humans decide</strong></td><td>YOU are accountable, not the AI — always</td></tr>
 <tr><td style="font-size: 20px;font-weight:800;color:var(--accent)">6</td><td><strong>Enterprise tools are worth it</strong></td><td>₹6L/year protects data worth ₹50 Cr+ in business</td></tr>
 </table>
+</div>
 <div class="stats">
 <div class="stat"><span class="n">12</span><span class="l">Case Studies</span></div>
 <div class="stat"><span class="n">15</span><span class="l">Quiz Scenarios</span></div>
@@ -4415,6 +4416,7 @@ function renderModule3(container) {
 
 
         </div>
+    </div>
 `;
     
     // Auto-scroll to top

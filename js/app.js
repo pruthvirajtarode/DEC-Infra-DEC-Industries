@@ -4102,7 +4102,7 @@ function renderModule3(container) {
         <h3 style="text-align:center; color: #fff; margin-bottom: 10px; font-size: 24px;">Can you classify DEC Infra's data safely?</h3>
         <p style="text-align:center; color: var(--text-muted); margin-bottom: 30px; font-size: 16px;">Test your knowledge on the 3-Tier system. Get a perfect score to unlock the Anonymization Master Guide!</p>
         
-        <div id="data-quiz-container" style="max-width: 800px; margin: 0 auto; background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 40px 30px; text-align: center; position: relative; box-shadow: inset 0 0 20px rgba(0,0,0,0.5);">
+        <div id="part5-quiz-container" style="max-width: 800px; margin: 0 auto; background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 40px 30px; text-align: center; position: relative; box-shadow: inset 0 0 20px rgba(0,0,0,0.5);">
             <img src="x" onerror="if(window.initDataQuiz) window.initDataQuiz()" style="display:none;">
             
             <div style="position:absolute; top: 20px; right: 25px; font-weight: 800; font-size: 18px; color: var(--accent); background: rgba(59, 130, 246, 0.2); padding: 5px 15px; border-radius: 20px;">Score: <span id="q-score">0</span>/5</div>
@@ -4461,16 +4461,16 @@ function renderModule3(container) {
     // --- GAMIFIED QUIZ CSS & LOGIC ---
     if(!document.getElementById('m3-gamified-css')) {
         document.head.insertAdjacentHTML('beforeend', `<style id="m3-gamified-css">
-        .opt-btn { font:inherit;font-weight:700;font-size:16px;border-radius:12px;padding:16px 20px;cursor:pointer;background:rgba(255,255,255,0.03);border:2px solid var(--border-color);color:var(--text-main);text-align:left;display:flex;align-items:center;justify-content:space-between;transition:all 0.2s;margin-bottom:8px;width:100%; }
-        .opt-btn:hover:not(:disabled) { background:rgba(255,255,255,0.08);border-color:var(--text-muted); }
-        .opt-btn:disabled { cursor:default;opacity:0.6; }
-        .opt-btn.correct { background:rgba(16, 185, 129, 0.1);border-color:var(--success);color:var(--success);opacity:1; }
-        .opt-btn.wrong { background:rgba(239, 68, 68, 0.1);border-color:var(--danger);color:var(--danger);opacity:1; }
+        .opt-btn { font:inherit;font-weight:700;font-size:18px;border-radius:16px;padding:20px 24px;cursor:pointer;background:linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%);border:2px solid rgba(255,255,255,0.1);color:var(--text-main);text-align:left;display:flex;align-items:center;justify-content:space-between;transition:all 0.3s cubic-bezier(0.4, 0, 0.2, 1);margin-bottom:12px;width:100%;box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+        .opt-btn:hover:not(:disabled) { background:linear-gradient(145deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);border-color:var(--accent);transform:translateY(-2px);box-shadow: 0 8px 25px rgba(59,130,246,0.3); }
+        .opt-btn:disabled { cursor:default;opacity:0.6;transform:none!important;box-shadow:none!important; }
+        .opt-btn.correct { background:linear-gradient(145deg, rgba(16,185,129,0.2) 0%, rgba(16,185,129,0.05) 100%);border-color:var(--success);color:#A7F3D0;opacity:1;box-shadow: 0 0 30px rgba(16,185,129,0.4)!important;transform:scale(1.02); }
+        .opt-btn.wrong { background:linear-gradient(145deg, rgba(239,68,68,0.2) 0%, rgba(239,68,68,0.05) 100%);border-color:var(--danger);color:#FECACA;opacity:1;box-shadow: 0 0 30px rgba(239,68,68,0.4)!important; }
 
-        .quiz-feedback { margin-top:20px;padding:16px;border-radius:12px;font-size:15px;animation:fadein 0.3s; }
-        .quiz-feedback.good { background:rgba(16,185,129,0.15);border-left:4px solid var(--success); }
-        .quiz-feedback.bad { background:rgba(239,68,68,0.15);border-left:4px solid var(--danger); }
-        .quiz-feedback.warn { background:rgba(245,158,11,0.15);border-left:4px solid var(--warning); }
+        .quiz-feedback { margin-top:24px;padding:20px;border-radius:16px;font-size:16px;animation:fadein 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        .quiz-feedback.good { background:rgba(16,185,129,0.15);border:1px solid var(--success);box-shadow: inset 0 0 20px rgba(16,185,129,0.1); }
+        .quiz-feedback.bad { background:rgba(239,68,68,0.15);border:1px solid var(--danger);box-shadow: inset 0 0 20px rgba(239,68,68,0.1); }
+        .quiz-feedback.warn { background:rgba(245,158,11,0.15);border:1px solid var(--warning);box-shadow: inset 0 0 20px rgba(245,158,11,0.1); }
 
         .bar-row { display:flex;align-items:center;gap:16px;margin-bottom:12px; }
         .bar-label { width:160px;font-weight:700;font-size:14px;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;text-align:right; }
@@ -4533,8 +4533,8 @@ function renderModule3(container) {
             const fClass = isCorrect ? 'good' : 'bad';
             const fIcon = isCorrect ? '✓ Correct' : '✗ Incorrect';
             
-            let fbHTML = `<div class="quiz-feedback ${fClass}"><strong>${fIcon}</strong> — ${q.why}</div>`;
-            fbHTML += `<div style="margin-top:16px"><button class="btn btn-primary" onclick="nextQuiz('${type}')">${idx < data.length-1 ? 'Next Scenario' : 'Finish Section'}</button></div>`;
+            let fbHTML = `<div class="quiz-feedback ${fClass}"><strong>${fIcon}</strong><div style="margin-top:8px;opacity:0.9;">${q.why}</div></div>`;
+            fbHTML += `<div style="margin-top:20px;text-align:center;"><button class="btn btn-primary" style="padding:12px 30px;font-size:18px;border-radius:30px;box-shadow:0 10px 20px rgba(59,130,246,0.3);" onclick="nextQuiz('${type}')">${idx < data.length-1 ? 'Next Scenario ➔' : 'Finish Section ➔'}</button></div>`;
             container.querySelector('.feedback-area').innerHTML = fbHTML;
         };
 
@@ -4552,12 +4552,15 @@ function renderModule3(container) {
                 return;
             }
             const q = hData[window.state.hIndex];
-            const optsHtml = q.opts.map(o => `<button class="opt-btn" onclick="handleQuiz('hallucination', '${o.v}', this)">${o.l}</button>`).join('');
+            const optsHtml = q.opts.map(o => `<button class="opt-btn" onclick="handleQuiz('hallucination', '${o.v}', this)"><span style="display:flex;align-items:center;gap:15px;"><div style="width:24px;height:24px;border-radius:50%;border:2px solid rgba(255,255,255,0.3);display:flex;align-items:center;justify-content:center;font-size:12px;">${o.l.charAt(0)}</div>${o.l}</span></button>`).join('');
             el.innerHTML = `
-                <div class="card glass-card" style="border: 2px solid var(--accent); background: rgba(0,0,0,0.2); animation:fadein 0.3s;">
-                    <div style="font-family:monospace; color:var(--text-muted); margin-bottom:10px;">Scenario ${window.state.hIndex+1} of ${hData.length}</div>
-                    <div style="font-size:20px; font-weight:600; margin-bottom:16px; line-height: 1.4;">${q.q}</div>
-                    <div>${optsHtml}</div>
+                <div class="card glass-card" style="border: 1px solid rgba(255,255,255,0.1); background: linear-gradient(180deg, rgba(30,41,59,0.8) 0%, rgba(15,23,42,0.9) 100%); box-shadow: 0 20px 50px rgba(0,0,0,0.5); border-radius: 24px; padding: 40px; animation:fadein 0.4s ease-out;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:25px; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:15px;">
+                        <span style="font-family:monospace; color:var(--accent); font-weight:700; letter-spacing:1px; background:rgba(59,130,246,0.2); padding:5px 15px; border-radius:20px;">SCENARIO ${window.state.hIndex+1} / ${hData.length}</span>
+                        <span style="font-weight:700; color:#fff;">Score: <span style="color:var(--success)">${window.state.scores["Hallucinations (3)"].correct}</span></span>
+                    </div>
+                    <div style="font-size:24px; font-weight:700; margin-bottom:30px; line-height: 1.5; color:#fff;">${q.q}</div>
+                    <div style="display:flex; flex-direction:column; gap:5px;">${optsHtml}</div>
                     <div class="feedback-area"></div>
                 </div>
             `;
@@ -4571,12 +4574,19 @@ function renderModule3(container) {
                 return;
             }
             const q = dData[window.state.dIndex];
-            const optsHtml = q.opts.map(o => `<button class="opt-btn" onclick="handleQuiz('data', '${o.v}', this)">${o.l}</button>`).join('');
+            const optsHtml = q.opts.map(o => {
+                const colors = { 'SAFE': '#10B981', 'ANONYMIZE': '#F59E0B', 'RISKY': '#EF4444' };
+                const dotColor = colors[o.v] || '#fff';
+                return `<button class="opt-btn" onclick="handleQuiz('data', '${o.v}', this)"><span style="display:flex;align-items:center;gap:15px;"><div style="width:16px;height:16px;border-radius:50%;background:${dotColor};box-shadow:0 0 10px ${dotColor}88;"></div>${o.l}</span></button>`;
+            }).join('');
             el.innerHTML = `
-                <div class="card glass-card" style="border: 2px solid var(--accent); background: rgba(0,0,0,0.2); animation:fadein 0.3s;">
-                    <div style="font-family:monospace; color:var(--text-muted); margin-bottom:10px;">Scenario ${window.state.dIndex+1} of ${dData.length}</div>
-                    <div style="font-size:20px; font-weight:600; margin-bottom:16px; line-height: 1.4;">${q.q}</div>
-                    <div>${optsHtml}</div>
+                <div class="card glass-card" style="border: 1px solid rgba(255,255,255,0.1); background: linear-gradient(180deg, rgba(30,41,59,0.8) 0%, rgba(15,23,42,0.9) 100%); box-shadow: 0 20px 50px rgba(0,0,0,0.5); border-radius: 24px; padding: 40px; animation:fadein 0.4s ease-out;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:25px; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:15px;">
+                        <span style="font-family:monospace; color:var(--accent); font-weight:700; letter-spacing:1px; background:rgba(59,130,246,0.2); padding:5px 15px; border-radius:20px;">SCENARIO ${window.state.dIndex+1} / ${dData.length}</span>
+                        <span style="font-weight:700; color:#fff;">Score: <span style="color:var(--success)">${window.state.scores["Data Safety (15)"].correct}</span></span>
+                    </div>
+                    <div style="font-size:24px; font-weight:700; margin-bottom:30px; line-height: 1.5; color:#fff;">${q.q}</div>
+                    <div style="display:flex; flex-direction:column; gap:5px;">${optsHtml}</div>
                     <div class="feedback-area"></div>
                 </div>
             `;
@@ -7622,7 +7632,7 @@ window.initDataQuiz = function() {
     document.getElementById('anonymization-guide').style.display = 'none';
     
     // reset buttons
-    const buttons = document.querySelectorAll('#data-quiz-container .btn');
+    const buttons = document.querySelectorAll('#part5-quiz-container .btn');
     buttons.forEach(b => {
         b.style.display = 'block';
         b.style.pointerEvents = 'auto';
@@ -7698,7 +7708,7 @@ window.handleDataQuizAnswer = function(tier, btnEl) {
                         c.style.top = '10px'; c.style.left = '50%'; c.style.transform='translateX(-50%)';
                         c.style.fontSize = '40px';
                         c.style.animation = 'slideUp 1s ease-out';
-                        document.getElementById('data-quiz-container').appendChild(c);
+                        document.getElementById('part5-quiz-container').appendChild(c);
                         setTimeout(()=>c.remove(), 2000);
                     }
                 } catch(e) {}

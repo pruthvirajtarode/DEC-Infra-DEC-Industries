@@ -7651,37 +7651,58 @@ window.handleDataQuizAnswer = function(tier, btnEl) {
     const scoreEl = document.getElementById('q-score');
     
     const buttons = btnEl.parentElement.querySelectorAll('.btn');
-    buttons.forEach(b => b.style.transform = 'scale(1)');
-    
-    btnEl.style.transform = 'scale(0.95)';
-    setTimeout(() => btnEl.style.transform = 'scale(1)', 200);
+    buttons.forEach((b, index) => {
+        const btnTier = index + 1;
+        b.style.pointerEvents = 'none';
+        b.style.opacity = '0.4';
+        b.style.transform = 'scale(0.98)';
+        
+        if (btnTier === q.tier) {
+            b.style.opacity = '1';
+            b.style.transform = 'scale(1.05)';
+            b.style.background = 'rgba(16,185,129,0.2)';
+            b.style.border = '2px solid var(--success)';
+            b.style.boxShadow = '0 0 30px rgba(16,185,129,0.5)';
+        } else if (btnTier === tier && tier !== q.tier) {
+            b.style.opacity = '1';
+            b.style.transform = 'scale(1)';
+            b.style.background = 'rgba(239,68,68,0.2)';
+            b.style.border = '2px solid var(--danger)';
+            b.style.boxShadow = '0 0 20px rgba(239,68,68,0.5)';
+        }
+    });
 
     if (tier === q.tier) {
         state.score++;
-        feedbackEl.innerHTML = `<div style="font-size: 20px; margin-bottom: 8px;">✨ <strong>Correct!</strong></div><div style="font-size:16px; opacity:0.9;">${q.why}</div>`;
-        feedbackEl.style.background = 'linear-gradient(145deg, rgba(16,185,129,0.2) 0%, rgba(16,185,129,0.05) 100%)';
+        feedbackEl.innerHTML = `<div style="font-size: 22px; margin-bottom: 8px;">✨ <strong>Correct!</strong></div><div style="font-size:16px; opacity:0.9;">${q.why}</div>`;
+        feedbackEl.style.background = 'linear-gradient(145deg, rgba(16,185,129,0.3) 0%, rgba(16,185,129,0.1) 100%)';
         feedbackEl.style.color = '#A7F3D0';
         feedbackEl.style.border = '1px solid var(--success)';
-        feedbackEl.style.boxShadow = '0 4px 15px rgba(16,185,129,0.3)';
+        feedbackEl.style.boxShadow = '0 8px 25px rgba(16,185,129,0.4)';
     } else {
-        feedbackEl.innerHTML = `<div style="font-size: 20px; margin-bottom: 8px;">🛡️ <strong>Actually, it's Tier ${q.tier}.</strong></div><div style="font-size:16px; opacity:0.9;">${q.why}</div>`;
-        feedbackEl.style.background = 'linear-gradient(145deg, rgba(239,68,68,0.2) 0%, rgba(239,68,68,0.05) 100%)';
+        feedbackEl.innerHTML = `<div style="font-size: 22px; margin-bottom: 8px;">🛡️ <strong>Actually, it's Tier ${q.tier}.</strong></div><div style="font-size:16px; opacity:0.9;">${q.why}</div>`;
+        feedbackEl.style.background = 'linear-gradient(145deg, rgba(239,68,68,0.3) 0%, rgba(239,68,68,0.1) 100%)';
         feedbackEl.style.color = '#FECACA';
         feedbackEl.style.border = '1px solid var(--danger)';
-        feedbackEl.style.boxShadow = '0 4px 15px rgba(239,68,68,0.3)';
+        feedbackEl.style.boxShadow = '0 8px 25px rgba(239,68,68,0.4)';
     }
 
     feedbackEl.style.opacity = '1';
     scoreEl.innerText = state.score;
-    buttons.forEach(b => b.style.pointerEvents = 'none');
     
-    // Add manual Next button
     const nextBtn = document.createElement('button');
     nextBtn.innerText = state.current + 1 < state.questions.length ? 'Continue to Next Scenario ➔' : 'Complete Quiz ➔';
-    nextBtn.className = 'btn';
-    nextBtn.style.marginTop = '15px';
-    nextBtn.style.background = 'rgba(255,255,255,0.1)';
+    nextBtn.className = 'btn btn-primary';
+    nextBtn.style.marginTop = '20px';
+    nextBtn.style.background = 'var(--primary)';
     nextBtn.style.color = '#fff';
+    nextBtn.style.padding = '12px 30px';
+    nextBtn.style.fontSize = '18px';
+    nextBtn.style.borderRadius = '30px';
+    nextBtn.style.border = 'none';
+    nextBtn.style.cursor = 'pointer';
+    nextBtn.style.boxShadow = '0 10px 20px rgba(59,130,246,0.4)';
+    nextBtn.style.fontWeight = 'bold';
     nextBtn.onclick = () => window.advanceDataQuiz();
     feedbackEl.appendChild(nextBtn);
 };
@@ -7696,9 +7717,7 @@ window.advanceDataQuiz = function() {
     if (state.current < state.questions.length) {
         window.updateQuizUI();
         feedbackEl.style.opacity = '0';
-        buttons.forEach(b => b.style.pointerEvents = 'auto');
     } else {
-        // Finish Quiz
         document.getElementById('q-text').innerHTML = `Quiz Complete!`;
         buttons.forEach(b => b.style.display = 'none');
         
@@ -7709,10 +7728,8 @@ window.advanceDataQuiz = function() {
             feedbackEl.style.border = '1px solid var(--warning)';
             feedbackEl.style.boxShadow = '0 10px 30px rgba(245,158,11,0.3)';
             
-            // Show Guide
             document.getElementById('anonymization-guide').style.display = 'block';
             
-            // Confetti if function exists globally or inject simple confetti
             try {
                 if(typeof fireConfetti === 'function') fireConfetti();
                 else {
@@ -7733,7 +7750,6 @@ window.advanceDataQuiz = function() {
             feedbackEl.style.border = '1px solid rgba(255,255,255,0.2)';
             feedbackEl.style.boxShadow = 'none';
             
-            // Add retry button
             const retryBtn = document.createElement('button');
             retryBtn.innerText = '🔄 Retry Challenge';
             retryBtn.className = 'btn btn-primary';
@@ -7744,11 +7760,42 @@ window.advanceDataQuiz = function() {
             retryBtn.style.boxShadow = '0 10px 20px rgba(59,130,246,0.3)';
             retryBtn.style.border = 'none';
             retryBtn.style.cursor = 'pointer';
+            retryBtn.style.background = 'var(--accent)';
             retryBtn.onclick = () => window.initDataQuiz();
             
             feedbackEl.appendChild(retryBtn);
         }
     }
+};
+
+window.updateQuizUI = function() {
+    if (window.dataQuizState.current >= window.dataQuizState.questions.length) return;
+    const q = window.dataQuizState.questions[window.dataQuizState.current];
+    const textEl = document.getElementById('q-text');
+    if (textEl) {
+        textEl.style.opacity = '0';
+        setTimeout(() => {
+            textEl.innerHTML = `<div style="font-size:14px; font-weight:800; color:var(--accent); text-transform:uppercase; margin-bottom:15px; letter-spacing:1px; background:rgba(59,130,246,0.15); display:inline-block; padding:5px 15px; border-radius:20px;">Scenario ${window.dataQuizState.current + 1} of ${window.dataQuizState.questions.length}</div><br>${q.text}`;
+            textEl.style.opacity = '1';
+        }, 300);
+    }
+    
+    const buttons = document.querySelectorAll('#part5-quiz-container .btn');
+    const originalStyles = [
+        { bg: 'rgba(16,185,129,0.1)', border: 'var(--success)' },
+        { bg: 'rgba(245,158,11,0.1)', border: 'var(--warning)' },
+        { bg: 'rgba(239,68,68,0.1)', border: 'var(--danger)' }
+    ];
+    buttons.forEach((b, i) => {
+        if(i < 3) {
+            b.style.pointerEvents = 'auto';
+            b.style.opacity = '1';
+            b.style.transform = 'scale(1)';
+            b.style.background = originalStyles[i].bg;
+            b.style.border = '2px solid ' + originalStyles[i].border;
+            b.style.boxShadow = '0 4px 15px ' + originalStyles[i].bg.replace('0.1', '0.15');
+        }
+    });
 };
 
 window.updateQuizUI = function() {

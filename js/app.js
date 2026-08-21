@@ -7650,7 +7650,6 @@ window.handleDataQuizAnswer = function(tier, btnEl) {
     const feedbackEl = document.getElementById('q-feedback');
     const scoreEl = document.getElementById('q-score');
     
-    // Reset buttons visual state
     const buttons = btnEl.parentElement.querySelectorAll('.btn');
     buttons.forEach(b => b.style.transform = 'scale(1)');
     
@@ -7659,39 +7658,32 @@ window.handleDataQuizAnswer = function(tier, btnEl) {
 
     if (tier === q.tier) {
         state.score++;
-        feedbackEl.innerHTML = `<div style="font-size: 20px; margin-bottom: 8px;">✅ <strong>Correct!</strong></div><div style="font-size:16px; opacity:0.9;">${q.why}</div>`;
+        feedbackEl.innerHTML = `<div style="font-size: 20px; margin-bottom: 8px;">✨ <strong>Correct!</strong></div><div style="font-size:16px; opacity:0.9;">${q.why}</div>`;
         feedbackEl.style.background = 'linear-gradient(145deg, rgba(16,185,129,0.2) 0%, rgba(16,185,129,0.05) 100%)';
         feedbackEl.style.color = '#A7F3D0';
         feedbackEl.style.border = '1px solid var(--success)';
-        feedbackEl.style.boxShadow = '0 10px 30px rgba(16,185,129,0.2)';
+        feedbackEl.style.boxShadow = '0 4px 15px rgba(16,185,129,0.3)';
     } else {
-        feedbackEl.innerHTML = `<div style="font-size: 20px; margin-bottom: 8px;">❌ <strong>Incorrect. It's Tier ${q.tier}.</strong></div><div style="font-size:16px; opacity:0.9;">${q.why}</div>`;
+        feedbackEl.innerHTML = `<div style="font-size: 20px; margin-bottom: 8px;">🛡️ <strong>Actually, it's Tier ${q.tier}.</strong></div><div style="font-size:16px; opacity:0.9;">${q.why}</div>`;
         feedbackEl.style.background = 'linear-gradient(145deg, rgba(239,68,68,0.2) 0%, rgba(239,68,68,0.05) 100%)';
         feedbackEl.style.color = '#FECACA';
         feedbackEl.style.border = '1px solid var(--danger)';
-        feedbackEl.style.boxShadow = '0 10px 30px rgba(239,68,68,0.2)';
+        feedbackEl.style.boxShadow = '0 4px 15px rgba(239,68,68,0.3)';
     }
+
+    feedbackEl.style.opacity = '1';
+    scoreEl.innerText = state.score;
+    buttons.forEach(b => b.style.pointerEvents = 'none');
     
+    // Add manual Next button
     const nextBtn = document.createElement('button');
-    nextBtn.innerText = state.current + 1 < state.questions.length ? 'Next Scenario ➔' : 'View Results ➔';
-    nextBtn.className = 'btn btn-primary';
-    nextBtn.style.marginTop = '20px';
-    nextBtn.style.padding = '12px 30px';
-    nextBtn.style.fontSize = '18px';
-    nextBtn.style.borderRadius = '30px';
-    nextBtn.style.boxShadow = '0 10px 20px rgba(59,130,246,0.3)';
-    nextBtn.style.border = 'none';
-    nextBtn.style.cursor = 'pointer';
+    nextBtn.innerText = state.current + 1 < state.questions.length ? 'Continue to Next Scenario ➔' : 'Complete Quiz ➔';
+    nextBtn.className = 'btn';
+    nextBtn.style.marginTop = '15px';
+    nextBtn.style.background = 'rgba(255,255,255,0.1)';
     nextBtn.style.color = '#fff';
-    nextBtn.style.background = 'var(--primary)';
     nextBtn.onclick = () => window.advanceDataQuiz();
     feedbackEl.appendChild(nextBtn);
-    
-    scoreEl.innerText = state.score;
-    feedbackEl.style.opacity = '1';
-    
-    // Disable buttons temporarily
-    buttons.forEach(b => b.style.pointerEvents = 'none');
 };
 
 window.advanceDataQuiz = function() {

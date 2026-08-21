@@ -4092,63 +4092,100 @@ function renderModule3(container) {
 </div>
 
 <!-- ============================================================ -->
-<!-- PART 5: DATA CLASSIFICATION -->
+<!-- PART 5: DATA CLASSIFICATION (GAMIFIED) -->
 <!-- ============================================================ -->
-<div class="section">
-<div class="section-head" onclick="toggle(this)"><h2>🔒 Part 5: Data Classification — The 3-Tier System for DEC Infra</h2><span class="arrow">▼</span></div>
+<div class="section open">
+<div class="section-head" onclick="toggle(this)"><h2>🎮 Part 5: Data Classification Challenge — The 3-Tier System</h2><span class="arrow">▼</span></div>
 <div class="section-body">
-<div class="grid-3">
-<div class="card glass-card reveal-on-scroll" style="border-top:3px solid var(--success); background: var(--bg-card);">
-<h3 style="color:var(--success)">🟢 Tier 1: Public / Safe</h3>
-<p>Share freely with any AI tool</p>
-<ul>
-<li>General industry knowledge</li>
-<li>Public info from decinfra.com</li>
-<li>Published standards (IS 456, NBC, OSHA)</li>
-<li>Generic templates & checklists</li>
-<li>Industry benchmark data</li>
-<li>Training materials</li>
-</ul>
-</div>
-<div class="card glass-card reveal-on-scroll" style="border-top:3px solid var(--warning); background: var(--bg-card);">
-<h3 style="color:var(--warning)">🟡 Tier 2: Internal — Anonymize</h3>
-<p>Share ONLY after removing identifiers</p>
-<ul>
-<li>Budget data (remove vendor/client names)</li>
-<li>Schedules (remove project identity)</li>
-<li>Test results (remove lab names)</li>
-<li>Site photos (remove logos/faces)</li>
-<li>Progress reports (remove names)</li>
-<li>Specs (remove proprietary detail)</li>
-</ul>
-</div>
-<div class="card glass-card reveal-on-scroll" style="border-top:3px solid var(--danger); background: var(--bg-card);">
-<h3 style="color:var(--danger)">🔴 Tier 3: Confidential — NEVER</h3>
-<p>NEVER upload to any external AI</p>
-<ul>
-<li>Vendor quotes & negotiated rates</li>
-<li>Profit margins & markups</li>
-<li>Employee salaries, Aadhaar, PAN</li>
-<li>Client contracts & agreements</li>
-<li>Bank details & credentials</li>
-<li>Tender bids & pricing strategy</li>
-</ul>
-</div>
-</div>
+    
+    <div class="card glass-card" style="border: 1px solid var(--accent); background: linear-gradient(145deg, rgba(30,41,59,0.7) 0%, rgba(15,23,42,0.9) 100%); padding-top:30px;">
+        <h3 style="text-align:center; color: #fff; margin-bottom: 10px; font-size: 24px;">Can you classify DEC Infra's data safely?</h3>
+        <p style="text-align:center; color: var(--text-muted); margin-bottom: 30px; font-size: 16px;">Test your knowledge on the 3-Tier system. Get a perfect score to unlock the Anonymization Master Guide!</p>
+        
+        <div id="data-quiz-container" style="max-width: 800px; margin: 0 auto; background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 40px 30px; text-align: center; position: relative; box-shadow: inset 0 0 20px rgba(0,0,0,0.5);">
+            <img src="x" onerror="if(window.initDataQuiz) window.initDataQuiz()" style="display:none;">
+            
+            <div style="position:absolute; top: 20px; right: 25px; font-weight: 800; font-size: 18px; color: var(--accent); background: rgba(59, 130, 246, 0.2); padding: 5px 15px; border-radius: 20px;">Score: <span id="q-score">0</span>/5</div>
+            
+            <!-- Current Question -->
+            <div id="quiz-question-container" style="min-height: 120px; display: flex; align-items: center; justify-content: center; margin-bottom: 30px;">
+                <h4 id="q-text" style="font-size: 24px; color: #fff; line-height: 1.4; font-weight: 600; transition: opacity 0.3s;">Loading challenge...</h4>
+            </div>
 
-<h3 style="color:white;margin-top:20px;font-size: 18px">DEC Infra Anonymization Guide</h3>
-<table>
-<tr><th>Original Data</th><th>Anonymized Version</th><th>Why</th></tr>
-<tr><td>"Concrete Suppliers Inc quoted ₹4,500/cum"</td><td>"Vendor A quoted ₹4,500/cum"</td><td>Vendor identity protected</td></tr>
-<tr><td>"IISER Library, Tirupati — ₹12.5 Cr"</td><td>"Educational Building, South India — ₹XX Cr"</td><td>Client & location protected</td></tr>
-<tr><td>"Mr. Anirudh Gupta, CMD, approved"</td><td>"Senior management approved"</td><td>Individual identity protected</td></tr>
-<tr><td>"NSDL awarded DEC Infra the contract"</td><td>"Client awarded Company the contract"</td><td>Both parties protected</td></tr>
-<tr><td>"Our bid: ₹45.7 Cr for NMDC project"</td><td><span style="color:var(--danger)">⛔ NEVER SHARE — Tier 3</span></td><td>Competitor would undercut</td></tr>
-<tr><td>"DEC Infra profit margin: 14.2%"</td><td><span style="color:var(--danger)">⛔ NEVER SHARE — Tier 3</span></td><td>Commercially devastating</td></tr>
-<tr><td>"Staff salary: ₹8.5 LPA, Aadhaar: 1234..."</td><td><span style="color:var(--danger)">⛔ NEVER SHARE — Tier 3</span></td><td>DPDP Act violation</td></tr>
-</table>
+            <!-- Options -->
+            <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+                <button onclick="handleDataQuizAnswer(1, this)" class="btn btn-tier1" style="background: rgba(16,185,129,0.1); border: 2px solid var(--success); color: var(--success); padding: 15px; border-radius: 12px; font-weight: bold; font-size: 16px; cursor: pointer; transition: all 0.3s; flex: 1; min-width: 150px; box-shadow: 0 4px 15px rgba(16,185,129,0.15);">🟢 Tier 1: Public<br><span style="font-size:12px; font-weight:normal; opacity:0.8;">Safe to share freely</span></button>
+                <button onclick="handleDataQuizAnswer(2, this)" class="btn btn-tier2" style="background: rgba(245,158,11,0.1); border: 2px solid var(--warning); color: var(--warning); padding: 15px; border-radius: 12px; font-weight: bold; font-size: 16px; cursor: pointer; transition: all 0.3s; flex: 1; min-width: 150px; box-shadow: 0 4px 15px rgba(245,158,11,0.15);">🟡 Tier 2: Internal<br><span style="font-size:12px; font-weight:normal; opacity:0.8;">Anonymize first</span></button>
+                <button onclick="handleDataQuizAnswer(3, this)" class="btn btn-tier3" style="background: rgba(239,68,68,0.1); border: 2px solid var(--danger); color: var(--danger); padding: 15px; border-radius: 12px; font-weight: bold; font-size: 16px; cursor: pointer; transition: all 0.3s; flex: 1; min-width: 150px; box-shadow: 0 4px 15px rgba(239,68,68,0.15);">🔴 Tier 3: Confidential<br><span style="font-size:12px; font-weight:normal; opacity:0.8;">NEVER share</span></button>
+            </div>
+            
+            <!-- Feedback -->
+            <div id="q-feedback" style="margin-top: 25px; min-height: 60px; font-size: 18px; font-weight: 500; opacity: 0; transition: opacity 0.3s; border-radius: 10px; padding: 15px; display: flex; align-items: center; justify-content: center; flex-direction: column;"></div>
+        </div>
 
-<div class="tip"><strong>💡 The DEC Infra Rule:</strong> If you wouldn't print it and leave it at a competitor's office, don't upload it to free ChatGPT.</div>
+        <!-- Hidden Anonymization Guide (revealed on win) -->
+        <div id="anonymization-guide" style="display: none; margin-top: 40px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 30px;">
+            <div style="text-align: center; margin-bottom: 30px;">
+                <h3 style="color: #FCD34D; font-size: 28px; text-shadow: 0 0 20px rgba(252, 211, 77, 0.4);">🎉 Master Guide Unlocked! 🎉</h3>
+                <p style="color: var(--text-muted);">You've proven you can classify data safely. Here is the full DEC Infra 3-Tier System.</p>
+            </div>
+            
+            <div class="grid-3">
+                <div class="card glass-card reveal-on-scroll" style="border-top:3px solid var(--success); background: var(--bg-card);">
+                <h3 style="color:var(--success)">🟢 Tier 1: Public / Safe</h3>
+                <p>Share freely with any AI tool</p>
+                <ul style="text-align:left;">
+                <li>General industry knowledge</li>
+                <li>Public info from decinfra.com</li>
+                <li>Published standards (IS 456, NBC, OSHA)</li>
+                <li>Generic templates & checklists</li>
+                <li>Industry benchmark data</li>
+                <li>Training materials</li>
+                </ul>
+                </div>
+                <div class="card glass-card reveal-on-scroll" style="border-top:3px solid var(--warning); background: var(--bg-card);">
+                <h3 style="color:var(--warning)">🟡 Tier 2: Internal — Anonymize</h3>
+                <p>Share ONLY after removing identifiers</p>
+                <ul style="text-align:left;">
+                <li>Budget data (remove vendor/client names)</li>
+                <li>Schedules (remove project identity)</li>
+                <li>Test results (remove lab names)</li>
+                <li>Site photos (remove logos/faces)</li>
+                <li>Progress reports (remove names)</li>
+                <li>Specs (remove proprietary detail)</li>
+                </ul>
+                </div>
+                <div class="card glass-card reveal-on-scroll" style="border-top:3px solid var(--danger); background: var(--bg-card);">
+                <h3 style="color:var(--danger)">🔴 Tier 3: Confidential — NEVER</h3>
+                <p>NEVER upload to any external AI</p>
+                <ul style="text-align:left;">
+                <li>Vendor quotes & negotiated rates</li>
+                <li>Profit margins & markups</li>
+                <li>Employee salaries, Aadhaar, PAN</li>
+                <li>Client contracts & agreements</li>
+                <li>Bank details & credentials</li>
+                <li>Tender bids & pricing strategy</li>
+                </ul>
+                </div>
+            </div>
+
+            <h3 style="color:white;margin-top:40px;font-size: 20px; text-align: center;">DEC Infra Anonymization Cheat Sheet</h3>
+            <div style="overflow-x:auto;">
+            <table style="margin-top: 20px; width:100%; text-align:left;">
+            <tr><th>Original Data</th><th>Anonymized Version</th><th>Why</th></tr>
+            <tr><td>"Concrete Suppliers Inc quoted ₹4,500/cum"</td><td>"Vendor A quoted ₹4,500/cum"</td><td>Vendor identity protected</td></tr>
+            <tr><td>"IISER Library, Tirupati — ₹12.5 Cr"</td><td>"Educational Building, South India — ₹XX Cr"</td><td>Client & location protected</td></tr>
+            <tr><td>"Mr. Anirudh Gupta, CMD, approved"</td><td>"Senior management approved"</td><td>Individual identity protected</td></tr>
+            <tr><td>"NSDL awarded DEC Infra the contract"</td><td>"Client awarded Company the contract"</td><td>Both parties protected</td></tr>
+            <tr><td>"Our bid: ₹45.7 Cr for NMDC project"</td><td><span style="color:var(--danger)">⛔ NEVER SHARE — Tier 3</span></td><td>Competitor would undercut</td></tr>
+            <tr><td>"DEC Infra profit margin: 14.2%"</td><td><span style="color:var(--danger)">⛔ NEVER SHARE — Tier 3</span></td><td>Commercially devastating</td></tr>
+            <tr><td>"Staff salary: ₹8.5 LPA, Aadhaar: 1234..."</td><td><span style="color:var(--danger)">⛔ NEVER SHARE — Tier 3</span></td><td>DPDP Act violation</td></tr>
+            </table>
+            </div>
+
+            <div class="tip" style="margin-top: 25px;"><strong>💡 The DEC Infra Rule:</strong> If you wouldn't print it and leave it at a competitor's office, don't upload it to free ChatGPT.</div>
+        </div>
+    </div>
 </div>
 </div>
 
@@ -7562,3 +7599,144 @@ function renderDatasetHub(container) {
 window.toggle = function(el){el.parentElement.classList.toggle('open')}
 window.toggleCS = function(el){if(el.classList.contains('case-study'))el.classList.toggle('cs-open')}
 window.copyPrompt = function(btn){const t=btn.parentElement.textContent.replace('📋 Copy','').trim();navigator.clipboard.writeText(t).then(()=>{btn.textContent='✓ Copied!';setTimeout(()=>btn.textContent='📋 Copy',2000)});event.stopPropagation()}
+
+// ============================================================
+// DATA CLASSIFICATION GAMIFICATION LOGIC
+// ============================================================
+window.dataQuizState = {
+    current: 0,
+    score: 0,
+    questions: [
+        { text: '"Concrete Suppliers Inc quoted ₹4,500/cum"', tier: 2, why: "Vendor identities must be protected. Anonymize to 'Vendor A'!" },
+        { text: 'Published IS 456 Standards', tier: 1, why: "Publicly available standards are safe to share freely." },
+        { text: '"Our bid: ₹45.7 Cr for NMDC project"', tier: 3, why: "Tender bids are strictly confidential. Never share!" },
+        { text: '"Staff salary: ₹8.5 LPA, Aadhaar: 1234..."', tier: 3, why: "PII and salaries violate DPDP Act. Tier 3!" },
+        { text: 'General construction safety templates without DEC logos', tier: 1, why: "Generic templates are public and safe." }
+    ]
+};
+
+window.initDataQuiz = function() {
+    window.dataQuizState.current = 0;
+    window.dataQuizState.score = 0;
+    document.getElementById('q-score').innerText = '0';
+    document.getElementById('anonymization-guide').style.display = 'none';
+    
+    // reset buttons
+    const buttons = document.querySelectorAll('#data-quiz-container .btn');
+    buttons.forEach(b => {
+        b.style.display = 'block';
+        b.style.pointerEvents = 'auto';
+    });
+    
+    document.getElementById('q-feedback').style.opacity = '0';
+    window.updateQuizUI();
+};
+
+window.handleDataQuizAnswer = function(tier, btnEl) {
+    const state = window.dataQuizState;
+    if (state.current >= state.questions.length) return;
+    
+    const q = state.questions[state.current];
+    const feedbackEl = document.getElementById('q-feedback');
+    const scoreEl = document.getElementById('q-score');
+    
+    // Reset buttons visual state
+    const buttons = btnEl.parentElement.querySelectorAll('.btn');
+    buttons.forEach(b => b.style.transform = 'scale(1)');
+    
+    btnEl.style.transform = 'scale(0.95)';
+    setTimeout(() => btnEl.style.transform = 'scale(1)', 200);
+
+    if (tier === q.tier) {
+        state.score++;
+        feedbackEl.innerHTML = `<span>✅ <strong>Correct!</strong></span><span style="font-size:14px; opacity:0.9; margin-top:5px;">${q.why}</span>`;
+        feedbackEl.style.background = 'rgba(16,185,129,0.2)';
+        feedbackEl.style.color = '#A7F3D0';
+        feedbackEl.style.border = '1px solid var(--success)';
+    } else {
+        feedbackEl.innerHTML = `<span>❌ <strong>Incorrect.</strong> It's Tier ${q.tier}.</span><span style="font-size:14px; opacity:0.9; margin-top:5px;">${q.why}</span>`;
+        feedbackEl.style.background = 'rgba(239,68,68,0.2)';
+        feedbackEl.style.color = '#FECACA';
+        feedbackEl.style.border = '1px solid var(--danger)';
+    }
+    
+    scoreEl.innerText = state.score;
+    feedbackEl.style.opacity = '1';
+    
+    state.current++;
+    
+    // Disable buttons temporarily
+    buttons.forEach(b => b.style.pointerEvents = 'none');
+    
+    setTimeout(() => {
+        if (state.current < state.questions.length) {
+            window.updateQuizUI();
+            feedbackEl.style.opacity = '0';
+            buttons.forEach(b => b.style.pointerEvents = 'auto');
+        } else {
+            // Finish Quiz
+            document.getElementById('q-text').innerHTML = `Quiz Complete!`;
+            buttons.forEach(b => b.style.display = 'none');
+            
+            if (state.score === state.questions.length) {
+                feedbackEl.innerHTML = `<span>🌟 <strong>Perfect Score!</strong> You are a Data Security Master.</span>`;
+                feedbackEl.style.background = 'rgba(245,158,11,0.2)';
+                feedbackEl.style.color = '#FDE68A';
+                feedbackEl.style.border = '1px solid var(--warning)';
+                
+                // Show Guide
+                document.getElementById('anonymization-guide').style.display = 'block';
+                
+                // Confetti if function exists globally or inject simple confetti
+                try {
+                    if(typeof fireConfetti === 'function') fireConfetti();
+                    else {
+                        // simple confetti
+                        const c = document.createElement('div');
+                        c.innerHTML = '🎉🎊✨';
+                        c.style.position = 'absolute';
+                        c.style.top = '10px'; c.style.left = '50%'; c.style.transform='translateX(-50%)';
+                        c.style.fontSize = '40px';
+                        c.style.animation = 'slideUp 1s ease-out';
+                        document.getElementById('data-quiz-container').appendChild(c);
+                        setTimeout(()=>c.remove(), 2000);
+                    }
+                } catch(e) {}
+            } else {
+                feedbackEl.innerHTML = `<span>You got ${state.score} out of ${state.questions.length}. Please try again to unlock the guide.</span>`;
+                feedbackEl.style.background = 'rgba(255,255,255,0.1)';
+                feedbackEl.style.color = '#fff';
+                feedbackEl.style.border = '1px solid rgba(255,255,255,0.3)';
+                
+                // Add retry button
+                const retryBtn = document.createElement('button');
+                retryBtn.innerText = '🔄 Retry Challenge';
+                retryBtn.className = 'btn';
+                retryBtn.style.marginTop = '15px';
+                retryBtn.style.background = 'var(--accent)';
+                retryBtn.style.color = '#fff';
+                retryBtn.style.border = 'none';
+                retryBtn.style.padding = '10px 20px';
+                retryBtn.style.borderRadius = '8px';
+                retryBtn.style.cursor = 'pointer';
+                retryBtn.onclick = () => {
+                    window.initDataQuiz();
+                };
+                feedbackEl.appendChild(retryBtn);
+            }
+        }
+    }, 2500);
+};
+
+window.updateQuizUI = function() {
+    if (window.dataQuizState.current >= window.dataQuizState.questions.length) return;
+    const q = window.dataQuizState.questions[window.dataQuizState.current];
+    const textEl = document.getElementById('q-text');
+    if (textEl) {
+        textEl.style.opacity = '0';
+        setTimeout(() => {
+            textEl.innerText = q.text;
+            textEl.style.opacity = '1';
+        }, 300);
+    }
+};

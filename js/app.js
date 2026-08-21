@@ -7659,83 +7659,104 @@ window.handleDataQuizAnswer = function(tier, btnEl) {
 
     if (tier === q.tier) {
         state.score++;
-        feedbackEl.innerHTML = `<span>✅ <strong>Correct!</strong></span><span style="font-size:14px; opacity:0.9; margin-top:5px;">${q.why}</span>`;
-        feedbackEl.style.background = 'rgba(16,185,129,0.2)';
+        feedbackEl.innerHTML = `<div style="font-size: 20px; margin-bottom: 8px;">✅ <strong>Correct!</strong></div><div style="font-size:16px; opacity:0.9;">${q.why}</div>`;
+        feedbackEl.style.background = 'linear-gradient(145deg, rgba(16,185,129,0.2) 0%, rgba(16,185,129,0.05) 100%)';
         feedbackEl.style.color = '#A7F3D0';
         feedbackEl.style.border = '1px solid var(--success)';
+        feedbackEl.style.boxShadow = '0 10px 30px rgba(16,185,129,0.2)';
     } else {
-        feedbackEl.innerHTML = `<span>❌ <strong>Incorrect.</strong> It's Tier ${q.tier}.</span><span style="font-size:14px; opacity:0.9; margin-top:5px;">${q.why}</span>`;
-        feedbackEl.style.background = 'rgba(239,68,68,0.2)';
+        feedbackEl.innerHTML = `<div style="font-size: 20px; margin-bottom: 8px;">❌ <strong>Incorrect. It's Tier ${q.tier}.</strong></div><div style="font-size:16px; opacity:0.9;">${q.why}</div>`;
+        feedbackEl.style.background = 'linear-gradient(145deg, rgba(239,68,68,0.2) 0%, rgba(239,68,68,0.05) 100%)';
         feedbackEl.style.color = '#FECACA';
         feedbackEl.style.border = '1px solid var(--danger)';
+        feedbackEl.style.boxShadow = '0 10px 30px rgba(239,68,68,0.2)';
     }
+    
+    const nextBtn = document.createElement('button');
+    nextBtn.innerText = state.current + 1 < state.questions.length ? 'Next Scenario ➔' : 'View Results ➔';
+    nextBtn.className = 'btn btn-primary';
+    nextBtn.style.marginTop = '20px';
+    nextBtn.style.padding = '12px 30px';
+    nextBtn.style.fontSize = '18px';
+    nextBtn.style.borderRadius = '30px';
+    nextBtn.style.boxShadow = '0 10px 20px rgba(59,130,246,0.3)';
+    nextBtn.style.border = 'none';
+    nextBtn.style.cursor = 'pointer';
+    nextBtn.style.color = '#fff';
+    nextBtn.style.background = 'var(--primary)';
+    nextBtn.onclick = () => window.advanceDataQuiz();
+    feedbackEl.appendChild(nextBtn);
     
     scoreEl.innerText = state.score;
     feedbackEl.style.opacity = '1';
     
-    state.current++;
-    
     // Disable buttons temporarily
     buttons.forEach(b => b.style.pointerEvents = 'none');
+};
+
+window.advanceDataQuiz = function() {
+    const state = window.dataQuizState;
+    const feedbackEl = document.getElementById('q-feedback');
+    const buttons = document.querySelectorAll('#part5-quiz-container .btn');
     
-    setTimeout(() => {
-        if (state.current < state.questions.length) {
-            window.updateQuizUI();
-            feedbackEl.style.opacity = '0';
-            buttons.forEach(b => b.style.pointerEvents = 'auto');
-        } else {
-            // Finish Quiz
-            document.getElementById('q-text').innerHTML = `Quiz Complete!`;
-            buttons.forEach(b => b.style.display = 'none');
+    state.current++;
+    
+    if (state.current < state.questions.length) {
+        window.updateQuizUI();
+        feedbackEl.style.opacity = '0';
+        buttons.forEach(b => b.style.pointerEvents = 'auto');
+    } else {
+        // Finish Quiz
+        document.getElementById('q-text').innerHTML = `Quiz Complete!`;
+        buttons.forEach(b => b.style.display = 'none');
+        
+        if (state.score === state.questions.length) {
+            feedbackEl.innerHTML = `<div style="font-size:24px; margin-bottom:10px;">🌟 <strong>Perfect Score!</strong></div><div>You are a Data Security Master.</div>`;
+            feedbackEl.style.background = 'linear-gradient(145deg, rgba(245,158,11,0.2) 0%, rgba(245,158,11,0.05) 100%)';
+            feedbackEl.style.color = '#FDE68A';
+            feedbackEl.style.border = '1px solid var(--warning)';
+            feedbackEl.style.boxShadow = '0 10px 30px rgba(245,158,11,0.3)';
             
-            if (state.score === state.questions.length) {
-                feedbackEl.innerHTML = `<span>🌟 <strong>Perfect Score!</strong> You are a Data Security Master.</span>`;
-                feedbackEl.style.background = 'rgba(245,158,11,0.2)';
-                feedbackEl.style.color = '#FDE68A';
-                feedbackEl.style.border = '1px solid var(--warning)';
-                
-                // Show Guide
-                document.getElementById('anonymization-guide').style.display = 'block';
-                
-                // Confetti if function exists globally or inject simple confetti
-                try {
-                    if(typeof fireConfetti === 'function') fireConfetti();
-                    else {
-                        // simple confetti
-                        const c = document.createElement('div');
-                        c.innerHTML = '🎉🎊✨';
-                        c.style.position = 'absolute';
-                        c.style.top = '10px'; c.style.left = '50%'; c.style.transform='translateX(-50%)';
-                        c.style.fontSize = '40px';
-                        c.style.animation = 'slideUp 1s ease-out';
-                        document.getElementById('part5-quiz-container').appendChild(c);
-                        setTimeout(()=>c.remove(), 2000);
-                    }
-                } catch(e) {}
-            } else {
-                feedbackEl.innerHTML = `<span>You got ${state.score} out of ${state.questions.length}. Please try again to unlock the guide.</span>`;
-                feedbackEl.style.background = 'rgba(255,255,255,0.1)';
-                feedbackEl.style.color = '#fff';
-                feedbackEl.style.border = '1px solid rgba(255,255,255,0.3)';
-                
-                // Add retry button
-                const retryBtn = document.createElement('button');
-                retryBtn.innerText = '🔄 Retry Challenge';
-                retryBtn.className = 'btn';
-                retryBtn.style.marginTop = '15px';
-                retryBtn.style.background = 'var(--accent)';
-                retryBtn.style.color = '#fff';
-                retryBtn.style.border = 'none';
-                retryBtn.style.padding = '10px 20px';
-                retryBtn.style.borderRadius = '8px';
-                retryBtn.style.cursor = 'pointer';
-                retryBtn.onclick = () => {
-                    window.initDataQuiz();
-                };
-                feedbackEl.appendChild(retryBtn);
-            }
+            // Show Guide
+            document.getElementById('anonymization-guide').style.display = 'block';
+            
+            // Confetti if function exists globally or inject simple confetti
+            try {
+                if(typeof fireConfetti === 'function') fireConfetti();
+                else {
+                    const c = document.createElement('div');
+                    c.innerHTML = '🎉🎊✨';
+                    c.style.position = 'absolute';
+                    c.style.top = '10px'; c.style.left = '50%'; c.style.transform='translateX(-50%)';
+                    c.style.fontSize = '50px';
+                    c.style.animation = 'slideUp 1.5s ease-out';
+                    document.getElementById('part5-quiz-container').appendChild(c);
+                    setTimeout(()=>c.remove(), 2000);
+                }
+            } catch(e) {}
+        } else {
+            feedbackEl.innerHTML = `<div style="font-size:20px; margin-bottom:10px;">You got ${state.score} out of ${state.questions.length}.</div><div>Please try again to unlock the master guide.</div>`;
+            feedbackEl.style.background = 'rgba(255,255,255,0.05)';
+            feedbackEl.style.color = '#fff';
+            feedbackEl.style.border = '1px solid rgba(255,255,255,0.2)';
+            feedbackEl.style.boxShadow = 'none';
+            
+            // Add retry button
+            const retryBtn = document.createElement('button');
+            retryBtn.innerText = '🔄 Retry Challenge';
+            retryBtn.className = 'btn btn-primary';
+            retryBtn.style.marginTop = '20px';
+            retryBtn.style.padding = '12px 30px';
+            retryBtn.style.fontSize = '18px';
+            retryBtn.style.borderRadius = '30px';
+            retryBtn.style.boxShadow = '0 10px 20px rgba(59,130,246,0.3)';
+            retryBtn.style.border = 'none';
+            retryBtn.style.cursor = 'pointer';
+            retryBtn.onclick = () => window.initDataQuiz();
+            
+            feedbackEl.appendChild(retryBtn);
         }
-    }, 2500);
+    }
 };
 
 window.updateQuizUI = function() {

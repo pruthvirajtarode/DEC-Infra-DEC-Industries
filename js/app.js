@@ -7798,15 +7798,3 @@ window.updateQuizUI = function() {
     });
 };
 
-window.updateQuizUI = function() {
-    if (window.dataQuizState.current >= window.dataQuizState.questions.length) return;
-    const q = window.dataQuizState.questions[window.dataQuizState.current];
-    const textEl = document.getElementById('q-text');
-    if (textEl) {
-        textEl.style.opacity = '0';
-        setTimeout(() => {
-            textEl.innerText = q.text;
-            textEl.style.opacity = '1';
-        }, 300);
-    }
-};
